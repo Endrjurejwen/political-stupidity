@@ -21,7 +21,7 @@ module.exports = {
         "react",
         "prettier"
     ],
-    "extends": ["airbnb", "prettier"],
+    "extends": ["airbnb", "prettier", "prettier/react"],
     "rules": {
       "react/jsx-filename-extension": 0,
       "function-paren-newline": 0,
@@ -30,5 +30,13 @@ module.exports = {
       "no-shadow": "off",
       'import/no-unresolved': "off",
       "prettier/prettier": "error",
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": true,}],
+    },
+    "globals": {
+      "test": true,
+      "expect": true,
+      "afterEach": true,
+      "jest": true,
+      "describe": true
     }
   };

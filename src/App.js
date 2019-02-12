@@ -1,14 +1,46 @@
 /* eslint react/prefer-stateless-function: 0 */
 
-import React, { Component } from "react";
-import "./App.css";
+import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import './App.css';
+
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+
+import Global from 'Global';
+import Layout from 'layout/components/Layout';
+import Dashboard from 'dashboard/containers/dashboard';
+import CreateQuotation from 'quotations/containers/CreateQuotation';
+import About from 'about/components/about';
+import Terms from 'terms/components/terms';
+import store from 'store';
+import rootReducer from './rootReducer';
+
+// const store = createStore(
+//   rootReducer,
+//   {},
+//   composeWithDevTools(applyMiddleware(thunk))
+// );
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <h1>Hello</h1>
-      </div>
+      <Provider store={store()}>
+        <BrowserRouter>
+          <Layout>
+            <Switch>
+              <Route exact path="/home" component={Dashboard} />
+              <Route exact path="/about" component={About} />
+              <Route exact path="/terms" component={Terms} />
+              <Route exact path="/create" component={CreateQuotation} />
+              <Redirect exact from="/" to="/home" />
+            </Switch>
+            <Global />
+          </Layout>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }
