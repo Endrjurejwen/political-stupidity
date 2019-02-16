@@ -1,22 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Button, Icon } from 'elements';
+import { Button, Icon, Card } from 'elements';
 import { spacing, elevation, color, flexCenter } from 'utils';
 
-const quotation = ({ quotation }) => (
+const quotation = ({ quotation, click }) => (
   <Card>
-    <TextWrapper>
-      <p data-testid="quotation-body">{quotation.body}</p>
-      <Author>{quotation.author}</Author>
-    </TextWrapper>
+    <p data-testid="quotation-body">{quotation.body}</p>
+    <Author>{quotation.author}</Author>
     <FlexContainer>
-      <Button secondary>Czytaj więcej</Button>
+      <Button secondary onClick={click}>
+        Czytaj więcej
+      </Button>
       <IconContainer>
         <div>{quotation.comments.length}</div>
         <Icon name="comments" />
       </IconContainer>
-
       <IconContainer>
         <div>{quotation.likes}</div>
         <IconButton>
@@ -39,19 +38,14 @@ quotation.propTypes = {
 
 export default quotation;
 
-const Card = styled.article`
-  ${elevation[1]};
-  margin: 0 auto ${spacing[6]};
-  max-width: 30rem;
-  /* border: 1px solid green; */
-  border-radius: 8px;
-  padding: ${spacing[2]} ${spacing[3]};
-`;
-
-const TextWrapper = styled.div`
-  /* border: 1px solid grey; */
-  padding: ${spacing[1]} 0;
-`;
+// const Card = styled.article`
+//   ${elevation[1]};
+//   margin: 0 auto ${spacing[6]};
+//   max-width: 30rem;
+//   /* border: 1px solid green; */
+//   border-radius: 8px;
+//   padding: ${spacing[2]} ${spacing[3]};
+// `;
 
 const Author = styled.div`
   margin-top: ${spacing[2]};

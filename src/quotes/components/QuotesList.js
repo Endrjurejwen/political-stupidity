@@ -3,10 +3,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Quotation from 'quotes/components/Quotation';
 
-const quotesList = ({ quotes }) => (
+const quotesList = ({ quotes, readMore }) => (
   <div>
     {quotes.map(quotation => (
-      <Quotation quotation={quotation} key={quotation.id} />
+      <Quotation
+        click={() => readMore(quotation.id)}
+        quotation={quotation}
+        key={quotation.id}
+      />
     ))}
   </div>
 );

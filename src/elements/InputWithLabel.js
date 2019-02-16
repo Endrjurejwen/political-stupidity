@@ -1,13 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
 import { color, spacing } from 'utils';
 
-const inputWithLabel = ({ type = 'text', placeholder, id, ...rest }) => (
+const inputWithLabel = ({ type, placeholder, id, ...rest }) => (
   <Wrapper>
     <Input type={type} placeholder={placeholder} id={id} {...rest} />
     <Label htmlFor={id}>{placeholder}</Label>
   </Wrapper>
 );
+
+inputWithLabel.propTypes = {
+  type: PropTypes.string,
+  placeholder: PropTypes.string,
+  id: PropTypes.string.isRequired
+};
+
+inputWithLabel.defaultProps = {
+  type: 'text',
+  placeholder: 'name'
+};
+
 export default inputWithLabel;
 
 const Wrapper = styled.div`

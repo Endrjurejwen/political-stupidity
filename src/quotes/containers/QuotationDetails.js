@@ -1,9 +1,9 @@
-/* eslint react/prefer-stateless-function: 0 */
-
-import React, { Component } from 'react';
-import Header from 'dashboard/components/Header';
-import Panel from 'dashboard/components/Panel';
-import QuotesList from 'quotes/components/QuotesList';
+import React from 'react';
+import styled from 'styled-components';
+import Quotation from 'quotes/components/Quotation';
+import CommmentsList from 'comments/components/CommentsList';
+import { H2 } from 'elements';
+import { elevation, spacing } from 'utils';
 
 const FAKE_QUOTES = [
   {
@@ -19,13 +19,15 @@ const FAKE_QUOTES = [
         body: 'to się popisała Pani Premier :)',
         likes: 25,
         user: 'Jaś Gamoń',
-        id: 't53regfdgdf'
+        id: 't53regfdgdf',
+        dataStamp: '14-02-2019'
       },
       {
         body: 'Hahahahaha, nie wierzę',
         likes: 7,
         user: 'Inny Gamoń',
-        id: 'sdfdsf45tgdgf'
+        id: 'sdfdsf45tgdgf',
+        dataStamp: '14-02-2019'
       }
     ]
   },
@@ -42,36 +44,36 @@ const FAKE_QUOTES = [
         body: 'Jego to ewolucja nie rusza',
         likes: 12,
         user: 'Jan Nowak',
-        id: 'sgfsg45gsdgdf'
+        id: 'sgfsg45gsdgdf',
+        dataStamp: '14-02-2019'
       },
       {
         body: 'Hahahahaha, nie no, ten to wymyślił',
         likes: 19,
         user: 'Halina Konopna',
-        id: 'dsgdfgdff44gdfg'
+        id: 'dsgdfgdff44gdfg',
+        dataStamp: '14-02-2019'
       }
     ]
   }
 ];
 
-class Dashboard extends Component {
-  navigationToQuotationDetailsHandler = id => {
-    const { history } = this.props;
-    history.push(`/quotes/${id}`);
-  };
+const terms = props => {
+  const quotation = FAKE_QUOTES.find(
+    quotation => quotation.id === props.match.params.id
+  );
+  return (
+    <>
+      <Quotation quotation={quotation} />
+      <Title>Komentarze</Title>
+      <CommmentsList comments={quotation.comments} />
+    </>
+  );
+};
 
-  render() {
-    return (
-      <>
-        <Header />
-        <Panel />
-        <QuotesList
-          readMore={this.navigationToQuotationDetailsHandler}
-          quotes={FAKE_QUOTES}
-        />
-      </>
-    );
-  }
-}
+export default terms;
 
-export default Dashboard;
+const Title = styled(H2)`
+  text-align: center;
+  margin-bottom: ${spacing[3]};
+`;

@@ -12,6 +12,7 @@ import Global from 'Global';
 import Layout from 'layout/components/Layout';
 import Dashboard from 'dashboard/containers/Dashboard';
 import CreateQuotation from 'quotes/containers/CreateQuotation';
+import QuotationDetails from 'quotes/containers/QuotationDetails';
 import About from 'about/components/about';
 import Terms from 'terms/components/terms';
 import store from 'store';
@@ -34,6 +35,7 @@ class App extends Component {
               <Route exact path="/about" component={About} />
               <Route exact path="/terms" component={Terms} />
               <Route exact path="/create" component={CreateQuotation} />
+              <Route exact path="/quotes/:id" component={QuotationDetails} />
               <Redirect exact from="/" to="/home" />
             </Switch>
             <Global />

@@ -11,7 +11,7 @@ export default styled.button`
   border: 2px solid ${color.action};
   background-color: ${props =>
     props.secondary ? 'transparent' : color.action};
-  color: ${props => (props.secondary ? color.textDark : color.textLight)};
+  color: ${props => (props.secondary ? color.action : color.textLight)};
   cursor: pointer;
   text-transform: uppercase;
   transition: box-shadow 0.2s ease;

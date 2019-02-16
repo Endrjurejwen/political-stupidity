@@ -7,6 +7,7 @@ const createQuotation = () => (
   <div>
     <Title>Create Quotation</Title>
     <Form>
+      <InputWithLabel placeholder="Twoje imię" id="name" required />
       <InputWithLabel placeholder="Twój nick" id="nick" required />
       <InputWithLabel type="email" placeholder="Email" id="mail" required />
     </Form>
