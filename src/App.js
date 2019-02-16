@@ -2,21 +2,20 @@
 
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import './App.css';
 
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
+// import { createStore, applyMiddleware } from 'redux';
+// import { composeWithDevTools } from 'redux-devtools-extension';
+// import thunk from 'redux-thunk';
 
 import Global from 'Global';
 import Layout from 'layout/components/Layout';
-import Dashboard from 'dashboard/containers/dashboard';
-import CreateQuotation from 'quotations/containers/CreateQuotation';
+import Dashboard from 'dashboard/containers/Dashboard';
+import CreateQuotation from 'quotes/containers/CreateQuotation';
 import About from 'about/components/about';
 import Terms from 'terms/components/terms';
 import store from 'store';
-import rootReducer from './rootReducer';
+// import rootReducer from './rootReducer';
 
 // const store = createStore(
 //   rootReducer,

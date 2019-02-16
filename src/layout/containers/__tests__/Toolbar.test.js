@@ -14,14 +14,14 @@ describe('<Toolbar />', () => {
     expect(getByTestId('toolbar-wrapper')).toBeInTheDocument();
 
     expect(getByTestId('sideDrawer')).toHaveStyle(
-      'transform: translateY(-30vh)'
+      'transform: translateY(-50vh)'
     );
     fireEvent.click(getByTestId('menu-button'));
     expect(getByTestId('sideDrawer')).toHaveStyle('transform: translateY(0)');
 
     fireEvent.click(getByTestId('menu-button'));
     expect(getByTestId('sideDrawer')).toHaveStyle(
-      'transform: translateY(-30vh)'
+      'transform: translateY(-50vh)'
     );
   });
 
@@ -44,7 +44,7 @@ describe('<Toolbar />', () => {
     fireEvent.click(getByTestId('backdrop'));
     expect(queryByTestId('backdrop')).not.toBeInTheDocument();
     expect(getByTestId('sideDrawer')).toHaveStyle(
-      'transform: translateY(-30vh)'
+      'transform: translateY(-50vh)'
     );
   });
 });

@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   ${elevation[5]};
   padding: ${spacing[4]};
   margin: ${navigationHeight} auto 0;
-  background-color: green;
+  background-color: #eee;
   min-height: calc(100vh - ${navigationHeight});
   max-width: ${bodyMaxWidth};
 `;

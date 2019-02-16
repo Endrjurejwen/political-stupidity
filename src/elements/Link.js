@@ -16,10 +16,9 @@ export default styled(NavLink)`
   height: 100%;
   transition: color 0.2s;
 
-  /* &:hover,
-  &:focus {
-    color: ${color.blue};
-  } */
+  &:hover {
+    color: ${color.action};
+  }
 
   ${media.tablet`
     ${flexCenter()};
@@ -34,8 +33,8 @@ export default styled(NavLink)`
     }
 
     &:hover {
-      color: pink;
-      border-bottom: 2px solid ${color.textLight};
+      color: ${color.action};
+      /* border-bottom: 2px solid ${color.textLight}; */
     }
   `}
 `;

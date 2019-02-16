@@ -5,7 +5,11 @@ import PropTypes from 'prop-types';
 import { media, color, spacing } from 'utils';
 
 const menuButton = ({ toggleMenu, isOpen }) => (
-  <MenuBtn data-testid="menu-button" onClick={toggleMenu}>
+  <MenuBtn
+    aria-label="Menu Button"
+    data-testid="menu-button"
+    onClick={toggleMenu}
+  >
     <MenuIcon isOpen={isOpen} />
   </MenuBtn>
 );

@@ -29,10 +29,11 @@ export default navigationItem;
 
 const NavItem = styled.li`
   ${flexCenter()};
-
+  width: 70%;
   background-color: transparent;
 
   ${media.tablet`
+    width: auto;
     padding: 0 ${spacing[2]};
     height: 100%;
   `}

@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-family: ${defaultFont};
     line-height: 1.6;
-    background-color: #eee;
+    background-color: #FFDB99;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

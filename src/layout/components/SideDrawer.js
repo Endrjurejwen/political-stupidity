@@ -24,7 +24,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   padding: ${spacing[2]} ${spacing[4]};
-  height: 30vh;
+  height: 50vh;
   width: 100vw;
   z-index: 30;
   background-color: ${color.primary};
@@ -33,7 +33,7 @@ const Container = styled.div`
 
   transition: all 0.2s cubic-bezier(0.63, 0.21, 0.66, 1);
   transform: ${({ isOpen }) =>
-    isOpen ? 'translateY(0)' : 'translateY(-30vh)'};
+    isOpen ? 'translateY(0)' : 'translateY(-50vh)'};
 
   ${media.tablet`
     display: none;

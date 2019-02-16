@@ -18,7 +18,7 @@ describe('<App />', () => {
     const logoutLink = queryByText(/wyloguj się/i);
     const lefClick = { button: 0 };
 
-    expect(queryByText(/dashboard page/i)).toBeInTheDocument();
+    expect(queryByText(/polityczny poprawczak/i)).toBeInTheDocument();
     expect(queryByText(/strona o pomyśle/i)).not.toBeInTheDocument();
     expect(homeLink).toHaveClass('active');
     [aboutLink, termsLink, logoutLink].map(link =>
@@ -27,9 +27,9 @@ describe('<App />', () => {
 
     fireEvent.click(aboutLink, lefClick);
     expect(queryByText(/strona o pomyśle/i)).toBeInTheDocument();
-    expect(queryByText(/dashboard page/i)).not.toBeInTheDocument();
+    expect(queryByText(/polityczny poprawczak/i)).not.toBeInTheDocument();
     expect(getByTestId('sideDrawer')).toHaveStyle(
-      'transform: translateY(-30vh)'
+      'transform: translateY(-50vh)'
     );
     expect(queryByTestId('backdrop')).not.toBeInTheDocument();
     expect(aboutLink).toHaveClass('active');

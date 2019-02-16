@@ -6,6 +6,9 @@ export const textDark = '#333';
 export const color = {
   primary: '#222',
   textLight: '#fff',
+  textDark: '#222',
   blue: 'blue',
-  action: 'green'
+  action: '#996300',
+  valid: 'green',
+  invalid: 'crimson'
 };

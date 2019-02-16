@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { fluidTypography, textDark, headingsFont } from 'utils';
+import { fluidTypography, textDark } from 'utils';
 
 const headings = css`
   text-transform: uppercase;
@@ -30,5 +30,10 @@ export const H4 = styled.h4`
 
 export const H5 = styled.h5`
   ${fluidTypography({ minFontSize: 17.07, maxFontSize: 19.2 })};
+  ${headings};
+`;
+
+export const H6 = styled.h6`
+  ${fluidTypography({ minFontSize: 16, maxFontSize: 16 })};
   ${headings};
 `;
