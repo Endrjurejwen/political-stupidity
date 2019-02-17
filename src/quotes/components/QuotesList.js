@@ -3,11 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Quotation from 'quotes/components/Quotation';
 
-const quotesList = ({ quotes, readMore }) => (
+const quotesList = ({ quotes, navigationClick }) => (
   <div>
     {quotes.map(quotation => (
       <Quotation
-        click={() => readMore(quotation.id)}
+        navigationClick={() => navigationClick(quotation.id)}
         quotation={quotation}
         key={quotation.id}
       />

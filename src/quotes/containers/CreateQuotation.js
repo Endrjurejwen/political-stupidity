@@ -1,15 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { spacing } from 'utils';
-import { InputWithLabel, H1 } from 'elements';
+import { InputBox, TextareaBox } from 'common';
+import { H1 } from 'elements';
 
 const createQuotation = () => (
   <div>
     <Title>Create Quotation</Title>
     <Form>
-      <InputWithLabel placeholder="Twoje imię" id="name" required />
-      <InputWithLabel placeholder="Twój nick" id="nick" required />
-      <InputWithLabel type="email" placeholder="Email" id="mail" required />
+      <TextareaBox
+        placeholder="Tutaj wpisz cytaty"
+        rows="5"
+        id="quotes"
+        required
+      />
+      <InputBox placeholder="Autor" id="author" required />
     </Form>
   </div>
 );

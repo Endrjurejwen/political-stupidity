@@ -1,11 +1,8 @@
-/* eslint react/prefer-stateless-function: 0 */
+import React from 'react';
+import { render } from 'react-testing-library';
+import QuotesList from '../QuotesList';
 
-import React, { Component } from 'react';
-import Header from 'dashboard/components/Header';
-import Panel from 'dashboard/components/Panel';
-import QuotesList from 'quotes/components/QuotesList';
-
-const FAKE_QUOTES = [
+const fakeQuotes = [
   {
     body:
       'Wtedy, kiedy dinozaury jeszcze były, a ludzie nie mieli żadnych strzelb, nie mieli żadnej broni nowoczesnej, która pozwoliłaby ich zabić.',
@@ -54,24 +51,13 @@ const FAKE_QUOTES = [
   }
 ];
 
-class Dashboard extends Component {
-  navigationToQuotationDetailsHandler = id => {
-    const { history } = this.props;
-    history.push(`/quotes/${id}`);
-  };
-
-  render() {
-    return (
-      <>
-        <Header />
-        <Panel />
-        <QuotesList
-          navigationClick={this.navigationToQuotationDetailsHandler}
-          quotes={FAKE_QUOTES}
-        />
-      </>
+describe('<QuotesList />', () => {
+  test('should render list of quotes', () => {
+    const { getAllByTestId } = render(<QuotesList quotes={fakeQuotes} />);
+    const quotesBody = getAllByTestId('quotation-body').map(
+      quotationBody => quotationBody.textContent
     );
-  }
-}
-
-export default Dashboard;
+    const fakeQuotesBody = fakeQuotes.map(fakeQuotation => fakeQuotation.body);
+    expect(quotesBody).toEqual(fakeQuotesBody);
+  });
+});

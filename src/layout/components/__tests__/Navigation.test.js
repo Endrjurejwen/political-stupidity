@@ -14,7 +14,7 @@ describe('<Navigation />', () => {
       <Navigation navItems={fakeLinks} />
     );
     const linkNames = getAllByTestId('link').map(link => link.textContent);
-    const fakseLinkNames = fakeLinks.map(link => link.name);
-    expect(linkNames).toEqual(fakseLinkNames);
+    const fakeLinkNames = fakeLinks.map(link => link.name);
+    expect(linkNames).toEqual(fakeLinkNames);
   });
 });

@@ -12,7 +12,7 @@ const FAKE_QUOTES = [
     author: 'Ewa Kopacz',
     user: 'Biedny Obywatel',
     likes: 34,
-    dataStamp: '12-02-2019',
+    timestamp: '12-02-2019',
     id: 'gfh5465464654g4',
     comments: [
       {
@@ -20,14 +20,14 @@ const FAKE_QUOTES = [
         likes: 25,
         user: 'Jaś Gamoń',
         id: 't53regfdgdf',
-        dataStamp: '14-02-2019'
+        timestamp: '14-02-2019'
       },
       {
         body: 'Hahahahaha, nie wierzę',
         likes: 7,
         user: 'Inny Gamoń',
         id: 'sdfdsf45tgdgf',
-        dataStamp: '14-02-2019'
+        timestamp: '14-02-2019'
       }
     ]
   },
@@ -37,7 +37,7 @@ const FAKE_QUOTES = [
     author: 'Maciej Giertych',
     user: 'Bartłomiej Kowalski',
     likes: 23,
-    dataStamp: '14-02-2019',
+    timestamp: '14-02-2019',
     id: 'sdfsdgfgfdgfdg',
     comments: [
       {
@@ -45,20 +45,20 @@ const FAKE_QUOTES = [
         likes: 12,
         user: 'Jan Nowak',
         id: 'sgfsg45gsdgdf',
-        dataStamp: '14-02-2019'
+        timestamp: '14-02-2019'
       },
       {
         body: 'Hahahahaha, nie no, ten to wymyślił',
         likes: 19,
         user: 'Halina Konopna',
         id: 'dsgdfgdff44gdfg',
-        dataStamp: '14-02-2019'
+        timestamp: '14-02-2019'
       }
     ]
   }
 ];
 
-const terms = props => {
+const quotationDetails = props => {
   const quotation = FAKE_QUOTES.find(
     quotation => quotation.id === props.match.params.id
   );
@@ -71,7 +71,7 @@ const terms = props => {
   );
 };
 
-export default terms;
+export default quotationDetails;
 
 const Title = styled(H2)`
   text-align: center;

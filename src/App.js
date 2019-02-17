@@ -16,6 +16,7 @@ import QuotationDetails from 'quotes/containers/QuotationDetails';
 import About from 'about/components/about';
 import Terms from 'terms/components/terms';
 import store from 'store';
+import { ScrollToTop } from 'common';
 // import rootReducer from './rootReducer';
 
 // const store = createStore(
@@ -29,17 +30,19 @@ class App extends Component {
     return (
       <Provider store={store()}>
         <BrowserRouter>
-          <Layout>
-            <Switch>
-              <Route exact path="/home" component={Dashboard} />
-              <Route exact path="/about" component={About} />
-              <Route exact path="/terms" component={Terms} />
-              <Route exact path="/create" component={CreateQuotation} />
-              <Route exact path="/quotes/:id" component={QuotationDetails} />
-              <Redirect exact from="/" to="/home" />
-            </Switch>
-            <Global />
-          </Layout>
+          <ScrollToTop>
+            <Layout>
+              <Switch>
+                <Route exact path="/home" component={Dashboard} />
+                <Route exact path="/about" component={About} />
+                <Route exact path="/terms" component={Terms} />
+                <Route exact path="/create" component={CreateQuotation} />
+                <Route exact path="/quotes/:id" component={QuotationDetails} />
+                <Redirect exact from="/" to="/home" />
+              </Switch>
+              <Global />
+            </Layout>
+          </ScrollToTop>
         </BrowserRouter>
       </Provider>
     );

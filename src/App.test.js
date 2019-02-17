@@ -3,6 +3,9 @@ import { fireEvent } from 'react-testing-library';
 import { renderWithRouter } from 'utils';
 import App from './App';
 
+// because scrollTo is not implemented in jsdom
+console.error = jest.fn();
+
 describe('<App />', () => {
   test('should navigate corectly', () => {
     const {
@@ -11,6 +14,8 @@ describe('<App />', () => {
       getByText,
       queryByText
     } = renderWithRouter(<App />);
+
+    expect(console.error).toBeCalled();
 
     const homeLink = queryByText(/strona główna/i);
     const aboutLink = queryByText(/idea/i);
