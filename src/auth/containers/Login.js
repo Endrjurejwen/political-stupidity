@@ -4,10 +4,8 @@ import { InputBox } from 'common';
 import { Button, H2 } from 'elements';
 import { spacing, flexCenter } from 'utils';
 
-class SignUp extends Component {
+class Login extends Component {
   state = {
-    firstName: '',
-    lastName: '',
     email: '',
     password: ''
   };
@@ -26,21 +24,7 @@ class SignUp extends Component {
   render() {
     return (
       <Form onSubmit={this.submitHandler}>
-        <Title>Rejestracja</Title>
-        <InputBox
-          change={this.changeHandler}
-          type="text"
-          placeholder="Twoje imię"
-          id="firsName"
-          required
-        />
-        <InputBox
-          change={this.changeHandler}
-          type="text"
-          placeholder="Twoje Nazwisko"
-          id="lastName"
-          required
-        />
+        <Title>Logowanie</Title>
         <InputBox
           change={this.changeHandler}
           type="email"
@@ -55,13 +39,13 @@ class SignUp extends Component {
           id="password"
           required
         />
-        <Button type="submit">Załóż konto</Button>
+        <Button type="submit">Zaloguj się</Button>
       </Form>
     );
   }
 }
 
-export default SignUp;
+export default Login;
 
 const Title = styled(H2)`
   text-align: center;

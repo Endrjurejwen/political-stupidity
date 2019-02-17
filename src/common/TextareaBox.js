@@ -26,7 +26,7 @@ textareaBox.defaultProps = {
 export default textareaBox;
 
 const Wrapper = styled.div`
-  margin-bottom: ${spacing[1]};
+  margin-bottom: ${spacing[3]};
 `;
 
 // const Input = styled.textarea`

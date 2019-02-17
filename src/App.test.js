@@ -44,7 +44,7 @@ describe('<App />', () => {
 
     fireEvent.click(getByText(/dodaj cytat/i));
     expect(queryByText(/strona o pomyśle/i)).not.toBeInTheDocument();
-    expect(queryByText(/create quotation/i)).toBeInTheDocument();
+    expect(queryByText(/stwórz cytat/i)).toBeInTheDocument();
     [homeLink, aboutLink, termsLink, logoutLink].map(link =>
       expect(link).not.toHaveClass('active')
     );

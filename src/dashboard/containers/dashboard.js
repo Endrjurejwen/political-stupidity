@@ -1,6 +1,7 @@
 /* eslint react/prefer-stateless-function: 0 */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Header from 'dashboard/components/Header';
 import Panel from 'dashboard/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
@@ -61,17 +62,22 @@ class Dashboard extends Component {
   };
 
   render() {
+    const { quotes } = this.props;
     return (
       <>
         <Header />
         <Panel />
         <QuotesList
           navigationClick={this.navigationToQuotationDetailsHandler}
-          quotes={FAKE_QUOTES}
+          quotes={quotes}
         />
       </>
     );
   }
 }
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  quotes: state.quotes.quotes
+});
+
+export default connect(mapStateToProps)(Dashboard);
