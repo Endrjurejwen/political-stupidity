@@ -6,7 +6,7 @@ import { spacing, flexCenter } from 'utils';
 
 const comment = ({ comment, likeClick }) => (
   <Card secondary>
-    <Text data-testid="comment-body">{comment.body}</Text>
+    <Text data-testid="comment-content">{comment.content}</Text>
     <FlexContainer>
       <div>
         <UserName data-testid="comment-user">{comment.user}</UserName>

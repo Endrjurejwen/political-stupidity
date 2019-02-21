@@ -4,7 +4,7 @@ import QuotesList from '../QuotesList';
 
 const fakeQuotes = [
   {
-    body:
+    content:
       'Wtedy, kiedy dinozaury jeszcze były, a ludzie nie mieli żadnych strzelb, nie mieli żadnej broni nowoczesnej, która pozwoliłaby ich zabić.',
     author: 'Ewa Kopacz',
     user: 'Biedny Obywatel',
@@ -13,13 +13,13 @@ const fakeQuotes = [
     id: 'gfh5465464654g4',
     comments: [
       {
-        body: 'to się popisała Pani Premier :)',
+        content: 'to się popisała Pani Premier :)',
         likes: 25,
         user: 'Jaś Gamoń',
         id: 't53regfdgdf'
       },
       {
-        body: 'Hahahahaha, nie wierzę',
+        content: 'Hahahahaha, nie wierzę',
         likes: 7,
         user: 'Inny Gamoń',
         id: 'sdfdsf45tgdgf'
@@ -27,7 +27,7 @@ const fakeQuotes = [
     ]
   },
   {
-    body:
+    content:
       'Założenie przypadkowego powstania życia niczym się nie różni od rozumowania, że tornado przechodzące przez samolotowe złomowisko może złożyć boeinga 747 gotowego do lotu.',
     author: 'Maciej Giertych',
     user: 'Bartłomiej Kowalski',
@@ -36,13 +36,13 @@ const fakeQuotes = [
     id: 'sdfsdgfgfdgfdg',
     comments: [
       {
-        body: 'Jego to ewolucja nie rusza',
+        content: 'Jego to ewolucja nie rusza',
         likes: 12,
         user: 'Jan Nowak',
         id: 'sgfsg45gsdgdf'
       },
       {
-        body: 'Hahahahaha, nie no, ten to wymyślił',
+        content: 'Hahahahaha, nie no, ten to wymyślił',
         likes: 19,
         user: 'Halina Konopna',
         id: 'dsgdfgdff44gdfg'
@@ -54,10 +54,10 @@ const fakeQuotes = [
 describe('<QuotesList />', () => {
   test('should render list of quotes', () => {
     const { getAllByTestId } = render(<QuotesList quotes={fakeQuotes} />);
-    const quotesBody = getAllByTestId('quotation-body').map(
-      quotationBody => quotationBody.textContent
+    const quotesContent = getAllByTestId('quotation-content').map(
+      quotationContent => quotationContent.textContent
     );
-    const fakeQuotesBody = fakeQuotes.map(fakeQuotation => fakeQuotation.body);
-    expect(quotesBody).toEqual(fakeQuotesBody);
+    const fakeQuotesContent = fakeQuotes.map(fakeQuotation => fakeQuotation.content);
+    expect(quotesContent).toEqual(fakeQuotesContent);
   });
 });

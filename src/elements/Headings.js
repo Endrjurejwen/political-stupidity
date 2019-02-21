@@ -6,6 +6,7 @@ const headings = css`
   text-transform: uppercase;
   color: ${textDark};
   font-family: sans-serif;
+  text-align: ${props => (props.center ? 'center' : 'left')};
 `;
 
 export const H1 = styled.h1`

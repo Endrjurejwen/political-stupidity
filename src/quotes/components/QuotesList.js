@@ -5,7 +5,7 @@ import Quotation from 'quotes/components/Quotation';
 
 // pokazuj coś innego jak nie ma w ogóle cytatów
 const quotesList = ({ quotes, navigationClick }) => (
-  <div>
+  <div data-testid="quotes-list">
     {quotes &&
       quotes.map(quotation => (
         <Quotation

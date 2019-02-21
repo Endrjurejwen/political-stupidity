@@ -40,7 +40,7 @@ describe('<Toolbar />', () => {
       <Toolbar toggleMenu={clickMock} />
     );
 
-    fireEvent.click(getByTestId('menu-button'));
+    // fireEvent.click(getByTestId('menu-button'));
     fireEvent.click(getByTestId('backdrop'));
     expect(queryByTestId('backdrop')).not.toBeInTheDocument();
     expect(getByTestId('sideDrawer')).toHaveStyle(

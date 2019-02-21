@@ -1,4 +1,4 @@
-import { CREATE_QUOTATION } from './actions';
+import { CREATE_QUOTATION, CREATE_QUOTATION_ERROR } from './actions';
 
 const initialState = {
   quotes: [
@@ -52,10 +52,13 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-  const { type, quotation } = action;
+  const { type, quotation, error } = action;
   switch (type) {
     case CREATE_QUOTATION:
       console.log('Created Quotation', quotation);
+      return state;
+    case CREATE_QUOTATION_ERROR:
+      console.log('create quotation error', error);
       return state;
     default:
       return state;

@@ -8,7 +8,7 @@ import store from 'store';
 
 export const renderWithRedux = ui => {
   return {
-    ...render(<Provider store={store()}>{ui}</Provider>)
+    ...render(<Provider store={store}>{ui}</Provider>)
   };
 };
 
@@ -34,7 +34,7 @@ export const renderWithReduxAndRouter = (
 ) => {
   return {
     ...render(
-      <Provider store={store()}>
+      <Provider store={store}>
         <Router history={history}>{ui}</Router>
       </Provider>
     ),

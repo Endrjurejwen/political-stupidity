@@ -5,7 +5,7 @@ import Comment from '../Comment';
 const likeClickMock = jest.fn();
 
 const fakeComment = {
-  body: 'Hahahahaha, nie no, ten to wymyślił',
+  content: 'Hahahahaha, nie no, ten to wymyślił',
   likes: 19,
   user: 'Halina Konopna',
   id: 'dsgdfgdff44gdfg',
@@ -18,9 +18,9 @@ describe('<Comment />', () => {
       <Comment comment={fakeComment} likeClick={likeClickMock} />
     );
 
-    const { body, user, likes, timestamp } = fakeComment;
+    const { content, user, likes, timestamp } = fakeComment;
 
-    expect(getByTestId('comment-body')).toHaveTextContent(body);
+    expect(getByTestId('comment-content')).toHaveTextContent(content);
     expect(getByTestId('comment-user')).toHaveTextContent(user);
     expect(getByTestId('button-likes')).toHaveTextContent(likes);
     expect(getByTestId('comment-timestamp')).toHaveTextContent(timestamp);

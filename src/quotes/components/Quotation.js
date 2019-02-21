@@ -7,7 +7,7 @@ import { spacing, flexCenter } from 'utils';
 
 const quotation = ({ quotation, navigationClick, likeClick }) => (
   <Card>
-    <p data-testid="quotation-body">{quotation.body}</p>
+    <p data-testid="quotation-content">{quotation.content}</p>
     <Author data-testid="quotation-author">{quotation.author}</Author>
     <FlexContainer>
       <Button
@@ -17,10 +17,10 @@ const quotation = ({ quotation, navigationClick, likeClick }) => (
       >
         Komentarze ({quotation.comments.length})
       </Button>
-      <LikeButton likes={quotation.likes} click={likeClick} />
+      <LikeButton likes={quotation.likes.length} click={likeClick} />
     </FlexContainer>
     <UserName data-testid="quotation-user">
-      Opublikował {quotation.user}
+      Opublikował {quotation.userFirstName} {quotation.userLastName}
     </UserName>
     <Data data-testid="quotation-timestamp">{quotation.timestamp}</Data>
   </Card>

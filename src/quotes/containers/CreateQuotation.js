@@ -9,7 +9,7 @@ import { H2, Button } from 'elements';
 
 class CreateQuotation extends Component {
   state = {
-    quotation: '',
+    content: '',
     author: ''
   };
 
@@ -34,7 +34,7 @@ class CreateQuotation extends Component {
           placeholder="Tutaj wpisz cytat"
           rows="5"
           cols="30"
-          id="quotation"
+          id="content"
           required
         />
         <InputBox

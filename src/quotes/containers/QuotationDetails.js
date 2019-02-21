@@ -2,8 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import Quotation from 'quotes/components/Quotation';
 import CommmentsList from 'comments/components/CommentsList';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { Spinner } from 'common';
+
 import { H2 } from 'elements';
-import { elevation, spacing } from 'utils';
+import { spacing } from 'utils';
 
 const FAKE_QUOTES = [
   {
@@ -59,19 +64,37 @@ const FAKE_QUOTES = [
 ];
 
 const quotationDetails = props => {
-  const quotation = FAKE_QUOTES.find(
-    quotation => quotation.id === props.match.params.id
-  );
-  return (
-    <>
-      <Quotation quotation={quotation} />
-      <Title>Komentarze</Title>
-      <CommmentsList comments={quotation.comments} />
-    </>
-  );
+  console.log(props.quotation);
+  if (!props.quotation) {
+    return <Spinner />;
+  }
+
+  if (props.quotation) {
+    return (
+      <>
+        <Quotation quotation={props.quotation} />
+        <Title>Komentarze</Title>
+        <CommmentsList comments={props.quotation.comments} />
+      </>
+    );
+  }
 };
 
-export default quotationDetails;
+const mapStateToProps = (state, ownProps) => {
+  console.log(state);
+  const id = ownProps.match.params.id;
+  const quotes = state.firestore.data.quotes;
+  const quotation = quotes ? quotes[id] : null;
+
+  return {
+    quotation
+  };
+};
+
+export default compose(
+  connect(mapStateToProps),
+  firestoreConnect([{ collection: 'quotes' }])
+)(quotationDetails);
 
 const Title = styled(H2)`
   text-align: center;
