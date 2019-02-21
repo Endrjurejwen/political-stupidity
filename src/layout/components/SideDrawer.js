@@ -6,15 +6,16 @@ import { color, fixed, elevation, spacing, media } from 'utils';
 
 import Navigation from 'layout/components/Navigation';
 
-const sideDrawer = ({ isOpen, closeMenu, navItems }) => (
+const sideDrawer = ({ isOpen, closeMenu, navItems, logout, display }) => (
   <Container data-testid="sideDrawer" isOpen={isOpen}>
-    <Navigation navItems={navItems} closeMenu={closeMenu} />
+    <Navigation display={display} navItems={navItems} closeMenu={closeMenu} logout={logout} />
   </Container>
 );
 
 sideDrawer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeMenu: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
   navItems: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 

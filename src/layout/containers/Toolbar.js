@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { toggleMenu } from 'layout/actions';
+import { logout } from 'auth/actions';
 import { Backdrop } from 'common';
 import { Button } from 'elements';
 import ToolbarWrapper from 'layout/components/ToolbarWrapper';
@@ -14,38 +15,62 @@ import Navigation from 'layout/components/Navigation';
 const SIGN_IN_NAVIGATION_ITEMS = [
   { name: 'Strona Główna', path: '/home' },
   { name: 'Idea', path: '/about' },
+  { name: 'Regulamin', path: '/terms' }
+  // { name: 'Wyloguj się', path: '/logout' }
+];
+
+const SIGN_OUT_NAVIGATION_ITEMS = [
+  { name: 'Strona Główna', path: '/home' },
+  { name: 'Idea', path: '/about' },
   { name: 'Regulamin', path: '/terms' },
-  { name: 'Wyloguj się', path: '/logout' }
+  { name: 'Załóż konto', path: '/signup' }
 ];
 
 class Toolbar extends Component {
   static propTypes = {
     isMenuOpen: PropTypes.bool,
     toggleMenu: PropTypes.func.isRequired,
-    history: PropTypes.shape().isRequired
+    logout: PropTypes.func.isRequired,
+    history: PropTypes.shape().isRequired,
+    auth: PropTypes.shape().isRequired
   };
 
   static defaultProps = {
     isMenuOpen: false
   };
 
-  historyPushHandler = () => {
-    const { history } = this.props;
-    history.push('/create');
+  navigationHandler = () => {
+    const { history, auth } = this.props;
+    const path = auth.uid ? '/create' : '/login';
+    history.push(path);
   };
 
   render() {
-    const { isMenuOpen, toggleMenu } = this.props;
+    const { isMenuOpen, toggleMenu, logout, auth } = this.props;
+    const links = auth.uid
+      ? SIGN_IN_NAVIGATION_ITEMS
+      : SIGN_OUT_NAVIGATION_ITEMS;
+    const actionBtnText = auth.uid ? 'Dodaj cytat' : 'Zaloguj się';
     return (
       <ToolbarWrapper>
         <MenuButton isOpen={isMenuOpen} toggleMenu={toggleMenu} />
         <h2>Logo</h2>
-        <Button onClick={this.historyPushHandler}>Dodaj Cytat</Button>
-        <Navigation desktop navItems={SIGN_IN_NAVIGATION_ITEMS} />
+        <Button onClick={this.navigationHandler}>{actionBtnText}</Button>
+        <Navigation
+          display={auth.uid}
+          desktop
+          navItems={links}
+          logout={logout}
+        />
         <SideDrawer
-          navItems={SIGN_IN_NAVIGATION_ITEMS}
+          display={auth.uid}
+          navItems={links}
           closeMenu={toggleMenu}
           isOpen={isMenuOpen}
+          logout={() => {
+            logout();
+            toggleMenu();
+          }}
         />
         {isMenuOpen && <Backdrop close={toggleMenu} />}
       </ToolbarWrapper>
@@ -54,13 +79,15 @@ class Toolbar extends Component {
 }
 
 const mapStateToProps = state => ({
-  isMenuOpen: state.menu.isMenuOpen
+  isMenuOpen: state.menu.isMenuOpen,
+  auth: state.firebase.auth
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      toggleMenu
+      toggleMenu,
+      logout
     },
     dispatch
   );

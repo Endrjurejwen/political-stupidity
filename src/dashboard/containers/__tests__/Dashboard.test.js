@@ -68,9 +68,7 @@ const FAKE_QUOTES = [
 
 describe('<Dashboard />', () => {
   test('should render correctly', async () => {
-    const { getByText, getByTestId, queryByTestId } = renderWithRedux(
-      <Dashboard quotes={FAKE_QUOTES} />
-    );
+    const { getByText } = renderWithRedux(<Dashboard quotes={FAKE_QUOTES} />);
     expect(getByText(/polityczny poprawczak/i)).toBeInTheDocument();
   });
 });

@@ -63,27 +63,25 @@ const FAKE_QUOTES = [
   }
 ];
 
-const quotationDetails = props => {
-  console.log(props.quotation);
-  if (!props.quotation) {
+const quotationDetails = ({ quotation }) => {
+  if (!quotation) {
     return <Spinner />;
   }
 
-  if (props.quotation) {
+  if (quotation) {
     return (
       <>
-        <Quotation quotation={props.quotation} />
+        <Quotation quotation={quotation} />
         <Title>Komentarze</Title>
-        <CommmentsList comments={props.quotation.comments} />
+        <CommmentsList comments={quotation.comments} />
       </>
     );
   }
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
-  const id = ownProps.match.params.id;
-  const quotes = state.firestore.data.quotes;
+  const { id } = ownProps.match.params;
+  const { quotes } = state.firestore.data;
   const quotation = quotes ? quotes[id] : null;
 
   return {

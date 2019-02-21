@@ -8,7 +8,8 @@ import {
   flexCenter,
   elevation,
   spacing,
-  navigationHeight
+  navigationHeight,
+  media
 } from 'utils';
 
 const toolbarWrapper = ({ children }) => (
@@ -32,5 +33,9 @@ const Wrapper = styled.div`
   background-color: ${color.primary};
   width: 100vw;
   height: ${navigationHeight};
-  padding: 0 ${spacing[3]};
+  padding: 0 ${spacing[1]};
+
+  ${media.tablet`
+  padding: 0 ${spacing[5]};
+  `}
 `;

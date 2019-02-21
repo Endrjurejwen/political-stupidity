@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { login } from 'auth/actions';
 import { InputBox } from 'common';
 import { Button, H2 } from 'elements';
 import { spacing, flexCenter } from 'utils';
@@ -18,7 +21,7 @@ class Login extends Component {
 
   submitHandler = event => {
     event.preventDefault();
-    console.log(this.state);
+    this.props.login(this.state);
   };
 
   render() {
@@ -45,7 +48,18 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      login
+    },
+    dispatch
+  );
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Login);
 
 const Title = styled(H2)`
   text-align: center;
