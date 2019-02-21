@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { InputBox } from 'common';
 import { Button, H2 } from 'elements';
 import { spacing, flexCenter } from 'utils';
+import { signUp } from 'auth/actions';
 
 class SignUp extends Component {
   state = {
@@ -20,10 +23,17 @@ class SignUp extends Component {
 
   submitHandler = event => {
     event.preventDefault();
-    console.log(this.state);
+    this.props.signUp(this.state);
+    this.setState({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: ''
+    });
   };
 
   render() {
+    const { firstName, lastName, email, password } = this.state;
     return (
       <Form onSubmit={this.submitHandler}>
         <Title>Rejestracja</Title>
@@ -31,7 +41,8 @@ class SignUp extends Component {
           change={this.changeHandler}
           type="text"
           placeholder="Twoje imię"
-          id="firsName"
+          id="firstName"
+          value={firstName}
           required
         />
         <InputBox
@@ -39,6 +50,7 @@ class SignUp extends Component {
           type="text"
           placeholder="Twoje Nazwisko"
           id="lastName"
+          value={lastName}
           required
         />
         <InputBox
@@ -46,6 +58,7 @@ class SignUp extends Component {
           type="email"
           placeholder="Twój email"
           id="email"
+          value={email}
           required
         />
         <InputBox
@@ -53,15 +66,33 @@ class SignUp extends Component {
           type="password"
           placeholder="Twoje hasło"
           id="password"
+          value={password}
+          minlength="6"
           required
         />
         <Button type="submit">Załóż konto</Button>
+        <p>{this.props.authError || null}</p>
       </Form>
     );
   }
 }
 
-export default SignUp;
+const mapStateToProps = state => ({
+  authError: state.auth.authError
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      signUp
+    },
+    dispatch
+  );
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUp);
 
 const Title = styled(H2)`
   text-align: center;

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createQuotation } from 'dashboard/actions';
+import { withRouter } from 'react-router-dom';
+import { createQuotation } from 'quotes/actions';
 import { spacing, flexCenter } from 'utils';
 import { InputBox, TextareaBox } from 'common';
 import { H2, Button } from 'elements';
@@ -20,12 +21,19 @@ class CreateQuotation extends Component {
   };
 
   submitHandler = event => {
+    const { createQuotation, history } = this.props;
     event.preventDefault();
     // console.log(this.state);
-    this.props.createQuotation(this.state);
+    createQuotation(this.state);
+    this.setState({
+      content: '',
+      author: ''
+    });
+    history.push('/home');
   };
 
   render() {
+    const { content, author } = this.state;
     return (
       <Form onSubmit={this.submitHandler}>
         <Title>Stwórz cytat</Title>
@@ -35,12 +43,14 @@ class CreateQuotation extends Component {
           rows="5"
           cols="30"
           id="content"
+          value={content}
           required
         />
         <InputBox
           onChange={this.changeHandler}
           placeholder="Autor cytatu"
           id="author"
+          value={author}
           required
         />
         <Button type="submit">Opublikuj</Button>
@@ -57,10 +67,12 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(CreateQuotation);
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(CreateQuotation)
+);
 
 const Title = styled(H2)`
   text-align: center;

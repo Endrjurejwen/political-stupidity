@@ -4,13 +4,15 @@ export const CREATE_QUOTATION_ERROR = 'CREATE_QUOTATION_ERROR';
 export const createQuotation = quotation => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
+    const { profile } = getState().firebase;
+    const authorId = getState().firebase.auth.uid;
     firestore
       .collection('quotes')
       .add({
         ...quotation,
-        userFirstName: 'Andrzej',
-        userLastName: 'Kruk',
-        authorId: 123345,
+        userFirstName: profile.firstName,
+        userLastName: profile.lastName,
+        authorId,
         createAt: new Date(),
         likes: [],
         comments: [

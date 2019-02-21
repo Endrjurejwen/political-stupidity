@@ -3,7 +3,7 @@ import { firestoreReducer } from 'redux-firestore';
 import { firebaseReducer } from 'react-redux-firebase';
 
 import menu from 'layout/reducer';
-import quotes from 'dashboard/reducer';
+import quotes from 'quotes/reducer';
 import auth from 'auth/reducer';
 
 const rootReducer = combineReducers({

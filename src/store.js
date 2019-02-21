@@ -14,7 +14,11 @@ const store = createStore(
   composeWithDevTools(
     applyMiddleware(...middleware),
     reduxFirestore(fbConfig),
-    reactReduxFirebase(fbConfig)
+    reactReduxFirebase(fbConfig, {
+      useFirestoreForProfile: true,
+      userProfile: 'user',
+      attachAuthIsReady: true
+    })
   )
 );
 

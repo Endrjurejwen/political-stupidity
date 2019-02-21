@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { LikeButton } from 'common';
 import { Button, Card } from 'elements';
 import { spacing, flexCenter } from 'utils';
@@ -22,7 +23,9 @@ const quotation = ({ quotation, navigationClick, likeClick }) => (
     <UserName data-testid="quotation-user">
       Opublikował {quotation.userFirstName} {quotation.userLastName}
     </UserName>
-    <Data data-testid="quotation-timestamp">{quotation.timestamp}</Data>
+    <Data data-testid="quotation-timestamp">
+      {moment(quotation.createAt.toDate()).calendar()}
+    </Data>
   </Card>
 );
 

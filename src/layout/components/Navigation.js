@@ -7,13 +7,6 @@ import { media, flexCenter, spacing, color } from 'utils';
 
 import NavigationItem from 'layout/components/NavigationItem';
 
-// const SIGN_IN_NAVIGATION_ITEMS = [
-//   { name: 'Strona Główna', path: '/home' },
-//   { name: 'Idea', path: '/about' },
-//   { name: 'Regulamin', path: '/terms' },
-//   { name: 'Wyloguj się', path: '/logout' }
-// ];
-
 const navigation = ({ desktop, closeMenu, navItems, logout, display }) => (
   <Wrapper desktop={desktop}>
     <NavigationList display={display}>
@@ -34,7 +27,7 @@ const navigation = ({ desktop, closeMenu, navItems, logout, display }) => (
 
 navigation.propTypes = {
   desktop: PropTypes.bool,
-  display: PropTypes.bool,
+  display: PropTypes.number,
   closeMenu: PropTypes.func,
   logout: PropTypes.func,
   navItems: PropTypes.arrayOf(PropTypes.object).isRequired
@@ -44,7 +37,7 @@ navigation.defaultProps = {
   desktop: false,
   closeMenu: () => null,
   logout: () => null,
-  display: false
+  display: 0
 };
 
 export default navigation;

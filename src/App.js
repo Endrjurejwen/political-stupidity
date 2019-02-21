@@ -18,7 +18,7 @@ import Terms from 'terms/components/terms';
 import Login from 'auth/containers/Login';
 import SignUp from 'auth/containers/SignUp';
 import store from 'store';
-import { ScrollToTop } from 'common';
+import { ScrollToTop, PrivateRoute, PublicRoute } from 'common';
 // import rootReducer from './rootReducer';
 
 // const store = createStore(
@@ -38,11 +38,18 @@ class App extends Component {
                 <Route exact path="/home" component={Dashboard} />
                 <Route exact path="/about" component={About} />
                 <Route exact path="/terms" component={Terms} />
-                <Route exact path="/create" component={CreateQuotation} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={SignUp} />
-                <Route exact path="/quotes/:id" component={QuotationDetails} />
+                <PublicRoute exact path="/login" component={Login} />
+                <PublicRoute exact path="/signup" component={SignUp} />
+                <PrivateRoute
+                  exact
+                  path="/create"
+                  component={CreateQuotation}
+                />
+                <PrivateRoute
+                  exact
+                  path="/quotes/:id"
+                  component={QuotationDetails}
+                />
                 <Redirect exact from="/" to="/home" />
               </Switch>
               <Global />

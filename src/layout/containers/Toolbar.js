@@ -46,24 +46,27 @@ class Toolbar extends Component {
   };
 
   render() {
-    const { isMenuOpen, toggleMenu, logout, auth } = this.props;
+    const { isMenuOpen, toggleMenu, logout, auth, profile } = this.props;
     const links = auth.uid
       ? SIGN_IN_NAVIGATION_ITEMS
       : SIGN_OUT_NAVIGATION_ITEMS;
     const actionBtnText = auth.uid ? 'Dodaj cytat' : 'Zaloguj się';
+    const helloText = auth.uid ? profile.firstName : null;
     return (
       <ToolbarWrapper>
         <MenuButton isOpen={isMenuOpen} toggleMenu={toggleMenu} />
-        <h2>Logo</h2>
+        <p>
+          <strong>{helloText}</strong>
+        </p>
         <Button onClick={this.navigationHandler}>{actionBtnText}</Button>
         <Navigation
-          display={auth.uid}
+          display={auth.uid ? 1 : 0}
           desktop
           navItems={links}
           logout={logout}
         />
         <SideDrawer
-          display={auth.uid}
+          display={auth.uid ? 1 : 0}
           navItems={links}
           closeMenu={toggleMenu}
           isOpen={isMenuOpen}
@@ -80,7 +83,8 @@ class Toolbar extends Component {
 
 const mapStateToProps = state => ({
   isMenuOpen: state.menu.isMenuOpen,
-  auth: state.firebase.auth
+  auth: state.firebase.auth,
+  profile: state.firebase.profile
 });
 
 const mapDispatchToProps = dispatch =>

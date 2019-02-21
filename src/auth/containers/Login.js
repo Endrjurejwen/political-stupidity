@@ -22,9 +22,14 @@ class Login extends Component {
   submitHandler = event => {
     event.preventDefault();
     this.props.login(this.state);
+    this.setState({
+      email: '',
+      password: ''
+    });
   };
 
   render() {
+    const { email, password } = this.state;
     return (
       <Form onSubmit={this.submitHandler}>
         <Title>Logowanie</Title>
@@ -33,6 +38,7 @@ class Login extends Component {
           type="email"
           placeholder="Twój email"
           id="email"
+          value={email}
           required
         />
         <InputBox
@@ -40,13 +46,19 @@ class Login extends Component {
           type="password"
           placeholder="Twoje hasło"
           id="password"
+          value={password}
           required
         />
         <Button type="submit">Zaloguj się</Button>
+        <p>{this.props.authError || null}</p>
       </Form>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  authError: state.auth.authError
+});
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
@@ -57,7 +69,7 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Login);
 
