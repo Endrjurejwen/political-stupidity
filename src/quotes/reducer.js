@@ -1,4 +1,13 @@
-import { CREATE_QUOTATION, CREATE_QUOTATION_ERROR } from './actions';
+import {
+  CREATE_QUOTATION,
+  CREATE_QUOTATION_ERROR,
+  ADD_TO_FAVORITE,
+  ADD_TO_FAVORITE_ERROR,
+  CHECK_IF_FAVORITE,
+  CHECK_IF_FAVORITE_ERROR,
+  REMOVE_FROM_FAVORITE,
+  REMOVE_FROM_FAVORITE_ERROR
+} from './actions';
 
 const initialState = {
   quotes: [
@@ -59,6 +68,24 @@ export default function(state = initialState, action) {
       return state;
     case CREATE_QUOTATION_ERROR:
       console.log('create quotation error', error);
+      return state;
+    case ADD_TO_FAVORITE:
+      console.log('Add to Favorite');
+      return state;
+    case ADD_TO_FAVORITE_ERROR:
+      console.log('Add to Favorite error', error);
+      return state;
+    case CHECK_IF_FAVORITE:
+      console.log('Check if is in Favorite');
+      return state;
+    case CHECK_IF_FAVORITE_ERROR:
+      console.log('Check if is in Favorite error', error);
+      return state;
+    case REMOVE_FROM_FAVORITE:
+      console.log('Remove from favorites');
+      return state;
+    case REMOVE_FROM_FAVORITE_ERROR:
+      console.log('Remove from favorites error', error);
       return state;
     default:
       return state;

@@ -6,7 +6,7 @@ import { LikeButton } from 'common';
 import { Button, Card } from 'elements';
 import { spacing, flexCenter } from 'utils';
 
-const quotation = ({ quotation, navigationClick, likeClick }) => (
+const quotation = ({ quotation, navigationClick, likeClick, full }) => (
   <Card>
     <p data-testid="quotation-content">{quotation.content}</p>
     <Author data-testid="quotation-author">{quotation.author}</Author>
@@ -18,7 +18,11 @@ const quotation = ({ quotation, navigationClick, likeClick }) => (
       >
         Komentarze ({quotation.comments.length})
       </Button>
-      <LikeButton likes={quotation.likes.length} click={likeClick} />
+      <LikeButton
+        likes={quotation.likes.length}
+        click={likeClick}
+        full={full}
+      />
     </FlexContainer>
     <UserName data-testid="quotation-user">
       Opublikował {quotation.userFirstName} {quotation.userLastName}

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Icon } from 'elements';
 import { spacing, color, flexCenter } from 'utils';
 
-const likeButton = ({ likes, click }) => (
-  <IconButton data-testid="button-likes" onClick={click}>
+const likeButton = ({ likes, click, full }) => (
+  <IconButton data-testid="button-likes" full={full} onClick={click}>
     <Icon name="fullLove" color={color.action} />{' '}
     <span>
       <strong>{likes}</strong>
@@ -38,6 +38,10 @@ const IconButton = styled.button`
 
   svg {
     margin: 0 ${spacing[0]} 0 0;
+
+    g path {
+      fill: ${({ full }) => (full ? color.action : 'transparent')};
+    }
   }
 
   &:hover svg g path {

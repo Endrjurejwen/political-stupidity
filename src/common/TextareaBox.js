@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { Textarea, Label } from 'elements';
-import { color, spacing } from 'utils';
+import { spacing } from 'utils';
 
 const textareaBox = ({ type, placeholder, id, ...rest }) => (
   <Wrapper>
