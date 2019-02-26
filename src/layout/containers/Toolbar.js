@@ -45,6 +45,12 @@ class Toolbar extends Component {
     history.push(path);
   };
 
+  logoutHandler = () => {
+    const { toggleMenu, logout } = this.props;
+    logout();
+    toggleMenu();
+  }
+
   render() {
     const { isMenuOpen, toggleMenu, logout, auth, profile } = this.props;
     const links = auth.uid
@@ -70,10 +76,7 @@ class Toolbar extends Component {
           navItems={links}
           closeMenu={toggleMenu}
           isOpen={isMenuOpen}
-          logout={() => {
-            logout();
-            toggleMenu();
-          }}
+          logout={this.logoutHandler}
         />
         {isMenuOpen && <Backdrop close={toggleMenu} />}
       </ToolbarWrapper>

@@ -16,8 +16,13 @@ import {
 } from 'quotes/actions';
 
 class Dashboard extends Component {
-  componentDidUpdate = () => {
+  componentDidMount = () => {
     this.props.checkIfFavorite();
+    console.log('mount');
+  };
+
+  componentWillUnMount = () => {
+    this.props.firestore.unsetListener('quotes');
   };
 
   navigationToQuotationDetailsHandler = id => {
@@ -25,24 +30,29 @@ class Dashboard extends Component {
   };
 
   toFavoriteHandler = id => {
+    // const { firebase } = this.context.store;
     const {
+      firestore,
       auth,
       history,
       quotes,
       addToFavorite,
-      removeFromFavorite,
-      checkIfFavorite
+      removeFromFavorite
     } = this.props;
     const quotation = quotes.find(quotation => quotation.id === id);
     if (!auth.uid) {
       history.push('/login');
     }
-    if (auth.uid && !quotation.likes.includes(auth.uid)) {
+    if (auth.uid && !(auth.uid in quotation.likes)) {
       addToFavorite(id);
+      firestore.setListener('quotes');
     }
-    if (auth.uid && quotation.likes.includes(auth.uid)) {
+    if (auth.uid && auth.uid in quotation.likes) {
       removeFromFavorite(id);
+      firestore.setListener('quotes');
     }
+    // removeFromFavorite(id);
+    // firestore.setListener('quotes');
   };
 
   render() {

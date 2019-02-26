@@ -6,6 +6,8 @@ export const CHECK_IF_FAVORITE = 'CHECK_IF_FAVORITE';
 export const CHECK_IF_FAVORITE_ERROR = 'CHECK_IF_FAVORITE_ERROR';
 export const REMOVE_FROM_FAVORITE = 'REMOVE_FROM_FAVORITE';
 export const REMOVE_FROM_FAVORITE_ERROR = 'REMOVE_FROM_FAVORITE';
+export const COUNT_ALL_LIKES = 'COUNT_ALL_LIKES';
+export const COUNT_ALL_LIKES_ERROR = 'COUNT_ALL_LIKES_ERROR';
 
 export const createQuotation = quotation => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -20,7 +22,7 @@ export const createQuotation = quotation => {
         userLastName: profile.lastName,
         authorId,
         createAt: new Date(),
-        likes: [],
+        likes: {},
         comments: [
           {
             content: 'Jego to ewolucja nie rusza',
@@ -53,7 +55,10 @@ export const addToFavorite = id => {
     firestore
       .collection('quotes')
       .doc(id)
-      .update({ likes: firebase.firestore.FieldValue.arrayUnion(authorId) })
+      .update({
+        [`likes.${authorId}`]: true,
+        isFavorite: true
+      })
       .then(() => {
         dispatch({ type: 'ADD_TO_FAVORITE' });
       })
@@ -71,12 +76,49 @@ export const removeFromFavorite = id => {
     firestore
       .collection('quotes')
       .doc(id)
-      .update({ likes: firebase.firestore.FieldValue.arrayRemove(authorId) })
+      .update({
+        [`likes.${authorId}`]: firebase.firestore.FieldValue.delete(),
+        isFavorite: false
+      })
       .then(() => {
         dispatch({ type: 'REMOVE_FROM_FAVORITE' });
       })
       .catch(error => {
         dispatch({ type: 'REMOVE_FROM_ERROR', error });
+      });
+  };
+};
+
+export const checkIfFavorite = () => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firebase = getFirebase();
+    const firestore = getFirestore();
+    const authorId = getState().firebase.auth.uid;
+    const { quotes } = getState().firestore.ordered;
+
+    firestore
+      .collection('quotes')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const likes = [...Object.keys(doc.data().likes)];
+          let isFavorite;
+          if (likes.includes(authorId)) {
+            isFavorite = true;
+          } else {
+            isFavorite = false;
+          }
+          return firestore
+            .collection('quotes')
+            .doc(doc.id)
+            .update({ isFavorite });
+        });
+      })
+      .then(() => {
+        dispatch({ type: 'CHECK_IF_FAVORITE' });
+      })
+      .catch(error => {
+        dispatch({ type: 'CHECK_IF_FAVORITE_ERROR', error });
       });
   };
 };
@@ -110,36 +152,90 @@ export const removeFromFavorite = id => {
 //   };
 // };
 
-export const checkIfFavorite = () => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firebase = getFirebase();
-    const firestore = getFirestore();
-    const authorId = getState().firebase.auth.uid;
-    const { quotes } = getState().firestore.ordered;
+// export const addToFavorite = id => {
+//   return (dispatch, getState, { getFirebase, getFirestore }) => {
+//     const firebase = getFirebase();
+//     const firestore = getFirestore();
+//     const authorId = getState().firebase.auth.uid;
+//     firestore
+//       .collection('quotes')
+//       .doc(id)
+//       .update({
+//         [`likes.${authorId}`]: true,
+//         isFavorite: true
+//       })
+//       .then(() => {
+//         const { likes } = getState().firestore.ordered.quotes.find(
+//           doc => doc.id === id
+//         );
+//         const likesNumber = Object.keys(likes).length;
+//         firestore
+//           .collection('quotes')
+//           .doc(id)
+//           .update({ likesNumber });
+//       })
+//       .then(() => {
+//         dispatch({ type: 'ADD_TO_FAVORITE' });
+//       })
+//       .catch(error => {
+//         dispatch({ type: 'ADD_TO_FAVORITE_ERROR', error });
+//       });
+//   };
+// };
 
-    firestore
-      .collection('quotes')
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          const likes = [...doc.data().likes];
-          let isFavorite;
-          if (likes.includes(authorId)) {
-            isFavorite = true;
-          } else {
-            isFavorite = false;
-          }
-          return firestore
-            .collection('quotes')
-            .doc(doc.id)
-            .update({ isFavorite });
-        });
-      })
-      .then(() => {
-        dispatch({ type: 'CHECK_IF_FAVORITE' });
-      })
-      .catch(error => {
-        dispatch({ type: 'CHECK_IF_FAVORITE_ERROR', error });
-      });
-  };
-};
+// export const removeFromFavorite = id => {
+//   return (dispatch, getState, { getFirebase, getFirestore }) => {
+//     const firebase = getFirebase();
+//     const firestore = getFirestore();
+//     const authorId = getState().firebase.auth.uid;
+//     firestore
+//       .collection('quotes')
+//       .doc(id)
+//       .update({
+//         [`likes.${authorId}`]: firebase.firestore.FieldValue.delete(),
+//         isFavorite: false
+//       })
+//       .then(() => {
+//         const { likes } = getState().firestore.ordered.quotes.find(
+//           doc => doc.id === id
+//         );
+//         const likesNumber = Object.keys(likes).length;
+//         firestore
+//           .collection('quotes')
+//           .doc(id)
+//           .update({ likesNumber });
+//       })
+//       .then(() => {
+//         dispatch({ type: 'REMOVE_FROM_FAVORITE' });
+//       })
+//       .catch(error => {
+//         dispatch({ type: 'REMOVE_FROM_ERROR', error });
+//       });
+//   };
+// };
+
+// export const countLikes = id => {
+//   return (dispatch, getState, { getFirebase, getFirestore }) => {
+//     const firebase = getFirebase();
+//     const firestore = getFirestore();
+//     const authorId = getState().firebase.auth.uid;
+//     const { likes } = getState().firestore.ordered.quotes.find(
+//       doc => doc.id === id
+//     );
+//     console.log(likes);
+//     const likesNumber = Object.keys(likes).length;
+//     console.log(likesNumber);
+//     firestore
+//       .collection('quotes')
+//       .doc(id)
+//       .update({
+//         likesNumber
+//       })
+//       .then(() => {
+//         dispatch({ type: 'COUNT_ALL_LIKES' });
+//       })
+//       .catch(error => {
+//         dispatch({ type: 'COUNT_ALL_LIKES_ERROR', error });
+//       });
+//   };
+// };

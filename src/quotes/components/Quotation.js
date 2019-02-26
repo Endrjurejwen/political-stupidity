@@ -6,32 +6,35 @@ import { LikeButton } from 'common';
 import { Button, Card } from 'elements';
 import { spacing, flexCenter } from 'utils';
 
-const quotation = ({ quotation, navigationClick, likeClick, full }) => (
-  <Card>
-    <p data-testid="quotation-content">{quotation.content}</p>
-    <Author data-testid="quotation-author">{quotation.author}</Author>
-    <FlexContainer>
-      <Button
-        data-testid="quotation-comments-button"
-        secondary
-        onClick={navigationClick}
-      >
-        Komentarze ({quotation.comments.length})
-      </Button>
-      <LikeButton
-        likes={quotation.likes.length}
-        click={likeClick}
-        full={full}
-      />
-    </FlexContainer>
-    <UserName data-testid="quotation-user">
-      Opublikował {quotation.userFirstName} {quotation.userLastName}
-    </UserName>
-    <Data data-testid="quotation-timestamp">
-      {moment(quotation.createAt.toDate()).calendar()}
-    </Data>
-  </Card>
-);
+const quotation = ({ quotation, navigationClick, likeClick, full }) => {
+  console.log(Object.keys(quotation.likes).length);
+  return (
+    <Card>
+      <p data-testid="quotation-content">{quotation.content}</p>
+      <Author data-testid="quotation-author">{quotation.author}</Author>
+      <FlexContainer>
+        <Button
+          data-testid="quotation-comments-button"
+          secondary
+          onClick={navigationClick}
+        >
+          Komentarze ({quotation.comments.length})
+        </Button>
+        <LikeButton
+          likes={Object.keys(quotation.likes).length}
+          click={likeClick}
+          full={full}
+        />
+      </FlexContainer>
+      <UserName data-testid="quotation-user">
+        Opublikował {quotation.userFirstName} {quotation.userLastName}
+      </UserName>
+      <Data data-testid="quotation-timestamp">
+        {moment(quotation.createAt.toDate()).calendar()}
+      </Data>
+    </Card>
+  );
+};
 
 quotation.propTypes = {
   quotation: PropTypes.shape().isRequired
