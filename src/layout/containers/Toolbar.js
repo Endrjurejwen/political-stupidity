@@ -16,7 +16,6 @@ const SIGN_IN_NAVIGATION_ITEMS = [
   { name: 'Strona Główna', path: '/home' },
   { name: 'Idea', path: '/about' },
   { name: 'Regulamin', path: '/terms' }
-  // { name: 'Wyloguj się', path: '/logout' }
 ];
 
 const SIGN_OUT_NAVIGATION_ITEMS = [
@@ -49,7 +48,7 @@ class Toolbar extends Component {
     const { toggleMenu, logout } = this.props;
     logout();
     toggleMenu();
-  }
+  };
 
   render() {
     const { isMenuOpen, toggleMenu, logout, auth, profile } = this.props;
@@ -58,6 +57,7 @@ class Toolbar extends Component {
       : SIGN_OUT_NAVIGATION_ITEMS;
     const actionBtnText = auth.uid ? 'Dodaj cytat' : 'Zaloguj się';
     const helloText = auth.uid ? profile.firstName : null;
+
     return (
       <ToolbarWrapper>
         <MenuButton isOpen={isMenuOpen} toggleMenu={toggleMenu} />

@@ -49,7 +49,6 @@ export const createQuotation = quotation => {
 
 export const addToFavorite = id => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firebase = getFirebase();
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
     firestore
@@ -91,10 +90,8 @@ export const removeFromFavorite = id => {
 
 export const checkIfFavorite = () => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firebase = getFirebase();
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
-    const { quotes } = getState().firestore.ordered;
 
     firestore
       .collection('quotes')

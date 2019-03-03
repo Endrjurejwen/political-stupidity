@@ -1,6 +1,4 @@
-/* eslint react/prefer-stateless-function: 0 */
-
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -15,10 +13,15 @@ import {
   checkIfFavorite
 } from 'quotes/actions';
 
-class Dashboard extends Component {
+class Dashboard extends PureComponent {
   componentDidMount = () => {
     this.props.checkIfFavorite();
-    console.log('mount');
+  };
+
+  componentDidUpdate = prevProps => {
+    if (this.props.auth.uid !== prevProps.auth.uid) {
+      this.props.checkIfFavorite();
+    }
   };
 
   componentWillUnMount = () => {
@@ -30,7 +33,6 @@ class Dashboard extends Component {
   };
 
   toFavoriteHandler = id => {
-    // const { firebase } = this.context.store;
     const {
       firestore,
       auth,
@@ -51,12 +53,10 @@ class Dashboard extends Component {
       removeFromFavorite(id);
       firestore.setListener('quotes');
     }
-    // removeFromFavorite(id);
-    // firestore.setListener('quotes');
   };
 
   render() {
-    const { quotes, auth } = this.props;
+    const { quotes } = this.props;
 
     let quotesBox;
     if (!quotes) {

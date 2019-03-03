@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { InputBox } from 'common';
+import { InputBox, Spinner } from 'common';
 import { Button, H2 } from 'elements';
 import { spacing, flexCenter } from 'utils';
 import { signUp } from 'auth/actions';
@@ -34,6 +34,7 @@ class SignUp extends Component {
 
   render() {
     const { firstName, lastName, email, password } = this.state;
+    const { authError, isLoading } = this.props;
     return (
       <Form onSubmit={this.submitHandler}>
         <Title>Rejestracja</Title>
@@ -71,14 +72,16 @@ class SignUp extends Component {
           required
         />
         <Button type="submit">Załóż konto</Button>
-        <p>{this.props.authError || null}</p>
+        {isLoading && <Spinner />}
+        <p>{authError || null}</p>
       </Form>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  authError: state.auth.authError
+  authError: state.auth.authError,
+  isLoading: state.auth.isLoading
 });
 
 const mapDispatchToProps = dispatch =>

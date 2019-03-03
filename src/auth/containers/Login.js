@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from 'auth/actions';
-import { InputBox } from 'common';
+import { InputBox, Spinner } from 'common';
 import { Button, H2 } from 'elements';
 import { spacing, flexCenter } from 'utils';
 
@@ -24,12 +24,14 @@ class Login extends Component {
     this.props.login(this.state);
     this.setState({
       email: '',
-      password: ''
+      password: '',
+      loading: false
     });
   };
 
   render() {
     const { email, password } = this.state;
+    const { authError, isLoading } = this.props;
     return (
       <Form onSubmit={this.submitHandler}>
         <Title>Logowanie</Title>
@@ -50,14 +52,16 @@ class Login extends Component {
           required
         />
         <Button type="submit">Zaloguj się</Button>
-        <p>{this.props.authError || null}</p>
+        {isLoading && <Spinner />}
+        <p>{authError || null}</p>
       </Form>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  authError: state.auth.authError
+  authError: state.auth.authError,
+  isLoading: state.auth.isLoading
 });
 
 const mapDispatchToProps = dispatch =>
