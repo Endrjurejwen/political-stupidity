@@ -8,7 +8,12 @@ import Navigation from 'layout/components/Navigation';
 
 const sideDrawer = ({ isOpen, closeMenu, navItems, logout, display }) => (
   <Container data-testid="sideDrawer" isOpen={isOpen}>
-    <Navigation display={display} navItems={navItems} closeMenu={closeMenu} logout={logout} />
+    <Navigation
+      display={display}
+      navItems={navItems}
+      closeMenu={closeMenu}
+      logout={logout}
+    />
   </Container>
 );
 
@@ -33,6 +38,7 @@ const Container = styled.div`
   text-align: center;
 
   transition: all 0.2s cubic-bezier(0.63, 0.21, 0.66, 1);
+  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
   transform: ${({ isOpen }) =>
     isOpen ? 'translateY(0)' : 'translateY(-50vh)'};
 

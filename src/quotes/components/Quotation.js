@@ -2,11 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { LikeButton } from 'common';
+import { LikeButton, CloseButton } from 'common';
 import { Button, Card } from 'elements';
 import { spacing, flexCenter } from 'utils';
 
-const quotation = ({ quotation, navigationClick, likeClick, full }) => (
+const quotation = ({
+  quotation,
+  navigationClick,
+  likeClick,
+  deleteClick,
+  full,
+  userId
+}) => (
   <Card>
     <p data-testid="quotation-content">{quotation.content}</p>
     <Author data-testid="quotation-author">{quotation.author}</Author>
@@ -21,7 +28,7 @@ const quotation = ({ quotation, navigationClick, likeClick, full }) => (
       <LikeButton
         likes={Object.keys(quotation.likes).length}
         click={likeClick}
-        full={full}
+        full={userId in quotation.likes}
       />
     </FlexContainer>
     <UserName data-testid="quotation-user">
@@ -30,6 +37,10 @@ const quotation = ({ quotation, navigationClick, likeClick, full }) => (
     <Data data-testid="quotation-timestamp">
       {moment(quotation.createAt.toDate()).calendar()}
     </Data>
+    <CloseButton
+      click={deleteClick}
+      isDisplay={quotation.authorId === userId}
+    />
   </Card>
 );
 

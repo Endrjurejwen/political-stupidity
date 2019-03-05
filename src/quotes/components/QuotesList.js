@@ -4,7 +4,14 @@ import PropTypes from 'prop-types';
 import Quotation from 'quotes/components/Quotation';
 
 // pokazuj coś innego jak nie ma w ogóle cytatów
-const quotesList = ({ quotes, navigationClick, likeClick, full }) => (
+const quotesList = ({
+  quotes,
+  navigationClick,
+  likeClick,
+  deleteClick,
+  full,
+  userId
+}) => (
   <div data-testid="quotes-list">
     {quotes &&
       quotes.map(quotation => (
@@ -13,7 +20,9 @@ const quotesList = ({ quotes, navigationClick, likeClick, full }) => (
           quotation={quotation}
           key={quotation.id}
           likeClick={() => likeClick(quotation.id)}
+          deleteClick={() => deleteClick(quotation.id)}
           full={quotation.isFavorite}
+          userId={userId}
         />
       ))}
   </div>

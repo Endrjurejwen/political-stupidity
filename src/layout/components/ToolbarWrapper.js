@@ -34,7 +34,7 @@ const Wrapper = styled.div`
   width: 100vw;
   height: ${navigationHeight};
   padding: 0 ${spacing[1]};
-
+  z-index: 100;
   ${media.tablet`
   padding: 0 ${spacing[5]};
   `}

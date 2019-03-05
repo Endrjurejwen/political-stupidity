@@ -1,11 +1,13 @@
 export const CREATE_QUOTATION = 'CREATE_QUOTATION';
 export const CREATE_QUOTATION_ERROR = 'CREATE_QUOTATION_ERROR';
-export const ADD_TO_FAVORITE = 'ADD_TO_FAVORITE';
-export const ADD_TO_FAVORITE_ERROR = 'ADD_TO_FAVORITE_ERROR';
+export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
+export const ADD_TO_FAVORITES_ERROR = 'ADD_TO_FAVORITES_ERROR';
 export const CHECK_IF_FAVORITE = 'CHECK_IF_FAVORITE';
 export const CHECK_IF_FAVORITE_ERROR = 'CHECK_IF_FAVORITE_ERROR';
-export const REMOVE_FROM_FAVORITE = 'REMOVE_FROM_FAVORITE';
-export const REMOVE_FROM_FAVORITE_ERROR = 'REMOVE_FROM_FAVORITE';
+export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES';
+export const REMOVE_FROM_FAVORITES_ERROR = 'REMOVE_FROM_FAVORITES_ERROR';
+export const DELETE_FROM_COLLECTION = 'DELETE_FROM_COLLECTION';
+export const DELETE_FROM_COLLECTION_ERROR = 'DELETE_FROM_COLLECTION_ERROR';
 export const COUNT_ALL_LIKES = 'COUNT_ALL_LIKES';
 export const COUNT_ALL_LIKES_ERROR = 'COUNT_ALL_LIKES_ERROR';
 
@@ -47,7 +49,7 @@ export const createQuotation = quotation => {
   };
 };
 
-export const addToFavorite = id => {
+export const addToFavorites = id => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
@@ -55,19 +57,20 @@ export const addToFavorite = id => {
       .collection('quotes')
       .doc(id)
       .update({
-        [`likes.${authorId}`]: true,
-        isFavorite: true
+        [`likes.${authorId}`]: true
+        // isFavorite: true
       })
       .then(() => {
-        dispatch({ type: 'ADD_TO_FAVORITE' });
+        dispatch({ type: 'ADD_TO_FAVORITES' });
+        // firestore.unsetListener('quotes');
       })
       .catch(error => {
-        dispatch({ type: 'ADD_TO_FAVORITE_ERROR', error });
+        dispatch({ type: 'ADD_TO_FAVORITES_ERROR', error });
       });
   };
 };
 
-export const removeFromFavorite = id => {
+export const removeFromFavorites = id => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
@@ -76,14 +79,31 @@ export const removeFromFavorite = id => {
       .collection('quotes')
       .doc(id)
       .update({
-        [`likes.${authorId}`]: firebase.firestore.FieldValue.delete(),
-        isFavorite: false
+        [`likes.${authorId}`]: firebase.firestore.FieldValue.delete()
+        // isFavorite: false
       })
       .then(() => {
-        dispatch({ type: 'REMOVE_FROM_FAVORITE' });
+        dispatch({ type: 'REMOVE_FROM_FAVORITES' });
+        // firestore.unsetListener('quotes');
       })
       .catch(error => {
-        dispatch({ type: 'REMOVE_FROM_ERROR', error });
+        dispatch({ type: 'REMOVE_FROM_FAVORITES_ERROR', error });
+      });
+  };
+};
+
+export const deleteQuotation = id => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firestore = getFirestore();
+    firestore
+      .collection('quotes')
+      .doc(id)
+      .delete()
+      .then(() => {
+        dispatch({ type: 'DELETE_FROM_COLLECTION' });
+      })
+      .catch(error => {
+        dispatch({ type: 'DELETE_FROM_COLLECTION_ERROR', error });
       });
   };
 };

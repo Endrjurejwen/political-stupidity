@@ -1,12 +1,14 @@
 import {
   CREATE_QUOTATION,
   CREATE_QUOTATION_ERROR,
-  ADD_TO_FAVORITE,
-  ADD_TO_FAVORITE_ERROR,
+  ADD_TO_FAVORITES,
+  ADD_TO_FAVORITES_ERROR,
   CHECK_IF_FAVORITE,
   CHECK_IF_FAVORITE_ERROR,
-  REMOVE_FROM_FAVORITE,
-  REMOVE_FROM_FAVORITE_ERROR,
+  REMOVE_FROM_FAVORITES,
+  REMOVE_FROM_FAVORITES_ERROR,
+  DELETE_FROM_COLLECTION,
+  DELETE_FROM_COLLECTION_ERROR,
   COUNT_ALL_LIKES,
   COUNT_ALL_LIKES_ERROR
 } from './actions';
@@ -24,10 +26,10 @@ export default function(state = initialState, action) {
     case CREATE_QUOTATION_ERROR:
       console.log('create quotation error', error);
       return state;
-    case ADD_TO_FAVORITE:
+    case ADD_TO_FAVORITES:
       console.log('Add to Favorite');
       return state;
-    case ADD_TO_FAVORITE_ERROR:
+    case ADD_TO_FAVORITES_ERROR:
       console.log('Add to Favorite error', error);
       return state;
     case CHECK_IF_FAVORITE:
@@ -36,11 +38,17 @@ export default function(state = initialState, action) {
     case CHECK_IF_FAVORITE_ERROR:
       console.log('Check if is in Favorite error', error);
       return state;
-    case REMOVE_FROM_FAVORITE:
+    case REMOVE_FROM_FAVORITES:
       console.log('Remove from favorites');
       return state;
-    case REMOVE_FROM_FAVORITE_ERROR:
+    case REMOVE_FROM_FAVORITES_ERROR:
       console.log('Remove from favorites error', error);
+      return state;
+    case DELETE_FROM_COLLECTION:
+      console.log('dellete document from collection');
+      return state;
+    case DELETE_FROM_COLLECTION_ERROR:
+      console.log('dellete document from collection error', error);
       return state;
     case COUNT_ALL_LIKES:
       console.log('Count All Likes');
