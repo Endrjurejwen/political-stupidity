@@ -3,15 +3,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Comment from 'comments/components/Comment';
 
-const quotesList = ({ comments }) => (
-  <div>
+const commentsList = ({ comments, deleteClick, likeClick, userId }) => (
+  <>
     {comments.map(comment => (
-      <Comment comment={comment} key={comment.id} />
+      <Comment
+        comment={comment}
+        key={comment.id}
+        deleteClick={() => deleteClick(comment.id)}
+        likeClick={() => likeClick(comment.id)}
+        userId={userId}
+      />
     ))}
-  </div>
+  </>
 );
 
-quotesList.propTypes = {
+commentsList.propTypes = {
   comments: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
@@ -19,4 +25,4 @@ quotesList.propTypes = {
 
 // };
 
-export default quotesList;
+export default commentsList;

@@ -2,14 +2,15 @@ export const CREATE_QUOTATION = 'CREATE_QUOTATION';
 export const CREATE_QUOTATION_ERROR = 'CREATE_QUOTATION_ERROR';
 export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
 export const ADD_TO_FAVORITES_ERROR = 'ADD_TO_FAVORITES_ERROR';
-export const CHECK_IF_FAVORITE = 'CHECK_IF_FAVORITE';
-export const CHECK_IF_FAVORITE_ERROR = 'CHECK_IF_FAVORITE_ERROR';
 export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES';
 export const REMOVE_FROM_FAVORITES_ERROR = 'REMOVE_FROM_FAVORITES_ERROR';
 export const DELETE_FROM_COLLECTION = 'DELETE_FROM_COLLECTION';
 export const DELETE_FROM_COLLECTION_ERROR = 'DELETE_FROM_COLLECTION_ERROR';
-export const COUNT_ALL_LIKES = 'COUNT_ALL_LIKES';
-export const COUNT_ALL_LIKES_ERROR = 'COUNT_ALL_LIKES_ERROR';
+
+// export const CHECK_IF_FAVORITE = 'CHECK_IF_FAVORITE';
+// export const CHECK_IF_FAVORITE_ERROR = 'CHECK_IF_FAVORITE_ERROR';
+// export const COUNT_ALL_LIKES = 'COUNT_ALL_LIKES';
+// export const COUNT_ALL_LIKES_ERROR = 'COUNT_ALL_LIKES_ERROR';
 
 export const createQuotation = quotation => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -45,6 +46,22 @@ export const createQuotation = quotation => {
       })
       .catch(error => {
         dispatch({ type: 'CREATE_QUOTATION_ERROR', error });
+      });
+  };
+};
+
+export const deleteQuotation = id => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firestore = getFirestore();
+    firestore
+      .collection('quotes')
+      .doc(id)
+      .delete()
+      .then(() => {
+        dispatch({ type: 'DELETE_FROM_COLLECTION' });
+      })
+      .catch(error => {
+        dispatch({ type: 'DELETE_FROM_COLLECTION_ERROR', error });
       });
   };
 };
@@ -92,53 +109,37 @@ export const removeFromFavorites = id => {
   };
 };
 
-export const deleteQuotation = id => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firestore = getFirestore();
-    firestore
-      .collection('quotes')
-      .doc(id)
-      .delete()
-      .then(() => {
-        dispatch({ type: 'DELETE_FROM_COLLECTION' });
-      })
-      .catch(error => {
-        dispatch({ type: 'DELETE_FROM_COLLECTION_ERROR', error });
-      });
-  };
-};
+// export const checkIfFavorite = () => {
+//   return (dispatch, getState, { getFirebase, getFirestore }) => {
+//     const firestore = getFirestore();
+//     const authorId = getState().firebase.auth.uid;
 
-export const checkIfFavorite = () => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firestore = getFirestore();
-    const authorId = getState().firebase.auth.uid;
-
-    firestore
-      .collection('quotes')
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          const likes = [...Object.keys(doc.data().likes)];
-          let isFavorite;
-          if (likes.includes(authorId)) {
-            isFavorite = true;
-          } else {
-            isFavorite = false;
-          }
-          return firestore
-            .collection('quotes')
-            .doc(doc.id)
-            .update({ isFavorite });
-        });
-      })
-      .then(() => {
-        dispatch({ type: 'CHECK_IF_FAVORITE' });
-      })
-      .catch(error => {
-        dispatch({ type: 'CHECK_IF_FAVORITE_ERROR', error });
-      });
-  };
-};
+//     firestore
+//       .collection('quotes')
+//       .get()
+//       .then(querySnapshot => {
+//         querySnapshot.forEach(doc => {
+//           const likes = [...Object.keys(doc.data().likes)];
+//           let isFavorite;
+//           if (likes.includes(authorId)) {
+//             isFavorite = true;
+//           } else {
+//             isFavorite = false;
+//           }
+//           return firestore
+//             .collection('quotes')
+//             .doc(doc.id)
+//             .update({ isFavorite });
+//         });
+//       })
+//       .then(() => {
+//         dispatch({ type: 'CHECK_IF_FAVORITE' });
+//       })
+//       .catch(error => {
+//         dispatch({ type: 'CHECK_IF_FAVORITE_ERROR', error });
+//       });
+//   };
+// };
 
 // export const checkIfFavorite = () => {
 //   return (dispatch, getState, { getFirebase, getFirestore }) => {

@@ -1,19 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
-import { LikeButton } from 'common';
+import moment from 'moment';
+import { LikeButton, CloseButton } from 'common';
 import { Card } from 'elements';
 import { spacing, flexCenter } from 'utils';
 
-const comment = ({ comment, likeClick }) => (
+const comment = ({ comment, likeClick, deleteClick, userId }) => (
   <Card secondary>
     <Text data-testid="comment-content">{comment.content}</Text>
     <FlexContainer>
       <div>
-        <UserName data-testid="comment-user">{comment.user}</UserName>
-        <Data data-testid="comment-timestamp">{comment.timestamp}</Data>
+        <UserName data-testid="comment-user">{comment.userFirstName}</UserName>
+        <Data data-testid="comment-timestamp">
+          {moment(comment.createAt.toDate()).calendar()}
+        </Data>
       </div>
-      <LikeButton likes={comment.likes} click={likeClick} />
+      <LikeButton
+        likes={Object.keys(comment.likes).length}
+        click={likeClick}
+        full={userId in comment.likes}
+      />
     </FlexContainer>
+    <CloseButton click={deleteClick} isDisplay={comment.authorId === userId} />
   </Card>
 );
 

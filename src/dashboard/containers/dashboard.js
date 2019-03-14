@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
+import { actionTypes } from 'redux-firestore';
+import { firestoreConnect, withFirebase } from 'react-redux-firebase';
 import Header from 'dashboard/components/Header';
 import Panel from 'dashboard/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
@@ -10,13 +11,14 @@ import { H5 } from 'elements';
 import {
   addToFavorites,
   removeFromFavorites,
-  checkIfFavorite,
   deleteQuotation
 } from 'quotes/actions';
 
 class Dashboard extends PureComponent {
   // componentDidMount = () => {
-  //   this.props.checkIfFavorite();
+  //   this.props.firestore.setListener({
+  //     collection: 'quotes'
+  //   });
   // };
 
   // componentDidUpdate = prevProps => {
@@ -25,9 +27,14 @@ class Dashboard extends PureComponent {
   //   }
   // };
 
-  // componentWillUnMount = () => {
-  //   this.props.firestore.unsetListener('quotes');
-  // };
+  // workaround dla problemu z dodawaniem cytatów po ponownym wejściu
+  componentDidMount = () => {
+    this.props.firestore.setListener('quotes');
+  };
+
+  componentWillUnmount = () => {
+    this.props.firestore.unsetListener('quotes');
+  };
 
   // shouldComponentUpdate = (nextProps) => {
   //   return nextProps.quotes !== this.props.quotes;
@@ -43,7 +50,6 @@ class Dashboard extends PureComponent {
 
   toFavoritesHandler = id => {
     const {
-      firestore,
       auth,
       history,
       quotes,
@@ -56,11 +62,9 @@ class Dashboard extends PureComponent {
     }
     if (!(auth.uid in quotation.likes)) {
       addToFavorites(id);
-      // firestore.setListener('quotes');
     }
     if (auth.uid in quotation.likes) {
       removeFromFavorites(id);
-      // firestore.setListener('quotes');
     }
   };
 
@@ -112,7 +116,6 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       addToFavorites,
-      checkIfFavorite,
       removeFromFavorites,
       deleteQuotation
     },
@@ -120,13 +123,14 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default compose(
+  withFirebase,
   connect(
     mapStateToProps,
     mapDispatchToProps
   ),
   firestoreConnect([
-    {
-      collection: 'quotes'
-    }
+    // {
+    //   collection: 'quotes'
+    // }
   ])
 )(Dashboard);

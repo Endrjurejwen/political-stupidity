@@ -3,14 +3,14 @@ import {
   CREATE_QUOTATION_ERROR,
   ADD_TO_FAVORITES,
   ADD_TO_FAVORITES_ERROR,
-  CHECK_IF_FAVORITE,
-  CHECK_IF_FAVORITE_ERROR,
   REMOVE_FROM_FAVORITES,
   REMOVE_FROM_FAVORITES_ERROR,
   DELETE_FROM_COLLECTION,
-  DELETE_FROM_COLLECTION_ERROR,
-  COUNT_ALL_LIKES,
-  COUNT_ALL_LIKES_ERROR
+  DELETE_FROM_COLLECTION_ERROR
+  // CHECK_IF_FAVORITE,
+  // CHECK_IF_FAVORITE_ERROR,
+  // COUNT_ALL_LIKES,
+  // COUNT_ALL_LIKES_ERROR
 } from './actions';
 
 const initialState = {
@@ -32,12 +32,6 @@ export default function(state = initialState, action) {
     case ADD_TO_FAVORITES_ERROR:
       console.log('Add to Favorite error', error);
       return state;
-    case CHECK_IF_FAVORITE:
-      console.log('Check if is in Favorite');
-      return state;
-    case CHECK_IF_FAVORITE_ERROR:
-      console.log('Check if is in Favorite error', error);
-      return state;
     case REMOVE_FROM_FAVORITES:
       console.log('Remove from favorites');
       return state;
@@ -50,12 +44,18 @@ export default function(state = initialState, action) {
     case DELETE_FROM_COLLECTION_ERROR:
       console.log('dellete document from collection error', error);
       return state;
-    case COUNT_ALL_LIKES:
-      console.log('Count All Likes');
-      return state;
-    case COUNT_ALL_LIKES_ERROR:
-      console.log('Count All Likes error', error);
-      return state;
+    // case CHECK_IF_FAVORITE:
+    //   console.log('Check if is in Favorite');
+    //   return state;
+    // case CHECK_IF_FAVORITE_ERROR:
+    //   console.log('Check if is in Favorite error', error);
+    //   return state;
+    // case COUNT_ALL_LIKES:
+    //   console.log('Count All Likes');
+    //   return state;
+    // case COUNT_ALL_LIKES_ERROR:
+    //   console.log('Count All Likes error', error);
+    //   return state;
     default:
       return state;
   }
