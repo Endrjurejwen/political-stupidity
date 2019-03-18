@@ -1,20 +1,18 @@
 import {
   CREATE_QUOTATION,
   CREATE_QUOTATION_ERROR,
-  ADD_TO_FAVORITES,
-  ADD_TO_FAVORITES_ERROR,
-  REMOVE_FROM_FAVORITES,
-  REMOVE_FROM_FAVORITES_ERROR,
-  DELETE_FROM_COLLECTION,
-  DELETE_FROM_COLLECTION_ERROR
-  // CHECK_IF_FAVORITE,
-  // CHECK_IF_FAVORITE_ERROR,
-  // COUNT_ALL_LIKES,
-  // COUNT_ALL_LIKES_ERROR
+  DELETE_QUOTATION,
+  DELETE_QUOTATION_ERROR,
+  LIKE_QUOTATION,
+  LIKE_QUOTATION_ERROR,
+  DISLIKE_QUOTATION,
+  DISLIKE_QUOTATION_ERROR,
+  TOGGLE_SORT_ORDER
 } from './actions';
 
 const initialState = {
-  error: null
+  error: null,
+  order: 'desc'
 };
 
 export default function(state = initialState, action) {
@@ -26,36 +24,29 @@ export default function(state = initialState, action) {
     case CREATE_QUOTATION_ERROR:
       console.log('create quotation error', error);
       return state;
-    case ADD_TO_FAVORITES:
-      console.log('Add to Favorite');
-      return state;
-    case ADD_TO_FAVORITES_ERROR:
-      console.log('Add to Favorite error', error);
-      return state;
-    case REMOVE_FROM_FAVORITES:
-      console.log('Remove from favorites');
-      return state;
-    case REMOVE_FROM_FAVORITES_ERROR:
-      console.log('Remove from favorites error', error);
-      return state;
-    case DELETE_FROM_COLLECTION:
+    case DELETE_QUOTATION:
       console.log('dellete document from collection');
       return state;
-    case DELETE_FROM_COLLECTION_ERROR:
+    case DELETE_QUOTATION_ERROR:
       console.log('dellete document from collection error', error);
       return state;
-    // case CHECK_IF_FAVORITE:
-    //   console.log('Check if is in Favorite');
-    //   return state;
-    // case CHECK_IF_FAVORITE_ERROR:
-    //   console.log('Check if is in Favorite error', error);
-    //   return state;
-    // case COUNT_ALL_LIKES:
-    //   console.log('Count All Likes');
-    //   return state;
-    // case COUNT_ALL_LIKES_ERROR:
-    //   console.log('Count All Likes error', error);
-    //   return state;
+    case LIKE_QUOTATION:
+      console.log('Add to Favorite');
+      return state;
+    case LIKE_QUOTATION_ERROR:
+      console.log('Add to Favorite error', error);
+      return state;
+    case DISLIKE_QUOTATION:
+      console.log('Remove from favorites');
+      return state;
+    case DISLIKE_QUOTATION_ERROR:
+      console.log('Remove from favorites error', error);
+      return state;
+    case TOGGLE_SORT_ORDER:
+      return {
+        ...state,
+        order: state.order === 'asc' ? 'desc' : 'asc'
+      };
     default:
       return state;
   }

@@ -28,6 +28,6 @@ const Wrapper = styled.div`
   padding: ${spacing[4]};
   margin: ${navigationHeight} auto 0;
   background-color: #eee;
-  min-height: calc(100vh - ${navigationHeight});
+  min-height: calc(150vh - ${navigationHeight}); // z mniejszą wysokoścją pojawiają się przeskoki przy reload
   max-width: ${bodyMaxWidth};
 `;

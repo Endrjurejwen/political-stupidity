@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import { Button } from 'elements';
 import { flexCenter, spacing, media, color } from 'utils';
 
-const panel = ({ click }) => (
+const panel = ({ click, onTimeSortingClick, sortOrder }) => (
   <Wrapper>
-    <Button className="btn--margin-bottom" onClick={click}>
-      Najnowsze
+    <Button className="btn--margin-bottom" onClick={onTimeSortingClick}>
+      {sortOrder === 'asc' ? 'Najnowsze' : 'Najstarsze'}
     </Button>
     <Button className="btn--margin-bottom" onClick={click}>
       Najwięcej komentarzy

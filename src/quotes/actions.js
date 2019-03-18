@@ -1,16 +1,14 @@
+import { actionTypes } from 'redux-firestore';
+
 export const CREATE_QUOTATION = 'CREATE_QUOTATION';
 export const CREATE_QUOTATION_ERROR = 'CREATE_QUOTATION_ERROR';
-export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
-export const ADD_TO_FAVORITES_ERROR = 'ADD_TO_FAVORITES_ERROR';
-export const REMOVE_FROM_FAVORITES = 'REMOVE_FROM_FAVORITES';
-export const REMOVE_FROM_FAVORITES_ERROR = 'REMOVE_FROM_FAVORITES_ERROR';
-export const DELETE_FROM_COLLECTION = 'DELETE_FROM_COLLECTION';
-export const DELETE_FROM_COLLECTION_ERROR = 'DELETE_FROM_COLLECTION_ERROR';
-
-// export const CHECK_IF_FAVORITE = 'CHECK_IF_FAVORITE';
-// export const CHECK_IF_FAVORITE_ERROR = 'CHECK_IF_FAVORITE_ERROR';
-// export const COUNT_ALL_LIKES = 'COUNT_ALL_LIKES';
-// export const COUNT_ALL_LIKES_ERROR = 'COUNT_ALL_LIKES_ERROR';
+export const DELETE_QUOTATION = 'DELETE_QUOTATION';
+export const DELETE_QUOTATION_ERROR = 'DELETE_QUOTATION_ERROR';
+export const LIKE_QUOTATION = 'LIKE_QUOTATION';
+export const LIKE_QUOTATION_ERROR = 'LIKE_QUOTATION_ERROR';
+export const DISLIKE_QUOTATION = 'DISLIKE_QUOTATION';
+export const DISLIKE_QUOTATION_ERROR = 'DISLIKE_QUOTATION_ERROR';
+export const TOGGLE_SORT_ORDER = 'TOGGLE_SORT_ORDER';
 
 export const createQuotation = quotation => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -25,21 +23,7 @@ export const createQuotation = quotation => {
         userLastName: profile.lastName,
         authorId,
         createAt: new Date(),
-        likes: {},
-        comments: [
-          {
-            content: 'Jego to ewolucja nie rusza',
-            likes: 12,
-            user: 'Jan Nowak',
-            id: 'sgfsg45gsdgdf'
-          },
-          {
-            content: 'Hahahahaha, nie no, ten to wymyślił',
-            likes: 19,
-            user: 'Halina Konopna',
-            id: 'dsgdfgdff44gdfg'
-          }
-        ]
+        likes: {}
       })
       .then(() => {
         dispatch({ type: 'CREATE_QUOTATION', quotation });
@@ -58,15 +42,15 @@ export const deleteQuotation = id => {
       .doc(id)
       .delete()
       .then(() => {
-        dispatch({ type: 'DELETE_FROM_COLLECTION' });
+        dispatch({ type: 'DELETE_QUOTATION' });
       })
       .catch(error => {
-        dispatch({ type: 'DELETE_FROM_COLLECTION_ERROR', error });
+        dispatch({ type: 'DELETE_QUOTATION_ERROR', error });
       });
   };
 };
 
-export const addToFavorites = id => {
+export const likeQuotation = id => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
@@ -75,19 +59,17 @@ export const addToFavorites = id => {
       .doc(id)
       .update({
         [`likes.${authorId}`]: true
-        // isFavorite: true
       })
       .then(() => {
-        dispatch({ type: 'ADD_TO_FAVORITES' });
-        // firestore.unsetListener('quotes');
+        dispatch({ type: 'LIKE_QUOTATION' });
       })
       .catch(error => {
-        dispatch({ type: 'ADD_TO_FAVORITES_ERROR', error });
+        dispatch({ type: 'LIKE_QUOTATION_ERROR', error });
       });
   };
 };
 
-export const removeFromFavorites = id => {
+export const dislikeQuotation = id => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
@@ -97,17 +79,39 @@ export const removeFromFavorites = id => {
       .doc(id)
       .update({
         [`likes.${authorId}`]: firebase.firestore.FieldValue.delete()
-        // isFavorite: false
       })
       .then(() => {
-        dispatch({ type: 'REMOVE_FROM_FAVORITES' });
-        // firestore.unsetListener('quotes');
+        dispatch({ type: 'DISLIKE_QUOTATION' });
       })
       .catch(error => {
-        dispatch({ type: 'REMOVE_FROM_FAVORITES_ERROR', error });
+        dispatch({ type: 'DISLIKE_QUOTATION_ERROR', error });
       });
   };
 };
+
+export const toggleSortOrder = () => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const firestore = getFirestore();
+    dispatch({ type: actionTypes.CLEAR_DATA });
+    dispatch({ type: 'TOGGLE_SORT_ORDER' });
+    const sortOrder = getState().quotes.order;
+    firestore
+      .get({
+        collection: 'quotes',
+        orderBy: ['createAt', sortOrder]
+      })
+      .then(() => {
+        // dispatch({ type: 'TOGGLE_SORT_ORDER' });
+      })
+      .catch(error => {
+        // dispatch({ type: 'DISLIKE_QUOTATION_ERROR', error });
+      });
+  };
+};
+
+// export const toggleSortOrder = () => ({
+//   type: 'TOGGLE_SORT_ORDER'
+// });
 
 // export const checkIfFavorite = () => {
 //   return (dispatch, getState, { getFirebase, getFirestore }) => {

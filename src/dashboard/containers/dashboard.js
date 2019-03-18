@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionTypes } from 'redux-firestore';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
 import Header from 'dashboard/components/Header';
 import Panel from 'dashboard/components/Panel';
@@ -9,62 +8,53 @@ import QuotesList from 'quotes/components/QuotesList';
 import { Spinner } from 'common';
 import { H5 } from 'elements';
 import {
-  addToFavorites,
-  removeFromFavorites,
-  deleteQuotation
+  likeQuotation,
+  dislikeQuotation,
+  deleteQuotation,
+  toggleSortOrder
 } from 'quotes/actions';
 
 class Dashboard extends PureComponent {
-  // componentDidMount = () => {
+  // workaround dla problemu z dodawaniem cytatów po ponownym wejściu
+  componentDidMount = () => {
+    this.props.firestore.setListener({
+      collection: 'quotes',
+      orderBy: ['createAt', this.props.sortOrder]
+    });
+  };
+
+  // componentDidUpdate = () => {
   //   this.props.firestore.setListener({
-  //     collection: 'quotes'
+  //     collection: 'quotes',
+  //     orderBy: ['createAt', this.state.order]
   //   });
   // };
 
-  // componentDidUpdate = prevProps => {
-  //   if (this.props.auth.uid !== prevProps.auth.uid) {
-  //     this.props.checkIfFavorite();
-  //   }
-  // };
-
-  // workaround dla problemu z dodawaniem cytatów po ponownym wejściu
-  componentDidMount = () => {
-    this.props.firestore.setListener('quotes');
-  };
-
   componentWillUnmount = () => {
     this.props.firestore.unsetListener('quotes');
-  };
-
-  // shouldComponentUpdate = (nextProps) => {
-  //   return nextProps.quotes !== this.props.quotes;
-  // }
-
-  componentDidUpdate = () => {
-    console.log('update');
   };
 
   navigationToQuotationDetailsHandler = id => {
     this.props.history.push(`/quotes/${id}`);
   };
 
-  toFavoritesHandler = id => {
+  likeOrDislikeQuotationHandler = id => {
     const {
       auth,
       history,
       quotes,
-      addToFavorites,
-      removeFromFavorites
+      likeQuotation,
+      dislikeQuotation
     } = this.props;
     const quotation = quotes.find(quotation => quotation.id === id);
     if (!auth.uid) {
       history.push('/login');
     }
     if (!(auth.uid in quotation.likes)) {
-      addToFavorites(id);
+      likeQuotation(id);
     }
     if (auth.uid in quotation.likes) {
-      removeFromFavorites(id);
+      dislikeQuotation(id);
     }
   };
 
@@ -72,8 +62,16 @@ class Dashboard extends PureComponent {
     this.props.deleteQuotation(id);
   };
 
+  timeSortingHandler = () => {
+    this.props.toggleSortOrder();
+    // this.props.firestore.get({
+    //   collection: 'quotes',
+    //   orderBy: ['createAt', this.props.sortOrder]
+    // });
+  };
+
   render() {
-    const { quotes, auth } = this.props;
+    const { quotes, auth, sortOrder } = this.props;
 
     let quotesBox;
     if (!quotes) {
@@ -91,7 +89,7 @@ class Dashboard extends PureComponent {
         <QuotesList
           navigationClick={this.navigationToQuotationDetailsHandler}
           quotes={quotes}
-          likeClick={this.toFavoritesHandler}
+          likeClick={this.likeOrDislikeQuotationHandler}
           deleteClick={this.deleteQuotationHandler}
           userId={auth.uid}
         />
@@ -100,7 +98,10 @@ class Dashboard extends PureComponent {
     return (
       <>
         <Header />
-        <Panel />
+        <Panel
+          onTimeSortingClick={this.timeSortingHandler}
+          sortOrder={sortOrder}
+        />
         {quotesBox}
       </>
     );
@@ -109,15 +110,17 @@ class Dashboard extends PureComponent {
 
 const mapStateToProps = state => ({
   quotes: state.firestore.ordered.quotes,
-  auth: state.firebase.auth
+  auth: state.firebase.auth,
+  sortOrder: state.quotes.order
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      addToFavorites,
-      removeFromFavorites,
-      deleteQuotation
+      likeQuotation,
+      dislikeQuotation,
+      deleteQuotation,
+      toggleSortOrder
     },
     dispatch
   );
