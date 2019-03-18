@@ -11,7 +11,7 @@ import {
   likeQuotation,
   dislikeQuotation,
   deleteQuotation,
-  toggleSortOrder
+  sortQuotes
 } from 'quotes/actions';
 
 class Dashboard extends PureComponent {
@@ -50,10 +50,10 @@ class Dashboard extends PureComponent {
     if (!auth.uid) {
       history.push('/login');
     }
-    if (!(auth.uid in quotation.likes)) {
+    if (auth.uid && !(auth.uid in quotation.likes)) {
       likeQuotation(id);
     }
-    if (auth.uid in quotation.likes) {
+    if (auth.uid && auth.uid in quotation.likes) {
       dislikeQuotation(id);
     }
   };
@@ -62,12 +62,8 @@ class Dashboard extends PureComponent {
     this.props.deleteQuotation(id);
   };
 
-  timeSortingHandler = () => {
-    this.props.toggleSortOrder();
-    // this.props.firestore.get({
-    //   collection: 'quotes',
-    //   orderBy: ['createAt', this.props.sortOrder]
-    // });
+  sortingQuotesHandler = () => {
+    this.props.sortQuotes();
   };
 
   render() {
@@ -98,10 +94,7 @@ class Dashboard extends PureComponent {
     return (
       <>
         <Header />
-        <Panel
-          onTimeSortingClick={this.timeSortingHandler}
-          sortOrder={sortOrder}
-        />
+        <Panel onSortClick={this.sortingQuotesHandler} sortOrder={sortOrder} />
         {quotesBox}
       </>
     );
@@ -120,7 +113,7 @@ const mapDispatchToProps = dispatch =>
       likeQuotation,
       dislikeQuotation,
       deleteQuotation,
-      toggleSortOrder
+      sortQuotes
     },
     dispatch
   );

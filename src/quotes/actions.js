@@ -23,7 +23,8 @@ export const createQuotation = quotation => {
         userLastName: profile.lastName,
         authorId,
         createAt: new Date(),
-        likes: {}
+        likes: {},
+        commentCount: 0
       })
       .then(() => {
         dispatch({ type: 'CREATE_QUOTATION', quotation });
@@ -89,7 +90,7 @@ export const dislikeQuotation = id => {
   };
 };
 
-export const toggleSortOrder = () => {
+export const sortQuotes = () => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
     dispatch({ type: actionTypes.CLEAR_DATA });

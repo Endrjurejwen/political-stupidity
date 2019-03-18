@@ -1,29 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Button } from 'elements';
+import { Button, Icon } from 'elements';
 import { flexCenter, spacing, media, color } from 'utils';
 
-const panel = ({ click, onTimeSortingClick, sortOrder }) => (
+const panel = ({ onSortClick, sortOrder }) => (
   <Wrapper>
-    <Button className="btn--margin-bottom" onClick={onTimeSortingClick}>
+    <Button className="btn--margin-bottom" onClick={onSortClick}>
       {sortOrder === 'asc' ? 'Najnowsze' : 'Najstarsze'}
+      {/* <Icon name="arrow" width="1.2rem" height="1rem" color="#fff" /> */}
     </Button>
-    <Button className="btn--margin-bottom" onClick={click}>
+    <Button className="btn--margin-bottom" onClick={onSortClick}>
       Najwięcej komentarzy
     </Button>
-    <Button className="btn--margin-bottom" onClick={click}>
+    <Button className="btn--margin-bottom" onClick={onSortClick}>
       Najwięcej polubień
     </Button>
   </Wrapper>
 );
 
 panel.propTypes = {
-  click: PropTypes.func
+  onSortClick: PropTypes.func
 };
 
 panel.defaultProps = {
-  click: () => null
+  onSortClick: () => null
 };
 
 export default panel;
@@ -48,3 +49,12 @@ const Wrapper = styled.div`
   `}
   }
 `;
+
+// const SortButton = styled(Button)`
+//   display: flex;
+//   align-items: center;
+
+//   svg {
+//     margin-left: .2rem;
+//   }
+// `;
