@@ -10,13 +10,54 @@ import {
   TOGGLE_SORT_ORDER
 } from './actions';
 
+const resetSortOrder = state => {
+  const sortTypesArray = Object.keys(state.sortTypes);
+  return sortTypesArray.reduce((acc, current) => {
+    return {
+      ...acc,
+      [current]: {
+        ...state.sortTypes[current],
+        order: 'asc'
+      }
+    };
+  }, {});
+};
+
+const changeSortOrder = (state, sortBy) => {
+  const resetSortTypes = resetSortOrder(state);
+  return {
+    ...state,
+    sortTypes: {
+      ...state.sortTypes,
+      ...resetSortTypes,
+      [sortBy]: {
+        ...state.sortTypes[sortBy],
+        order: state.sortTypes[sortBy].order === 'asc' ? 'desc' : 'asc'
+      }
+    }
+  };
+};
+
 const initialState = {
   error: null,
-  order: 'desc'
+  sortTypes: {
+    time: {
+      order: 'desc',
+      type: 'createAt'
+    },
+    comments: {
+      order: 'asc',
+      type: 'commentsCount'
+    },
+    likes: {
+      order: 'asc',
+      type: 'likesCount'
+    }
+  }
 };
 
 export default function(state = initialState, action) {
-  const { type, quotation, error } = action;
+  const { type, quotation, sortBy, error } = action;
   switch (type) {
     case CREATE_QUOTATION:
       console.log('Created Quotation', quotation);
@@ -43,14 +84,48 @@ export default function(state = initialState, action) {
       console.log('Remove from favorites error', error);
       return state;
     case TOGGLE_SORT_ORDER:
-      return {
-        ...state,
-        order: state.order === 'asc' ? 'desc' : 'asc'
-      };
+      return changeSortOrder(state, sortBy);
     default:
       return state;
   }
 }
+
+// // refactor? forEach
+// const changeSortOrder = (state, sortBy) => {
+//   console.log(Object.keys(state.sortTypes));
+//   return {
+//     ...state,
+//     sortTypes: {
+//       ...state.sortTypes,
+//       time: {
+//         ...state.sortTypes.time,
+//         order: 'asc'
+//       },
+//       comments: {
+//         ...state.sortTypes.comments,
+//         order: 'asc'
+//       },
+//       likes: {
+//         ...state.sortTypes.likes,
+//         order: 'asc'
+//       },
+//       [sortBy]: {
+//         ...state.sortTypes[sortBy],
+//         order: state.sortTypes[sortBy].order === 'asc' ? 'desc' : 'asc'
+//       }
+//     }
+//   };
+// };
+
+// case TOGGLE_SORT_ORDER:
+// return {
+//   ...state,
+//   sortTypes: {
+//     [sortBy]: {
+//       order: state.sortTypes[sortBy].order === 'asc' ? 'desc' : 'asc'
+//     }
+//   }
+// };
 
 // const initialState = {
 //   quotes: [

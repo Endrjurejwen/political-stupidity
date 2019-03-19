@@ -24,7 +24,8 @@ export const createQuotation = quotation => {
         authorId,
         createAt: new Date(),
         likes: {},
-        commentCount: 0
+        likesCount: 0,
+        commentsCount: 0
       })
       .then(() => {
         dispatch({ type: 'CREATE_QUOTATION', quotation });
@@ -55,11 +56,13 @@ export const likeQuotation = id => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
+    const oldLikesCount = getState().firestore.data.quotes[id].likesCount;
     firestore
       .collection('quotes')
       .doc(id)
       .update({
-        [`likes.${authorId}`]: true
+        [`likes.${authorId}`]: true,
+        likesCount: oldLikesCount + 1
       })
       .then(() => {
         dispatch({ type: 'LIKE_QUOTATION' });
@@ -75,11 +78,13 @@ export const dislikeQuotation = id => {
     const firebase = getFirebase();
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
+    const oldLikesCount = getState().firestore.data.quotes[id].likesCount;
     firestore
       .collection('quotes')
       .doc(id)
       .update({
-        [`likes.${authorId}`]: firebase.firestore.FieldValue.delete()
+        [`likes.${authorId}`]: firebase.firestore.FieldValue.delete(),
+        likesCount: oldLikesCount - 1
       })
       .then(() => {
         dispatch({ type: 'DISLIKE_QUOTATION' });
@@ -90,16 +95,17 @@ export const dislikeQuotation = id => {
   };
 };
 
-export const sortQuotes = () => {
+export const sortQuotes = sortBy => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
     dispatch({ type: actionTypes.CLEAR_DATA });
-    dispatch({ type: 'TOGGLE_SORT_ORDER' });
-    const sortOrder = getState().quotes.order;
+    dispatch({ type: 'TOGGLE_SORT_ORDER', sortBy });
+    const sortOrder = getState().quotes.sortTypes[sortBy].order;
+    const sortType = getState().quotes.sortTypes[sortBy].type;
     firestore
       .get({
         collection: 'quotes',
-        orderBy: ['createAt', sortOrder]
+        orderBy: [sortType, sortOrder]
       })
       .then(() => {
         // dispatch({ type: 'TOGGLE_SORT_ORDER' });

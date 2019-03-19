@@ -23,10 +23,10 @@ const quotation = ({
         secondary
         onClick={navigationClick}
       >
-        Komentarze ({quotation.commentCount})
+        Komentarze ({quotation.commentsCount})
       </Button>
       <LikeButton
-        likes={Object.keys(quotation.likes).length}
+        likes={quotation.likesCount}
         click={likeClick}
         full={userId in quotation.likes}
       />

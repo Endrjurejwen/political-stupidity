@@ -20,8 +20,8 @@ exports.addedComments = functions.firestore
       .doc(quotationId);
 
     return quotationRef.get().then(snap => {
-      const commentCount = snap.data().commentCount + 1;
-      const data = { commentCount };
+      const commentsCount = snap.data().commentsCount + 1;
+      const data = { commentsCount };
       return quotationRef.update(data);
       // .then(doc => console.log('comment agregate'));
     });
@@ -37,8 +37,8 @@ exports.removedComments = functions.firestore
       .doc(quotationId);
 
     return quotationRef.get().then(snap => {
-      const commentCount = snap.data().commentCount - 1;
-      const data = { commentCount };
+      const commentsCount = snap.data().commentsCount - 1;
+      const data = { commentsCount };
       return quotationRef.update(data);
     });
   });

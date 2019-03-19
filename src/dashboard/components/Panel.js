@@ -4,17 +4,36 @@ import styled from 'styled-components';
 import { Button, Icon } from 'elements';
 import { flexCenter, spacing, media, color } from 'utils';
 
-const panel = ({ onSortClick, sortOrder }) => (
+const panel = ({
+  onSortClick,
+  timeSortOrder,
+  commentsSortOrder,
+  likesSortOrder
+}) => (
   <Wrapper>
-    <Button className="btn--margin-bottom" onClick={onSortClick}>
-      {sortOrder === 'asc' ? 'Najnowsze' : 'Najstarsze'}
+    <Button
+      className="btn--margin-bottom"
+      data-sortby="time"
+      onClick={onSortClick}
+    >
+      {timeSortOrder === 'asc' ? 'Najnowsze' : 'Najstarsze'}
       {/* <Icon name="arrow" width="1.2rem" height="1rem" color="#fff" /> */}
     </Button>
-    <Button className="btn--margin-bottom" onClick={onSortClick}>
-      Najwięcej komentarzy
+    <Button
+      className="btn--margin-bottom"
+      data-sortby="comments"
+      onClick={onSortClick}
+    >
+      {commentsSortOrder === 'asc'
+        ? 'Najwięcej komentarzy'
+        : 'Najmnniej komentarzy'}
     </Button>
-    <Button className="btn--margin-bottom" onClick={onSortClick}>
-      Najwięcej polubień
+    <Button
+      className="btn--margin-bottom"
+      data-sortby="likes"
+      onClick={onSortClick}
+    >
+      {likesSortOrder === 'asc' ? 'Najwięcej polubień' : 'Najmnniej polubień'}
     </Button>
   </Wrapper>
 );
@@ -34,7 +53,6 @@ const Wrapper = styled.div`
   ${flexCenter({ justifyContent: 'space-evenly' })};
   flex-direction: column;
   flex-wrap: wrap;
-  /* border-bottom: 1px solid ${color.textDark}; */
   margin-bottom: ${spacing[5]};
 
   ${media.tablet`

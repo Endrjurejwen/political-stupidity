@@ -19,7 +19,7 @@ class Dashboard extends PureComponent {
   componentDidMount = () => {
     this.props.firestore.setListener({
       collection: 'quotes',
-      orderBy: ['createAt', this.props.sortOrder]
+      orderBy: ['createAt', this.props.timeSortOrder]
     });
   };
 
@@ -62,12 +62,19 @@ class Dashboard extends PureComponent {
     this.props.deleteQuotation(id);
   };
 
-  sortingQuotesHandler = () => {
-    this.props.sortQuotes();
+  sortingQuotesHandler = event => {
+    const sortBy = event.target.dataset.sortby;
+    this.props.sortQuotes(sortBy);
   };
 
   render() {
-    const { quotes, auth, sortOrder } = this.props;
+    const {
+      quotes,
+      auth,
+      timeSortOrder,
+      commentsSortOrder,
+      likesSortOrder
+    } = this.props;
 
     let quotesBox;
     if (!quotes) {
@@ -94,7 +101,12 @@ class Dashboard extends PureComponent {
     return (
       <>
         <Header />
-        <Panel onSortClick={this.sortingQuotesHandler} sortOrder={sortOrder} />
+        <Panel
+          onSortClick={this.sortingQuotesHandler}
+          timeSortOrder={timeSortOrder}
+          commentsSortOrder={commentsSortOrder}
+          likesSortOrder={likesSortOrder}
+        />
         {quotesBox}
       </>
     );
@@ -104,7 +116,9 @@ class Dashboard extends PureComponent {
 const mapStateToProps = state => ({
   quotes: state.firestore.ordered.quotes,
   auth: state.firebase.auth,
-  sortOrder: state.quotes.order
+  timeSortOrder: state.quotes.sortTypes.time.order,
+  commentsSortOrder: state.quotes.sortTypes.comments.order,
+  likesSortOrder: state.quotes.sortTypes.likes.order
 });
 
 const mapDispatchToProps = dispatch =>
