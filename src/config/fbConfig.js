@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/functions';
 // import 'firebase/database';
 
 // Initialize Firebase
@@ -19,5 +20,9 @@ firebase.initializeApp(config);
 //   let provider = new firebase.auth.GoogleAuthProvider();
 //   firebase.auth().signInWithRedirect(provider);
 // }
+
+const functions = firebase.functions();
+console.log(firebase);
+console.log(functions);
 
 export default firebase;

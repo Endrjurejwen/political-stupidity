@@ -1,4 +1,5 @@
 import { actionTypes } from 'redux-firestore';
+import firebase from 'config/fbConfig';
 
 export const CREATE_QUOTATION = 'CREATE_QUOTATION';
 export const CREATE_QUOTATION_ERROR = 'CREATE_QUOTATION_ERROR';
@@ -9,6 +10,19 @@ export const LIKE_QUOTATION_ERROR = 'LIKE_QUOTATION_ERROR';
 export const DISLIKE_QUOTATION = 'DISLIKE_QUOTATION';
 export const DISLIKE_QUOTATION_ERROR = 'DISLIKE_QUOTATION_ERROR';
 export const TOGGLE_SORT_ORDER = 'TOGGLE_SORT_ORDER';
+
+function deleteAtPath(path) {
+  const deleteFn = firebase.functions().httpsCallable('recursiveDelete');
+  deleteFn({ path })
+    .then(result => {
+      // logMessage(`Delete success: ${JSON.stringify(result)}`);
+      console.log(result);
+    })
+    .catch(err => {
+      // logMessage('Delete failed, see console,');
+      console.warn(err);
+    });
+}
 
 export const createQuotation = quotation => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
@@ -39,6 +53,7 @@ export const createQuotation = quotation => {
 export const deleteQuotation = id => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
+    deleteAtPath(`quotes/${id}/comments`);
     firestore
       .collection('quotes')
       .doc(id)
@@ -98,7 +113,10 @@ export const dislikeQuotation = id => {
 export const sortQuotes = sortBy => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
-    dispatch({ type: actionTypes.CLEAR_DATA });
+    dispatch({
+      type: actionTypes.CLEAR_DATA,
+      preserve: { data: true, ordered: false }
+    });
     dispatch({ type: 'TOGGLE_SORT_ORDER', sortBy });
     const sortOrder = getState().quotes.sortTypes[sortBy].order;
     const sortType = getState().quotes.sortTypes[sortBy].type;

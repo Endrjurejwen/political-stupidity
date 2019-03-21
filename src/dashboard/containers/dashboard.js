@@ -17,10 +17,12 @@ import {
 class Dashboard extends PureComponent {
   // workaround dla problemu z dodawaniem cytatów po ponownym wejściu
   componentDidMount = () => {
-    this.props.firestore.setListener({
+    const { firestore, timeSortOrder } = this.props;
+    firestore.setListener({
       collection: 'quotes',
-      orderBy: ['createAt', this.props.timeSortOrder]
+      orderBy: ['createAt', timeSortOrder]
     });
+    firestore.setListener({ collection: 'counters' });
   };
 
   // componentDidUpdate = () => {
@@ -73,7 +75,9 @@ class Dashboard extends PureComponent {
       auth,
       timeSortOrder,
       commentsSortOrder,
-      likesSortOrder
+      likesSortOrder,
+      commentsTotal,
+      quotesTotal
     } = this.props;
 
     let quotesBox;
@@ -100,7 +104,7 @@ class Dashboard extends PureComponent {
     }
     return (
       <>
-        <Header />
+        <Header comments={commentsTotal} quotes={quotesTotal} />
         <Panel
           onSortClick={this.sortingQuotesHandler}
           timeSortOrder={timeSortOrder}
@@ -113,13 +117,21 @@ class Dashboard extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  quotes: state.firestore.ordered.quotes,
-  auth: state.firebase.auth,
-  timeSortOrder: state.quotes.sortTypes.time.order,
-  commentsSortOrder: state.quotes.sortTypes.comments.order,
-  likesSortOrder: state.quotes.sortTypes.likes.order
-});
+const mapStateToProps = state => {
+  const { counters } = state.firestore.data;
+  const commentsTotal = counters ? counters.comments.number : 0;
+  const quotesTotal = counters ? counters.quotes.number : 0;
+
+  return {
+    quotes: state.firestore.ordered.quotes,
+    auth: state.firebase.auth,
+    commentsTotal,
+    quotesTotal,
+    timeSortOrder: state.quotes.sortTypes.time.order,
+    commentsSortOrder: state.quotes.sortTypes.comments.order,
+    likesSortOrder: state.quotes.sortTypes.likes.order
+  };
+};
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(

@@ -22,6 +22,7 @@ export const createComment = (quotationID, comment) => {
         userLastName: profile.lastName,
         authorId,
         createAt: new Date(),
+        likesCount: 0,
         likes: {}
       })
       .then(() => {
@@ -55,13 +56,16 @@ export const likeComment = (quotationID, commentID) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
+    const oldLikesCount = getState().firestore.data.comments[commentID]
+      .likesCount;
     firestore
       .collection('quotes')
       .doc(quotationID)
       .collection('comments')
       .doc(commentID)
       .update({
-        [`likes.${authorId}`]: true
+        [`likes.${authorId}`]: true,
+        likesCount: oldLikesCount + 1
       })
       .then(() => {
         dispatch({ type: 'LIKE_COMMENT' });
@@ -77,13 +81,16 @@ export const dislikeComment = (quotationID, commentID) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
+    const oldLikesCount = getState().firestore.data.comments[commentID]
+      .likesCount;
     firestore
       .collection('quotes')
       .doc(quotationID)
       .collection('comments')
       .doc(commentID)
       .update({
-        [`likes.${authorId}`]: firebase.firestore.FieldValue.delete()
+        [`likes.${authorId}`]: firebase.firestore.FieldValue.delete(),
+        likesCount: oldLikesCount - 1
       })
       .then(() => {
         dispatch({ type: 'DISLIKE_COMMENT' });
