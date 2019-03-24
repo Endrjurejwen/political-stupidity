@@ -34,7 +34,6 @@ export default styled(NavLink)`
 
     &:hover {
       color: ${color.action};
-      /* border-bottom: 2px solid ${color.textLight}; */
     }
   `}
 `;

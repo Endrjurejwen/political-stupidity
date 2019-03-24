@@ -1,10 +1,13 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
 import Header from 'dashboard/components/Header';
 import Panel from 'dashboard/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
+import { quotationType, firebaseType } from 'types';
 import { Spinner } from 'common';
 import { H5 } from 'elements';
 import {
@@ -15,22 +18,40 @@ import {
 } from 'quotes/actions';
 
 class Dashboard extends PureComponent {
+  static propTypes = {
+    authId: PropTypes.string,
+    quotes: PropTypes.arrayOf(quotationType),
+    likeQuotation: PropTypes.func.isRequired,
+    dislikeQuotation: PropTypes.func.isRequired,
+    deleteQuotation: PropTypes.func.isRequired,
+    sortQuotes: PropTypes.func.isRequired,
+    commentsTotal: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    quotesTotal: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    sortOrder: PropTypes.shape({
+      time: PropTypes.string.isRequired,
+      comments: PropTypes.string.isRequired,
+      likes: PropTypes.string.isRequired
+    }).isRequired,
+    firestore: firebaseType.isRequired,
+    history: ReactRouterPropTypes.history.isRequired
+  };
+
+  static defaultProps = {
+    authId: null,
+    quotes: null,
+    commentsTotal: 0,
+    quotesTotal: 0
+  };
+
   // workaround dla problemu z dodawaniem cytatów po ponownym wejściu
   componentDidMount = () => {
-    const { firestore, timeSortOrder } = this.props;
+    const { firestore, sortOrder } = this.props;
     firestore.setListener({
       collection: 'quotes',
-      orderBy: ['createAt', timeSortOrder]
+      orderBy: ['createAt', sortOrder.time]
     });
     firestore.setListener({ collection: 'counters' });
   };
-
-  // componentDidUpdate = () => {
-  //   this.props.firestore.setListener({
-  //     collection: 'quotes',
-  //     orderBy: ['createAt', this.state.order]
-  //   });
-  // };
 
   componentWillUnmount = () => {
     this.props.firestore.unsetListener('quotes');
@@ -42,20 +63,20 @@ class Dashboard extends PureComponent {
 
   likeOrDislikeQuotationHandler = id => {
     const {
-      auth,
+      authId,
       history,
       quotes,
       likeQuotation,
       dislikeQuotation
     } = this.props;
     const quotation = quotes.find(quotation => quotation.id === id);
-    if (!auth.uid) {
+    const isLiked = authId in quotation.likes;
+    if (!authId) {
       history.push('/login');
     }
-    if (auth.uid && !(auth.uid in quotation.likes)) {
+    if (authId && !isLiked) {
       likeQuotation(id);
-    }
-    if (auth.uid && auth.uid in quotation.likes) {
+    } else {
       dislikeQuotation(id);
     }
   };
@@ -64,7 +85,7 @@ class Dashboard extends PureComponent {
     this.props.deleteQuotation(id);
   };
 
-  sortingQuotesHandler = event => {
+  sortQuotesHandler = event => {
     const sortBy = event.target.dataset.sortby;
     this.props.sortQuotes(sortBy);
   };
@@ -72,10 +93,8 @@ class Dashboard extends PureComponent {
   render() {
     const {
       quotes,
-      auth,
-      timeSortOrder,
-      commentsSortOrder,
-      likesSortOrder,
+      authId,
+      sortOrder,
       commentsTotal,
       quotesTotal
     } = this.props;
@@ -94,23 +113,18 @@ class Dashboard extends PureComponent {
     if (quotes && quotes.length) {
       quotesBox = (
         <QuotesList
-          navigationClick={this.navigationToQuotationDetailsHandler}
           quotes={quotes}
+          userId={authId}
+          navigationClick={this.navigationToQuotationDetailsHandler}
           likeClick={this.likeOrDislikeQuotationHandler}
           deleteClick={this.deleteQuotationHandler}
-          userId={auth.uid}
         />
       );
     }
     return (
       <>
         <Header comments={commentsTotal} quotes={quotesTotal} />
-        <Panel
-          onSortClick={this.sortingQuotesHandler}
-          timeSortOrder={timeSortOrder}
-          commentsSortOrder={commentsSortOrder}
-          likesSortOrder={likesSortOrder}
-        />
+        <Panel onSortClick={this.sortQuotesHandler} sortOrder={sortOrder} />
         {quotesBox}
       </>
     );
@@ -119,17 +133,19 @@ class Dashboard extends PureComponent {
 
 const mapStateToProps = state => {
   const { counters } = state.firestore.data;
-  const commentsTotal = counters ? counters.comments.number : 0;
-  const quotesTotal = counters ? counters.quotes.number : 0;
+  const commentsTotal = counters ? counters.comments.number : '--';
+  const quotesTotal = counters ? counters.quotes.number : '--';
 
   return {
     quotes: state.firestore.ordered.quotes,
-    auth: state.firebase.auth,
+    authId: state.firebase.auth.uid,
     commentsTotal,
     quotesTotal,
-    timeSortOrder: state.quotes.sortTypes.time.order,
-    commentsSortOrder: state.quotes.sortTypes.comments.order,
-    likesSortOrder: state.quotes.sortTypes.likes.order
+    sortOrder: {
+      time: state.quotes.sortTypes.time.order,
+      comments: state.quotes.sortTypes.comments.order,
+      likes: state.quotes.sortTypes.likes.order
+    }
   };
 };
 

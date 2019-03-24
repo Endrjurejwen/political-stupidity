@@ -7,9 +7,9 @@ import { media, flexCenter, spacing, color } from 'utils';
 
 import NavigationItem from 'layout/components/NavigationItem';
 
-const navigation = ({ desktop, closeMenu, navItems, logout, display }) => (
+const navigation = ({ desktop, closeMenu, navItems, logout, isLogin }) => (
   <Wrapper desktop={desktop}>
-    <NavigationList display={display}>
+    <NavigationList isLogin={isLogin}>
       {navItems.map(navItem => (
         <NavigationItem
           key={navItem.name}
@@ -19,7 +19,14 @@ const navigation = ({ desktop, closeMenu, navItems, logout, display }) => (
         />
       ))}
     </NavigationList>
-    <LogOutButton display={display} onClick={logout} secondary>
+    <LogOutButton
+      secondary
+      isLogin={isLogin}
+      onClick={() => {
+        logout();
+        closeMenu();
+      }}
+    >
       Wyloguj się
     </LogOutButton>
   </Wrapper>
@@ -27,7 +34,7 @@ const navigation = ({ desktop, closeMenu, navItems, logout, display }) => (
 
 navigation.propTypes = {
   desktop: PropTypes.bool,
-  display: PropTypes.number,
+  isLogin: PropTypes.number,
   closeMenu: PropTypes.func,
   logout: PropTypes.func,
   navItems: PropTypes.arrayOf(PropTypes.object).isRequired
@@ -37,7 +44,7 @@ navigation.defaultProps = {
   desktop: false,
   closeMenu: () => null,
   logout: () => null,
-  display: 0
+  isLogin: 0
 };
 
 export default navigation;
@@ -66,9 +73,8 @@ const NavigationList = styled.ul`
   width: 100%;
   height: 100%;
   margin-bottom: ${spacing[4]};
-  /* border-bottom: 1px solid ${color.action}; */
-  border-bottom: ${({ display }) =>
-    display ? `1px solid ${color.action}` : 'none'};
+  border-bottom: ${({ isLogin }) =>
+    isLogin ? `1px solid ${color.action}` : 'none'};
 
   ${media.tablet`
     width: auto;
@@ -81,8 +87,7 @@ const NavigationList = styled.ul`
 `;
 
 const LogOutButton = styled(Button)`
-  /* width: 10rem; */
   align-self: center;
   color: #fff;
-  display: ${({ display }) => (display ? 'block' : 'none')};
+  display: ${({ isLogin }) => (isLogin ? 'block' : 'none')};
 `;

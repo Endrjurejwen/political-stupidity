@@ -1,29 +1,39 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
-import { LikeButton, CloseButton } from 'common';
+import { commentType } from 'types';
 import { Card } from 'elements';
 import { spacing, flexCenter } from 'utils';
 
-const comment = ({ comment, likeClick, deleteClick, userId }) => (
+const comment = ({ comment, closeButton, likeButton }) => (
   <Card secondary>
     <Text data-testid="comment-content">{comment.content}</Text>
     <FlexContainer>
       <div>
-        <UserName data-testid="comment-user">{comment.userFirstName}</UserName>
+        <UserName data-testid="comment-user">
+          {comment.userFirstName} {comment.userLastName}{' '}
+        </UserName>
         <Data data-testid="comment-timestamp">
           {moment(comment.createAt.toDate()).calendar()}
         </Data>
       </div>
-      <LikeButton
-        likes={Object.keys(comment.likes).length}
-        click={likeClick}
-        full={userId in comment.likes}
-      />
+      {likeButton}
     </FlexContainer>
-    <CloseButton click={deleteClick} isDisplay={comment.authorId === userId} />
+    {closeButton}
   </Card>
 );
+
+comment.propTypes = {
+  comment: commentType.isRequired,
+  likeButton: PropTypes.element,
+  closeButton: PropTypes.element
+};
+
+comment.defaultProps = {
+  likeButton: null,
+  closeButton: null
+};
 
 export default comment;
 

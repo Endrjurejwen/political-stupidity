@@ -4,27 +4,18 @@ import PropTypes from 'prop-types';
 
 import { color, fixed, elevation, spacing, media } from 'utils';
 
-import Navigation from 'layout/components/Navigation';
-
-const sideDrawer = ({ isOpen, closeMenu, navItems, logout, display }) => (
-  <Container data-testid="sideDrawer" isOpen={isOpen}>
-    <Navigation
-      display={display}
-      navItems={navItems}
-      closeMenu={closeMenu}
-      logout={logout}
-    />
-  </Container>
+const sideDrawer = ({ children, isOpen }) => (
+  <Wrapper data-testid="sideDrawer" isOpen={isOpen}>
+    {children}
+  </Wrapper>
 );
 
 sideDrawer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  closeMenu: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
-  navItems: PropTypes.arrayOf(PropTypes.object).isRequired
+  children: PropTypes.element.isRequired
 };
 
-const Container = styled.div`
+const Wrapper = styled.div`
   ${fixed()};
   ${elevation[3]};
   display: flex;

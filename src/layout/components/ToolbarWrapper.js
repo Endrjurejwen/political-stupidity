@@ -18,7 +18,7 @@ const toolbarWrapper = ({ children }) => (
 
 toolbarWrapper.propTypes = {
   children: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.object, PropTypes.bool])
+    PropTypes.oneOfType([PropTypes.element, PropTypes.bool])
   ).isRequired
 };
 

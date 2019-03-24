@@ -1,18 +1,28 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const PrivateRoute = ({ auth, component: Component, ...rest }) => (
+const privateRoute = ({ authId, component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      auth.uid ? <Component {...props} /> : <Redirect to="/login" />
+      authId ? <Component {...props} /> : <Redirect to="/login" />
     }
   />
 );
 
+privateRoute.propTypes = {
+  authId: PropTypes.string,
+  component: PropTypes.func.isRequired
+};
+
+privateRoute.defaultProps = {
+  authId: null
+};
+
 const mapStateToProps = state => ({
-  auth: state.firebase.auth
+  authId: state.firebase.auth.uid
 });
 
-export default withRouter(connect(mapStateToProps)(PrivateRoute));
+export default withRouter(connect(mapStateToProps)(privateRoute));

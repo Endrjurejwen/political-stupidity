@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { TextareaBox } from 'common';
 import { Button } from 'elements';
@@ -10,6 +11,12 @@ const createComment = ({ commentValue, onCommentSubmit, onCommentChange }) => (
     <SubmitButton>Skomentuj</SubmitButton>
   </Form>
 );
+
+createComment.propTypes = {
+  commentValue: PropTypes.string.isRequired,
+  onCommentSubmit: PropTypes.func.isRequired,
+  onCommentChange: PropTypes.func.isRequired
+};
 
 export default createComment;
 

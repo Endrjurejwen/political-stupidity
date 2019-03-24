@@ -1,22 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Button, Icon } from 'elements';
-import { flexCenter, spacing, media, color } from 'utils';
+import { Button } from 'elements';
+import { flexCenter, spacing, media } from 'utils';
 
-const panel = ({
-  onSortClick,
-  timeSortOrder,
-  commentsSortOrder,
-  likesSortOrder
-}) => (
+const panel = ({ onSortClick, sortOrder }) => (
   <Wrapper>
     <Button
       className="btn--margin-bottom"
       data-sortby="time"
       onClick={onSortClick}
     >
-      {timeSortOrder === 'asc' ? 'Najnowsze' : 'Najstarsze'}
+      {sortOrder.time === 'asc' ? 'Najnowsze' : 'Najstarsze'}
       {/* <Icon name="arrow" width="1.2rem" height="1rem" color="#fff" /> */}
     </Button>
     <Button
@@ -24,7 +19,7 @@ const panel = ({
       data-sortby="comments"
       onClick={onSortClick}
     >
-      {commentsSortOrder === 'asc'
+      {sortOrder.comments === 'asc'
         ? 'Najwięcej komentarzy'
         : 'Najmnniej komentarzy'}
     </Button>
@@ -33,13 +28,18 @@ const panel = ({
       data-sortby="likes"
       onClick={onSortClick}
     >
-      {likesSortOrder === 'asc' ? 'Najwięcej polubień' : 'Najmnniej polubień'}
+      {sortOrder.likes === 'asc' ? 'Najwięcej polubień' : 'Najmnniej polubień'}
     </Button>
   </Wrapper>
 );
 
 panel.propTypes = {
-  onSortClick: PropTypes.func
+  onSortClick: PropTypes.func,
+  sortOrder: PropTypes.shape({
+    time: PropTypes.string.isRequired,
+    comments: PropTypes.string.isRequired,
+    likes: PropTypes.string.isRequired
+  }).isRequired
 };
 
 panel.defaultProps = {

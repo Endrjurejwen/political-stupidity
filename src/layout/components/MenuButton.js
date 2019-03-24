@@ -4,19 +4,19 @@ import PropTypes from 'prop-types';
 
 import { media, color, spacing } from 'utils';
 
-const menuButton = ({ toggleMenu, isOpen }) => (
+const menuButton = ({ toggleMenu, isMenuOpen }) => (
   <MenuBtn
     aria-label="Menu Button"
     data-testid="menu-button"
     onClick={toggleMenu}
   >
-    <MenuIcon isOpen={isOpen} />
+    <MenuIcon isMenuOpen={isMenuOpen} />
   </MenuBtn>
 );
 
 menuButton.propTypes = {
   toggleMenu: PropTypes.func.isRequired,
-  isOpen: PropTypes.bool.isRequired
+  isMenuOpen: PropTypes.bool.isRequired
 };
 
 export default menuButton;
@@ -37,8 +37,8 @@ const MenuBtn = styled.button`
 
 const MenuIcon = styled.div`
   position: relative;
-  background-color: ${({ isOpen }) =>
-    isOpen ? 'transparent' : color.textLight};
+  background-color: ${({ isMenuOpen }) =>
+    isMenuOpen ? 'transparent' : color.textLight};
   width: 22px;
   height: 2px;
 
@@ -54,12 +54,14 @@ const MenuIcon = styled.div`
   }
 
   &::before {
-    top: ${({ isOpen }) => (isOpen ? '0' : '-6px')};
-    transform: ${({ isOpen }) => (isOpen ? 'rotate(135deg)' : 'rotate(0deg)')};
+    top: ${({ isMenuOpen }) => (isMenuOpen ? '0' : '-6px')};
+    transform: ${({ isMenuOpen }) =>
+      isMenuOpen ? 'rotate(135deg)' : 'rotate(0deg)'};
   }
 
   &::after {
-    top: ${({ isOpen }) => (isOpen ? '0' : '6px')};
-    transform: ${({ isOpen }) => (isOpen ? 'rotate(-135deg)' : 'rotate(0deg)')};
+    top: ${({ isMenuOpen }) => (isMenuOpen ? '0' : '6px')};
+    transform: ${({ isMenuOpen }) =>
+      isMenuOpen ? 'rotate(-135deg)' : 'rotate(0deg)'};
   }
 `;

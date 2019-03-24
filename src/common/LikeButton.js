@@ -15,12 +15,14 @@ const likeButton = ({ likes, click, full }) => (
 
 likeButton.propTypes = {
   likes: PropTypes.number,
-  click: PropTypes.func
+  click: PropTypes.func,
+  full: PropTypes.bool
 };
 
 likeButton.defaultProps = {
   likes: 0,
-  click: () => null
+  click: () => null,
+  full: false
 };
 
 export default likeButton;

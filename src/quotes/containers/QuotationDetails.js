@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import Quotation from 'quotes/components/Quotation';
 import CommentsContainer from 'comments/containers/CommentsContainer';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
-import { Spinner } from 'common';
+import { quotationType } from 'types';
+import { Spinner, LikeButton, CloseButton } from 'common';
+import { Button } from 'elements';
 import {
   likeQuotation,
   dislikeQuotation,
@@ -13,6 +17,21 @@ import {
 } from 'quotes/actions';
 
 class QuotationDetails extends Component {
+  static propTypes = {
+    quotation: quotationType,
+    auth: PropTypes.shape().isRequired, // zamienić na userId
+    dispatch: PropTypes.func.isRequired,
+    likeQuotation: PropTypes.func.isRequired,
+    dislikeQuotation: PropTypes.func.isRequired,
+    deleteQuotation: PropTypes.func.isRequired,
+    history: ReactRouterPropTypes.history.isRequired,
+    match: ReactRouterPropTypes.match.isRequired
+  };
+
+  static defaultProps = {
+    quotation: null
+  };
+
   componentWillUnmount = () => {
     this.props.dispatch({ type: actionTypes.CLEAR_DATA });
   };
@@ -50,9 +69,20 @@ class QuotationDetails extends Component {
         <Quotation
           quotation={quotation}
           userId={auth.uid}
-          likeClick={this.likeOrDislikeQuotationHandler}
-          deleteClick={this.deleteQuotationHandler}
-        />
+          closeButton={
+            <CloseButton
+              click={this.deleteQuotationHandler}
+              isDisplay={quotation.authorId === auth.uid}
+            />
+          }
+        >
+          <Button secondary>Zobacz źródło</Button>
+          <LikeButton
+            likes={quotation.likesCount}
+            click={this.likeOrDislikeQuotationHandler}
+            full={auth.uid in quotation.likes}
+          />
+        </Quotation>
         <CommentsContainer />
       </>
     );

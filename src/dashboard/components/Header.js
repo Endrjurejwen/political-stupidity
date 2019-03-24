@@ -19,8 +19,8 @@ const header = ({ quotes, comments }) => (
 );
 
 header.propTypes = {
-  quotes: PropTypes.number,
-  comments: PropTypes.number
+  quotes: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  comments: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 header.defaultProps = {

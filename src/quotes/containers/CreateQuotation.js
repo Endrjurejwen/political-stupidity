@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -14,6 +16,11 @@ class CreateQuotation extends Component {
     author: ''
   };
 
+  static propTypes = {
+    createQuotation: PropTypes.func.isRequired,
+    history: ReactRouterPropTypes.history.isRequired
+  };
+
   changeHandler = event => {
     this.setState({
       [event.target.id]: event.target.value
@@ -23,7 +30,6 @@ class CreateQuotation extends Component {
   submitHandler = event => {
     const { createQuotation, history } = this.props;
     event.preventDefault();
-    // console.log(this.state);
     createQuotation(this.state);
     this.setState({
       content: '',

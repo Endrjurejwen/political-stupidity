@@ -21,8 +21,6 @@ firebase.initializeApp(config);
 //   firebase.auth().signInWithRedirect(provider);
 // }
 
-const functions = firebase.functions();
-console.log(firebase);
-console.log(functions);
+// const functions = firebase.functions();
 
 export default firebase;

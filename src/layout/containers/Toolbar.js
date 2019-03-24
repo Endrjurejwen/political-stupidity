@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -30,54 +31,51 @@ class Toolbar extends Component {
     isMenuOpen: PropTypes.bool,
     toggleMenu: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
-    history: PropTypes.shape().isRequired,
-    auth: PropTypes.shape().isRequired
+    authId: PropTypes.string.isRequired,
+    profile: PropTypes.objectOf(
+      PropTypes.oneOfType([PropTypes.func, PropTypes.bool, PropTypes.string])
+    ),
+    history: ReactRouterPropTypes.history.isRequired
   };
 
   static defaultProps = {
-    isMenuOpen: false
+    isMenuOpen: false,
+    profile: null
   };
 
   navigationHandler = () => {
-    const { history, auth } = this.props;
-    const path = auth.uid ? '/create' : '/login';
+    const { history, authId } = this.props;
+    const path = authId ? '/create' : '/login';
     history.push(path);
   };
 
-  logoutHandler = () => {
-    const { toggleMenu, logout } = this.props;
-    logout();
-    toggleMenu();
-  };
-
   render() {
-    const { isMenuOpen, toggleMenu, logout, auth, profile } = this.props;
-    const links = auth.uid
-      ? SIGN_IN_NAVIGATION_ITEMS
-      : SIGN_OUT_NAVIGATION_ITEMS;
-    const actionBtnText = auth.uid ? 'Dodaj cytat' : 'Zaloguj się';
-    const helloText = auth.uid ? profile.firstName : null;
+    const { isMenuOpen, toggleMenu, logout, authId, profile } = this.props;
+    const links = authId ? SIGN_IN_NAVIGATION_ITEMS : SIGN_OUT_NAVIGATION_ITEMS;
+    const actionBtnText = authId ? 'Dodaj cytat' : 'Zaloguj się';
+    const helloText = authId ? profile.firstName : null;
 
     return (
       <ToolbarWrapper>
-        <MenuButton isOpen={isMenuOpen} toggleMenu={toggleMenu} />
+        <MenuButton isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
         <p>
           <strong>{helloText}</strong>
         </p>
         <Button onClick={this.navigationHandler}>{actionBtnText}</Button>
         <Navigation
-          display={auth.uid ? 1 : 0}
           desktop
+          isLogin={authId ? 1 : 0}
           navItems={links}
           logout={logout}
         />
-        <SideDrawer
-          display={auth.uid ? 1 : 0}
-          navItems={links}
-          closeMenu={toggleMenu}
-          isOpen={isMenuOpen}
-          logout={this.logoutHandler}
-        />
+        <SideDrawer isOpen={isMenuOpen}>
+          <Navigation
+            isLogin={authId ? 1 : 0}
+            navItems={links}
+            closeMenu={toggleMenu}
+            logout={logout}
+          />
+        </SideDrawer>
         {isMenuOpen && <Backdrop close={toggleMenu} />}
       </ToolbarWrapper>
     );
@@ -86,7 +84,7 @@ class Toolbar extends Component {
 
 const mapStateToProps = state => ({
   isMenuOpen: state.menu.isMenuOpen,
-  auth: state.firebase.auth,
+  authId: state.firebase.auth.uid,
   profile: state.firebase.profile
 });
 

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import CommmentsList from 'comments/components/CommentsList';
 import CreateComment from 'comments/components/CreateComment';
@@ -7,6 +9,7 @@ import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
+import { commentType } from 'types';
 import { Spinner } from 'common';
 import { H2, H5 } from 'elements';
 import { spacing } from 'utils';
@@ -20,6 +23,22 @@ import {
 class CommentsContainer extends Component {
   state = {
     content: ''
+  };
+
+  static propTypes = {
+    createComment: PropTypes.func.isRequired,
+    deleteComment: PropTypes.func.isRequired,
+    likeComment: PropTypes.func.isRequired,
+    dislikeComment: PropTypes.func.isRequired,
+    comments: PropTypes.arrayOf(commentType),
+    dispatch: PropTypes.func.isRequired,
+    authId: PropTypes.string,
+    match: ReactRouterPropTypes.match.isRequired
+  };
+
+  static defaultProps = {
+    comments: null,
+    authId: null
   };
 
   componentWillUnmount = () => {
@@ -36,7 +55,6 @@ class CommentsContainer extends Component {
     const { createComment, match } = this.props;
     const quotationID = match.params.id;
     event.preventDefault();
-    console.log(this.state);
     createComment(quotationID, this.state);
     this.setState({
       content: ''
@@ -49,18 +67,18 @@ class CommentsContainer extends Component {
   };
 
   likeOrDislikeCommentHandler = commentId => {
-    const { auth, comments, likeComment, dislikeComment, match } = this.props;
+    const { authId, comments, likeComment, dislikeComment, match } = this.props;
     const comment = comments.find(comment => comment.id === commentId);
-    if (!(auth.uid in comment.likes)) {
+    if (!(authId in comment.likes)) {
       likeComment(match.params.id, commentId);
     }
-    if (auth.uid in comment.likes) {
+    if (authId in comment.likes) {
       dislikeComment(match.params.id, commentId);
     }
   };
 
   render() {
-    const { comments, auth } = this.props;
+    const { comments, authId } = this.props;
     let commentsBox;
     if (!comments) {
       commentsBox = <Spinner />;
@@ -72,7 +90,7 @@ class CommentsContainer extends Component {
       commentsBox = (
         <CommmentsList
           comments={comments}
-          userId={auth.uid}
+          userId={authId}
           deleteClick={this.deleteCommentHandler}
           likeClick={this.likeOrDislikeCommentHandler}
         />
@@ -100,7 +118,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     quotation,
     comments: state.firestore.ordered.comments,
-    auth: state.firebase.auth
+    authId: state.firebase.auth.uid
   };
 };
 

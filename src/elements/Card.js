@@ -3,7 +3,6 @@ import { elevation, spacing } from 'utils';
 
 export default styled.article`
   ${elevation[1]};
-  /* margin: 0 auto ${spacing[6]}; */
   position: relative;
   margin: ${props =>
     props.secondary ? `0 auto ${spacing[4]}` : `0 auto ${spacing[6]}`};

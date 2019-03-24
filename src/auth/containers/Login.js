@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,6 +12,16 @@ class Login extends Component {
   state = {
     email: '',
     password: ''
+  };
+
+  static propTypes = {
+    authError: PropTypes.string,
+    isLoading: PropTypes.bool
+  };
+
+  static defaultProps = {
+    authError: null,
+    isLoading: false
   };
 
   changeHandler = event => {

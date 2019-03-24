@@ -8,7 +8,7 @@ export const DISLIKE_COMMENT = 'DISLIKE_COMMENT';
 export const DISLIKE_COMMENT_ERROR = 'DISLIKE_COMMENT_ERROR';
 
 export const createComment = (quotationID, comment) => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
+  return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     const { profile } = getState().firebase;
     const authorId = getState().firebase.auth.uid;
@@ -35,7 +35,7 @@ export const createComment = (quotationID, comment) => {
 };
 
 export const deleteComment = (quotationID, commentID) => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
+  return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     firestore
       .collection('quotes')
@@ -53,7 +53,7 @@ export const deleteComment = (quotationID, commentID) => {
 };
 
 export const likeComment = (quotationID, commentID) => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
+  return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
     const oldLikesCount = getState().firestore.data.comments[commentID]
