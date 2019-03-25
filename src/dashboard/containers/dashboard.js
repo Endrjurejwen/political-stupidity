@@ -7,8 +7,8 @@ import { firestoreConnect, withFirebase } from 'react-redux-firebase';
 import Header from 'dashboard/components/Header';
 import Panel from 'dashboard/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
+import { WithLoader, WithEmptyInfo } from 'hoc';
 import { quotationType, firebaseType } from 'types';
-import { Spinner } from 'common';
 import { H5 } from 'elements';
 import {
   likeQuotation,
@@ -99,33 +99,24 @@ class Dashboard extends PureComponent {
       quotesTotal
     } = this.props;
 
-    let quotesBox;
-    if (!quotes) {
-      quotesBox = <Spinner />;
-    }
-    if (quotes && !quotes.length) {
-      quotesBox = (
-        <H5 center data-testid="information">
-          Nie ma jeszcze żadnych cytatów
-        </H5>
-      );
-    }
-    if (quotes && quotes.length) {
-      quotesBox = (
-        <QuotesList
-          quotes={quotes}
-          userId={authId}
-          navigationClick={this.navigationToQuotationDetailsHandler}
-          likeClick={this.likeOrDislikeQuotationHandler}
-          deleteClick={this.deleteQuotationHandler}
-        />
-      );
-    }
     return (
       <>
         <Header comments={commentsTotal} quotes={quotesTotal} />
         <Panel onSortClick={this.sortQuotesHandler} sortOrder={sortOrder} />
-        {quotesBox}
+        <WithLoader isLoading={!quotes}>
+          <WithEmptyInfo
+            isEmpty={!quotes || !quotes.length}
+            info={<H5 center>Nie ma jeszcze żadnych cytatów</H5>}
+          >
+            <QuotesList
+              quotes={quotes}
+              userId={authId}
+              navigationClick={this.navigationToQuotationDetailsHandler}
+              likeClick={this.likeOrDislikeQuotationHandler}
+              deleteClick={this.deleteQuotationHandler}
+            />
+          </WithEmptyInfo>
+        </WithLoader>
       </>
     );
   }
@@ -172,3 +163,33 @@ export default compose(
     // }
   ])
 )(Dashboard);
+
+// let quotesBox;
+// if (!quotes) {
+//   quotesBox = <Spinner />;
+// }
+// if (!quotes.length) {
+//   quotesBox = (
+//     <H5 center data-testid="information">
+//       Nie ma jeszcze żadnych cytatów
+//     </H5>
+//   );
+// }
+// if (quotes.length) {
+// quotesBox = (
+//   <WithLoader isLoading={!quotes}>
+//     <WithEmptyInfo
+//       isEmpty={!quotes || !quotes.length}
+//       info={<H5 center>Nie ma jeszcze żadnych cytatów</H5>}
+//     >
+//       <QuotesList
+//         quotes={quotes}
+//         userId={authId}
+//         navigationClick={this.navigationToQuotationDetailsHandler}
+//         likeClick={this.likeOrDislikeQuotationHandler}
+//         deleteClick={this.deleteQuotationHandler}
+//       />
+//     </WithEmptyInfo>
+//   </WithLoader>
+// );
+// }

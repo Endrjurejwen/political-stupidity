@@ -45,7 +45,7 @@ const quotesList = ({
 );
 
 quotesList.propTypes = {
-  quotes: PropTypes.arrayOf(quotationType).isRequired,
+  quotes: PropTypes.arrayOf(quotationType),
   userId: PropTypes.string,
   navigationClick: PropTypes.func,
   likeClick: PropTypes.func,
@@ -53,6 +53,7 @@ quotesList.propTypes = {
 };
 
 quotesList.defaultProps = {
+  quotes: null,
   userId: null,
   navigationClick: () => null,
   likeClick: () => null,

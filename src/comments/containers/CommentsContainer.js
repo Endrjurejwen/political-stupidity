@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
 import { commentType } from 'types';
-import { Spinner } from 'common';
+import { WithLoader, WithEmptyInfo } from 'hoc';
 import { H2, H5 } from 'elements';
 import { spacing } from 'utils';
 import {
@@ -79,27 +79,22 @@ class CommentsContainer extends Component {
 
   render() {
     const { comments, authId } = this.props;
-    let commentsBox;
-    if (!comments) {
-      commentsBox = <Spinner />;
-    }
-    if (comments && !comments.length) {
-      commentsBox = <H5 center>Jeszcze nikt nie dodał komentarza</H5>;
-    }
-    if (comments && comments.length) {
-      commentsBox = (
-        <CommmentsList
-          comments={comments}
-          userId={authId}
-          deleteClick={this.deleteCommentHandler}
-          likeClick={this.likeOrDislikeCommentHandler}
-        />
-      );
-    }
     return (
       <section>
         <Title>Komentarze</Title>
-        {commentsBox}
+        <WithLoader isLoading={!comments}>
+          <WithEmptyInfo
+            isEmpty={!comments || !comments.length}
+            info={<H5 center>Jeszcze nikt nie dodał komentarza</H5>}
+          >
+            <CommmentsList
+              comments={comments}
+              userId={authId}
+              deleteClick={this.deleteCommentHandler}
+              likeClick={this.likeOrDislikeCommentHandler}
+            />
+          </WithEmptyInfo>
+        </WithLoader>
         <CreateComment
           commentValue={this.state.content}
           onCommentChange={this.changeCommentHandler}
@@ -154,3 +149,28 @@ const Title = styled(H2)`
   text-align: center;
   margin-bottom: ${spacing[3]};
 `;
+
+// let commentsBox;
+// if (!comments) {
+//   commentsBox = <Spinner />;
+// }
+// if (comments && !comments.length) {
+//   commentsBox = <H5 center>Jeszcze nikt nie dodał komentarza</H5>;
+// }
+// if (comments && comments.length) {
+// commentsBox = (
+//   <WithLoader isLoading={!comments}>
+//     <WithEmptyInfo
+//       isEmpty={!comments || !comments.length}
+//       info={<H5 center>Jeszcze nikt nie dodał komentarza</H5>}
+//     >
+//       <CommmentsList
+//         comments={comments}
+//         userId={authId}
+//         deleteClick={this.deleteCommentHandler}
+//         likeClick={this.likeOrDislikeCommentHandler}
+//       />
+//     </WithEmptyInfo>
+//   </WithLoader>
+// );
+// }

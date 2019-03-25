@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { WithLoader } from 'hoc';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from 'auth/actions';
-import { InputBox, Spinner } from 'common';
+import { InputBox } from 'common';
 import { Button, H2 } from 'elements';
 import { spacing, flexCenter } from 'utils';
 
@@ -16,7 +17,8 @@ class Login extends Component {
 
   static propTypes = {
     authError: PropTypes.string,
-    isLoading: PropTypes.bool
+    isLoading: PropTypes.bool,
+    login: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -44,28 +46,29 @@ class Login extends Component {
     const { email, password } = this.state;
     const { authError, isLoading } = this.props;
     return (
-      <Form onSubmit={this.submitHandler}>
-        <Title>Logowanie</Title>
-        <InputBox
-          change={this.changeHandler}
-          type="email"
-          placeholder="Twój email"
-          id="email"
-          value={email}
-          required
-        />
-        <InputBox
-          change={this.changeHandler}
-          type="password"
-          placeholder="Twoje hasło"
-          id="password"
-          value={password}
-          required
-        />
-        <Button type="submit">Zaloguj się</Button>
-        {isLoading && <Spinner />}
-        <p>{authError || null}</p>
-      </Form>
+      <WithLoader isLoading={isLoading}>
+        <Form onSubmit={this.submitHandler}>
+          <Title>Logowanie</Title>
+          <InputBox
+            change={this.changeHandler}
+            type="email"
+            placeholder="Twój email"
+            id="email"
+            value={email}
+            required
+          />
+          <InputBox
+            change={this.changeHandler}
+            type="password"
+            placeholder="Twoje hasło"
+            id="password"
+            value={password}
+            required
+          />
+          <Button type="submit">Zaloguj się</Button>
+          <p>{authError || null}</p>
+        </Form>
+      </WithLoader>
     );
   }
 }

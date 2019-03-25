@@ -8,7 +8,8 @@ import { connect } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
 import { quotationType } from 'types';
-import { Spinner, LikeButton, CloseButton } from 'common';
+import { WithLoader } from 'hoc';
+import { LikeButton, CloseButton } from 'common';
 import { Button } from 'elements';
 import {
   likeQuotation,
@@ -61,30 +62,27 @@ class QuotationDetails extends Component {
 
   render() {
     const { quotation, auth } = this.props;
-    if (!quotation) {
-      return <Spinner />;
-    }
     return (
-      <>
+      <WithLoader isLoading={!quotation}>
         <Quotation
           quotation={quotation}
           userId={auth.uid}
           closeButton={
             <CloseButton
               click={this.deleteQuotationHandler}
-              isDisplay={quotation.authorId === auth.uid}
+              isDisplay={!quotation || quotation.authorId === auth.uid}
             />
           }
         >
           <Button secondary>Zobacz źródło</Button>
           <LikeButton
-            likes={quotation.likesCount}
+            likes={!quotation || quotation.likesCount}
             click={this.likeOrDislikeQuotationHandler}
-            full={auth.uid in quotation.likes}
+            full={!quotation || auth.uid in quotation.likes}
           />
         </Quotation>
         <CommentsContainer />
-      </>
+      </WithLoader>
     );
   }
 }
