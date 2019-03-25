@@ -29,8 +29,10 @@ const SIGN_OUT_NAVIGATION_ITEMS = [
 class Toolbar extends Component {
   static propTypes = {
     isMenuOpen: PropTypes.bool,
-    toggleMenu: PropTypes.func.isRequired,
-    logout: PropTypes.func.isRequired,
+    actions: PropTypes.shape({
+      toggleMenu: PropTypes.func.isRequired,
+      logout: PropTypes.func.isRequired
+    }).isRequired,
     authId: PropTypes.string.isRequired,
     profile: PropTypes.objectOf(
       PropTypes.oneOfType([PropTypes.func, PropTypes.bool, PropTypes.string])
@@ -49,15 +51,26 @@ class Toolbar extends Component {
     history.push(path);
   };
 
+  toggleMenuHandler = () => {
+    this.props.actions.toggleMenu();
+  };
+
+  logoutHandler = () => {
+    this.props.actions.logout();
+  };
+
   render() {
-    const { isMenuOpen, toggleMenu, logout, authId, profile } = this.props;
+    const { isMenuOpen, authId, profile } = this.props;
     const links = authId ? SIGN_IN_NAVIGATION_ITEMS : SIGN_OUT_NAVIGATION_ITEMS;
     const actionBtnText = authId ? 'Dodaj cytat' : 'Zaloguj się';
     const helloText = authId ? profile.firstName : null;
 
     return (
       <ToolbarWrapper>
-        <MenuButton isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+        <MenuButton
+          isMenuOpen={isMenuOpen}
+          toggleMenu={this.toggleMenuHandler}
+        />
         <p>
           <strong>{helloText}</strong>
         </p>
@@ -66,17 +79,17 @@ class Toolbar extends Component {
           desktop
           isLogin={authId ? 1 : 0}
           navItems={links}
-          logout={logout}
+          logout={this.logoutHandler}
         />
         <SideDrawer isOpen={isMenuOpen}>
           <Navigation
             isLogin={authId ? 1 : 0}
             navItems={links}
-            closeMenu={toggleMenu}
-            logout={logout}
+            closeMenu={this.toggleMenuHandler}
+            logout={this.logoutHandler}
           />
         </SideDrawer>
-        {isMenuOpen && <Backdrop close={toggleMenu} />}
+        {isMenuOpen && <Backdrop close={this.toggleMenuHandler} />}
       </ToolbarWrapper>
     );
   }
@@ -88,14 +101,17 @@ const mapStateToProps = state => ({
   profile: state.firebase.profile
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      toggleMenu,
-      logout
-    },
-    dispatch
-  );
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators(
+      {
+        toggleMenu,
+        logout
+      },
+      dispatch
+    )
+  };
+};
 
 export default withRouter(
   connect(

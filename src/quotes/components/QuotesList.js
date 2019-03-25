@@ -7,7 +7,7 @@ import { Button } from 'elements';
 
 const quotesList = ({
   quotes,
-  userId,
+  user,
   navigationClick,
   likeClick,
   deleteClick
@@ -19,11 +19,10 @@ const quotesList = ({
           quotation={quotation}
           key={quotation.id}
           deleteClick={() => deleteClick(quotation.id)}
-          userId={userId}
           closeButton={
             <CloseButton
               click={() => deleteClick(quotation.id)}
-              isDisplay={quotation.authorId === userId}
+              isDisplay={quotation.author.id === user.id}
             />
           }
         >
@@ -37,7 +36,7 @@ const quotesList = ({
           <LikeButton
             likes={quotation.likesCount}
             click={() => likeClick(quotation.id)}
-            full={userId in quotation.likes}
+            full={user.id in quotation.likes}
           />
         </Quotation>
       ))}

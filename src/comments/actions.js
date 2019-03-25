@@ -18,9 +18,14 @@ export const createComment = (quotationID, comment) => {
       .collection('comments')
       .add({
         ...comment,
-        userFirstName: profile.firstName,
-        userLastName: profile.lastName,
-        authorId,
+        author: {
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+          id: authorId
+        },
+        // userFirstName: profile.firstName,
+        // userLastName: profile.lastName,
+        // authorId,
         createAt: new Date(),
         likesCount: 0,
         likes: {}

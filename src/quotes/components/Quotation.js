@@ -9,10 +9,10 @@ import { spacing, flexCenter } from 'utils';
 const quotation = ({ quotation, children, closeButton }) => (
   <Card>
     <p data-testid="quotation-content">{quotation.content}</p>
-    <Author data-testid="quotation-author">{quotation.author}</Author>
+    <Author data-testid="quotation-author">{quotation.politician}</Author>
     <FlexContainer>{children}</FlexContainer>
     <UserName data-testid="quotation-user">
-      Opublikował {quotation.userFirstName} {quotation.userLastName}
+      Opublikował {quotation.author.firstName} {quotation.author.lastName}
     </UserName>
     <Data data-testid="quotation-timestamp">
       {moment(quotation.createAt.toDate()).calendar()}
@@ -22,12 +22,13 @@ const quotation = ({ quotation, children, closeButton }) => (
 );
 
 quotation.propTypes = {
-  quotation: quotationType.isRequired,
+  quotation: quotationType,
   children: PropTypes.arrayOf(PropTypes.element),
   closeButton: PropTypes.element
 };
 
 quotation.defaultProps = {
+  quotation: null,
   children: null,
   closeButton: null
 };

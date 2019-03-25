@@ -20,17 +20,22 @@ import {
 class QuotationDetails extends Component {
   static propTypes = {
     quotation: quotationType,
-    auth: PropTypes.shape().isRequired, // zamienić na userId
+    user: PropTypes.shape({
+      id: PropTypes.string
+    }),
     dispatch: PropTypes.func.isRequired,
-    likeQuotation: PropTypes.func.isRequired,
-    dislikeQuotation: PropTypes.func.isRequired,
-    deleteQuotation: PropTypes.func.isRequired,
+    actions: PropTypes.shape({
+      likeQuotation: PropTypes.func.isRequired,
+      dislikeQuotation: PropTypes.func.isRequired,
+      deleteQuotation: PropTypes.func.isRequired
+    }).isRequired,
     history: ReactRouterPropTypes.history.isRequired,
     match: ReactRouterPropTypes.match.isRequired
   };
 
   static defaultProps = {
-    quotation: null
+    quotation: null,
+    user: null
   };
 
   componentWillUnmount = () => {
@@ -38,47 +43,40 @@ class QuotationDetails extends Component {
   };
 
   likeOrDislikeQuotationHandler = () => {
-    const {
-      match,
-      quotation,
-      auth,
-      likeQuotation,
-      dislikeQuotation
-    } = this.props;
+    const { match, quotation, user, actions } = this.props;
 
-    if (!(auth.uid in quotation.likes)) {
-      likeQuotation(match.params.id);
+    if (!(user.id in quotation.likes)) {
+      actions.likeQuotation(match.params.id);
     }
-    if (auth.uid in quotation.likes) {
-      dislikeQuotation(match.params.id);
+    if (user.id in quotation.likes) {
+      actions.dislikeQuotation(match.params.id);
     }
   };
 
   deleteQuotationHandler = () => {
-    const { match, history, deleteQuotation } = this.props;
-    deleteQuotation(match.params.id);
+    const { match, history, actions } = this.props;
+    actions.deleteQuotation(match.params.id);
     history.push('/home');
   };
 
   render() {
-    const { quotation, auth } = this.props;
+    const { quotation, user } = this.props;
     return (
       <WithLoader isLoading={!quotation}>
         <Quotation
           quotation={quotation}
-          userId={auth.uid}
           closeButton={
             <CloseButton
               click={this.deleteQuotationHandler}
-              isDisplay={!quotation || quotation.authorId === auth.uid}
+              isDisplay={!quotation || quotation.author.id === user.id}
             />
           }
         >
           <Button secondary>Zobacz źródło</Button>
           <LikeButton
-            likes={!quotation || quotation.likesCount}
+            likes={!quotation ? 0 : quotation.likesCount}
             click={this.likeOrDislikeQuotationHandler}
-            full={!quotation || auth.uid in quotation.likes}
+            full={!quotation || user.id in quotation.likes}
           />
         </Quotation>
         <CommentsContainer />
@@ -95,19 +93,24 @@ const mapStateToProps = (state, ownProps) => {
   return {
     quotation,
     comments: state.firestore.ordered.comments,
-    auth: state.firebase.auth
+    user: {
+      id: state.firebase.auth.uid
+    }
   };
 };
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      likeQuotation,
-      dislikeQuotation,
-      deleteQuotation
-    },
-    dispatch
-  );
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators(
+      {
+        likeQuotation,
+        dislikeQuotation,
+        deleteQuotation
+      },
+      dispatch
+    )
+  };
+};
 
 export default compose(
   withFirebase,

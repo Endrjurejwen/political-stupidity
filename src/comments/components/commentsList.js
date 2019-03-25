@@ -4,25 +4,23 @@ import Comment from 'comments/components/Comment';
 import { commentType } from 'types';
 import { LikeButton, CloseButton } from 'common';
 
-const commentsList = ({ comments, deleteClick, likeClick, userId }) => (
+const commentsList = ({ comments, deleteClick, likeClick, user }) => (
   <>
     {comments.map(comment => (
       <Comment
         comment={comment}
         key={comment.id}
-        likeClick={() => likeClick(comment.id)}
-        userId={userId}
         likeButton={
           <LikeButton
             click={() => likeClick(comment.id)}
             likes={comment.likesCount}
-            full={userId in comment.likes}
+            full={user.id in comment.likes}
           />
         }
         closeButton={
           <CloseButton
             click={() => deleteClick(comment.id)}
-            isDisplay={comment.authorId === userId}
+            isDisplay={comment.author.id === user.id}
           />
         }
       />
@@ -31,10 +29,16 @@ const commentsList = ({ comments, deleteClick, likeClick, userId }) => (
 );
 
 commentsList.propTypes = {
-  comments: PropTypes.arrayOf(commentType).isRequired,
-  userId: PropTypes.string.isRequired,
+  comments: PropTypes.arrayOf(commentType),
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired
+  }).isRequired,
   likeClick: PropTypes.func.isRequired,
   deleteClick: PropTypes.func.isRequired
+};
+
+commentsList.defaultProps = {
+  comments: null
 };
 
 export default commentsList;

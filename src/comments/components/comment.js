@@ -12,7 +12,7 @@ const comment = ({ comment, closeButton, likeButton }) => (
     <FlexContainer>
       <div>
         <UserName data-testid="comment-user">
-          {comment.userFirstName} {comment.userLastName}{' '}
+          {comment.author.firstName} {comment.author.lastName}{' '}
         </UserName>
         <Data data-testid="comment-timestamp">
           {moment(comment.createAt.toDate()).calendar()}

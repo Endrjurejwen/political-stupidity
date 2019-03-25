@@ -20,7 +20,9 @@ class SignUp extends Component {
   static propTypes = {
     authError: PropTypes.string,
     isLoading: PropTypes.bool,
-    signUp: PropTypes.func.isRequired
+    actions: PropTypes.shape({
+      signUp: PropTypes.func.isRequired
+    }).isRequired
   };
 
   static defaultProps = {
@@ -36,7 +38,7 @@ class SignUp extends Component {
 
   submitHandler = event => {
     event.preventDefault();
-    this.props.signUp(this.state);
+    this.props.actions.signUp(this.state);
     this.setState({
       firstName: '',
       lastName: '',
@@ -99,13 +101,16 @@ const mapStateToProps = state => ({
   isLoading: state.auth.isLoading
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      signUp
-    },
-    dispatch
-  );
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators(
+      {
+        signUp
+      },
+      dispatch
+    )
+  };
+};
 
 export default connect(
   mapStateToProps,

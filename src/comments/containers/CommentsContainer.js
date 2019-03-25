@@ -26,19 +26,23 @@ class CommentsContainer extends Component {
   };
 
   static propTypes = {
-    createComment: PropTypes.func.isRequired,
-    deleteComment: PropTypes.func.isRequired,
-    likeComment: PropTypes.func.isRequired,
-    dislikeComment: PropTypes.func.isRequired,
+    actions: PropTypes.shape({
+      createComment: PropTypes.func.isRequired,
+      deleteComment: PropTypes.func.isRequired,
+      likeComment: PropTypes.func.isRequired,
+      dislikeComment: PropTypes.func.isRequired
+    }).isRequired,
     comments: PropTypes.arrayOf(commentType),
     dispatch: PropTypes.func.isRequired,
-    authId: PropTypes.string,
+    user: PropTypes.shape({
+      id: PropTypes.string
+    }),
     match: ReactRouterPropTypes.match.isRequired
   };
 
   static defaultProps = {
     comments: null,
-    authId: null
+    user: null
   };
 
   componentWillUnmount = () => {
@@ -52,33 +56,34 @@ class CommentsContainer extends Component {
   };
 
   submitCommentHandler = event => {
-    const { createComment, match } = this.props;
+    const { actions, match } = this.props;
     const quotationID = match.params.id;
     event.preventDefault();
-    createComment(quotationID, this.state);
+    actions.createComment(quotationID, this.state);
     this.setState({
       content: ''
     });
   };
 
   deleteCommentHandler = commentId => {
-    const { match, deleteComment } = this.props;
-    deleteComment(match.params.id, commentId);
+    const { match, actions } = this.props;
+    actions.deleteComment(match.params.id, commentId);
   };
 
   likeOrDislikeCommentHandler = commentId => {
-    const { authId, comments, likeComment, dislikeComment, match } = this.props;
+    const { user, comments, actions, match } = this.props;
     const comment = comments.find(comment => comment.id === commentId);
-    if (!(authId in comment.likes)) {
-      likeComment(match.params.id, commentId);
+    if (!(user.id in comment.likes)) {
+      actions.likeComment(match.params.id, commentId);
     }
-    if (authId in comment.likes) {
-      dislikeComment(match.params.id, commentId);
+    if (user.id in comment.likes) {
+      actions.dislikeComment(match.params.id, commentId);
     }
   };
 
   render() {
-    const { comments, authId } = this.props;
+    const { comments, user } = this.props;
+    const { content } = this.state;
     return (
       <section>
         <Title>Komentarze</Title>
@@ -89,14 +94,14 @@ class CommentsContainer extends Component {
           >
             <CommmentsList
               comments={comments}
-              userId={authId}
+              user={user}
               deleteClick={this.deleteCommentHandler}
               likeClick={this.likeOrDislikeCommentHandler}
             />
           </WithEmptyInfo>
         </WithLoader>
         <CreateComment
-          commentValue={this.state.content}
+          commentValue={content}
           onCommentChange={this.changeCommentHandler}
           onCommentSubmit={this.submitCommentHandler}
         />
@@ -113,20 +118,25 @@ const mapStateToProps = (state, ownProps) => {
   return {
     quotation,
     comments: state.firestore.ordered.comments,
-    authId: state.firebase.auth.uid
+    user: {
+      id: state.firebase.auth.uid
+    }
   };
 };
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      createComment,
-      deleteComment,
-      likeComment,
-      dislikeComment
-    },
-    dispatch
-  );
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators(
+      {
+        createComment,
+        deleteComment,
+        likeComment,
+        dislikeComment
+      },
+      dispatch
+    )
+  };
+};
 
 export default compose(
   withRouter,

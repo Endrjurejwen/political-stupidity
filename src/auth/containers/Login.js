@@ -18,7 +18,9 @@ class Login extends Component {
   static propTypes = {
     authError: PropTypes.string,
     isLoading: PropTypes.bool,
-    login: PropTypes.func.isRequired
+    actions: PropTypes.shape({
+      login: PropTypes.func.isRequired
+    }).isRequired
   };
 
   static defaultProps = {
@@ -34,7 +36,7 @@ class Login extends Component {
 
   submitHandler = event => {
     event.preventDefault();
-    this.props.login(this.state);
+    this.props.actions.login(this.state);
     this.setState({
       email: '',
       password: '',
@@ -78,13 +80,16 @@ const mapStateToProps = state => ({
   isLoading: state.auth.isLoading
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      login
-    },
-    dispatch
-  );
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators(
+      {
+        login
+      },
+      dispatch
+    )
+  };
+};
 
 export default connect(
   mapStateToProps,

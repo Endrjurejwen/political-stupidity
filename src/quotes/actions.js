@@ -33,9 +33,14 @@ export const createQuotation = quotation => {
       .collection('quotes')
       .add({
         ...quotation,
-        userFirstName: profile.firstName,
-        userLastName: profile.lastName,
-        authorId,
+        author: {
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+          id: authorId
+        },
+        // userFirstName: profile.firstName,
+        // userLastName: profile.lastName,
+        // authorId,
         createAt: new Date(),
         likes: {},
         likesCount: 0,

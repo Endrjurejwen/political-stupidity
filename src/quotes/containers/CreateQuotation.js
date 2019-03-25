@@ -13,11 +13,13 @@ import { H2, Button } from 'elements';
 class CreateQuotation extends Component {
   state = {
     content: '',
-    author: ''
+    politician: ''
   };
 
   static propTypes = {
-    createQuotation: PropTypes.func.isRequired,
+    actions: PropTypes.shape({
+      createQuotation: PropTypes.func.isRequired
+    }).isRequired,
     history: ReactRouterPropTypes.history.isRequired
   };
 
@@ -28,18 +30,18 @@ class CreateQuotation extends Component {
   };
 
   submitHandler = event => {
-    const { createQuotation, history } = this.props;
+    const { actions, history } = this.props;
     event.preventDefault();
-    createQuotation(this.state);
+    actions.createQuotation(this.state);
     this.setState({
       content: '',
-      author: ''
+      politician: ''
     });
     history.push('/home');
   };
 
   render() {
-    const { content, author } = this.state;
+    const { content, politician } = this.state;
     return (
       <Form onSubmit={this.submitHandler}>
         <Title>Stwórz cytat</Title>
@@ -55,8 +57,8 @@ class CreateQuotation extends Component {
         <InputBox
           onChange={this.changeHandler}
           placeholder="Autor cytatu"
-          id="author"
-          value={author}
+          id="politician"
+          value={politician}
           required
         />
         <Button type="submit">Opublikuj</Button>
@@ -65,13 +67,16 @@ class CreateQuotation extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      createQuotation
-    },
-    dispatch
-  );
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators(
+      {
+        createQuotation
+      },
+      dispatch
+    )
+  };
+};
 
 export default withRouter(
   connect(

@@ -4,28 +4,27 @@ import styled from 'styled-components';
 import { H1, H5 } from 'elements';
 import { spacing, color } from 'utils';
 
-const header = ({ quotes, comments }) => (
+const header = ({ counters }) => (
   <Wrapper>
     <Title>Polityczny Poprawczak</Title>
     <QuotesContainer>
-      <QuotesNumber data-testid="quotes-number">{quotes}</QuotesNumber>
+      <QuotesNumber data-testid="quotes-number">{counters.quotes}</QuotesNumber>
       <H5>Cytaty</H5>
     </QuotesContainer>
     <CommentsContainer>
-      <CommentsNumber data-testid="comments-number">{comments}</CommentsNumber>
+      <CommentsNumber data-testid="comments-number">
+        {counters.comments}
+      </CommentsNumber>
       <H5>Komentarze</H5>
     </CommentsContainer>
   </Wrapper>
 );
 
 header.propTypes = {
-  quotes: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  comments: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-};
-
-header.defaultProps = {
-  quotes: 0,
-  comments: 0
+  counters: PropTypes.shape({
+    quotes: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    comments: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  }).isRequired
 };
 
 export default header;

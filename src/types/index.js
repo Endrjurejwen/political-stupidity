@@ -1,27 +1,31 @@
 import PropTypes from 'prop-types';
 
 export const quotationType = PropTypes.shape({
-  author: PropTypes.string.isRequired,
-  authorId: PropTypes.string.isRequired,
+  politician: PropTypes.string.isRequired,
+  author: PropTypes.shape({
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
+  }).isRequired,
   commentsCount: PropTypes.number.isRequired,
   content: PropTypes.string.isRequired,
   createAt: PropTypes.object.isRequired,
   id: PropTypes.string,
   likes: PropTypes.object.isRequired,
-  likesCount: PropTypes.number.isRequired,
-  userFirstName: PropTypes.string.isRequired,
-  userLastName: PropTypes.string
+  likesCount: PropTypes.number.isRequired
 });
 
 export const commentType = PropTypes.shape({
-  authorId: PropTypes.string.isRequired,
+  author: PropTypes.shape({
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
+  }).isRequired,
   content: PropTypes.string.isRequired,
   createAt: PropTypes.object.isRequired,
   id: PropTypes.string,
   likes: PropTypes.object.isRequired,
-  likesCount: PropTypes.number.isRequired,
-  userFirstName: PropTypes.string.isRequired,
-  userLastName: PropTypes.string.isRequired
+  likesCount: PropTypes.number.isRequired
 });
 
 export const firebaseType = PropTypes.objectOf(
