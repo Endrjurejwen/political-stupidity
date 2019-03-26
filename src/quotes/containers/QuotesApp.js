@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
+import { withRouter } from 'react-router-dom';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
-import HeaderContainer from 'dashboard/containers/HeaderContainer';
-import Panel from 'dashboard/components/Panel';
+import Panel from 'quotes/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
 import { WithLoader, WithEmptyInfo } from 'hoc';
-import { quotationType, firebaseType } from 'types';
+import { quotationType, firebaseType } from 'quotes/types';
 import { H5 } from 'elements';
 import {
   likeQuotation,
@@ -17,7 +17,7 @@ import {
   sortQuotes
 } from 'quotes/actions';
 
-class Dashboard extends PureComponent {
+class QuotesApp extends PureComponent {
   static propTypes = {
     user: PropTypes.shape({
       id: PropTypes.string
@@ -87,7 +87,6 @@ class Dashboard extends PureComponent {
     const { quotes, user, sortOrder } = this.props;
     return (
       <>
-        <HeaderContainer />
         <Panel onSortClick={this.sortQuotesHandler} sortOrder={sortOrder} />
         <WithLoader isLoading={!quotes}>
           <WithEmptyInfo
@@ -138,6 +137,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default compose(
+  withRouter,
   withFirebase,
   connect(
     mapStateToProps,
@@ -148,7 +148,7 @@ export default compose(
     //   collection: 'quotes'
     // }
   ])
-)(Dashboard);
+)(QuotesApp);
 
 // let quotesBox;
 // if (!quotes) {

@@ -9,7 +9,7 @@ import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
-import { commentType } from 'types';
+import { commentType } from 'comments/types';
 import { WithLoader, WithEmptyInfo } from 'hoc';
 import { H2, H5 } from 'elements';
 import { spacing } from 'utils';

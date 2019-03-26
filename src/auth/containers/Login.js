@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { WithLoader } from 'hoc';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { makeGetAuthErrorState, makeGetIsLoadingState } from 'auth/selectors';
 import { login } from 'auth/actions';
 import { InputBox } from 'common';
 import { Button, H2 } from 'elements';
@@ -75,10 +76,22 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  authError: state.auth.authError,
-  isLoading: state.auth.isLoading
-});
+// const mapStateToProps = state => ({
+//   authError: state.auth.authError,
+//   isLoading: state.auth.isLoading
+// });
+
+const makeMapStateToProps = () => {
+  const getAuthErrorState = makeGetAuthErrorState();
+  const getIsLoadingState = makeGetIsLoadingState();
+  const mapStateToProps = state => {
+    return {
+      authError: getAuthErrorState(state),
+      isLoading: getIsLoadingState(state)
+    };
+  };
+  return mapStateToProps;
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -92,7 +105,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps,
+  makeMapStateToProps,
   mapDispatchToProps
 )(Login);
 

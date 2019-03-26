@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Quotation from 'quotes/components/Quotation';
-import { quotationType } from 'types';
+import { quotationType } from 'quotes/types';
 import { LikeButton, CloseButton } from 'common';
 import { Button } from 'elements';
 
@@ -45,15 +45,17 @@ const quotesList = ({
 
 quotesList.propTypes = {
   quotes: PropTypes.arrayOf(quotationType),
-  userId: PropTypes.string,
+  user: PropTypes.shape({
+    id: PropTypes.string
+  }),
   navigationClick: PropTypes.func,
   likeClick: PropTypes.func,
   deleteClick: PropTypes.func
 };
 
 quotesList.defaultProps = {
+  user: null,
   quotes: null,
-  userId: null,
   navigationClick: () => null,
   likeClick: () => null,
   deleteClick: () => null

@@ -14,11 +14,11 @@ const layout = ({ children }) => (
 );
 
 layout.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element)
+  children: PropTypes.element
 };
 
 layout.defaultProps = {
-  children: []
+  children: null
 };
 
 export default layout;

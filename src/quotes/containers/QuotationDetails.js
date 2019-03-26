@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
+import { withRouter } from 'react-router-dom';
 import Quotation from 'quotes/components/Quotation';
-import CommentsContainer from 'comments/containers/CommentsContainer';
+import CommentsApp from 'comments/containers/CommentsApp';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
-import { quotationType } from 'types';
+import { quotationType } from 'quotes/types';
 import { WithLoader } from 'hoc';
 import { LikeButton, CloseButton } from 'common';
 import { Button } from 'elements';
@@ -79,7 +80,7 @@ class QuotationDetails extends Component {
             full={!quotation || user.id in quotation.likes}
           />
         </Quotation>
-        <CommentsContainer />
+        <CommentsApp />
       </WithLoader>
     );
   }
@@ -113,6 +114,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default compose(
+  withRouter,
   withFirebase,
   firestoreConnect(props => [
     { collection: 'quotes', doc: props.match.params.id }

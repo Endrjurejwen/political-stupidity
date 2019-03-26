@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Comment from 'comments/components/Comment';
-import { commentType } from 'types';
+import { commentType } from 'comments/types';
 import { LikeButton, CloseButton } from 'common';
 
 const commentsList = ({ comments, deleteClick, likeClick, user }) => (
