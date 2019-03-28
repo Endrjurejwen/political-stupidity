@@ -1,23 +1,27 @@
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_ERROR = 'LOGIN_ERROR';
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const SIGNOUT_SUCCESS = 'SIGNOUT_SUCCESS';
-export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
-export const SIGNUP_ERROR = 'SIGNUP_ERROR';
-export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
+import {
+  loginRequest,
+  loginSuccess,
+  loginFailure,
+  logoutRequest,
+  logoutSuccess,
+  logoutFailure,
+  signupRequest,
+  signupSuccess,
+  signupFailure
+} from 'auth/actionCreators';
 
 export const login = credentails => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
-    dispatch({ type: 'LOGIN_REQUEST' });
+    dispatch(loginRequest());
     firebase
       .auth()
       .signInWithEmailAndPassword(credentails.email, credentails.password)
       .then(() => {
-        dispatch({ type: 'LOGIN_SUCCESS' });
+        dispatch(loginSuccess());
       })
       .catch(error => {
-        dispatch({ type: 'LOGIN_ERROR', error });
+        dispatch(loginFailure(error));
       });
   };
 };
@@ -25,11 +29,15 @@ export const login = credentails => {
 export const logout = () => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
+    dispatch(logoutRequest());
     firebase
       .auth()
       .signOut()
       .then(() => {
-        dispatch({ type: 'SIGNOUT_SUCCESS' });
+        dispatch(logoutSuccess());
+      })
+      .catch(error => {
+        dispatch(logoutFailure(error));
       });
   };
 };
@@ -38,7 +46,7 @@ export const signUp = newUser => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
-    dispatch({ type: 'SIGNUP_REQUEST' });
+    dispatch(signupRequest());
     firebase
       .auth()
       .createUserWithEmailAndPassword(newUser.email, newUser.password)
@@ -53,10 +61,10 @@ export const signUp = newUser => {
           });
       })
       .then(() => {
-        dispatch({ type: 'SIGNUP_SUCCESS' });
+        dispatch(signupSuccess());
       })
       .catch(error => {
-        dispatch({ type: 'SIGNUP_ERROR', error });
+        dispatch(signupFailure(error));
       });
   };
 };

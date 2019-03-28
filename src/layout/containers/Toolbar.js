@@ -4,7 +4,8 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { getIsMenuOpenState, getUserInfoState } from 'layout/selectors';
+import { getIsMenuOpenState } from 'layout/selectors';
+import { getUserInfoState } from 'auth/selectors';
 import { toggleMenu } from 'layout/actions';
 import { logout } from 'auth/actions';
 import { Backdrop } from 'common';
@@ -47,17 +48,17 @@ class Toolbar extends Component {
     user: null
   };
 
-  navigationHandler = () => {
+  handleNavigateClick = () => {
     const { history, user } = this.props;
     const path = user.id ? '/quotes/create' : '/login';
     history.push(path);
   };
 
-  toggleMenuHandler = () => {
+  handleToggleMenuClick = () => {
     this.props.actions.toggleMenu();
   };
 
-  logoutHandler = () => {
+  handleLogoutClick = () => {
     this.props.actions.logout();
   };
 
@@ -73,27 +74,27 @@ class Toolbar extends Component {
       <ToolbarWrapper>
         <MenuButton
           isMenuOpen={isMenuOpen}
-          toggleMenu={this.toggleMenuHandler}
+          toggleMenu={this.handleToggleMenuClick}
         />
         <p>
           <strong>{helloText}</strong>
         </p>
-        <Button onClick={this.navigationHandler}>{actionBtnText}</Button>
+        <Button onClick={this.handleNavigateClick}>{actionBtnText}</Button>
         <Navigation
           desktop
           isLogin={user.id ? 1 : 0}
           navItems={links}
-          logout={this.logoutHandler}
+          logout={this.handleLogoutClick}
         />
         <SideDrawer isOpen={isMenuOpen}>
           <Navigation
             isLogin={user.id ? 1 : 0}
             navItems={links}
-            closeMenu={this.toggleMenuHandler}
-            logout={this.logoutHandler}
+            closeMenu={this.handleToggleMenuClick}
+            logout={this.handleLogoutClick}
           />
         </SideDrawer>
-        {isMenuOpen && <Backdrop close={this.toggleMenuHandler} />}
+        {isMenuOpen && <Backdrop close={this.handleToggleMenuClick} />}
       </ToolbarWrapper>
     );
   }

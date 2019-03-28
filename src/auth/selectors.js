@@ -1,17 +1,53 @@
-import { createSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 
-const getAuthError = state => state.auth.authError;
+const getErrorAuth = state => state.auth.error;
 
-export const makeGetAuthErrorState = () =>
-  createSelector(
-    [getAuthError],
-    authError => authError
-  );
+export const getErrorAuthState = createSelector(
+  [getErrorAuth],
+  authError => authError
+);
 
-const getIsLoading = state => state.auth.isLoading;
+const getIsLoadingAuth = state => state.auth.isLoading;
 
-export const makeGetIsLoadingState = () =>
-  createSelector(
-    [getIsLoading],
-    isLoading => isLoading
-  );
+export const getIsLoadingAuthState = createSelector(
+  [getIsLoadingAuth],
+  isLoading => isLoading
+);
+
+const getFirstName = state => state.firebase.profile.firstName;
+const getLastName = state => state.firebase.profile.lastName;
+const getId = state => state.firebase.auth.uid;
+
+export const getUserInfoState = createStructuredSelector({
+  firstName: getFirstName,
+  lastName: getLastName,
+  id: getId
+});
+
+// const getAuthError = state => state.auth.authError;
+
+// export const makeGetAuthErrorState = () =>
+//   createSelector(
+//     [getAuthError],
+//     authError => authError
+//   );
+
+// const getIsLoading = state => state.auth.isLoading;
+
+// export const makeGetIsLoadingState = () =>
+//   createSelector(
+//     [getIsLoading],
+//     isLoading => isLoading
+//   );
+
+// const makeMapStateToProps = () => {
+//   const getAuthErrorState = makeGetAuthErrorState();
+//   const getIsLoadingState = makeGetIsLoadingState();
+//   const mapStateToProps = state => {
+//     return {
+//       authError: getAuthErrorState(state),
+//       isLoading: getIsLoadingState(state)
+//     };
+//   };
+//   return mapStateToProps;
+// };

@@ -1,10 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Comment from 'comments/components/Comment';
-import { commentType } from 'comments/types';
+import { commentType } from 'comments/propTypes';
 import { LikeButton, CloseButton } from 'common';
 
-const commentsList = ({ comments, deleteClick, likeClick, user }) => (
+const commentsList = ({
+  comments,
+  deleteClick,
+  onLikeClick,
+  onDislikeClick,
+  user
+}) => (
   <>
     {comments.map(comment => (
       <Comment
@@ -12,9 +18,13 @@ const commentsList = ({ comments, deleteClick, likeClick, user }) => (
         key={comment.id}
         likeButton={
           <LikeButton
-            click={() => likeClick(comment.id)}
             likes={comment.likesCount}
             full={user.id in comment.likes}
+            click={
+              user.id in comment.likes
+                ? () => onDislikeClick(comment.id)
+                : () => onLikeClick(comment.id)
+            }
           />
         }
         closeButton={
@@ -33,7 +43,8 @@ commentsList.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.string.isRequired
   }).isRequired,
-  likeClick: PropTypes.func.isRequired,
+  onLikeClick: PropTypes.func.isRequired,
+  onDislikeClick: PropTypes.func.isRequired,
   deleteClick: PropTypes.func.isRequired
 };
 

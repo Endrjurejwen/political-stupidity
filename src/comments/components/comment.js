@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
-import { commentType } from 'comments/types';
+import { commentType } from 'comments/propTypes';
 import { Card } from 'elements';
 import { spacing, flexCenter } from 'utils';
 

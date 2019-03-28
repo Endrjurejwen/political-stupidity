@@ -1,3 +1,5 @@
 import Routes from './Routes';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
-export default Routes;
+export { Routes, PrivateRoute, PublicRoute };

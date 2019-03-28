@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 import Quotation from 'quotes/components/Quotation';
-import CommentsApp from 'comments/containers/CommentsApp';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
+import { getUserInfoState } from 'auth/selectors';
+import { makeGetQuotationState } from 'quotes/selectors';
 import { quotationType } from 'quotes/types';
-import { WithLoader } from 'hoc';
-import { LikeButton, CloseButton } from 'common';
+import { LikeButton, CloseButton, WithLoader } from 'common';
 import { Button } from 'elements';
 import {
   likeQuotation,
@@ -30,45 +30,57 @@ class QuotationDetails extends Component {
       dislikeQuotation: PropTypes.func.isRequired,
       deleteQuotation: PropTypes.func.isRequired
     }).isRequired,
+    children: PropTypes.element,
     history: ReactRouterPropTypes.history.isRequired,
     match: ReactRouterPropTypes.match.isRequired
   };
 
   static defaultProps = {
     quotation: null,
-    user: null
+    user: null,
+    children: null
   };
 
   componentWillUnmount = () => {
     this.props.dispatch({ type: actionTypes.CLEAR_DATA });
   };
 
-  likeOrDislikeQuotationHandler = () => {
-    const { match, quotation, user, actions } = this.props;
+  // likeOrDislikeQuotationHandler = () => {
+  //   const { match, quotation, user, actions } = this.props;
 
-    if (!(user.id in quotation.likes)) {
-      actions.likeQuotation(match.params.id);
-    }
-    if (user.id in quotation.likes) {
-      actions.dislikeQuotation(match.params.id);
-    }
+  //   if (!(user.id in quotation.likes)) {
+  //     actions.likeQuotation(match.params.id);
+  //   }
+  //   if (user.id in quotation.likes) {
+  //     actions.dislikeQuotation(match.params.id);
+  //   }
+  // };
+
+  handleLikeClick = () => {
+    const { match, actions } = this.props;
+    actions.likeQuotation(match.params.id);
   };
 
-  deleteQuotationHandler = () => {
+  handleDislikeClick = () => {
+    const { match, actions } = this.props;
+    actions.dislikeQuotation(match.params.id);
+  };
+
+  handleDeleteClick = () => {
     const { match, history, actions } = this.props;
     actions.deleteQuotation(match.params.id);
     history.push('/home');
   };
 
   render() {
-    const { quotation, user } = this.props;
+    const { quotation, user, children } = this.props;
     return (
       <WithLoader isLoading={!quotation}>
         <Quotation
           quotation={quotation}
           closeButton={
             <CloseButton
-              click={this.deleteQuotationHandler}
+              click={this.handleDeleteClick}
               isDisplay={!quotation || quotation.author.id === user.id}
             />
           }
@@ -76,28 +88,42 @@ class QuotationDetails extends Component {
           <Button secondary>Zobacz źródło</Button>
           <LikeButton
             likes={!quotation ? 0 : quotation.likesCount}
-            click={this.likeOrDislikeQuotationHandler}
             full={!quotation || user.id in quotation.likes}
+            click={
+              !quotation || user.id in quotation.likes
+                ? this.handleDislikeClick
+                : this.handleLikeClick
+            }
           />
         </Quotation>
-        <CommentsApp />
+        {children}
       </WithLoader>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { id } = ownProps.match.params;
-  const { quotes } = state.firestore.data;
-  const quotation = quotes ? quotes[id] : null;
+// const mapStateToProps = (state, ownProps) => {
+//   const { id } = ownProps.match.params;
+//   const { quotes } = state.firestore.data;
+//   const quotation = quotes ? quotes[id] : null;
 
-  return {
-    quotation,
-    comments: state.firestore.ordered.comments,
-    user: {
-      id: state.firebase.auth.uid
-    }
+//   return {
+//     quotation,
+//     user: {
+//       id: state.firebase.auth.uid
+//     }
+//   };
+// };
+
+const makeMapStateToProps = () => {
+  const getQuotationState = makeGetQuotationState();
+  const mapStateToProps = (state, ownProps) => {
+    return {
+      quotation: getQuotationState(state, ownProps),
+      user: getUserInfoState(state)
+    };
   };
+  return mapStateToProps;
 };
 
 const mapDispatchToProps = dispatch => {
@@ -116,16 +142,9 @@ const mapDispatchToProps = dispatch => {
 export default compose(
   withRouter,
   withFirebase,
-  firestoreConnect(props => [
-    { collection: 'quotes', doc: props.match.params.id }
-  ]),
+  firestoreConnect([{ collection: 'quotes' }]),
   connect(
-    mapStateToProps,
+    makeMapStateToProps,
     mapDispatchToProps
-    // ({ firestore }) => {
-    //   return {
-    //     quotes: firestore.ordered.quotes || []
-    //   };
-    // }
   )
 )(QuotationDetails);

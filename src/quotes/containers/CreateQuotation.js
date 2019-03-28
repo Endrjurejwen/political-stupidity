@@ -23,13 +23,13 @@ class CreateQuotation extends Component {
     history: ReactRouterPropTypes.history.isRequired
   };
 
-  changeHandler = event => {
+  hadleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   };
 
-  submitHandler = event => {
+  handleSubmit = event => {
     const { actions, history } = this.props;
     event.preventDefault();
     actions.createQuotation(this.state);
@@ -43,10 +43,10 @@ class CreateQuotation extends Component {
   render() {
     const { content, politician } = this.state;
     return (
-      <Form onSubmit={this.submitHandler}>
+      <Form onSubmit={this.handleSubmit}>
         <Title>Stwórz cytat</Title>
         <TextareaBox
-          onChange={this.changeHandler}
+          onChange={this.hadleChange}
           placeholder="Tutaj wpisz cytat"
           rows="5"
           cols="30"
@@ -55,7 +55,7 @@ class CreateQuotation extends Component {
           required
         />
         <InputBox
-          onChange={this.changeHandler}
+          onChange={this.hadleChange}
           placeholder="Autor cytatu"
           id="politician"
           value={politician}

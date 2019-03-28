@@ -1,42 +1,49 @@
 import {
-  LOGIN_SUCCESS,
-  LOGIN_ERROR,
-  SIGNOUT_SUCCESS,
-  SIGNUP_SUCCESS,
-  SIGNUP_ERROR,
   LOGIN_REQUEST,
-  SIGNUP_REQUEST
-} from 'auth/actions';
+  LOGIN_SUCCESS,
+  LOGIN_FAILURE,
+  SIGNUP_REQUEST,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAILURE,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILURE
+} from 'auth/actionTypes';
 
 const initState = {
-  authError: null,
+  error: null,
   isLoading: false
 };
 
+const sendRequest = state => ({ ...state, isLoading: true, error: null });
+const reciveResult = state => ({ ...state, isLoading: false });
+const reciveError = (state, action) => ({
+  ...state,
+  error: action.error.message,
+  isLoading: false
+});
+
 export default function(state = initState, action) {
-  const { type, error } = action;
+  const { type } = action;
   switch (type) {
     case LOGIN_REQUEST:
-      console.log('login request');
-      return { ...state, authError: null, isLoading: true };
+      return sendRequest(state);
     case LOGIN_SUCCESS:
-      console.log('login success');
-      return { ...state, isLoading: false };
-    case LOGIN_ERROR:
-      console.log('login failed');
-      return { ...state, authError: error.message, isLoading: false };
-    case SIGNOUT_SUCCESS:
-      console.log('logout success');
-      return state;
+      return reciveResult(state);
+    case LOGIN_FAILURE:
+      return reciveError(state, action);
     case SIGNUP_REQUEST:
-      console.log('signup request');
-      return { ...state, authError: null, isLoading: true };
+      return sendRequest(state);
     case SIGNUP_SUCCESS:
-      console.log('signup success');
-      return { ...state, authError: null, isLoading: false };
-    case SIGNUP_ERROR:
-      console.log('signup failed');
-      return { ...state, authError: error.message, isLoading: false };
+      return reciveResult(state);
+    case SIGNUP_FAILURE:
+      return reciveError(state, action);
+    case LOGOUT_REQUEST:
+      return sendRequest(state);
+    case LOGOUT_SUCCESS:
+      return reciveResult(state);
+    case LOGOUT_FAILURE:
+      return reciveError(state, action);
     default:
       return state;
   }

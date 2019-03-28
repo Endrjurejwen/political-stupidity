@@ -1,3 +1,2 @@
-export { default as PrivateRoute } from './PrivateRoute';
-export { default as PublicRoute } from './PublicRoute';
 export * from './ui';
+export * from './hoc';

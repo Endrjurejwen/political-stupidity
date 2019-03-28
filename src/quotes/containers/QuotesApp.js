@@ -5,9 +5,11 @@ import { withRouter } from 'react-router-dom';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
+import { getUserInfoState } from 'auth/selectors';
+import { getQuotesState, getSortOrderState } from 'quotes/selectors';
 import Panel from 'quotes/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
-import { WithLoader, WithEmptyInfo } from 'hoc';
+import { WithLoader, WithEmptyInfo } from 'common';
 import { quotationType, firebaseType } from 'quotes/types';
 import { H5 } from 'elements';
 import {
@@ -56,29 +58,47 @@ class QuotesApp extends PureComponent {
     this.props.firestore.unsetListener('quotes');
   };
 
-  navigateHandler = id => {
+  handleNavigateClick = id => {
     this.props.history.push(`/quotes/${id}`);
   };
 
-  likeOrDislikeQuotationHandler = id => {
-    const { user, history, quotes, actions } = this.props;
-    const quotation = quotes.find(quotation => quotation.id === id);
-    const isLiked = user.id in quotation.likes;
+  // likeOrDislikeQuotationHandler = id => {
+  //   const { user, history, quotes, actions } = this.props;
+  //   const quotation = quotes.find(quotation => quotation.id === id);
+  //   const isLiked = user.id in quotation.likes;
+  //   if (!user.id) {
+  //     history.push('/login');
+  //   }
+  //   if (user.id && !isLiked) {
+  //     actions.likeQuotation(id);
+  //   } else {
+  //     actions.dislikeQuotation(id);
+  //   }
+  // };
+
+  handleLikeClick = id => {
+    const { user, history, actions } = this.props;
     if (!user.id) {
       history.push('/login');
-    }
-    if (user.id && !isLiked) {
+    } else {
       actions.likeQuotation(id);
+    }
+  };
+
+  handleDislikeClick = id => {
+    const { user, history, actions } = this.props;
+    if (!user.id) {
+      history.push('/login');
     } else {
       actions.dislikeQuotation(id);
     }
   };
 
-  deleteQuotationHandler = id => {
+  handleDeleteClick = id => {
     this.props.actions.deleteQuotation(id);
   };
 
-  sortQuotesHandler = event => {
+  handleSortClick = event => {
     const sortBy = event.target.dataset.sortby;
     this.props.actions.sortQuotes(sortBy);
   };
@@ -87,7 +107,7 @@ class QuotesApp extends PureComponent {
     const { quotes, user, sortOrder } = this.props;
     return (
       <>
-        <Panel onSortClick={this.sortQuotesHandler} sortOrder={sortOrder} />
+        <Panel onSortClick={this.handleSortClick} sortOrder={sortOrder} />
         <WithLoader isLoading={!quotes}>
           <WithEmptyInfo
             isEmpty={!quotes || !quotes.length}
@@ -96,9 +116,10 @@ class QuotesApp extends PureComponent {
             <QuotesList
               quotes={quotes}
               user={user}
-              navigationClick={this.navigateHandler}
-              likeClick={this.likeOrDislikeQuotationHandler}
-              deleteClick={this.deleteQuotationHandler}
+              navigationClick={this.handleNavigateClick}
+              onLikeClick={this.handleLikeClick}
+              onDislikeClick={this.handleDislikeClick}
+              deleteClick={this.handleDeleteClick}
             />
           </WithEmptyInfo>
         </WithLoader>
@@ -107,20 +128,11 @@ class QuotesApp extends PureComponent {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    quotes: state.firestore.ordered.quotes,
-    user: {
-      id: state.firebase.auth.uid
-    },
-    // authId: state.firebase.auth.uid,
-    sortOrder: {
-      time: state.quotes.sortTypes.time.order,
-      comments: state.quotes.sortTypes.comments.order,
-      likes: state.quotes.sortTypes.likes.order
-    }
-  };
-};
+const mapStateToProps = state => ({
+  quotes: getQuotesState(state),
+  user: getUserInfoState(state),
+  sortOrder: getSortOrderState(state)
+});
 
 const mapDispatchToProps = dispatch => {
   return {

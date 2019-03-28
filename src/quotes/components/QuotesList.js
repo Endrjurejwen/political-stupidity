@@ -9,7 +9,8 @@ const quotesList = ({
   quotes,
   user,
   navigationClick,
-  likeClick,
+  onLikeClick,
+  onDislikeClick,
   deleteClick
 }) => (
   <div data-testid="quotes-list">
@@ -18,7 +19,6 @@ const quotesList = ({
         <Quotation
           quotation={quotation}
           key={quotation.id}
-          deleteClick={() => deleteClick(quotation.id)}
           closeButton={
             <CloseButton
               click={() => deleteClick(quotation.id)}
@@ -35,8 +35,12 @@ const quotesList = ({
           </Button>
           <LikeButton
             likes={quotation.likesCount}
-            click={() => likeClick(quotation.id)}
             full={user.id in quotation.likes}
+            click={
+              user.id in quotation.likes
+                ? () => onDislikeClick(quotation.id)
+                : () => onLikeClick(quotation.id)
+            }
           />
         </Quotation>
       ))}
@@ -48,17 +52,15 @@ quotesList.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.string
   }),
-  navigationClick: PropTypes.func,
-  likeClick: PropTypes.func,
-  deleteClick: PropTypes.func
+  navigationClick: PropTypes.func.isRequired,
+  onLikeClick: PropTypes.func.isRequired,
+  onDislikeClick: PropTypes.func.isRequired,
+  deleteClick: PropTypes.func.isRequired
 };
 
 quotesList.defaultProps = {
   user: null,
-  quotes: null,
-  navigationClick: () => null,
-  likeClick: () => null,
-  deleteClick: () => null
+  quotes: null
 };
 
 export default quotesList;

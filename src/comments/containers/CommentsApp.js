@@ -9,8 +9,11 @@ import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
-import { commentType } from 'comments/types';
-import { WithLoader, WithEmptyInfo } from 'hoc';
+import { getUserInfoState } from 'auth/selectors';
+import { getCommentsState } from 'comments/selectors';
+import { makeGetQuotationState } from 'quotes/selectors';
+import { commentType } from 'comments/propTypes';
+import { WithLoader, WithEmptyInfo } from 'common';
 import { H2, H5 } from 'elements';
 import { spacing } from 'utils';
 import {
@@ -49,13 +52,13 @@ class CommentsContainer extends Component {
     this.props.dispatch({ type: actionTypes.CLEAR_DATA });
   };
 
-  changeCommentHandler = event => {
+  handleChange = event => {
     this.setState({
       content: event.target.value
     });
   };
 
-  submitCommentHandler = event => {
+  handleSubmit = event => {
     const { actions, match } = this.props;
     const quotationID = match.params.id;
     event.preventDefault();
@@ -65,20 +68,30 @@ class CommentsContainer extends Component {
     });
   };
 
-  deleteCommentHandler = commentId => {
+  handleDeleteClick = commentId => {
     const { match, actions } = this.props;
     actions.deleteComment(match.params.id, commentId);
   };
 
-  likeOrDislikeCommentHandler = commentId => {
-    const { user, comments, actions, match } = this.props;
-    const comment = comments.find(comment => comment.id === commentId);
-    if (!(user.id in comment.likes)) {
-      actions.likeComment(match.params.id, commentId);
-    }
-    if (user.id in comment.likes) {
-      actions.dislikeComment(match.params.id, commentId);
-    }
+  // likeOrDislikeCommentHandler = commentId => {
+  //   const { user, comments, actions, match } = this.props;
+  //   const comment = comments.find(comment => comment.id === commentId);
+  //   if (!(user.id in comment.likes)) {
+  //     actions.likeComment(match.params.id, commentId);
+  //   }
+  //   if (user.id in comment.likes) {
+  //     actions.dislikeComment(match.params.id, commentId);
+  //   }
+  // };
+
+  handleLikeClick = commentId => {
+    const { match, actions } = this.props;
+    actions.likeComment(match.params.id, commentId);
+  };
+
+  handleDislikeClick = commentId => {
+    const { match, actions } = this.props;
+    actions.dislikeComment(match.params.id, commentId);
   };
 
   render() {
@@ -95,33 +108,44 @@ class CommentsContainer extends Component {
             <CommmentsList
               comments={comments}
               user={user}
-              deleteClick={this.deleteCommentHandler}
-              likeClick={this.likeOrDislikeCommentHandler}
+              deleteClick={this.handleDeleteClick}
+              onLikeClick={this.handleLikeClick}
+              onDislikeClick={this.handleDislikeClick}
             />
           </WithEmptyInfo>
         </WithLoader>
         <CreateComment
           commentValue={content}
-          onCommentChange={this.changeCommentHandler}
-          onCommentSubmit={this.submitCommentHandler}
+          onCommentChange={this.handleChange}
+          onCommentSubmit={this.handleSubmit}
         />
       </section>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { id } = ownProps.match.params;
-  const { quotes } = state.firestore.data;
-  const quotation = quotes ? quotes[id] : null;
+// const mapStateToProps = (state, ownProps) => {
+//   const { id } = ownProps.match.params;
+//   const { quotes } = state.firestore.data;
+//   const quotation = quotes ? quotes[id] : null;
 
-  return {
-    quotation,
-    comments: state.firestore.ordered.comments,
-    user: {
-      id: state.firebase.auth.uid
-    }
+//   return {
+//     quotation,
+//     comments: getCommentsState(state),
+//     user: getUserInfoState(state)
+//   };
+// };
+
+const makeMapStateToProps = () => {
+  const getQuotationState = makeGetQuotationState();
+  const mapStateToProps = (state, ownProps) => {
+    return {
+      quotation: getQuotationState(state, ownProps),
+      comments: getCommentsState(state),
+      user: getUserInfoState(state)
+    };
   };
+  return mapStateToProps;
 };
 
 const mapDispatchToProps = dispatch => {
@@ -150,7 +174,7 @@ export default compose(
     }
   ]),
   connect(
-    mapStateToProps,
+    makeMapStateToProps,
     mapDispatchToProps
   )
 )(CommentsContainer);

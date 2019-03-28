@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { WithLoader } from 'hoc';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { makeGetAuthErrorState, makeGetIsLoadingState } from 'auth/selectors';
+import { getErrorAuthState, getIsLoadingAuthState } from 'auth/selectors';
 import { login } from 'auth/actions';
-import { InputBox } from 'common';
+import { InputBox, WithLoader } from 'common';
 import { Button, H2 } from 'elements';
 import { spacing, flexCenter } from 'utils';
 
@@ -17,7 +16,7 @@ class Login extends Component {
   };
 
   static propTypes = {
-    authError: PropTypes.string,
+    error: PropTypes.string,
     isLoading: PropTypes.bool,
     actions: PropTypes.shape({
       login: PropTypes.func.isRequired
@@ -25,17 +24,17 @@ class Login extends Component {
   };
 
   static defaultProps = {
-    authError: null,
+    error: null,
     isLoading: false
   };
 
-  changeHandler = event => {
+  handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   };
 
-  submitHandler = event => {
+  handleSubmit = event => {
     event.preventDefault();
     this.props.actions.login(this.state);
     this.setState({
@@ -47,13 +46,13 @@ class Login extends Component {
 
   render() {
     const { email, password } = this.state;
-    const { authError, isLoading } = this.props;
+    const { error, isLoading } = this.props;
     return (
       <WithLoader isLoading={isLoading}>
-        <Form onSubmit={this.submitHandler}>
+        <Form onSubmit={this.handleSubmit}>
           <Title>Logowanie</Title>
           <InputBox
-            change={this.changeHandler}
+            change={this.handleChange}
             type="email"
             placeholder="Twój email"
             id="email"
@@ -61,7 +60,7 @@ class Login extends Component {
             required
           />
           <InputBox
-            change={this.changeHandler}
+            change={this.handleChange}
             type="password"
             placeholder="Twoje hasło"
             id="password"
@@ -69,29 +68,17 @@ class Login extends Component {
             required
           />
           <Button type="submit">Zaloguj się</Button>
-          <p>{authError || null}</p>
+          <p>{error || null}</p>
         </Form>
       </WithLoader>
     );
   }
 }
 
-// const mapStateToProps = state => ({
-//   authError: state.auth.authError,
-//   isLoading: state.auth.isLoading
-// });
-
-const makeMapStateToProps = () => {
-  const getAuthErrorState = makeGetAuthErrorState();
-  const getIsLoadingState = makeGetIsLoadingState();
-  const mapStateToProps = state => {
-    return {
-      authError: getAuthErrorState(state),
-      isLoading: getIsLoadingState(state)
-    };
-  };
-  return mapStateToProps;
-};
+const mapStateToProps = state => ({
+  error: getErrorAuthState(state),
+  isLoading: getIsLoadingAuthState(state)
+});
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -105,7 +92,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  makeMapStateToProps,
+  mapStateToProps,
   mapDispatchToProps
 )(Login);
 

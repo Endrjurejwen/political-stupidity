@@ -4,6 +4,7 @@ import Header from 'header/components/Header';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import { getCountersState } from 'header/selectors';
 
 const headerContainer = ({ counters }) => <Header counters={counters} />;
 
@@ -14,18 +15,9 @@ headerContainer.propTypes = {
   }).isRequired
 };
 
-const mapStateToProps = state => {
-  const { counters } = state.firestore.data;
-  const comments = counters ? counters.comments.number : '--';
-  const quotes = counters ? counters.quotes.number : '--';
-
-  return {
-    counters: {
-      comments,
-      quotes
-    }
-  };
-};
+const mapStateToProps = state => ({
+  counters: getCountersState(state)
+});
 
 export default compose(
   connect(mapStateToProps),

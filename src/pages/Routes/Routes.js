@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import { PrivateRoute, PublicRoute } from 'common';
-import { ScrollToTop } from 'hoc';
+import { PrivateRoute, PublicRoute } from 'pages/Routes';
+import { ScrollToTop } from 'common';
 import { AboutPage, TermsPage, HomePage, SignUpPage, LoginPage } from 'pages';
 import { QuotationDetailsPage, CreateQuotationPage } from 'pages/QuotesPages';
 

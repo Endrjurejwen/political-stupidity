@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { WithLoader } from 'hoc';
-import { InputBox, Spinner } from 'common';
+import { getErrorAuthState, getIsLoadingAuthState } from 'auth/selectors';
+import { InputBox, Spinner, WithLoader } from 'common';
 import { Button, H2 } from 'elements';
 import { spacing, flexCenter } from 'utils';
 import { signUp } from 'auth/actions';
@@ -18,7 +18,7 @@ class SignUp extends Component {
   };
 
   static propTypes = {
-    authError: PropTypes.string,
+    error: PropTypes.string,
     isLoading: PropTypes.bool,
     actions: PropTypes.shape({
       signUp: PropTypes.func.isRequired
@@ -26,17 +26,17 @@ class SignUp extends Component {
   };
 
   static defaultProps = {
-    authError: null,
+    error: null,
     isLoading: false
   };
 
-  changeHandler = event => {
+  handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   };
 
-  submitHandler = event => {
+  handleSubmit = event => {
     event.preventDefault();
     this.props.actions.signUp(this.state);
     this.setState({
@@ -49,13 +49,13 @@ class SignUp extends Component {
 
   render() {
     const { firstName, lastName, email, password } = this.state;
-    const { authError, isLoading } = this.props;
+    const { error, isLoading } = this.props;
     return (
       <WithLoader isLoading={isLoading}>
-        <Form onSubmit={this.submitHandler}>
+        <Form onSubmit={this.handleSubmit}>
           <Title>Rejestracja</Title>
           <InputBox
-            change={this.changeHandler}
+            change={this.handleChange}
             type="text"
             placeholder="Twoje imię"
             id="firstName"
@@ -63,7 +63,7 @@ class SignUp extends Component {
             required
           />
           <InputBox
-            change={this.changeHandler}
+            change={this.handleChange}
             type="text"
             placeholder="Twoje Nazwisko"
             id="lastName"
@@ -71,7 +71,7 @@ class SignUp extends Component {
             required
           />
           <InputBox
-            change={this.changeHandler}
+            change={this.handleChange}
             type="email"
             placeholder="Twój email"
             id="email"
@@ -79,7 +79,7 @@ class SignUp extends Component {
             required
           />
           <InputBox
-            change={this.changeHandler}
+            change={this.handleChange}
             type="password"
             placeholder="Twoje hasło"
             id="password"
@@ -89,7 +89,7 @@ class SignUp extends Component {
           />
           <Button type="submit">Załóż konto</Button>
           {isLoading && <Spinner />}
-          <p>{authError || null}</p>
+          <p>{error || null}</p>
         </Form>
       </WithLoader>
     );
@@ -97,8 +97,8 @@ class SignUp extends Component {
 }
 
 const mapStateToProps = state => ({
-  authError: state.auth.authError,
-  isLoading: state.auth.isLoading
+  error: getErrorAuthState(state),
+  isLoading: getIsLoadingAuthState(state)
 });
 
 const mapDispatchToProps = dispatch => {

@@ -1,3 +1,18 @@
+import {
+  createCommentRequest,
+  createCommentSuccess,
+  createCommentFailure,
+  deleteCommentRequest,
+  deleteCommentSuccess,
+  deleteCommentFailure,
+  likeCommentRequest,
+  likeCommentSuccess,
+  likeCommentFailure,
+  dislikeCommentRequest,
+  dislikeCommentSuccess,
+  dislikeCommentFailure
+} from 'comments/actionCreators';
+
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const CREATE_COMMENT_ERROR = 'CREATE_COMMENT_ERROR';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
@@ -12,6 +27,7 @@ export const createComment = (quotationID, comment) => {
     const firestore = getFirestore();
     const { profile } = getState().firebase;
     const authorId = getState().firebase.auth.uid;
+    dispatch(createCommentRequest());
     firestore
       .collection('quotes')
       .doc(quotationID)
@@ -23,18 +39,15 @@ export const createComment = (quotationID, comment) => {
           lastName: profile.lastName,
           id: authorId
         },
-        // userFirstName: profile.firstName,
-        // userLastName: profile.lastName,
-        // authorId,
         createAt: new Date(),
         likesCount: 0,
         likes: {}
       })
       .then(() => {
-        dispatch({ type: 'CREATE_COMMENT', comment });
+        dispatch(createCommentSuccess());
       })
       .catch(error => {
-        dispatch({ type: 'CREATE_COMMENT_ERROR', error });
+        dispatch(createCommentFailure(error));
       });
   };
 };
@@ -42,6 +55,7 @@ export const createComment = (quotationID, comment) => {
 export const deleteComment = (quotationID, commentID) => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
+    dispatch(deleteCommentRequest());
     firestore
       .collection('quotes')
       .doc(quotationID)
@@ -49,10 +63,10 @@ export const deleteComment = (quotationID, commentID) => {
       .doc(commentID)
       .delete()
       .then(() => {
-        dispatch({ type: 'DELETE_COMMENT' });
+        dispatch(deleteCommentSuccess());
       })
       .catch(error => {
-        dispatch({ type: 'DELETE_COMMENT_ERROR', error });
+        dispatch(deleteCommentFailure(error));
       });
   };
 };
@@ -63,6 +77,7 @@ export const likeComment = (quotationID, commentID) => {
     const authorId = getState().firebase.auth.uid;
     const oldLikesCount = getState().firestore.data.comments[commentID]
       .likesCount;
+    dispatch(likeCommentRequest());
     firestore
       .collection('quotes')
       .doc(quotationID)
@@ -73,10 +88,10 @@ export const likeComment = (quotationID, commentID) => {
         likesCount: oldLikesCount + 1
       })
       .then(() => {
-        dispatch({ type: 'LIKE_COMMENT' });
+        dispatch(likeCommentSuccess());
       })
       .catch(error => {
-        dispatch({ type: 'LIKE_COMMENT_ERROR', error });
+        dispatch(likeCommentFailure(error));
       });
   };
 };
@@ -88,6 +103,7 @@ export const dislikeComment = (quotationID, commentID) => {
     const authorId = getState().firebase.auth.uid;
     const oldLikesCount = getState().firestore.data.comments[commentID]
       .likesCount;
+    dispatch(dislikeCommentRequest());
     firestore
       .collection('quotes')
       .doc(quotationID)
@@ -98,10 +114,106 @@ export const dislikeComment = (quotationID, commentID) => {
         likesCount: oldLikesCount - 1
       })
       .then(() => {
-        dispatch({ type: 'DISLIKE_COMMENT' });
+        dispatch(dislikeCommentSuccess());
       })
       .catch(error => {
-        dispatch({ type: 'DISLIKE_COMMENT_ERROR', error });
+        dispatch(dislikeCommentFailure(error));
       });
   };
 };
+
+// export const createComment = (quotationID, comment) => {
+//   return (dispatch, getState, { getFirestore }) => {
+//     const firestore = getFirestore();
+//     const { profile } = getState().firebase;
+//     const authorId = getState().firebase.auth.uid;
+//     firestore
+//       .collection('quotes')
+//       .doc(quotationID)
+//       .collection('comments')
+//       .add({
+//         ...comment,
+//         author: {
+//           firstName: profile.firstName,
+//           lastName: profile.lastName,
+//           id: authorId
+//         },
+//         createAt: new Date(),
+//         likesCount: 0,
+//         likes: {}
+//       })
+//       .then(() => {
+//         dispatch({ type: 'CREATE_COMMENT', comment });
+//       })
+//       .catch(error => {
+//         dispatch({ type: 'CREATE_COMMENT_ERROR', error });
+//       });
+//   };
+// };
+
+// export const deleteComment = (quotationID, commentID) => {
+//   return (dispatch, getState, { getFirestore }) => {
+//     const firestore = getFirestore();
+//     firestore
+//       .collection('quotes')
+//       .doc(quotationID)
+//       .collection('comments')
+//       .doc(commentID)
+//       .delete()
+//       .then(() => {
+//         dispatch({ type: 'DELETE_COMMENT' });
+//       })
+//       .catch(error => {
+//         dispatch({ type: 'DELETE_COMMENT_ERROR', error });
+//       });
+//   };
+// };
+
+// export const likeComment = (quotationID, commentID) => {
+//   return (dispatch, getState, { getFirestore }) => {
+//     const firestore = getFirestore();
+//     const authorId = getState().firebase.auth.uid;
+//     const oldLikesCount = getState().firestore.data.comments[commentID]
+//       .likesCount;
+//     firestore
+//       .collection('quotes')
+//       .doc(quotationID)
+//       .collection('comments')
+//       .doc(commentID)
+//       .update({
+//         [`likes.${authorId}`]: true,
+//         likesCount: oldLikesCount + 1
+//       })
+//       .then(() => {
+//         dispatch({ type: 'LIKE_COMMENT' });
+//       })
+//       .catch(error => {
+//         dispatch({ type: 'LIKE_COMMENT_ERROR', error });
+//       });
+//   };
+// };
+
+// export const dislikeComment = (quotationID, commentID) => {
+//   return (dispatch, getState, { getFirebase, getFirestore }) => {
+//     const firebase = getFirebase();
+//     const firestore = getFirestore();
+//     const authorId = getState().firebase.auth.uid;
+//     const oldLikesCount = getState().firestore.data.comments[commentID]
+//       .likesCount;
+//     firestore
+//       .collection('quotes')
+//       .doc(quotationID)
+//       .collection('comments')
+//       .doc(commentID)
+//       .update({
+//         [`likes.${authorId}`]: firebase.firestore.FieldValue.delete(),
+//         likesCount: oldLikesCount - 1
+//       })
+//       .then(() => {
+//         dispatch({ type: 'DISLIKE_COMMENT' });
+//       })
+//       .catch(error => {
+//         dispatch({ type: 'DISLIKE_COMMENT_ERROR', error });
+//       });
+//   };
+// };
