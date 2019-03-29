@@ -7,54 +7,84 @@ import {
   LIKE_QUOTATION_ERROR,
   DISLIKE_QUOTATION,
   DISLIKE_QUOTATION_ERROR,
-  TOGGLE_SORT_ORDER
+  TOGGLE_SORT_ORDER,
+  LOAD_MORE_QUOTES_REQUEST,
+  LOAD_MORE_QUOTES_SUCCESS,
+  // LOAD_MORE_QUOTES_FAILURE,
+  RESET_PAGINATION
 } from './actions';
-
-const resetSortOrder = state => {
-  const sortTypesArray = Object.keys(state.sortTypes);
-  return sortTypesArray.reduce((acc, current) => {
-    return {
-      ...acc,
-      [current]: {
-        ...state.sortTypes[current],
-        order: 'asc'
-      }
-    };
-  }, {});
-};
-
-const changeSortOrder = (state, sortBy) => {
-  const resetSortTypes = resetSortOrder(state);
-  return {
-    ...state,
-    sortTypes: {
-      ...state.sortTypes,
-      ...resetSortTypes,
-      [sortBy]: {
-        ...state.sortTypes[sortBy],
-        order: state.sortTypes[sortBy].order === 'asc' ? 'desc' : 'asc'
-      }
-    }
-  };
-};
 
 const initialState = {
   error: null,
-  sortTypes: {
-    time: {
+  pagination: {
+    limit: 2,
+    added: 2,
+    isLoading: false
+  },
+  sortTypes: [
+    {
+      name: 'time',
       order: 'desc',
-      type: 'createAt'
+      type: 'createAt',
+      active: true
     },
-    comments: {
+    {
+      name: 'comments',
       order: 'asc',
-      type: 'commentsCount'
+      type: 'commentsCount',
+      active: false
     },
-    likes: {
+    {
+      name: 'likes',
       order: 'asc',
-      type: 'likesCount'
+      type: 'likesCount',
+      active: false
     }
-  }
+  ]
 };
+
+const changeSortOrder = (state, sortBy) => {
+  const newSortTypes = [...state.sortTypes].map(sortType => {
+    if (sortType.name === sortBy) {
+      return {
+        ...sortType,
+        order: sortType.order === 'desc' ? 'asc' : 'desc',
+        active: true
+      };
+    }
+    return {
+      ...sortType,
+      order: 'asc',
+      active: false
+    };
+  });
+  return { ...state, sortTypes: [...newSortTypes] };
+};
+
+const addPaginationLimit = state => {
+  const pagination = { ...state.pagination };
+  const newPagination = {
+    ...pagination,
+    limit: state.pagination.limit + state.pagination.added,
+    isLoading: true
+  };
+  return { ...state, pagination: { ...newPagination } };
+};
+
+const resetPagination = state => ({
+  ...state,
+  pagination: {
+    ...initialState.pagination
+  }
+});
+
+const reciveMoreQuotes = state => ({
+  ...state,
+  pagination: {
+    ...state.pagination,
+    isLoading: false
+  }
+});
 
 export default function(state = initialState, action) {
   const { type, quotation, sortBy, error } = action;
@@ -85,95 +115,67 @@ export default function(state = initialState, action) {
       return state;
     case TOGGLE_SORT_ORDER:
       return changeSortOrder(state, sortBy);
+    case LOAD_MORE_QUOTES_REQUEST:
+      console.log('try load more quotes');
+      return addPaginationLimit(state);
+    case LOAD_MORE_QUOTES_SUCCESS:
+      console.log('recive more quotes');
+      return reciveMoreQuotes(state);
+    case RESET_PAGINATION:
+      console.log('Reset pagination');
+      return resetPagination(state);
     default:
       return state;
   }
 }
 
-// // refactor? forEach
-// const changeSortOrder = (state, sortBy) => {
-//   console.log(Object.keys(state.sortTypes));
-//   return {
-//     ...state,
-//     sortTypes: {
-//       ...state.sortTypes,
-//       time: {
-//         ...state.sortTypes.time,
-//         order: 'asc'
-//       },
-//       comments: {
-//         ...state.sortTypes.comments,
-//         order: 'asc'
-//       },
-//       likes: {
-//         ...state.sortTypes.likes,
-//         order: 'asc'
-//       },
-//       [sortBy]: {
-//         ...state.sortTypes[sortBy],
-//         order: state.sortTypes[sortBy].order === 'asc' ? 'desc' : 'asc'
-//       }
-//     }
-//   };
-// };
-
-// case TOGGLE_SORT_ORDER:
-// return {
-//   ...state,
+// const initialState = {
+//   error: null,
 //   sortTypes: {
-//     [sortBy]: {
-//       order: state.sortTypes[sortBy].order === 'asc' ? 'desc' : 'asc'
+//     time: {
+//       order: 'desc',
+//       type: 'createAt',
+//       active: false
+//     },
+//     comments: {
+//       order: 'asc',
+//       type: 'commentsCount',
+//       active: false
+//     },
+//     likes: {
+//       order: 'asc',
+//       type: 'likesCount',
+//       active: false
 //     }
 //   }
 // };
 
-// const initialState = {
-//   quotes: [
-//     {
-//       body:
-//         'Wtedy, kiedy dinozaury jeszcze były, a ludzie nie mieli żadnych strzelb, nie mieli żadnej broni nowoczesnej, która pozwoliłaby ich zabić.',
-//       author: 'Ewa Kopacz',
-//       user: 'Biedny Obywatel',
-//       likes: 34,
-//       timestamp: '12-02-2019',
-//       id: 'gfh5465464654g4',
-//       comments: [
-//         {
-//           body: 'to się popisała Pani Premier :)',
-//           likes: 25,
-//           user: 'Jaś Gamoń',
-//           id: 't53regfdgdf'
-//         },
-//         {
-//           body: 'Hahahahaha, nie wierzę',
-//           likes: 7,
-//           user: 'Inny Gamoń',
-//           id: 'sdfdsf45tgdgf'
-//         }
-//       ]
-//     },
-//     {
-//       body:
-//         'Założenie przypadkowego powstania życia niczym się nie różni od rozumowania, że tornado przechodzące przez samolotowe złomowisko może złożyć boeinga 747 gotowego do lotu.',
-//       author: 'Maciej Giertych',
-//       user: 'Bartłomiej Kowalski',
-//       likes: 23,
-//       timestamp: '14-02-2019',
-//       id: 'sdfsdgfgfdgfdg',
-//       comments: [
-//         {
-//           body: 'Jego to ewolucja nie rusza',
-//           likes: 12,
-//           user: 'Jan Nowak',
-//           id: 'sgfsg45gsdgdf'
-//         },
-//         {
-//           body: 'Hahahahaha, nie no, ten to wymyślił',
-//           likes: 19,
-//           user: 'Halina Konopna',
-//           id: 'dsgdfgdff44gdfg'
-//         }
-//       ]
+// const resetSortOrder = state => {
+//   const sortTypesArray = Object.keys(state.sortTypes);
+//   return sortTypesArray.reduce((acc, current) => {
+//     return {
+//       ...acc,
+//       [current]: {
+//         ...state.sortTypes[current],
+//         order: 'asc',
+//         active: false
+//       }
+//     };
+//   }, {});
+// };
+
+// const changeSortOrder = (state, sortBy) => {
+//   const resetSortTypes = resetSortOrder(state);
+//   return {
+//     ...state,
+//     sortTypes: {
+//       ...state.sortTypes,
+//       ...resetSortTypes,
+//       [sortBy]: {
+//         ...state.sortTypes[sortBy],
+//         order: state.sortTypes[sortBy].order === 'asc' ? 'desc' : 'asc',
+//         active: true
+//       }
 //     }
-//   ]
+//   };
 // };

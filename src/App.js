@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Global from 'Global';
 import Layout from 'layout/components/Layout';
-import store from 'store';
+import { store } from 'store';
 import { Routes } from 'pages';
 
 class App extends Component {

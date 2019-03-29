@@ -6,17 +6,23 @@ import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
 import { getUserInfoState } from 'auth/selectors';
-import { getQuotesState, getSortOrderState } from 'quotes/selectors';
+import { getCountersState } from 'header/selectors';
+import {
+  getQuotesState,
+  getSortOrderState,
+  getPaginationState
+} from 'quotes/selectors';
 import Panel from 'quotes/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
-import { WithLoader, WithEmptyInfo } from 'common';
+import { WithLoader, WithEmptyInfo, withInfiniteScroll } from 'common';
 import { quotationType, firebaseType } from 'quotes/types';
 import { H5 } from 'elements';
 import {
   likeQuotation,
   dislikeQuotation,
   deleteQuotation,
-  sortQuotes
+  sortQuotes,
+  loadMoreQuotes
 } from 'quotes/actions';
 
 class QuotesApp extends PureComponent {
@@ -47,16 +53,29 @@ class QuotesApp extends PureComponent {
 
   // workaround dla problemu z dodawaniem cytatów po ponownym wejściu
   componentDidMount = () => {
-    const { firestore, sortOrder } = this.props;
+    const { firestore, sortOrder, pagination } = this.props;
     firestore.setListener({
       collection: 'quotes',
-      orderBy: ['createAt', sortOrder.time]
+      orderBy: ['createAt', sortOrder.time],
+      limit: pagination.limit
     });
+    // window.addEventListener('scroll', this.onScroll);
   };
 
   componentWillUnmount = () => {
     this.props.firestore.unsetListener('quotes');
+    // window.removeEventListener('scroll', this.onScroll);
   };
+
+  // onScroll = () => {
+  //   const { actions, counters, pagination } = this.props;
+  //   const isBottom =
+  //     window.innerHeight + window.scrollY >= document.body.offsetHeight; // "document.body.offsetHeight - 300" if you want load before bottom
+  //   const isMoreContent = pagination.limit < counters.quotes;
+  //   if (isBottom && isMoreContent && !pagination.isLoading) {
+  //     actions.loadMoreQuotes();
+  //   }
+  // };
 
   handleNavigateClick = id => {
     this.props.history.push(`/quotes/${id}`);
@@ -121,6 +140,11 @@ class QuotesApp extends PureComponent {
               onDislikeClick={this.handleDislikeClick}
               deleteClick={this.handleDeleteClick}
             />
+            {/* {this.props.pagination.isLoading && <Spinner />}
+            {this.props.pagination.limit > this.props.counters.quotes &&
+              !this.props.pagination.isLoading && (
+                <H5 center>gratulacje! dotarłeś do końca</H5>
+              )} */}
           </WithEmptyInfo>
         </WithLoader>
       </>
@@ -131,7 +155,9 @@ class QuotesApp extends PureComponent {
 const mapStateToProps = state => ({
   quotes: getQuotesState(state),
   user: getUserInfoState(state),
-  sortOrder: getSortOrderState(state)
+  sortOrder: getSortOrderState(state),
+  pagination: getPaginationState(state),
+  counters: getCountersState(state)
 });
 
 const mapDispatchToProps = dispatch => {
@@ -141,7 +167,8 @@ const mapDispatchToProps = dispatch => {
         likeQuotation,
         dislikeQuotation,
         deleteQuotation,
-        sortQuotes
+        sortQuotes,
+        loadMoreQuotes
       },
       dispatch
     )
@@ -159,7 +186,8 @@ export default compose(
     // {
     //   collection: 'quotes'
     // }
-  ])
+  ]),
+  withInfiniteScroll({ counterName: 'quotes', actionName: 'loadMoreQuotes' })
 )(QuotesApp);
 
 // let quotesBox;

@@ -4,7 +4,7 @@ import { Spinner } from 'common';
 // const withLoader = propName => WrappedComponent => {
 //   return class LoaderHOC extends Component {
 //     render() {
-//       return this.props[propName] ? (
+//       return !this.props[propName] ? (
 //         <Spinner />
 //       ) : (
 //         <WrappedComponent {...this.props} />

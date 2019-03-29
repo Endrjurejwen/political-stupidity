@@ -4,7 +4,7 @@ import { Router } from 'react-router-dom';
 import { render } from 'react-testing-library';
 
 import { Provider } from 'react-redux';
-import store from 'store';
+import { store } from 'store';
 
 export const renderWithRedux = ui => {
   return {
