@@ -9,7 +9,7 @@ import { actionTypes } from 'redux-firestore';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
 import { getUserInfoState } from 'auth/selectors';
 import { makeGetQuotationState } from 'quotes/selectors';
-import { quotationType } from 'quotes/types';
+import { quotationType } from 'quotes/propTypes';
 import { LikeButton, CloseButton, WithLoader } from 'common';
 import { Button } from 'elements';
 import {

@@ -1,21 +1,28 @@
 import {
-  CREATE_QUOTATION,
-  CREATE_QUOTATION_ERROR,
-  DELETE_QUOTATION,
-  DELETE_QUOTATION_ERROR,
-  LIKE_QUOTATION,
-  LIKE_QUOTATION_ERROR,
-  DISLIKE_QUOTATION,
-  DISLIKE_QUOTATION_ERROR,
-  TOGGLE_SORT_ORDER,
+  CREATE_QUOTATION_REQUEST,
+  CREATE_QUOTATION_SUCCESS,
+  CREATE_QUOTATION_FAILURE,
+  DELETE_QUOTATION_REQUEST,
+  DELETE_QUOTATION_SUCCESS,
+  DELETE_QUOTATION_FAILURE,
+  LIKE_QUOTATION_REQUEST,
+  LIKE_QUOTATION_SUCCESS,
+  LIKE_QUOTATION_FAILURE,
+  DISLIKE_QUOTATION_REQUEST,
+  DISLIKE_QUOTATION_SUCCESS,
+  DISLIKE_QUOTATION_FAILURE,
+  SORT_QUOTES_REQUEST,
+  SORT_QUOTES_SUCCESS,
+  SORT_QUOTES_FAILURE,
   LOAD_MORE_QUOTES_REQUEST,
   LOAD_MORE_QUOTES_SUCCESS,
-  // LOAD_MORE_QUOTES_FAILURE,
+  LOAD_MORE_QUOTES_FAILURE,
   RESET_PAGINATION
-} from './actions';
+} from './actionTypes';
 
 const initialState = {
   error: null,
+  // isLoading: false,
   pagination: {
     limit: 2,
     added: 2,
@@ -86,43 +93,53 @@ const reciveMoreQuotes = state => ({
   }
 });
 
+const sendRequest = state => ({ ...state, error: null });
+const reciveResult = state => ({ ...state });
+const reciveError = (state, action) => ({
+  ...state,
+  error: action.error.message
+});
+
 export default function(state = initialState, action) {
-  const { type, quotation, sortBy, error } = action;
+  const { type, sortBy } = action;
   switch (type) {
-    case CREATE_QUOTATION:
-      console.log('Created Quotation', quotation);
-      return state;
-    case CREATE_QUOTATION_ERROR:
-      console.log('create quotation error', error);
-      return state;
-    case DELETE_QUOTATION:
-      console.log('dellete document from collection');
-      return state;
-    case DELETE_QUOTATION_ERROR:
-      console.log('dellete document from collection error', error);
-      return state;
-    case LIKE_QUOTATION:
-      console.log('Add to Favorite');
-      return state;
-    case LIKE_QUOTATION_ERROR:
-      console.log('Add to Favorite error', error);
-      return state;
-    case DISLIKE_QUOTATION:
-      console.log('Remove from favorites');
-      return state;
-    case DISLIKE_QUOTATION_ERROR:
-      console.log('Remove from favorites error', error);
-      return state;
-    case TOGGLE_SORT_ORDER:
+    case CREATE_QUOTATION_REQUEST:
+      return sendRequest(state);
+    case CREATE_QUOTATION_SUCCESS:
+      return reciveResult(state);
+    case CREATE_QUOTATION_FAILURE:
+      return reciveError(state, action);
+    case DELETE_QUOTATION_REQUEST:
+      return sendRequest(state);
+    case DELETE_QUOTATION_SUCCESS:
+      return reciveResult(state);
+    case DELETE_QUOTATION_FAILURE:
+      return reciveError(state, action);
+    case LIKE_QUOTATION_REQUEST:
+      return sendRequest(state);
+    case LIKE_QUOTATION_SUCCESS:
+      return reciveResult(state);
+    case LIKE_QUOTATION_FAILURE:
+      return reciveError(state, action);
+    case DISLIKE_QUOTATION_REQUEST:
+      return sendRequest(state);
+    case DISLIKE_QUOTATION_SUCCESS:
+      return reciveResult(state);
+    case DISLIKE_QUOTATION_FAILURE:
+      return reciveError(state, action);
+    case SORT_QUOTES_REQUEST:
       return changeSortOrder(state, sortBy);
+    case SORT_QUOTES_SUCCESS:
+      return reciveResult(state);
+    case SORT_QUOTES_FAILURE:
+      return reciveError(state, action);
     case LOAD_MORE_QUOTES_REQUEST:
-      console.log('try load more quotes');
       return addPaginationLimit(state);
     case LOAD_MORE_QUOTES_SUCCESS:
-      console.log('recive more quotes');
       return reciveMoreQuotes(state);
+    case LOAD_MORE_QUOTES_FAILURE:
+      return reciveError(state);
     case RESET_PAGINATION:
-      console.log('Reset pagination');
       return resetPagination(state);
     default:
       return state;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Spinner } from 'common';
 import { H5 } from 'elements';
 
@@ -7,6 +8,19 @@ const withInfiniteScroll = ({
   actionName
 }) => WrappedComponent => {
   return class extends Component {
+    static propTypes = {
+      actions: PropTypes.shape({
+        [actionName]: PropTypes.func.isRequired
+      }).isRequired,
+      counters: PropTypes.shape({
+        [counterName]: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+      }).isRequired,
+      pagination: PropTypes.shape({
+        limit: PropTypes.number.isRequired,
+        isLoading: PropTypes.bool.isRequired
+      }).isRequired
+    };
+
     componentDidMount = () => {
       window.addEventListener('scroll', this.onScroll);
     };
@@ -31,7 +45,7 @@ const withInfiniteScroll = ({
         <>
           <WrappedComponent {...this.props} />
           {pagination.isLoading && <Spinner />}
-          {pagination.limit > counters[counterName] &&
+          {pagination.limit >= counters[counterName] &&
             !pagination.isLoading && (
               <H5 center>gratulacje! dotarłeś do końca</H5>
             )}

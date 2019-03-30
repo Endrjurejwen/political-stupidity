@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { quotationType } from 'quotes/types';
+import { quotationType } from 'quotes/propTypes';
 import { Card } from 'elements';
 import { spacing, flexCenter } from 'utils';
 

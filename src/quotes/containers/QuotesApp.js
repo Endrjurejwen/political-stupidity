@@ -15,7 +15,7 @@ import {
 import Panel from 'quotes/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
 import { WithLoader, WithEmptyInfo, withInfiniteScroll } from 'common';
-import { quotationType, firebaseType } from 'quotes/types';
+import { quotationType, firebaseType } from 'quotes/propTypes';
 import { H5 } from 'elements';
 import {
   likeQuotation,
@@ -42,6 +42,10 @@ class QuotesApp extends PureComponent {
       comments: PropTypes.string.isRequired,
       likes: PropTypes.string.isRequired
     }).isRequired,
+    pagination: PropTypes.shape({
+      limit: PropTypes.number.isRequired,
+      isLoading: PropTypes.bool.isRequired
+    }).isRequired,
     firestore: firebaseType.isRequired,
     history: ReactRouterPropTypes.history.isRequired
   };
@@ -59,41 +63,15 @@ class QuotesApp extends PureComponent {
       orderBy: ['createAt', sortOrder.time],
       limit: pagination.limit
     });
-    // window.addEventListener('scroll', this.onScroll);
   };
 
   componentWillUnmount = () => {
     this.props.firestore.unsetListener('quotes');
-    // window.removeEventListener('scroll', this.onScroll);
   };
-
-  // onScroll = () => {
-  //   const { actions, counters, pagination } = this.props;
-  //   const isBottom =
-  //     window.innerHeight + window.scrollY >= document.body.offsetHeight; // "document.body.offsetHeight - 300" if you want load before bottom
-  //   const isMoreContent = pagination.limit < counters.quotes;
-  //   if (isBottom && isMoreContent && !pagination.isLoading) {
-  //     actions.loadMoreQuotes();
-  //   }
-  // };
 
   handleNavigateClick = id => {
     this.props.history.push(`/quotes/${id}`);
   };
-
-  // likeOrDislikeQuotationHandler = id => {
-  //   const { user, history, quotes, actions } = this.props;
-  //   const quotation = quotes.find(quotation => quotation.id === id);
-  //   const isLiked = user.id in quotation.likes;
-  //   if (!user.id) {
-  //     history.push('/login');
-  //   }
-  //   if (user.id && !isLiked) {
-  //     actions.likeQuotation(id);
-  //   } else {
-  //     actions.dislikeQuotation(id);
-  //   }
-  // };
 
   handleLikeClick = id => {
     const { user, history, actions } = this.props;
@@ -140,11 +118,6 @@ class QuotesApp extends PureComponent {
               onDislikeClick={this.handleDislikeClick}
               deleteClick={this.handleDeleteClick}
             />
-            {/* {this.props.pagination.isLoading && <Spinner />}
-            {this.props.pagination.limit > this.props.counters.quotes &&
-              !this.props.pagination.isLoading && (
-                <H5 center>gratulacje! dotarłeś do końca</H5>
-              )} */}
           </WithEmptyInfo>
         </WithLoader>
       </>

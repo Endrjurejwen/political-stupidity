@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Quotation from 'quotes/components/Quotation';
-import { quotationType } from 'quotes/types';
+import { quotationType } from 'quotes/propTypes';
 import { LikeButton, CloseButton } from 'common';
 import { Button } from 'elements';
 
