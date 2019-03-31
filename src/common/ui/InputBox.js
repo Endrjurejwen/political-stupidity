@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { func, string } from 'prop-types';
 
 import { Input, Label } from 'elements';
 import { spacing } from 'utils';
@@ -19,16 +19,16 @@ const inputBox = ({ type, placeholder, id, change, ...rest }) => (
 );
 
 inputBox.propTypes = {
-  type: PropTypes.string,
-  placeholder: PropTypes.string,
-  id: PropTypes.string.isRequired,
-  change: PropTypes.func
+  change: func,
+  id: string.isRequired,
+  placeholder: string,
+  type: string
 };
 
 inputBox.defaultProps = {
-  type: 'text',
+  change: () => null,
   placeholder: 'name',
-  change: () => null
+  type: 'text'
 };
 
 export default inputBox;

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { number, string, shape, oneOfType } from 'prop-types';
 import styled from 'styled-components';
 import { H1, H5 } from 'elements';
 import { spacing, color } from 'utils';
@@ -21,9 +21,9 @@ const header = ({ counters }) => (
 );
 
 header.propTypes = {
-  counters: PropTypes.shape({
-    quotes: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    comments: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  counters: shape({
+    comments: oneOfType([string, number]),
+    quotes: oneOfType([string, number])
   }).isRequired
 };
 

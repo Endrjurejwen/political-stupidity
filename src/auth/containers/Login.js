@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { string, bool, shape, func } from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -16,11 +16,11 @@ class Login extends Component {
   };
 
   static propTypes = {
-    error: PropTypes.string,
-    isLoading: PropTypes.bool,
-    actions: PropTypes.shape({
-      login: PropTypes.func.isRequired
-    }).isRequired
+    actions: shape({
+      login: func.isRequired
+    }).isRequired,
+    error: string,
+    isLoading: bool
   };
 
   static defaultProps = {

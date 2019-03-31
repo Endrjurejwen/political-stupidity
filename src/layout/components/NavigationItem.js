@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { func, string } from 'prop-types';
 
 import { media, flexCenter, spacing } from 'utils';
 import { Link } from 'elements';
@@ -14,15 +14,15 @@ const navigationItem = ({ name, path, closeMenu }) => (
 );
 
 navigationItem.propTypes = {
-  name: PropTypes.string,
-  path: PropTypes.string,
-  closeMenu: PropTypes.func
+  closeMenu: func,
+  name: string,
+  path: string
 };
 
 navigationItem.defaultProps = {
+  closeMenu: () => {},
   name: 'Link',
-  path: '/',
-  closeMenu: () => {}
+  path: '/'
 };
 
 export default navigationItem;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { func, bool } from 'prop-types';
 import { Icon } from 'elements';
 import { spacing, color, flexCenter, absolute } from 'utils';
 
@@ -11,8 +11,8 @@ const CloseButton = ({ click, isDisplay }) => (
 );
 
 CloseButton.propTypes = {
-  click: PropTypes.func,
-  isDisplay: PropTypes.bool
+  click: func,
+  isDisplay: bool
 };
 
 CloseButton.defaultProps = {

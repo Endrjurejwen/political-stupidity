@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { string } from 'prop-types';
 
 import { Textarea, Label } from 'elements';
 import { spacing } from 'utils';
@@ -13,14 +13,14 @@ const textareaBox = ({ type, placeholder, id, ...rest }) => (
 );
 
 textareaBox.propTypes = {
-  type: PropTypes.string,
-  placeholder: PropTypes.string,
-  id: PropTypes.string.isRequired
+  id: string.isRequired,
+  placeholder: string,
+  type: string
 };
 
 textareaBox.defaultProps = {
-  type: 'text',
-  placeholder: 'Tutaj wpisz swój komentarz'
+  placeholder: 'Tutaj wpisz swój komentarz',
+  type: 'text'
 };
 
 export default textareaBox;

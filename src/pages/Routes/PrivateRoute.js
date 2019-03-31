@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string, func } from 'prop-types';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -13,8 +13,8 @@ const privateRoute = ({ authId, component: Component, ...rest }) => (
 );
 
 privateRoute.propTypes = {
-  authId: PropTypes.string,
-  component: PropTypes.func.isRequired
+  authId: string,
+  component: func.isRequired
 };
 
 privateRoute.defaultProps = {

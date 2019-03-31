@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { func } from 'prop-types';
 import { fixed } from 'utils';
 
 const backdrop = ({ close }) => (
@@ -8,7 +8,7 @@ const backdrop = ({ close }) => (
 );
 
 backdrop.propTypes = {
-  close: PropTypes.func.isRequired
+  close: func.isRequired
 };
 
 const Background = styled.div`

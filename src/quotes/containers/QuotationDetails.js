@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import { shape, func, element, string } from 'prop-types';
+import { match, history } from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 import Quotation from 'quotes/components/Quotation';
 import { compose, bindActionCreators } from 'redux';
@@ -20,41 +20,30 @@ import {
 
 class QuotationDetails extends Component {
   static propTypes = {
-    quotation: quotationType,
-    user: PropTypes.shape({
-      id: PropTypes.string
-    }),
-    dispatch: PropTypes.func.isRequired,
-    actions: PropTypes.shape({
-      likeQuotation: PropTypes.func.isRequired,
-      dislikeQuotation: PropTypes.func.isRequired,
-      deleteQuotation: PropTypes.func.isRequired
+    actions: shape({
+      deleteQuotation: func.isRequired,
+      dislikeQuotation: func.isRequired,
+      likeQuotation: func.isRequired
     }).isRequired,
-    children: PropTypes.element,
-    history: ReactRouterPropTypes.history.isRequired,
-    match: ReactRouterPropTypes.match.isRequired
+    children: element,
+    dispatch: func.isRequired,
+    history: history.isRequired,
+    match: match.isRequired,
+    quotation: quotationType,
+    user: shape({
+      id: string
+    })
   };
 
   static defaultProps = {
+    children: null,
     quotation: null,
-    user: null,
-    children: null
+    user: null
   };
 
   componentWillUnmount = () => {
     this.props.dispatch({ type: actionTypes.CLEAR_DATA });
   };
-
-  // likeOrDislikeQuotationHandler = () => {
-  //   const { match, quotation, user, actions } = this.props;
-
-  //   if (!(user.id in quotation.likes)) {
-  //     actions.likeQuotation(match.params.id);
-  //   }
-  //   if (user.id in quotation.likes) {
-  //     actions.dislikeQuotation(match.params.id);
-  //   }
-  // };
 
   handleLikeClick = () => {
     const { match, actions } = this.props;
@@ -101,19 +90,6 @@ class QuotationDetails extends Component {
     );
   }
 }
-
-// const mapStateToProps = (state, ownProps) => {
-//   const { id } = ownProps.match.params;
-//   const { quotes } = state.firestore.data;
-//   const quotation = quotes ? quotes[id] : null;
-
-//   return {
-//     quotation,
-//     user: {
-//       id: state.firebase.auth.uid
-//     }
-//   };
-// };
 
 const makeMapStateToProps = () => {
   const getQuotationState = makeGetQuotationState();

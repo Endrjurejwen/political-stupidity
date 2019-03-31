@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { element, bool } from 'prop-types';
 
 import { color, fixed, elevation, spacing, media } from 'utils';
 
@@ -11,8 +11,8 @@ const sideDrawer = ({ children, isOpen }) => (
 );
 
 sideDrawer.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  children: PropTypes.element.isRequired
+  children: element.isRequired,
+  isOpen: bool.isRequired
 };
 
 const Wrapper = styled.div`

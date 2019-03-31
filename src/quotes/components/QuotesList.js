@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { func, arrayOf, shape, string } from 'prop-types';
 import Quotation from 'quotes/components/Quotation';
 import { quotationType } from 'quotes/propTypes';
 import { LikeButton, CloseButton } from 'common';
@@ -48,19 +48,19 @@ const quotesList = ({
 );
 
 quotesList.propTypes = {
-  quotes: PropTypes.arrayOf(quotationType),
-  user: PropTypes.shape({
-    id: PropTypes.string
-  }),
-  navigationClick: PropTypes.func.isRequired,
-  onLikeClick: PropTypes.func.isRequired,
-  onDislikeClick: PropTypes.func.isRequired,
-  deleteClick: PropTypes.func.isRequired
+  deleteClick: func.isRequired,
+  navigationClick: func.isRequired,
+  onLikeClick: func.isRequired,
+  onDislikeClick: func.isRequired,
+  quotes: arrayOf(quotationType),
+  user: shape({
+    id: string
+  })
 };
 
 quotesList.defaultProps = {
-  user: null,
-  quotes: null
+  quotes: null,
+  user: null
 };
 
 export default quotesList;

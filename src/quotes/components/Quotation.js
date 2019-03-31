@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { arrayOf, element } from 'prop-types';
 import moment from 'moment';
 import { quotationType } from 'quotes/propTypes';
 import { Card } from 'elements';
@@ -22,15 +22,15 @@ const quotation = ({ quotation, children, closeButton }) => (
 );
 
 quotation.propTypes = {
-  quotation: quotationType,
-  children: PropTypes.arrayOf(PropTypes.element),
-  closeButton: PropTypes.element
+  children: arrayOf(element),
+  closeButton: element,
+  quotation: quotationType
 };
 
 quotation.defaultProps = {
-  quotation: null,
   children: null,
-  closeButton: null
+  closeButton: null,
+  quotation: null
 };
 
 export default quotation;

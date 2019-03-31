@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { element } from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
 import { commentType } from 'comments/propTypes';
@@ -25,14 +25,14 @@ const comment = ({ comment, closeButton, likeButton }) => (
 );
 
 comment.propTypes = {
+  closeButton: element,
   comment: commentType.isRequired,
-  likeButton: PropTypes.element,
-  closeButton: PropTypes.element
+  likeButton: element
 };
 
 comment.defaultProps = {
-  likeButton: null,
-  closeButton: null
+  closeButton: null,
+  likeButton: null
 };
 
 export default comment;

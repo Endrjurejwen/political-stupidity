@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { element } from 'prop-types';
 
 import { navigationHeight, bodyMaxWidth, elevation, spacing } from 'utils';
 
@@ -14,7 +14,7 @@ const layout = ({ children }) => (
 );
 
 layout.propTypes = {
-  children: PropTypes.element
+  children: element
 };
 
 layout.defaultProps = {

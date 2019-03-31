@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { func, bool, number, arrayOf, shape, string } from 'prop-types';
 
 import { Button } from 'elements';
 import { media, flexCenter, spacing, color } from 'utils';
@@ -33,17 +33,21 @@ const navigation = ({ desktop, closeMenu, navItems, logout, isLogin }) => (
 );
 
 navigation.propTypes = {
-  desktop: PropTypes.bool,
-  isLogin: PropTypes.number,
-  closeMenu: PropTypes.func,
-  logout: PropTypes.func,
-  navItems: PropTypes.arrayOf(PropTypes.object).isRequired
+  closeMenu: func,
+  desktop: bool,
+  isLogin: number,
+  logout: func.isRequired,
+  navItems: arrayOf(
+    shape({
+      name: string.isRequired,
+      path: string.isRequired
+    })
+  ).isRequired
 };
 
 navigation.defaultProps = {
-  desktop: false,
   closeMenu: () => null,
-  logout: () => null,
+  desktop: false,
   isLogin: 0
 };
 

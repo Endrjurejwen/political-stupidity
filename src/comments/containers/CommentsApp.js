@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { shape, arrayOf, func, string } from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import CommmentsList from 'comments/components/CommentsList';
@@ -29,18 +29,18 @@ class CommentsContainer extends Component {
   };
 
   static propTypes = {
-    actions: PropTypes.shape({
-      createComment: PropTypes.func.isRequired,
-      deleteComment: PropTypes.func.isRequired,
-      likeComment: PropTypes.func.isRequired,
-      dislikeComment: PropTypes.func.isRequired
+    actions: shape({
+      createComment: func.isRequired,
+      deleteComment: func.isRequired,
+      likeComment: func.isRequired,
+      dislikeComment: func.isRequired
     }).isRequired,
-    comments: PropTypes.arrayOf(commentType),
-    dispatch: PropTypes.func.isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.string
-    }),
-    match: ReactRouterPropTypes.match.isRequired
+    comments: arrayOf(commentType),
+    dispatch: func.isRequired,
+    match: ReactRouterPropTypes.match.isRequired,
+    user: shape({
+      id: string
+    })
   };
 
   static defaultProps = {
@@ -72,17 +72,6 @@ class CommentsContainer extends Component {
     const { match, actions } = this.props;
     actions.deleteComment(match.params.id, commentId);
   };
-
-  // likeOrDislikeCommentHandler = commentId => {
-  //   const { user, comments, actions, match } = this.props;
-  //   const comment = comments.find(comment => comment.id === commentId);
-  //   if (!(user.id in comment.likes)) {
-  //     actions.likeComment(match.params.id, commentId);
-  //   }
-  //   if (user.id in comment.likes) {
-  //     actions.dislikeComment(match.params.id, commentId);
-  //   }
-  // };
 
   handleLikeClick = commentId => {
     const { match, actions } = this.props;
@@ -123,18 +112,6 @@ class CommentsContainer extends Component {
     );
   }
 }
-
-// const mapStateToProps = (state, ownProps) => {
-//   const { id } = ownProps.match.params;
-//   const { quotes } = state.firestore.data;
-//   const quotation = quotes ? quotes[id] : null;
-
-//   return {
-//     quotation,
-//     comments: getCommentsState(state),
-//     user: getUserInfoState(state)
-//   };
-// };
 
 const makeMapStateToProps = () => {
   const getQuotationState = makeGetQuotationState();
@@ -183,28 +160,3 @@ const Title = styled(H2)`
   text-align: center;
   margin-bottom: ${spacing[3]};
 `;
-
-// let commentsBox;
-// if (!comments) {
-//   commentsBox = <Spinner />;
-// }
-// if (comments && !comments.length) {
-//   commentsBox = <H5 center>Jeszcze nikt nie dodał komentarza</H5>;
-// }
-// if (comments && comments.length) {
-// commentsBox = (
-//   <WithLoader isLoading={!comments}>
-//     <WithEmptyInfo
-//       isEmpty={!comments || !comments.length}
-//       info={<H5 center>Jeszcze nikt nie dodał komentarza</H5>}
-//     >
-//       <CommmentsList
-//         comments={comments}
-//         userId={authId}
-//         deleteClick={this.deleteCommentHandler}
-//         likeClick={this.likeOrDislikeCommentHandler}
-//       />
-//     </WithEmptyInfo>
-//   </WithLoader>
-// );
-// }

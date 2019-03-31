@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { shape, func, oneOfType, string, bool, number } from 'prop-types';
 import { Spinner } from 'common';
 import { H5 } from 'elements';
 
@@ -9,15 +9,15 @@ const withInfiniteScroll = ({
 }) => WrappedComponent => {
   return class extends Component {
     static propTypes = {
-      actions: PropTypes.shape({
-        [actionName]: PropTypes.func.isRequired
+      actions: shape({
+        [actionName]: func.isRequired
       }).isRequired,
-      counters: PropTypes.shape({
-        [counterName]: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+      counters: shape({
+        [counterName]: oneOfType([string, number])
       }).isRequired,
-      pagination: PropTypes.shape({
-        limit: PropTypes.number.isRequired,
-        isLoading: PropTypes.bool.isRequired
+      pagination: shape({
+        limit: number.isRequired,
+        isLoading: bool.isRequired
       }).isRequired
     };
 

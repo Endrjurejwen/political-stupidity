@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import { shape, func, string, bool } from 'prop-types';
+import { history } from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
@@ -30,17 +30,17 @@ const SIGN_OUT_NAVIGATION_ITEMS = [
 
 class Toolbar extends Component {
   static propTypes = {
-    isMenuOpen: PropTypes.bool,
-    actions: PropTypes.shape({
-      toggleMenu: PropTypes.func.isRequired,
-      logout: PropTypes.func.isRequired
+    actions: shape({
+      toggleMenu: func.isRequired,
+      logout: func.isRequired
     }).isRequired,
-    user: PropTypes.shape({
-      firstName: PropTypes.string,
-      lastName: PropTypes.string,
-      id: PropTypes.string
-    }),
-    history: ReactRouterPropTypes.history.isRequired
+    history: history.isRequired,
+    isMenuOpen: bool,
+    user: shape({
+      firstName: string,
+      lastName: string,
+      id: string
+    })
   };
 
   static defaultProps = {

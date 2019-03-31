@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import { shape, func } from 'prop-types';
+import { history } from 'react-router-prop-types';
 import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -17,10 +17,10 @@ class CreateQuotation extends Component {
   };
 
   static propTypes = {
-    actions: PropTypes.shape({
-      createQuotation: PropTypes.func.isRequired
+    actions: shape({
+      createQuotation: func.isRequired
     }).isRequired,
-    history: ReactRouterPropTypes.history.isRequired
+    history: history.isRequired
   };
 
   hadleChange = event => {

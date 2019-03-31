@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import { shape, arrayOf, func, bool, string, number } from 'prop-types';
+import { history } from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -27,32 +27,32 @@ import {
 
 class QuotesApp extends PureComponent {
   static propTypes = {
-    user: PropTypes.shape({
-      id: PropTypes.string
-    }),
-    quotes: PropTypes.arrayOf(quotationType),
-    actions: PropTypes.shape({
-      likeQuotation: PropTypes.func.isRequired,
-      dislikeQuotation: PropTypes.func.isRequired,
-      deleteQuotation: PropTypes.func.isRequired,
-      sortQuotes: PropTypes.func.isRequired
-    }).isRequired,
-    sortOrder: PropTypes.shape({
-      time: PropTypes.string.isRequired,
-      comments: PropTypes.string.isRequired,
-      likes: PropTypes.string.isRequired
-    }).isRequired,
-    pagination: PropTypes.shape({
-      limit: PropTypes.number.isRequired,
-      isLoading: PropTypes.bool.isRequired
+    actions: shape({
+      deleteQuotation: func.isRequired,
+      dislikeQuotation: func.isRequired,
+      likeQuotation: func.isRequired,
+      sortQuotes: func.isRequired
     }).isRequired,
     firestore: firebaseType.isRequired,
-    history: ReactRouterPropTypes.history.isRequired
+    history: history.isRequired,
+    pagination: shape({
+      isLoading: bool.isRequired,
+      limit: number.isRequired
+    }).isRequired,
+    quotes: arrayOf(quotationType),
+    sortOrder: shape({
+      comments: string.isRequired,
+      likes: string.isRequired,
+      time: string.isRequired
+    }).isRequired,
+    user: shape({
+      id: string
+    })
   };
 
   static defaultProps = {
-    user: null,
-    quotes: null
+    quotes: null,
+    user: null
   };
 
   // workaround dla problemu z dodawaniem cytatów po ponownym wejściu
@@ -162,33 +162,3 @@ export default compose(
   ]),
   withInfiniteScroll({ counterName: 'quotes', actionName: 'loadMoreQuotes' })
 )(QuotesApp);
-
-// let quotesBox;
-// if (!quotes) {
-//   quotesBox = <Spinner />;
-// }
-// if (!quotes.length) {
-//   quotesBox = (
-//     <H5 center data-testid="information">
-//       Nie ma jeszcze żadnych cytatów
-//     </H5>
-//   );
-// }
-// if (quotes.length) {
-// quotesBox = (
-//   <WithLoader isLoading={!quotes}>
-//     <WithEmptyInfo
-//       isEmpty={!quotes || !quotes.length}
-//       info={<H5 center>Nie ma jeszcze żadnych cytatów</H5>}
-//     >
-//       <QuotesList
-//         quotes={quotes}
-//         userId={authId}
-//         navigationClick={this.navigationToQuotationDetailsHandler}
-//         likeClick={this.likeOrDislikeQuotationHandler}
-//         deleteClick={this.deleteQuotationHandler}
-//       />
-//     </WithEmptyInfo>
-//   </WithLoader>
-// );
-// }

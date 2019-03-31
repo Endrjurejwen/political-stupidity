@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { arrayOf, shape, string, func } from 'prop-types';
 import Comment from 'comments/components/Comment';
 import { commentType } from 'comments/propTypes';
 import { LikeButton, CloseButton } from 'common';
@@ -39,13 +39,13 @@ const commentsList = ({
 );
 
 commentsList.propTypes = {
-  comments: PropTypes.arrayOf(commentType),
-  user: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }).isRequired,
-  onLikeClick: PropTypes.func.isRequired,
-  onDislikeClick: PropTypes.func.isRequired,
-  deleteClick: PropTypes.func.isRequired
+  comments: arrayOf(commentType),
+  deleteClick: func.isRequired,
+  onDislikeClick: func.isRequired,
+  onLikeClick: func.isRequired,
+  user: shape({
+    id: string.isRequired
+  }).isRequired
 };
 
 commentsList.defaultProps = {

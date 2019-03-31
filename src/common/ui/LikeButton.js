@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { func, bool, number } from 'prop-types';
 import { Icon } from 'elements';
 import { spacing, color, flexCenter } from 'utils';
 
@@ -14,15 +14,15 @@ const likeButton = ({ likes, click, full }) => (
 );
 
 likeButton.propTypes = {
-  likes: PropTypes.number,
-  click: PropTypes.func,
-  full: PropTypes.bool
+  click: func,
+  full: bool,
+  likes: number
 };
 
 likeButton.defaultProps = {
-  likes: 0,
   click: () => null,
-  full: false
+  full: false,
+  likes: 0
 };
 
 export default likeButton;

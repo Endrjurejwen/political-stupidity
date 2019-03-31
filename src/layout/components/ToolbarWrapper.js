@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { arrayOf, oneOfType, element, bool } from 'prop-types';
 
 import {
   color,
@@ -17,9 +17,7 @@ const toolbarWrapper = ({ children }) => (
 );
 
 toolbarWrapper.propTypes = {
-  children: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.element, PropTypes.bool])
-  ).isRequired
+  children: arrayOf(oneOfType([element, bool])).isRequired
 };
 
 export default toolbarWrapper;

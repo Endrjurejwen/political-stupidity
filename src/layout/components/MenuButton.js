@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { bool, func } from 'prop-types';
 
 import { media, color, spacing } from 'utils';
 
@@ -15,8 +15,8 @@ const menuButton = ({ toggleMenu, isMenuOpen }) => (
 );
 
 menuButton.propTypes = {
-  toggleMenu: PropTypes.func.isRequired,
-  isMenuOpen: PropTypes.bool.isRequired
+  isMenuOpen: bool.isRequired,
+  toggleMenu: func.isRequired
 };
 
 export default menuButton;
