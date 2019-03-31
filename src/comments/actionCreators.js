@@ -13,6 +13,7 @@ import {
   DISLIKE_COMMENT_FAILURE
 } from 'comments/actionTypes';
 
+// CREATE_COMMENT
 export const createCommentRequest = () => ({
   type: CREATE_COMMENT_REQUEST
 });
@@ -26,6 +27,7 @@ export const createCommentFailure = error => ({
   error
 });
 
+// DELETE_COMMENT
 export const deleteCommentRequest = () => ({
   type: DELETE_COMMENT_REQUEST
 });
@@ -39,6 +41,7 @@ export const deleteCommentFailure = error => ({
   error
 });
 
+// LIKE_COMMENT
 export const likeCommentRequest = () => ({
   type: LIKE_COMMENT_REQUEST
 });
@@ -52,6 +55,7 @@ export const likeCommentFailure = error => ({
   error
 });
 
+// DISLIKE_COMMENT
 export const dislikeCommentRequest = () => ({
   type: DISLIKE_COMMENT_REQUEST
 });

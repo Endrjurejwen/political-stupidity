@@ -39,10 +39,12 @@ export const getSortOrderState = createStructuredSelector({
 });
 
 const getId = ownProps => ownProps.match.params.id;
+const getDataQuotes = state => state.firestore.data.quotes;
 
 const getQuotation = (state, ownProps) => {
   const id = getId(ownProps);
-  const quotation = state.firestore.data.quotes[id];
+  const quotes = getDataQuotes(state);
+  const quotation = quotes ? quotes[id] : null;
   return quotation;
 };
 
