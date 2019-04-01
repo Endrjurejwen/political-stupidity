@@ -39,16 +39,16 @@ const withInfiniteScroll = ({
       }
     };
 
+    // zamienić quotes na isLoading!!!
     render() {
-      const { pagination, counters } = this.props;
+      const { pagination, counters, quotes } = this.props;
       return (
         <>
           <WrappedComponent {...this.props} />
           {pagination.isLoading && <Spinner />}
           {pagination.limit >= counters[counterName] &&
-            !pagination.isLoading && (
-              <H5 center>gratulacje! dotarłeś do końca</H5>
-            )}
+            !pagination.isLoading &&
+            quotes && <H5 center>gratulacje! dotarłeś do końca</H5>}
         </>
       );
     }

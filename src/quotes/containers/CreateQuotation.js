@@ -37,7 +37,7 @@ class CreateQuotation extends Component {
       content: '',
       politician: ''
     });
-    history.push('/home');
+    history.push('/quotes');
   };
 
   render() {

@@ -7,7 +7,7 @@ const publicRoute = ({ authId, component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      authId ? <Redirect to="/home" /> : <Component {...props} />
+      authId ? <Redirect to="/quotes" /> : <Component {...props} />
     }
   />
 );

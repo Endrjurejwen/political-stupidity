@@ -17,7 +17,8 @@ import {
   LOAD_MORE_QUOTES_REQUEST,
   LOAD_MORE_QUOTES_SUCCESS,
   LOAD_MORE_QUOTES_FAILURE,
-  RESET_PAGINATION
+  RESET_PAGINATION,
+  RESET_QUOTES_STATE
 } from './actionTypes';
 
 const initialState = {
@@ -141,6 +142,8 @@ export default function(state = initialState, action) {
       return reciveError(state);
     case RESET_PAGINATION:
       return resetPagination(state);
+    case RESET_QUOTES_STATE:
+      return initialState;
     default:
       return state;
   }

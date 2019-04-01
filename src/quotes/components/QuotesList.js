@@ -17,8 +17,8 @@ const quotesList = ({
     {quotes &&
       quotes.map(quotation => (
         <Quotation
-          quotation={quotation}
           key={quotation.id}
+          quotation={quotation}
           closeButton={
             <CloseButton
               click={() => deleteClick(quotation.id)}

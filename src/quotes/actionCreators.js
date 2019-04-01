@@ -17,7 +17,8 @@ import {
   LOAD_MORE_QUOTES_REQUEST,
   LOAD_MORE_QUOTES_SUCCESS,
   LOAD_MORE_QUOTES_FAILURE,
-  RESET_PAGINATION
+  RESET_PAGINATION,
+  RESET_QUOTES_STATE
 } from 'quotes/actionTypes';
 
 export const createQuotationRequest = () => ({
@@ -101,4 +102,8 @@ export const loadMoreQuotesFailure = error => ({
 
 export const resetPagination = () => ({
   type: RESET_PAGINATION
+});
+
+export const resetQotesState = () => ({
+  type: RESET_QUOTES_STATE
 });

@@ -1,16 +1,21 @@
-import React, { PureComponent } from 'react';
+import React, { useEffect } from 'react';
 import { shape, arrayOf, func, bool, string, number } from 'prop-types';
 import { history } from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { firestoreConnect, withFirebase } from 'react-redux-firebase';
+import {
+  firestoreConnect,
+  withFirebase,
+  withFirestore
+} from 'react-redux-firebase';
 import { getUserInfoState } from 'auth/selectors';
 import { getCountersState } from 'header/selectors';
 import {
   getQuotesState,
   getSortOrderState,
-  getPaginationState
+  getPaginationState,
+  getCurrentSortState
 } from 'quotes/selectors';
 import Panel from 'quotes/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
@@ -25,56 +30,35 @@ import {
   loadMoreQuotes
 } from 'quotes/actions';
 
-class QuotesApp extends PureComponent {
-  static propTypes = {
-    actions: shape({
-      deleteQuotation: func.isRequired,
-      dislikeQuotation: func.isRequired,
-      likeQuotation: func.isRequired,
-      sortQuotes: func.isRequired
-    }).isRequired,
-    firestore: firebaseType.isRequired,
-    history: history.isRequired,
-    pagination: shape({
-      isLoading: bool.isRequired,
-      limit: number.isRequired
-    }).isRequired,
-    quotes: arrayOf(quotationType),
-    sortOrder: shape({
-      comments: string.isRequired,
-      likes: string.isRequired,
-      time: string.isRequired
-    }).isRequired,
-    user: shape({
-      id: string
-    })
+const quotesApp = ({
+  actions,
+  firestore,
+  history,
+  location,
+  pagination,
+  quotes,
+  sortOrder,
+  currentSort,
+  user
+}) => {
+  // useEffect(() => {
+  //   console.log('useEffect');
+  //   firestore.setListener({
+  //     collection: 'quotes',
+  //     orderBy: [currentSort.type, currentSort.order],
+  //     limit: pagination.limit
+  //   });
+
+  //   return function cleanup() {
+  //     firestore.unsetListener('quotes');
+  //   };
+  // }, [user.id]);
+
+  const handleNavigateClick = id => {
+    history.push(`/quotes/${id}`);
   };
 
-  static defaultProps = {
-    quotes: null,
-    user: null
-  };
-
-  // workaround dla problemu z dodawaniem cytatów po ponownym wejściu
-  componentDidMount = () => {
-    const { firestore, sortOrder, pagination } = this.props;
-    firestore.setListener({
-      collection: 'quotes',
-      orderBy: ['createAt', sortOrder.time],
-      limit: pagination.limit
-    });
-  };
-
-  componentWillUnmount = () => {
-    this.props.firestore.unsetListener('quotes');
-  };
-
-  handleNavigateClick = id => {
-    this.props.history.push(`/quotes/${id}`);
-  };
-
-  handleLikeClick = id => {
-    const { user, history, actions } = this.props;
+  const handleLikeClick = id => {
     if (!user.id) {
       history.push('/login');
     } else {
@@ -82,8 +66,7 @@ class QuotesApp extends PureComponent {
     }
   };
 
-  handleDislikeClick = id => {
-    const { user, history, actions } = this.props;
+  const handleDislikeClick = id => {
     if (!user.id) {
       history.push('/login');
     } else {
@@ -91,43 +74,71 @@ class QuotesApp extends PureComponent {
     }
   };
 
-  handleDeleteClick = id => {
-    this.props.actions.deleteQuotation(id);
+  const handleDeleteClick = id => {
+    actions.deleteQuotation(id);
   };
 
-  handleSortClick = event => {
+  const handleSortClick = event => {
+    history.push('/quotes');
     const sortBy = event.target.dataset.sortby;
-    this.props.actions.sortQuotes(sortBy);
+    actions.sortQuotes(sortBy);
   };
 
-  render() {
-    const { quotes, user, sortOrder } = this.props;
-    return (
-      <>
-        <Panel onSortClick={this.handleSortClick} sortOrder={sortOrder} />
-        <WithLoader isLoading={!quotes}>
-          <WithEmptyInfo
-            isEmpty={!quotes || !quotes.length}
-            info={<H5 center>Nie ma jeszcze żadnych cytatów</H5>}
-          >
-            <QuotesList
-              quotes={quotes}
-              user={user}
-              navigationClick={this.handleNavigateClick}
-              onLikeClick={this.handleLikeClick}
-              onDislikeClick={this.handleDislikeClick}
-              deleteClick={this.handleDeleteClick}
-            />
-          </WithEmptyInfo>
-        </WithLoader>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <Panel onSortClick={handleSortClick} sortOrder={sortOrder} />
+      <WithLoader isLoading={!quotes}>
+        <WithEmptyInfo
+          isEmpty={!quotes || !quotes.length}
+          info={<H5 center>Nie ma jeszcze żadnych cytatów</H5>}
+        >
+          <QuotesList
+            quotes={quotes}
+            user={user}
+            navigationClick={handleNavigateClick}
+            onLikeClick={handleLikeClick}
+            onDislikeClick={handleDislikeClick}
+            deleteClick={handleDeleteClick}
+          />
+        </WithEmptyInfo>
+      </WithLoader>
+    </>
+  );
+};
+
+quotesApp.propTypes = {
+  actions: shape({
+    deleteQuotation: func.isRequired,
+    dislikeQuotation: func.isRequired,
+    likeQuotation: func.isRequired,
+    sortQuotes: func.isRequired
+  }).isRequired,
+  firestore: firebaseType.isRequired,
+  history: history.isRequired,
+  pagination: shape({
+    isLoading: bool.isRequired,
+    limit: number.isRequired
+  }).isRequired,
+  quotes: arrayOf(quotationType),
+  sortOrder: shape({
+    comments: string.isRequired,
+    likes: string.isRequired,
+    time: string.isRequired
+  }).isRequired,
+  user: shape({
+    id: string
+  })
+};
+
+quotesApp.defaultProps = {
+  quotes: null,
+  user: null
+};
 
 const mapStateToProps = state => ({
   quotes: getQuotesState(state),
   user: getUserInfoState(state),
+  currentSort: getCurrentSortState(state),
   sortOrder: getSortOrderState(state),
   pagination: getPaginationState(state),
   counters: getCountersState(state)
@@ -151,14 +162,17 @@ const mapDispatchToProps = dispatch => {
 export default compose(
   withRouter,
   withFirebase,
+  withFirestore,
   connect(
     mapStateToProps,
     mapDispatchToProps
   ),
-  firestoreConnect([
-    // {
-    //   collection: 'quotes'
-    // }
+  firestoreConnect(props => [
+    {
+      collection: 'quotes',
+      orderBy: [props.currentSort.type, props.currentSort.order],
+      limit: props.pagination.limit
+    }
   ]),
   withInfiniteScroll({ counterName: 'quotes', actionName: 'loadMoreQuotes' })
-)(QuotesApp);
+)(quotesApp);

@@ -16,13 +16,13 @@ import MenuButton from 'layout/components/MenuButton';
 import Navigation from 'layout/components/Navigation';
 
 const SIGN_IN_NAVIGATION_ITEMS = [
-  { name: 'Strona Główna', path: '/home' },
+  { name: 'Strona Główna', path: '/quotes' },
   { name: 'Idea', path: '/about' },
   { name: 'Regulamin', path: '/terms' }
 ];
 
 const SIGN_OUT_NAVIGATION_ITEMS = [
-  { name: 'Strona Główna', path: '/home' },
+  { name: 'Strona Główna', path: '/quotes' },
   { name: 'Idea', path: '/about' },
   { name: 'Regulamin', path: '/terms' },
   { name: 'Załóż konto', path: '/signup' }

@@ -62,12 +62,24 @@ export const getPaginationState = createStructuredSelector({
   isLoading: getPaginationIsLoading
 });
 
-// const getTimeSortOrder = state => state.quotes.sortTypes.time.order;
-// const getCommentsSortOrder = state => state.quotes.sortTypes.comments.order;
-// const getLikesSortOrder = state => state.quotes.sortTypes.likes.order;
+const getCurrentSort = state => {
+  const currentSort = state.quotes.sortTypes.find(
+    ({ active }) => active === true
+  );
+  return currentSort;
+};
 
-// export const getSortOrderState = createStructuredSelector({
-//   time: getTimeSortOrder,
-//   comments: getCommentsSortOrder,
-//   likes: getLikesSortOrder
-// });
+const getCurrentSortOrder = state => {
+  const { order } = getCurrentSort(state);
+  return order;
+};
+
+const getCurrentSortType = state => {
+  const { type } = getCurrentSort(state);
+  return type;
+};
+
+export const getCurrentSortState = createStructuredSelector({
+  type: getCurrentSortType,
+  order: getCurrentSortOrder
+});

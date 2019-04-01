@@ -9,7 +9,6 @@ import { QuotationDetailsPage, CreateQuotationPage } from 'pages/QuotesPages';
 const routes = () => (
   <ScrollToTop>
     <Switch>
-      <Route exact path="/home" component={HomePage} />
       <Route exact path="/about" component={AboutPage} />
       <Route exact path="/terms" component={TermsPage} />
       <PublicRoute exact path="/login" component={LoginPage} />
@@ -20,7 +19,8 @@ const routes = () => (
         component={CreateQuotationPage}
       />
       <PrivateRoute exact path="/quotes/:id" component={QuotationDetailsPage} />
-      <Redirect exact from="/" to="/home" />
+      <Route path="/quotes" exact component={HomePage} />
+      <Redirect exact from="/" to="/quotes" />
     </Switch>
   </ScrollToTop>
 );

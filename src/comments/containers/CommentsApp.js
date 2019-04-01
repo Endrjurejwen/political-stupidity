@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { shape, arrayOf, func, string } from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import { match } from 'react-router-prop-types';
 import styled from 'styled-components';
 import CommmentsList from 'comments/components/CommentsList';
 import CreateComment from 'comments/components/CreateComment';
@@ -37,7 +37,7 @@ class CommentsContainer extends Component {
     }).isRequired,
     comments: arrayOf(commentType),
     dispatch: func.isRequired,
-    match: ReactRouterPropTypes.match.isRequired,
+    match: match.isRequired,
     user: shape({
       id: string
     })

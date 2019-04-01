@@ -1,7 +1,10 @@
+import { actionTypes } from 'redux-firestore';
+
 import {
   createQuotationRequest,
   createQuotationSuccess,
-  createQuotationFailure
+  createQuotationFailure,
+  resetQotesState
 } from 'quotes/actionCreators';
 
 const createQuotation = quotation => {
@@ -9,6 +12,11 @@ const createQuotation = quotation => {
     const firestore = getFirestore();
     const { profile } = getState().firebase;
     const authorId = getState().firebase.auth.uid;
+    dispatch({
+      type: actionTypes.CLEAR_DATA,
+      preserve: { data: true, ordered: false }
+    });
+    dispatch(resetQotesState());
     dispatch(createQuotationRequest());
     firestore
       .collection('quotes')
