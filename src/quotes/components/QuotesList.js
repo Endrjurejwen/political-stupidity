@@ -13,10 +13,11 @@ const quotesList = ({
   onDislikeClick,
   deleteClick
 }) => (
-  <div data-testid="quotes-list">
+  <div id="feed" data-testid="quotes-list">
     {quotes &&
       quotes.map(quotation => (
         <Quotation
+          id={quotation.id}
           key={quotation.id}
           quotation={quotation}
           closeButton={

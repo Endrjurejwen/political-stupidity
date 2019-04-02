@@ -58,8 +58,15 @@ class QuotationDetails extends Component {
   handleDeleteClick = () => {
     const { match, history, actions } = this.props;
     actions.deleteQuotation(match.params.id);
-    history.push('/home');
+    history.push('/quotes');
   };
+
+  handleNavigateReturn = () => {
+    this.props.history.push({
+      pathname: '/quotes',
+      state: this.props.location.state
+    });
+  }
 
   render() {
     const { quotation, user, children } = this.props;
@@ -85,6 +92,7 @@ class QuotationDetails extends Component {
             }
           />
         </Quotation>
+        <button onClick={this.handleNavigateReturn}>powrót</button>
         {children}
       </WithLoader>
     );

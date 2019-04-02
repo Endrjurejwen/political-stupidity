@@ -10,12 +10,12 @@ import {
 const sortQuotes = sortBy => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
+    dispatch(resetPagination());
     dispatch({
       type: actionTypes.CLEAR_DATA,
       preserve: { data: true, ordered: false }
     });
     dispatch(sortQuotesRequest(sortBy));
-    dispatch(resetPagination());
     const sortInfo = getState().quotes.sortTypes.find(
       ({ name }) => name === sortBy
     );

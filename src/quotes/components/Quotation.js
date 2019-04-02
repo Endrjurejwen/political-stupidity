@@ -6,8 +6,8 @@ import { quotationType } from 'quotes/propTypes';
 import { Card } from 'elements';
 import { spacing, flexCenter } from 'utils';
 
-const quotation = ({ quotation, children, closeButton }) => (
-  <Card>
+const quotation = ({ quotation, children, closeButton, id }) => (
+  <Card id={id}>
     <p data-testid="quotation-content">{quotation.content}</p>
     <Author data-testid="quotation-author">{quotation.politician}</Author>
     <FlexContainer>{children}</FlexContainer>

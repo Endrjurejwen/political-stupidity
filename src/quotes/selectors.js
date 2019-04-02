@@ -83,3 +83,10 @@ export const getCurrentSortState = createStructuredSelector({
   type: getCurrentSortType,
   order: getCurrentSortOrder
 });
+
+const getIsLoading = state => state.quotes.isLoading;
+
+export const getIsLoadingState = createSelector(
+  [getIsLoading],
+  isLoading => isLoading
+);

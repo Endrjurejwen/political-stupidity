@@ -15,7 +15,8 @@ import {
   getQuotesState,
   getSortOrderState,
   getPaginationState,
-  getCurrentSortState
+  getCurrentSortState,
+  getIsLoadingState
 } from 'quotes/selectors';
 import Panel from 'quotes/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
@@ -39,7 +40,8 @@ const quotesApp = ({
   quotes,
   sortOrder,
   currentSort,
-  user
+  user,
+  isLoading
 }) => {
   // useEffect(() => {
   //   console.log('useEffect');
@@ -54,8 +56,34 @@ const quotesApp = ({
   //   };
   // }, [user.id]);
 
+  // zrobić z tego custom hooka
+  useEffect(() => {
+    const quotationCard = document.querySelector(`#${location.state}`);
+    if (quotationCard) {
+      quotationCard.scrollIntoView();
+      window.scrollBy(0, -100);
+    }
+    // Element.prototype.documentOffsetTop = function() {
+    //   return (
+    //     this.offsetTop +
+    //     (this.offsetParent ? this.offsetParent.documentOffsetTop() : 0)
+    //   );
+    // };
+    // if (quotationCard) {
+    //   const top = quotationCard.documentOffsetTop() - window.innerHeight / 4;
+    //   window.scrollTo(0, top);
+    // }
+  }, []);
+
+  // const handleNavigateClick = id => {
+  //   history.push(`/quotes/${id}`);
+  // };
+
   const handleNavigateClick = id => {
-    history.push(`/quotes/${id}`);
+    history.push({
+      pathname: `/quotes/${id}`,
+      state: id
+    });
   };
 
   const handleLikeClick = id => {
@@ -87,7 +115,7 @@ const quotesApp = ({
   return (
     <>
       <Panel onSortClick={handleSortClick} sortOrder={sortOrder} />
-      <WithLoader isLoading={!quotes}>
+      <WithLoader isLoading={!quotes || isLoading}>
         <WithEmptyInfo
           isEmpty={!quotes || !quotes.length}
           info={<H5 center>Nie ma jeszcze żadnych cytatów</H5>}
@@ -137,6 +165,7 @@ quotesApp.defaultProps = {
 
 const mapStateToProps = state => ({
   quotes: getQuotesState(state),
+  isLoading: getIsLoadingState(state),
   user: getUserInfoState(state),
   currentSort: getCurrentSortState(state),
   sortOrder: getSortOrderState(state),

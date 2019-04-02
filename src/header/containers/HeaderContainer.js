@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { number, string, shape, oneOfType } from 'prop-types';
 import Header from 'header/components/Header';
 import { withRouter } from 'react-router-dom';
