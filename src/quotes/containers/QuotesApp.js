@@ -20,7 +20,13 @@ import {
 } from 'quotes/selectors';
 import Panel from 'quotes/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
-import { WithLoader, WithEmptyInfo, withInfiniteScroll } from 'common';
+import {
+  WithLoader,
+  WithEmptyInfo,
+  withInfiniteScroll,
+  Toggle,
+  Modal
+} from 'common';
 import { quotationType, firebaseType } from 'quotes/propTypes';
 import { H5 } from 'elements';
 import {
@@ -43,46 +49,33 @@ const quotesApp = ({
   user,
   isLoading
 }) => {
-  // useEffect(() => {
-  //   console.log('useEffect');
-  //   firestore.setListener({
-  //     collection: 'quotes',
-  //     orderBy: [currentSort.type, currentSort.order],
-  //     limit: pagination.limit
-  //   });
+  useEffect(() => {
+    console.log('useEffect');
+    firestore.setListener({
+      collection: 'quotes',
+      orderBy: [currentSort.type, currentSort.order],
+      limit: pagination.limit
+    });
 
-  //   return function cleanup() {
-  //     firestore.unsetListener('quotes');
-  //   };
-  // }, [user.id]);
+    return function cleanup() {
+      firestore.unsetListener('quotes');
+    };
+  }, []);
 
   // zrobić z tego custom hooka
   useEffect(() => {
-    const quotationCard = document.querySelector(`#${location.state}`);
-    if (quotationCard) {
-      quotationCard.scrollIntoView();
-      window.scrollBy(0, -100);
+    const id = location.state ? location.state.id : 0;
+    window.scrollTo(0, 0);
+    if (id) {
+      window.scrollTo(0, id);
     }
-    // Element.prototype.documentOffsetTop = function() {
-    //   return (
-    //     this.offsetTop +
-    //     (this.offsetParent ? this.offsetParent.documentOffsetTop() : 0)
-    //   );
-    // };
-    // if (quotationCard) {
-    //   const top = quotationCard.documentOffsetTop() - window.innerHeight / 4;
-    //   window.scrollTo(0, top);
-    // }
   }, []);
 
-  // const handleNavigateClick = id => {
-  //   history.push(`/quotes/${id}`);
-  // };
-
   const handleNavigateClick = id => {
+    console.log(window.scrollY);
     history.push({
       pathname: `/quotes/${id}`,
-      state: id
+      state: { id: window.scrollY }
     });
   };
 
@@ -115,6 +108,17 @@ const quotesApp = ({
   return (
     <>
       <Panel onSortClick={handleSortClick} sortOrder={sortOrder} />
+      {/* <Toggle
+        open={show => <button onClick={show}>open</button>}
+        content={hide => (
+          <Modal close={hide}>
+            <p>
+              pptrzebujemy nieco więcej informacji jak to wygląda
+              <button onClick={hide}>Zamknij</button>
+            </p>
+          </Modal>
+        )}
+      /> */}
       <WithLoader isLoading={!quotes || isLoading}>
         <WithEmptyInfo
           isEmpty={!quotes || !quotes.length}
@@ -196,12 +200,12 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   ),
-  firestoreConnect(props => [
-    {
-      collection: 'quotes',
-      orderBy: [props.currentSort.type, props.currentSort.order],
-      limit: props.pagination.limit
-    }
-  ]),
+  // firestoreConnect(props => [
+  //   {
+  //     collection: 'quotes',
+  //     orderBy: [props.currentSort.type, props.currentSort.order],
+  //     limit: props.pagination.limit
+  //   }
+  // ]),
   withInfiniteScroll({ counterName: 'quotes', actionName: 'loadMoreQuotes' })
 )(quotesApp);

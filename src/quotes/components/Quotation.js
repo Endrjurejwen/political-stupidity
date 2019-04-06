@@ -4,9 +4,16 @@ import { arrayOf, element } from 'prop-types';
 import moment from 'moment';
 import { quotationType } from 'quotes/propTypes';
 import { Card } from 'elements';
-import { spacing, flexCenter } from 'utils';
+import { spacing, flexCenter, absolute } from 'utils';
 
-const quotation = ({ quotation, children, closeButton, id }) => (
+const quotation = ({
+  quotation,
+  children,
+  closeButton,
+  editButton,
+  id,
+  isEditButtonsDisplay
+}) => (
   <Card id={id}>
     <p data-testid="quotation-content">{quotation.content}</p>
     <Author data-testid="quotation-author">{quotation.politician}</Author>
@@ -17,19 +24,24 @@ const quotation = ({ quotation, children, closeButton, id }) => (
     <Data data-testid="quotation-timestamp">
       {moment(quotation.createAt.toDate()).calendar()}
     </Data>
-    {closeButton}
+    <EditButtonsWrapper isDisplay={isEditButtonsDisplay}>
+      {editButton}
+      {closeButton}
+    </EditButtonsWrapper>
   </Card>
 );
 
 quotation.propTypes = {
   children: arrayOf(element),
   closeButton: element,
+  editButton: element,
   quotation: quotationType
 };
 
 quotation.defaultProps = {
   children: null,
   closeButton: null,
+  editButton: null,
   quotation: null
 };
 
@@ -54,6 +66,15 @@ const UserName = styled.div`
 const Data = styled.time`
   font-size: 0.85rem;
   color: grey;
+`;
+
+const EditButtonsWrapper = styled.aside`
+  /* width: 200px;
+  height: 100px; */
+  ${absolute({ side: 'right' })};
+  ${flexCenter({ justifyContent: 'space-between' })};
+  display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
+  justify-content: space-between;
 `;
 
 // import React from 'react';

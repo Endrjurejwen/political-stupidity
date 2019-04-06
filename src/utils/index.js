@@ -2,6 +2,7 @@ export { default as media } from './media';
 export { default as elevation } from './elevation';
 export { default as fluidTypography } from './fluidTypography';
 export { default as spacing } from './spacing';
+export { default as margins } from './margins';
 export * from './colors';
 export * from './position';
 export * from './fonts';

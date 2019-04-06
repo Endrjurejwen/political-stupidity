@@ -24,6 +24,7 @@ layout.defaultProps = {
 export default layout;
 
 const Wrapper = styled.div`
+  position: relative;
   ${elevation[5]};
   padding: ${spacing[4]};
   margin: ${navigationHeight} auto 0;

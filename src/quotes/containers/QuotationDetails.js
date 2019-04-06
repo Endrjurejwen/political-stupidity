@@ -10,7 +10,8 @@ import { firestoreConnect, withFirebase } from 'react-redux-firebase';
 import { getUserInfoState } from 'auth/selectors';
 import { makeGetQuotationState } from 'quotes/selectors';
 import { quotationType } from 'quotes/propTypes';
-import { LikeButton, CloseButton, WithLoader } from 'common';
+import Confirmation from 'quotes/components/Confirmation';
+import { LikeButton, CloseButton, WithLoader, Toggle, Modal } from 'common';
 import { Button } from 'elements';
 import {
   likeQuotation,
@@ -61,12 +62,12 @@ class QuotationDetails extends Component {
     history.push('/quotes');
   };
 
-  handleNavigateReturn = () => {
-    this.props.history.push({
-      pathname: '/quotes',
-      state: this.props.location.state
-    });
-  }
+  // handleNavigateReturn = () => {
+  //   this.props.history.push({
+  //     pathname: '/quotes',
+  //     state: this.props.location.state
+  //   });
+  // }
 
   render() {
     const { quotation, user, children } = this.props;
@@ -74,10 +75,18 @@ class QuotationDetails extends Component {
       <WithLoader isLoading={!quotation}>
         <Quotation
           quotation={quotation}
+          isEditButtonsDisplay={!quotation || quotation.author.id === user.id}
           closeButton={
-            <CloseButton
-              click={this.handleDeleteClick}
-              isDisplay={!quotation || quotation.author.id === user.id}
+            <Toggle
+              open={show => <CloseButton click={show} />}
+              content={hide => (
+                <Modal close={hide}>
+                  <Confirmation
+                    onCloseClick={hide}
+                    onConfirmClick={this.handleDeleteClick}
+                  />
+                </Modal>
+              )}
             />
           }
         >
@@ -92,7 +101,7 @@ class QuotationDetails extends Component {
             }
           />
         </Quotation>
-        <button onClick={this.handleNavigateReturn}>powrót</button>
+        {/* <Button onClick={this.handleNavigateReturn}>powrót</Button> */}
         {children}
       </WithLoader>
     );
@@ -126,9 +135,14 @@ const mapDispatchToProps = dispatch => {
 export default compose(
   withRouter,
   withFirebase,
-  firestoreConnect([{ collection: 'quotes' }]),
   connect(
     makeMapStateToProps,
     mapDispatchToProps
-  )
+  ),
+  firestoreConnect(props => [
+    {
+      collection: 'quotes'
+      // doc: props.match.params.id
+    }
+  ])
 )(QuotationDetails);

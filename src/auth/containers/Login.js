@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { string, bool, shape, func } from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
@@ -8,6 +8,16 @@ import { login } from 'auth/actions';
 import { InputBox, WithLoader } from 'common';
 import { Button, H2 } from 'elements';
 import { spacing, flexCenter } from 'utils';
+
+const ErrorMessage = ({ error }) => {
+  const [isOpen, setIsOpen] = useState(true);
+  return isOpen ? (
+    <div>
+      <p>{error}</p>
+      <Button onClick={() => setIsOpen(false)}>close</Button>
+    </div>
+  ) : null;
+};
 
 class Login extends Component {
   state = {
@@ -44,6 +54,12 @@ class Login extends Component {
     });
   };
 
+  // handleCloseErrorMessage = () => {
+  //   this.setState({
+  //     isErrorInfoShown: false
+  //   });
+  // };
+
   render() {
     const { email, password } = this.state;
     const { error, isLoading } = this.props;
@@ -68,7 +84,8 @@ class Login extends Component {
             required
           />
           <Button type="submit">Zaloguj się</Button>
-          <p>{error || null}</p>
+          {/* <p>{error || null}</p> */}
+          {error && <ErrorMessage error={error} />}
         </Form>
       </WithLoader>
     );

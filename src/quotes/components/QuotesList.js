@@ -2,8 +2,9 @@ import React from 'react';
 import { func, arrayOf, shape, string } from 'prop-types';
 import Quotation from 'quotes/components/Quotation';
 import { quotationType } from 'quotes/propTypes';
-import { LikeButton, CloseButton } from 'common';
+import { LikeButton, CloseButton, EditButton, Toggle, Modal } from 'common';
 import { Button } from 'elements';
+import Confirmation from 'quotes/components/Confirmation';
 
 const quotesList = ({
   quotes,
@@ -13,19 +14,28 @@ const quotesList = ({
   onDislikeClick,
   deleteClick
 }) => (
-  <div id="feed" data-testid="quotes-list">
+  <div data-testid="quotes-list">
     {quotes &&
       quotes.map(quotation => (
         <Quotation
           id={quotation.id}
           key={quotation.id}
           quotation={quotation}
+          isEditButtonsDisplay={quotation.author.id === user.id}
           closeButton={
-            <CloseButton
-              click={() => deleteClick(quotation.id)}
-              isDisplay={quotation.author.id === user.id}
+            <Toggle
+              open={show => <CloseButton click={show} />}
+              content={hide => (
+                <Modal close={hide}>
+                  <Confirmation
+                    onCloseClick={hide}
+                    onConfirmClick={() => deleteClick(quotation.id)}
+                  />
+                </Modal>
+              )}
             />
           }
+          editButton={<EditButton />}
         >
           <Button
             secondary
@@ -65,3 +75,10 @@ quotesList.defaultProps = {
 };
 
 export default quotesList;
+
+// closeButton={
+//   <CloseButton
+//     click={() => deleteClick(quotation.id)}
+//     isDisplay={quotation.author.id === user.id}
+//   />
+// }

@@ -4,23 +4,23 @@ import { func, bool } from 'prop-types';
 import { Icon } from 'elements';
 import { spacing, color, flexCenter, absolute } from 'utils';
 
-const CloseButton = ({ click, isDisplay }) => (
-  <IconButton data-testid="button-close" onClick={click} isDisplay={isDisplay}>
-    <Icon name="close" width="1rem" />
+const EditButton = ({ click, isDisplay }) => (
+  <IconButton data-testid="button-edit" onClick={click} isDisplay={isDisplay}>
+    <Icon name="edit" />
   </IconButton>
 );
 
-CloseButton.propTypes = {
+EditButton.propTypes = {
   click: func,
   isDisplay: bool
 };
 
-CloseButton.defaultProps = {
+EditButton.defaultProps = {
   click: () => null,
   isDisplay: false
 };
 
-export default CloseButton;
+export default EditButton;
 
 const IconButton = styled.button`
   ${flexCenter};
