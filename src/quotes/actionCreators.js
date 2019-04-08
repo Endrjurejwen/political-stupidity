@@ -2,6 +2,9 @@ import {
   CREATE_QUOTATION_REQUEST,
   CREATE_QUOTATION_SUCCESS,
   CREATE_QUOTATION_FAILURE,
+  EDIT_QUOTATION_REQUEST,
+  EDIT_QUOTATION_SUCCESS,
+  EDIT_QUOTATION_FAILURE,
   DELETE_QUOTATION_REQUEST,
   DELETE_QUOTATION_SUCCESS,
   DELETE_QUOTATION_FAILURE,
@@ -31,6 +34,19 @@ export const createQuotationSuccess = () => ({
 
 export const createQuotationFailure = error => ({
   type: CREATE_QUOTATION_FAILURE,
+  error
+});
+
+export const editQuotationRequest = () => ({
+  type: EDIT_QUOTATION_REQUEST
+});
+
+export const editQuotationSuccess = () => ({
+  type: EDIT_QUOTATION_SUCCESS
+});
+
+export const editQuotationFailure = error => ({
+  type: EDIT_QUOTATION_FAILURE,
   error
 });
 

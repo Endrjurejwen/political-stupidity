@@ -6,14 +6,7 @@ import { quotationType } from 'quotes/propTypes';
 import { Card } from 'elements';
 import { spacing, flexCenter, absolute } from 'utils';
 
-const quotation = ({
-  quotation,
-  children,
-  closeButton,
-  editButton,
-  id,
-  isEditButtonsDisplay
-}) => (
+const quotation = ({ quotation, children, toolbox, id, isToolboxDisplay }) => (
   <Card id={id}>
     <p data-testid="quotation-content">{quotation.content}</p>
     <Author data-testid="quotation-author">{quotation.politician}</Author>
@@ -24,25 +17,20 @@ const quotation = ({
     <Data data-testid="quotation-timestamp">
       {moment(quotation.createAt.toDate()).calendar()}
     </Data>
-    <EditButtonsWrapper isDisplay={isEditButtonsDisplay}>
-      {editButton}
-      {closeButton}
-    </EditButtonsWrapper>
+    <ToolboxWrapper isDisplay={isToolboxDisplay}>{toolbox}</ToolboxWrapper>
   </Card>
 );
 
 quotation.propTypes = {
   children: arrayOf(element),
-  closeButton: element,
-  editButton: element,
-  quotation: quotationType
+  quotation: quotationType,
+  toolbox: HTMLBodyElement
 };
 
 quotation.defaultProps = {
   children: null,
-  closeButton: null,
-  editButton: null,
-  quotation: null
+  quotation: null,
+  toolbox: null
 };
 
 export default quotation;
@@ -68,7 +56,7 @@ const Data = styled.time`
   color: grey;
 `;
 
-const EditButtonsWrapper = styled.aside`
+const ToolboxWrapper = styled.aside`
   /* width: 200px;
   height: 100px; */
   ${absolute({ side: 'right' })};

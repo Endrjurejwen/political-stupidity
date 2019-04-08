@@ -142,6 +142,12 @@ const createQuotationReducer = makeAsyncReducerWithLoading({
   name: 'CREATE_QUOTATION',
   initialState
 });
+
+const editQuotationReducer = makeAsyncReducerWithLoading({
+  name: 'EDIT_QUOTATION',
+  initialState
+});
+
 const deleteQuotationReducer = makeAsyncReducerWithLoading({
   name: 'DELETE_QUOTATION',
   initialState
@@ -157,6 +163,7 @@ const dislikeQuotationReducer = makeAsyncReducer({
 
 const reducer = reduceReducers(
   createQuotationReducer,
+  editQuotationReducer,
   deleteQuotationReducer,
   likeQuotationReducer,
   dislikeQuotationReducer,

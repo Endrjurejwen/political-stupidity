@@ -16,6 +16,7 @@ const commentsList = ({
       <Comment
         comment={comment}
         key={comment.id}
+        isEditButtonsDisplay={comment.author.id === user.id}
         likeButton={
           <LikeButton
             likes={comment.likesCount}
@@ -27,12 +28,7 @@ const commentsList = ({
             }
           />
         }
-        closeButton={
-          <CloseButton
-            click={() => deleteClick(comment.id)}
-            isDisplay={comment.author.id === user.id}
-          />
-        }
+        closeButton={<CloseButton click={() => deleteClick(comment.id)} />}
       />
     ))}
   </>

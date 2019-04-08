@@ -4,11 +4,12 @@ const login = credentails => {
   return (dispatch, getState, { getFirebase }) => {
     const firebase = getFirebase();
     dispatch(loginRequest());
-    firebase
+    return firebase
       .auth()
       .signInWithEmailAndPassword(credentails.email, credentails.password)
-      .then(() => {
+      .then(res => {
         dispatch(loginSuccess());
+        return res;
       })
       .catch(error => {
         dispatch(loginFailure(error));

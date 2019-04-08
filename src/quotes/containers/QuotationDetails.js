@@ -6,12 +6,25 @@ import Quotation from 'quotes/components/Quotation';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
-import { firestoreConnect, withFirebase } from 'react-redux-firebase';
+import {
+  firestoreConnect,
+  withFirebase,
+  withFirestore
+} from 'react-redux-firebase';
 import { getUserInfoState } from 'auth/selectors';
 import { makeGetQuotationState } from 'quotes/selectors';
 import { quotationType } from 'quotes/propTypes';
 import Confirmation from 'quotes/components/Confirmation';
-import { LikeButton, CloseButton, WithLoader, Toggle, Modal } from 'common';
+import CreateQuotation from 'quotes/containers/CreateQuotation';
+import {
+  LikeButton,
+  CloseButton,
+  EditButton,
+  WithLoader,
+  Toggle,
+  Modal,
+  Toolbox
+} from 'common';
 import { Button } from 'elements';
 import {
   likeQuotation,
@@ -75,19 +88,29 @@ class QuotationDetails extends Component {
       <WithLoader isLoading={!quotation}>
         <Quotation
           quotation={quotation}
-          isEditButtonsDisplay={!quotation || quotation.author.id === user.id}
-          closeButton={
-            <Toggle
-              open={show => <CloseButton click={show} />}
-              content={hide => (
-                <Modal close={hide}>
-                  <Confirmation
-                    onCloseClick={hide}
-                    onConfirmClick={this.handleDeleteClick}
-                  />
-                </Modal>
-              )}
-            />
+          isToolboxDisplay={!quotation || quotation.author.id === user.id}
+          toolbox={
+            <>
+              <Toggle
+                open={show => <CloseButton click={show} />}
+                content={hide => (
+                  <Modal close={hide}>
+                    <Confirmation
+                      onCloseClick={hide}
+                      onConfirmClick={this.handleDeleteClick}
+                    />
+                  </Modal>
+                )}
+              />
+              <Toggle
+                open={show => <EditButton click={show} />}
+                content={hide => (
+                  <Modal close={hide}>
+                    <CreateQuotation quotation={quotation} closeModal={hide} />
+                  </Modal>
+                )}
+              />
+            </>
           }
         >
           <Button secondary>Zobacz źródło</Button>
@@ -101,7 +124,6 @@ class QuotationDetails extends Component {
             }
           />
         </Quotation>
-        {/* <Button onClick={this.handleNavigateReturn}>powrót</Button> */}
         {children}
       </WithLoader>
     );
@@ -135,14 +157,16 @@ const mapDispatchToProps = dispatch => {
 export default compose(
   withRouter,
   withFirebase,
+  withFirestore,
   connect(
     makeMapStateToProps,
     mapDispatchToProps
   ),
   firestoreConnect(props => [
     {
-      collection: 'quotes'
-      // doc: props.match.params.id
+      collection: 'quotes',
+      doc: props.match.params.id,
+      storeAs: 'quotation'
     }
   ])
 )(QuotationDetails);

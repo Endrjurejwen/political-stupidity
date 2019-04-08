@@ -38,7 +38,7 @@ confirmation.defaultProps = {
   onConfirmClick: () => null,
   onCloseClick: () => null,
   text:
-    'Czy potwierdzasz usunięcie cytatu? Będzie się to wiązać z usunięciem również wszystkich komentarzy, kóre pojawiły się pod tym cytatem!',
+    'Czy potwierdzasz usunięcie cytatu? Będzie się to wiązać z usunięciem również wszystkich komentarzy, kóre pojawiły się pod tym cytatem! ',
   title: 'Usunięcie cytatu'
 };
 

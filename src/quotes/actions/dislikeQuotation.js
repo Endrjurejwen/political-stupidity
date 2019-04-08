@@ -4,12 +4,22 @@ import {
   dislikeQuotationFailure
 } from 'quotes/actionCreators';
 
+const getQuotation = (state, id) => {
+  const quotation = state.firestore.data.quotation
+    ? state.firestore.data.quotation
+    : state.firestore.data.quotes[id];
+  return quotation;
+};
+
 const dislikeQuotation = id => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firebase = getFirebase();
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
-    const oldLikesCount = getState().firestore.data.quotes[id].likesCount;
+    // const oldLikesCount = getState().firestore.data.quotes[id].likesCount;
+    const state = getState();
+    const quotation = getQuotation(state, id);
+    const oldLikesCount = quotation.likesCount;
     dispatch(dislikeQuotationRequest());
     firestore
       .collection('quotes')

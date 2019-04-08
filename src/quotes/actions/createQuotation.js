@@ -18,7 +18,7 @@ const createQuotation = quotation => {
     });
     dispatch(resetQotesState());
     dispatch(createQuotationRequest());
-    firestore
+    return firestore
       .collection('quotes')
       .add({
         ...quotation,
@@ -32,8 +32,9 @@ const createQuotation = quotation => {
         likesCount: 0,
         commentsCount: 0
       })
-      .then(() => {
+      .then(res => {
         dispatch(createQuotationSuccess());
+        return res;
       })
       .catch(error => {
         dispatch(createQuotationFailure(error));

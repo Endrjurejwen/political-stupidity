@@ -30,12 +30,14 @@ class Login extends Component {
       login: func.isRequired
     }).isRequired,
     error: string,
-    isLoading: bool
+    isLoading: bool,
+    closeModal: func
   };
 
   static defaultProps = {
     error: null,
-    isLoading: false
+    isLoading: false,
+    closeModal: () => null
   };
 
   handleChange = event => {
@@ -45,8 +47,9 @@ class Login extends Component {
   };
 
   handleSubmit = event => {
+    const { actions, closeModal } = this.props;
     event.preventDefault();
-    this.props.actions.login(this.state);
+    actions.login(this.state).then(res => res && closeModal());
     this.setState({
       email: '',
       password: '',

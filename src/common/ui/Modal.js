@@ -36,11 +36,15 @@ const ModalCard = styled.div`
   transform: translate(-50%, -50%);
   ${elevation[3]};
   z-index: 100;
-  margin: 0 auto ${spacing[6]};
+  margin: 0 auto ${spacing[0]};
   background-color: #eee;
   width: 80%;
   border-radius: 8px;
   padding: ${spacing[2]} ${spacing[3]};
+  max-height: 80%;
+  min-height: 12rem;
+  min-width: 20rem;
+  overflow-y: auto;
 
   ${media.tablet`
     width: auto;
@@ -55,6 +59,8 @@ const ModalCard = styled.div`
 
 const ModalContent = styled.div`
   margin: ${spacing[3]} 0 ${spacing[2]};
+  max-height: 80%;
+  overflow-y: auto;
 `;
 
 const CloseButtonWrapper = styled.aside`

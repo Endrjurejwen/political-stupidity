@@ -49,24 +49,30 @@ const quotesApp = ({
   user,
   isLoading
 }) => {
-  useEffect(() => {
-    console.log('useEffect');
-    firestore.setListener({
-      collection: 'quotes',
-      orderBy: [currentSort.type, currentSort.order],
-      limit: pagination.limit
-    });
+  // useEffect(() => {
+  //   console.log('useEffect');
+  //   firestore.setListener({
+  //     collection: 'quotes',
+  //     orderBy: [currentSort.type, currentSort.order],
+  //     limit: pagination.limit
+  //   });
 
-    return function cleanup() {
-      firestore.unsetListener('quotes');
-    };
-  }, []);
+  //   return function cleanup() {
+  //     firestore.unsetListener({
+  //       collection: 'quotes',
+  //       orderBy: [currentSort.type, currentSort.order],
+  //       limit: pagination.limit
+  //     });
+  //   };
+  // }, []);
 
   // zrobić z tego custom hooka
   useEffect(() => {
     const id = location.state ? location.state.id : 0;
-    window.scrollTo(0, 0);
+    console.log('scroll');
+    // window.scrollTo(0, 0);
     if (id) {
+      console.log('scroll if');
       window.scrollTo(0, id);
     }
   }, []);
@@ -100,7 +106,7 @@ const quotesApp = ({
   };
 
   const handleSortClick = event => {
-    history.push('/quotes');
+    // history.push('/quotes');
     const sortBy = event.target.dataset.sortby;
     actions.sortQuotes(sortBy);
   };
@@ -108,17 +114,6 @@ const quotesApp = ({
   return (
     <>
       <Panel onSortClick={handleSortClick} sortOrder={sortOrder} />
-      {/* <Toggle
-        open={show => <button onClick={show}>open</button>}
-        content={hide => (
-          <Modal close={hide}>
-            <p>
-              pptrzebujemy nieco więcej informacji jak to wygląda
-              <button onClick={hide}>Zamknij</button>
-            </p>
-          </Modal>
-        )}
-      /> */}
       <WithLoader isLoading={!quotes || isLoading}>
         <WithEmptyInfo
           isEmpty={!quotes || !quotes.length}
@@ -200,12 +195,12 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps
   ),
-  // firestoreConnect(props => [
-  //   {
-  //     collection: 'quotes',
-  //     orderBy: [props.currentSort.type, props.currentSort.order],
-  //     limit: props.pagination.limit
-  //   }
-  // ]),
+  firestoreConnect(props => [
+    {
+      collection: 'quotes',
+      orderBy: [props.currentSort.type, props.currentSort.order],
+      limit: props.pagination.limit
+    }
+  ]),
   withInfiniteScroll({ counterName: 'quotes', actionName: 'loadMoreQuotes' })
 )(quotesApp);

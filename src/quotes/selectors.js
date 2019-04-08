@@ -42,9 +42,12 @@ const getId = ownProps => ownProps.match.params.id;
 const getDataQuotes = state => state.firestore.data.quotes;
 
 const getQuotation = (state, ownProps) => {
-  const id = getId(ownProps);
-  const quotes = getDataQuotes(state);
-  const quotation = quotes ? quotes[id] : null;
+  // const id = getId(ownProps);
+  // const quotes = getDataQuotes(state);
+  // const quotation = quotes ? quotes[id] : null;
+  const quotation = state.firestore.ordered.quotation
+    ? state.firestore.ordered.quotation[0]
+    : null;
   return quotation;
 };
 

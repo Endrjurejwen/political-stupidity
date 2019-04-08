@@ -2,9 +2,17 @@ import React from 'react';
 import { func, arrayOf, shape, string } from 'prop-types';
 import Quotation from 'quotes/components/Quotation';
 import { quotationType } from 'quotes/propTypes';
-import { LikeButton, CloseButton, EditButton, Toggle, Modal } from 'common';
+import {
+  LikeButton,
+  CloseButton,
+  EditButton,
+  Toggle,
+  Modal,
+  Toolbox
+} from 'common';
 import { Button } from 'elements';
 import Confirmation from 'quotes/components/Confirmation';
+import CreateQuotation from 'quotes/containers/CreateQuotation';
 
 const quotesList = ({
   quotes,
@@ -21,21 +29,30 @@ const quotesList = ({
           id={quotation.id}
           key={quotation.id}
           quotation={quotation}
-          isEditButtonsDisplay={quotation.author.id === user.id}
-          closeButton={
-            <Toggle
-              open={show => <CloseButton click={show} />}
-              content={hide => (
-                <Modal close={hide}>
-                  <Confirmation
-                    onCloseClick={hide}
-                    onConfirmClick={() => deleteClick(quotation.id)}
-                  />
-                </Modal>
-              )}
-            />
+          isToolboxDisplay={quotation.author.id === user.id}
+          toolbox={
+            <>
+              <Toggle
+                open={show => <CloseButton click={show} />}
+                content={hide => (
+                  <Modal close={hide}>
+                    <Confirmation
+                      onCloseClick={hide}
+                      onConfirmClick={() => deleteClick(quotation.id)}
+                    />
+                  </Modal>
+                )}
+              />
+              <Toggle
+                open={show => <EditButton click={show} />}
+                content={hide => (
+                  <Modal close={hide}>
+                    <CreateQuotation quotation={quotation} />
+                  </Modal>
+                )}
+              />
+            </>
           }
-          editButton={<EditButton />}
         >
           <Button
             secondary

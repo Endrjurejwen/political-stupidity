@@ -1,8 +1,9 @@
 import styled, { css } from 'styled-components';
 
-import { fluidTypography, textDark } from 'utils';
+import { fluidTypography, textDark, margins } from 'utils';
 
 const headings = css`
+  ${margins};
   text-transform: uppercase;
   color: ${textDark};
   font-family: sans-serif;

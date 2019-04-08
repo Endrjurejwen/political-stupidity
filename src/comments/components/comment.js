@@ -4,9 +4,14 @@ import styled from 'styled-components';
 import moment from 'moment';
 import { commentType } from 'comments/propTypes';
 import { Card } from 'elements';
-import { spacing, flexCenter } from 'utils';
+import { spacing, flexCenter, absolute } from 'utils';
 
-const comment = ({ comment, closeButton, likeButton }) => (
+const comment = ({
+  comment,
+  closeButton,
+  likeButton,
+  isEditButtonsDisplay
+}) => (
   <Card secondary>
     <Text data-testid="comment-content">{comment.content}</Text>
     <FlexContainer>
@@ -20,7 +25,9 @@ const comment = ({ comment, closeButton, likeButton }) => (
       </div>
       {likeButton}
     </FlexContainer>
-    {closeButton}
+    <EditButtonsWrapper isDisplay={isEditButtonsDisplay}>
+      {closeButton}
+    </EditButtonsWrapper>
   </Card>
 );
 
@@ -56,4 +63,13 @@ const UserName = styled.div`
 const Data = styled.time`
   font-size: 0.85rem;
   color: grey;
+`;
+
+const EditButtonsWrapper = styled.aside`
+  /* width: 200px;
+  height: 100px; */
+  ${absolute({ side: 'right' })};
+  ${flexCenter({ justifyContent: 'space-between' })};
+  display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
+  justify-content: space-between;
 `;
