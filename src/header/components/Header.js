@@ -1,23 +1,21 @@
 import React from 'react';
 import { number, string, shape, oneOfType } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { H1, H5 } from 'elements';
-import { spacing, color } from 'utils';
+import { spacing, color, elevation } from 'utils';
 
 const header = ({ counters }) => (
-  <Wrapper>
-    <Title>Polityczny Poprawczak</Title>
+  <Header>
+    <Title marginBottom={spacing[2]}>Polityczny Poprawczak</Title>
     <QuotesContainer>
-      <QuotesNumber data-testid="quotes-number">{counters.quotes}</QuotesNumber>
-      <H5>Cytaty</H5>
+      <Number data-testid="quotes-number">{counters.quotes}</Number>
+      <Caption>Mądrości</Caption>
     </QuotesContainer>
     <CommentsContainer>
-      <CommentsNumber data-testid="comments-number">
-        {counters.comments}
-      </CommentsNumber>
-      <H5>Komentarze</H5>
+      <Number data-testid="comments-number">{counters.comments}</Number>
+      <Caption>Komentarze</Caption>
     </CommentsContainer>
-  </Wrapper>
+  </Header>
 );
 
 header.propTypes = {
@@ -29,14 +27,22 @@ header.propTypes = {
 
 export default header;
 
-const Wrapper = styled.header`
+const Header = styled.header`
   text-align: center;
   display: grid;
   grid-template-columns: 1fr fit-content(50%) fit-content(50%) 1fr;
   grid-row-gap: ${spacing[1]};
   justify-items: start;
   padding-bottom: ${spacing[3]};
-  border-bottom: 1px solid ${color.textDark};
+  margin-bottom: ${spacing[4]};
+  /* border-bottom: 1px solid ${color.textDark}; */
+`;
+
+const figure = css`
+  border: 1px solid rgba(255, 199, 137, 0.4);
+  background-color: rgba(255, 199, 137, 0.4);
+  padding: ${spacing[3]};
+  border-radius: 8px;
 `;
 
 const Title = styled(H1)`
@@ -44,22 +50,28 @@ const Title = styled(H1)`
   display: inline-block;
 `;
 
-const QuotesContainer = styled.div`
+const QuotesContainer = styled.figure`
   grid-column: 2 / 3;
   justify-self: start;
+  ${figure};
 `;
 
-const CommentsContainer = styled.div`
+const CommentsContainer = styled.figure`
   grid-column: 3 / 4;
   justify-self: end;
+  ${figure};
 `;
 
-const QuotesNumber = styled.div`
-  font-size: 3rem;
+const Number = styled.span`
+  font-size: 2rem;
   line-height: 1;
 `;
 
-const CommentsNumber = styled.div`
-  font-size: 3rem;
-  line-height: 1;
+// const CommentsNumber = styled.span`
+//   font-size: 3rem;
+//   line-height: 1;
+// `;
+
+const Caption = styled.figcaption`
+  font-size: 1.1rem;
 `;

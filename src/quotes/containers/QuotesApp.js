@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { shape, arrayOf, func, bool, string, number } from 'prop-types';
-import { history } from 'react-router-prop-types';
+import { shape, arrayOf, func, bool, string } from 'prop-types';
+import { history, location } from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -20,15 +20,10 @@ import {
 } from 'quotes/selectors';
 import Panel from 'quotes/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
-import {
-  WithLoader,
-  WithEmptyInfo,
-  withInfiniteScroll,
-  Toggle,
-  Modal
-} from 'common';
-import { quotationType, firebaseType } from 'quotes/propTypes';
-import { H5 } from 'elements';
+import { WithLoader, WithEmptyInfo, withInfiniteScroll } from 'common';
+import { quotationType } from 'quotes/propTypes';
+import { H3 } from 'elements';
+import { spacing } from 'utils';
 import {
   likeQuotation,
   dislikeQuotation,
@@ -39,13 +34,10 @@ import {
 
 const quotesApp = ({
   actions,
-  firestore,
   history,
   location,
-  pagination,
   quotes,
   sortOrder,
-  currentSort,
   user,
   isLoading
 }) => {
@@ -69,16 +61,13 @@ const quotesApp = ({
   // zrobić z tego custom hooka
   useEffect(() => {
     const id = location.state ? location.state.id : 0;
-    console.log('scroll');
     // window.scrollTo(0, 0);
     if (id) {
-      console.log('scroll if');
       window.scrollTo(0, id);
     }
   }, []);
 
   const handleNavigateClick = id => {
-    console.log(window.scrollY);
     history.push({
       pathname: `/quotes/${id}`,
       state: { id: window.scrollY }
@@ -114,21 +103,24 @@ const quotesApp = ({
   return (
     <>
       <Panel onSortClick={handleSortClick} sortOrder={sortOrder} />
-      <WithLoader isLoading={!quotes || isLoading}>
-        <WithEmptyInfo
-          isEmpty={!quotes || !quotes.length}
-          info={<H5 center>Nie ma jeszcze żadnych cytatów</H5>}
-        >
-          <QuotesList
-            quotes={quotes}
-            user={user}
-            navigationClick={handleNavigateClick}
-            onLikeClick={handleLikeClick}
-            onDislikeClick={handleDislikeClick}
-            deleteClick={handleDeleteClick}
-          />
-        </WithEmptyInfo>
-      </WithLoader>
+      <section>
+        <H3 center marginBottom={spacing[6]} >Mądrości ze świata polityki</H3>
+        <WithLoader isLoading={!quotes || isLoading}>
+          <WithEmptyInfo
+            isEmpty={!quotes || !quotes.length}
+            info={<p>Nie ma jeszcze żadnych cytatów</p>}
+          >
+            <QuotesList
+              quotes={quotes}
+              user={user}
+              navigationClick={handleNavigateClick}
+              onLikeClick={handleLikeClick}
+              onDislikeClick={handleDislikeClick}
+              deleteClick={handleDeleteClick}
+            />
+          </WithEmptyInfo>
+        </WithLoader>
+      </section>
     </>
   );
 };
@@ -140,12 +132,9 @@ quotesApp.propTypes = {
     likeQuotation: func.isRequired,
     sortQuotes: func.isRequired
   }).isRequired,
-  firestore: firebaseType.isRequired,
   history: history.isRequired,
-  pagination: shape({
-    isLoading: bool.isRequired,
-    limit: number.isRequired
-  }).isRequired,
+  isLoading: bool,
+  location: location.isRequired,
   quotes: arrayOf(quotationType),
   sortOrder: shape({
     comments: string.isRequired,
@@ -158,6 +147,7 @@ quotesApp.propTypes = {
 };
 
 quotesApp.defaultProps = {
+  isLoading: false,
   quotes: null,
   user: null
 };

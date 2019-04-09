@@ -1,54 +1,69 @@
 import React from 'react';
 import styled from 'styled-components';
-import { arrayOf, element } from 'prop-types';
+import { arrayOf, element, bool } from 'prop-types';
 import moment from 'moment';
 import { quotationType } from 'quotes/propTypes';
-import { Card } from 'elements';
+import { Card, H5, Paragraph } from 'elements';
 import { spacing, flexCenter, absolute } from 'utils';
 
-const quotation = ({ quotation, children, toolbox, id, isToolboxDisplay }) => (
-  <Card id={id}>
-    <p data-testid="quotation-content">{quotation.content}</p>
-    <Author data-testid="quotation-author">{quotation.politician}</Author>
-    <FlexContainer>{children}</FlexContainer>
-    <UserName data-testid="quotation-user">
-      Opublikował {quotation.author.firstName} {quotation.author.lastName}
-    </UserName>
-    <Data data-testid="quotation-timestamp">
-      {moment(quotation.createAt.toDate()).calendar()}
-    </Data>
+const quotation = ({ quotation, children, toolbox, isToolboxDisplay }) => (
+  <Card>
+    <Header>
+      <Title data-testid="quotation-author">{quotation.politician}</Title>
+    </Header>
+    <Paragraph marginBottom={spacing[3]} data-testid="quotation-content">{quotation.content}</Paragraph>
+    <Footer>
+      <UserName data-testid="quotation-user">
+        Opublikował {quotation.author.firstName} {quotation.author.lastName}
+      </UserName>
+      <Data data-testid="quotation-timestamp">
+        {moment(quotation.createAt.toDate()).calendar()}
+      </Data>
+    </Footer>
     <ToolboxWrapper isDisplay={isToolboxDisplay}>{toolbox}</ToolboxWrapper>
+    <ActionButtonsWrapper>{children}</ActionButtonsWrapper>
   </Card>
 );
 
 quotation.propTypes = {
   children: arrayOf(element),
+  isToolboxDisplay: bool,
   quotation: quotationType,
-  toolbox: HTMLBodyElement
+  toolbox: element
 };
 
 quotation.defaultProps = {
   children: null,
+  isToolboxDisplay: false,
   quotation: null,
   toolbox: null
 };
 
 export default quotation;
 
-const Author = styled.div`
-  margin: ${spacing[2]} 0;
-  font-size: 0.9rem;
+const Title = styled(H5)`
+  width: 75%;
 `;
 
-const FlexContainer = styled.div`
+const Header = styled.header`
+  padding: ${spacing[2]} ${spacing[3]};
+  background-color: rgba(255, 199, 137, 0.4);
+  /* width: 75%; */
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: ${spacing[3]};
+`;
+
+const ActionButtonsWrapper = styled.aside`
   ${flexCenter({ justifyContent: 'space-between' })};
-  padding-bottom: ${spacing[3]};
-  border-bottom: 1px solid lightgrey;
-  margin-bottom: ${spacing[2]};
+  padding: ${spacing[3]} ${spacing[2]};
+  border-top: 1px solid lightgrey;
 `;
 
-const UserName = styled.div`
+const UserName = styled.address`
   font-size: 0.85rem;
+  font-style: normal;
+  color: inherit;
 `;
 
 const Data = styled.time`
@@ -57,61 +72,52 @@ const Data = styled.time`
 `;
 
 const ToolboxWrapper = styled.aside`
-  /* width: 200px;
-  height: 100px; */
   ${absolute({ side: 'right' })};
   ${flexCenter({ justifyContent: 'space-between' })};
   display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
   justify-content: space-between;
+  padding: 0;
+`;
+
+const Footer = styled.footer`
+  margin-bottom: ${spacing[2]};
 `;
 
 // import React from 'react';
 // import styled from 'styled-components';
-// import PropTypes from 'prop-types';
+// import { arrayOf, element, bool } from 'prop-types';
 // import moment from 'moment';
-// import { LikeButton, CloseButton } from 'common';
-// import { Button, Card } from 'elements';
-// import { spacing, flexCenter } from 'utils';
+// import { quotationType } from 'quotes/propTypes';
+// import { Card } from 'elements';
+// import { spacing, flexCenter, absolute } from 'utils';
 
-// const quotation = ({
-//   quotation,
-//   navigationClick,
-//   likeClick,
-//   deleteClick,
-//   userId
-// }) => (
+// const quotation = ({ quotation, children, toolbox, isToolboxDisplay }) => (
 //   <Card>
 //     <p data-testid="quotation-content">{quotation.content}</p>
-//     <Author data-testid="quotation-author">{quotation.author}</Author>
-//     <FlexContainer>
-//       <Button
-//         secondary
-//         data-testid="quotation-comments-button"
-//         onClick={navigationClick}
-//       >
-//         Komentarze ({quotation.commentsCount})
-//       </Button>
-//       <LikeButton
-//         likes={quotation.likesCount}
-//         click={likeClick}
-//         full={userId in quotation.likes}
-//       />
-//     </FlexContainer>
+//     <Author data-testid="quotation-author">{quotation.politician}</Author>
+//     <FlexContainer>{children}</FlexContainer>
 //     <UserName data-testid="quotation-user">
-//       Opublikował {quotation.userFirstName} {quotation.userLastName}
+//       Opublikował {quotation.author.firstName} {quotation.author.lastName}
 //     </UserName>
 //     <Data data-testid="quotation-timestamp">
 //       {moment(quotation.createAt.toDate()).calendar()}
 //     </Data>
-//     <CloseButton
-//       click={deleteClick}
-//       isDisplay={quotation.authorId === userId}
-//     />
+//     <ToolboxWrapper isDisplay={isToolboxDisplay}>{toolbox}</ToolboxWrapper>
 //   </Card>
 // );
 
 // quotation.propTypes = {
-//   quotation: PropTypes.shape().isRequired
+//   children: arrayOf(element),
+//   isToolboxDisplay: bool,
+//   quotation: quotationType,
+//   toolbox: element
+// };
+
+// quotation.defaultProps = {
+//   children: null,
+//   isToolboxDisplay: false,
+//   quotation: null,
+//   toolbox: null
 // };
 
 // export default quotation;
@@ -135,4 +141,11 @@ const ToolboxWrapper = styled.aside`
 // const Data = styled.time`
 //   font-size: 0.85rem;
 //   color: grey;
+// `;
+
+// const ToolboxWrapper = styled.aside`
+//   ${absolute({ side: 'right' })};
+//   ${flexCenter({ justifyContent: 'space-between' })};
+//   display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
+//   justify-content: space-between;
 // `;

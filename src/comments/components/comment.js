@@ -50,7 +50,7 @@ const FlexContainer = styled.div`
 `;
 
 const Text = styled.p`
-  padding: 0 0 ${spacing[2]};
+  /* padding: 0 0 ${spacing[2]}; */
 `;
 
 const UserName = styled.div`

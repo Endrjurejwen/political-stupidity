@@ -9,5 +9,9 @@ export default styled.article`
   background-color: ${props => (props.secondary ? '#e2e3e4' : '#eee')};
   max-width: 30rem;
   border-radius: 8px;
-  padding: ${spacing[2]} ${spacing[3]};
+  /* padding: ${spacing[2]} ${spacing[3]}; */
+
+  & > * {
+    padding: 0 ${spacing[3]};
+  }
 `;

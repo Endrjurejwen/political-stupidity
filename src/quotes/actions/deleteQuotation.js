@@ -1,4 +1,4 @@
-import { actionTypes } from 'redux-firestore';
+// import { actionTypes } from 'redux-firestore';
 import firebase from 'config/fbConfig';
 
 import {

@@ -3,7 +3,7 @@ import QuotationDetails from 'quotes/containers/QuotationDetails';
 import CommentsApp from 'comments/containers/CommentsApp';
 import styled from 'styled-components';
 import { Button } from 'elements';
-import { fixed, color, elevation } from 'utils';
+import { color, elevation } from 'utils';
 
 const quotationDetailsPage = ({ history, location }) => {
   const handleNavigateReturn = () => {

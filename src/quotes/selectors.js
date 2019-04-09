@@ -7,39 +7,72 @@ export const getQuotesState = createSelector(
   quotes => quotes
 );
 
-// add getSortTypes
+const getSortType = (state, sortTypeName) => {
+  return state.quotes.sortTypes.find(({ name }) => name === sortTypeName);
+};
+
+// TIME ORDER
 const getTimeSortOrder = state => {
-  const timeSortType = state.quotes.sortTypes.find(
-    ({ name }) => name === 'time'
-  );
+  const timeSortType = getSortType(state, 'time');
   const { order } = timeSortType;
   return order;
 };
 
-const getCommentsSortOrder = state => {
-  const commentsSortType = state.quotes.sortTypes.find(
-    ({ name }) => name === 'comments'
-  );
-  const { order } = commentsSortType;
-  return order;
+const getTimeSortActive = state => {
+  const timeSortType = getSortType(state, 'time');
+  const { active } = timeSortType;
+  return active;
 };
 
-const getLikesSortOrder = state => {
-  const likesSortType = state.quotes.sortTypes.find(
-    ({ name }) => name === 'likes'
-  );
-  const { order } = likesSortType;
-  return order;
-};
-
-export const getSortOrderState = createStructuredSelector({
-  time: getTimeSortOrder,
-  comments: getCommentsSortOrder,
-  likes: getLikesSortOrder
+const getTimeSortType = createStructuredSelector({
+  order: getTimeSortOrder,
+  active: getTimeSortActive
 });
 
-const getId = ownProps => ownProps.match.params.id;
-const getDataQuotes = state => state.firestore.data.quotes;
+// COMMENTS ORDER
+const getCommentsSortOrder = state => {
+  const timeSortType = getSortType(state, 'comments');
+  const { order } = timeSortType;
+  return order;
+};
+
+const getCommentsSortActive = state => {
+  const timeSortType = getSortType(state, 'comments');
+  const { active } = timeSortType;
+  return active;
+};
+
+const getCommentsSortType = createStructuredSelector({
+  order: getCommentsSortOrder,
+  active: getCommentsSortActive
+});
+
+// LIKE ORDER
+const getLikesSortOrder = state => {
+  const timeSortType = getSortType(state, 'likes');
+  const { order } = timeSortType;
+  return order;
+};
+
+const getLikesSortActive = state => {
+  const timeSortType = getSortType(state, 'likes');
+  const { active } = timeSortType;
+  return active;
+};
+
+const getLikesSortType = createStructuredSelector({
+  order: getLikesSortOrder,
+  active: getLikesSortActive
+});
+
+export const getSortOrderState = createStructuredSelector({
+  time: getTimeSortType,
+  comments: getCommentsSortType,
+  likes: getLikesSortType
+});
+
+// const getId = ownProps => ownProps.match.params.id;
+// const getDataQuotes = state => state.firestore.data.quotes;
 
 const getQuotation = (state, ownProps) => {
   // const id = getId(ownProps);

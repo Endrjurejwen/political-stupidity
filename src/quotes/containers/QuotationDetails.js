@@ -22,8 +22,7 @@ import {
   EditButton,
   WithLoader,
   Toggle,
-  Modal,
-  Toolbox
+  Modal
 } from 'common';
 import { Button } from 'elements';
 import {
@@ -74,13 +73,6 @@ class QuotationDetails extends Component {
     actions.deleteQuotation(match.params.id);
     history.push('/quotes');
   };
-
-  // handleNavigateReturn = () => {
-  //   this.props.history.push({
-  //     pathname: '/quotes',
-  //     state: this.props.location.state
-  //   });
-  // }
 
   render() {
     const { quotation, user, children } = this.props;

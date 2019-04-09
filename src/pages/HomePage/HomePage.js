@@ -5,7 +5,9 @@ import HeaderContainer from 'header/containers/HeaderContainer';
 const homePage = () => (
   <>
     <HeaderContainer />
-    <QuotesApp />
+    <main>
+      <QuotesApp />
+    </main>
   </>
 );
 

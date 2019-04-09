@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { func, element } from 'prop-types';
 import { Backdrop, CloseButton, Portal, useBodyScrollLock } from 'common';
-import { Card } from 'elements';
 import { media, fixed, elevation, spacing, flexCenter, absolute } from 'utils';
 
 const modal = ({ close, children }) => {

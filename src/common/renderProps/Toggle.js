@@ -1,3 +1,5 @@
+/* eslint no-unused-vars: 0 */
+
 import React, { useState } from 'react';
 import { func } from 'prop-types';
 
