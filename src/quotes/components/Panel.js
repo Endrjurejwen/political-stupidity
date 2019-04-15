@@ -6,10 +6,7 @@ import { flexCenter, absolute, spacing, media, color, elevation } from 'utils';
 
 const panel = ({ onSortClick, sortOrder }) => (
   <Wrapper>
-    <H3 center marginBottom={spacing[4]}>
-      Opcje filtrowania i sortowania
-    </H3>
-    <section>
+    <aside>
       <H5 marginBottom={spacing[2]}>Sortuj według:</H5>
       <SortButtonsList>
         <SortButtonListItem>
@@ -48,7 +45,7 @@ const panel = ({ onSortClick, sortOrder }) => (
           </SortButton>
         </SortButtonListItem>
       </SortButtonsList>
-    </section>
+    </aside>
   </Wrapper>
 );
 
@@ -68,12 +65,12 @@ panel.defaultProps = {
 export default panel;
 
 const Wrapper = styled.section`
-  padding: ${spacing[5]} ${spacing[6]};
+  padding: ${spacing[5]} 0;
   /* border-bottom: 1px solid ${color.textDark}; */
-  margin-bottom: ${spacing[6]};
-  margin-left: -${spacing[4]};
+  margin-bottom: ${spacing[2]};
+  /* margin-left: -${spacing[4]};
   margin-right: -${spacing[4]};
-  background-color: rgba(255, 199, 137, 0.4);
+  background-color: rgba(255, 199, 137, 0.4); */
 
   .btn--margin-bottom:not(:last-child) {
     margin-bottom: ${spacing[3]};
@@ -87,7 +84,7 @@ const Wrapper = styled.section`
 const SortButtonsList = styled.ul`
   list-style: none;
   ${flexCenter({ justifyContent: 'start', alignItems: 'start' })};
-  flex-direction: column;
+  /* flex-direction: column; */
   flex-wrap: wrap;
 
   ${media.phone`
@@ -97,17 +94,14 @@ const SortButtonsList = styled.ul`
 
 const SortButtonListItem = styled.li`
   display: block;
-  margin-bottom: ${spacing[1]};
-
-  ${media.phone`
-    margin-right: ${spacing[1]};
-  `}
+  /* margin-right: ${spacing[1]}; */
 `;
 
 const SortButton = styled.button`
   font-weight: bold;
+  font-size: 0.6rem;
   position: relative;
-  padding: ${spacing[1]} ${spacing[5]} ${spacing[1]} ${spacing[4]};
+  padding: ${spacing[1]} ${spacing[5]} ${spacing[1]} ${spacing[1]};
   border: 2px solid ${color.action};
   background-color: ${props =>
     props.secondary ? 'transparent' : color.action};

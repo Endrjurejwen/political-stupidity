@@ -10,7 +10,7 @@ import {
   withFirestore
 } from 'react-redux-firebase';
 import { getUserInfoState } from 'auth/selectors';
-import { getCountersState } from 'header/selectors';
+import { getCountersState } from 'stats/selectors';
 import {
   getQuotesState,
   getSortOrderState,
@@ -18,6 +18,8 @@ import {
   getCurrentSortState,
   getIsLoadingState
 } from 'quotes/selectors';
+import CreateQuotationButton from 'quotes/components/CreateQuotationButton';
+import LoginButton from 'auth/components/LoginButton';
 import Panel from 'quotes/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
 import { WithLoader, WithEmptyInfo, withInfiniteScroll } from 'common';
@@ -102,9 +104,9 @@ const quotesApp = ({
 
   return (
     <>
+      {user.id ? <CreateQuotationButton /> : <LoginButton />}
       <Panel onSortClick={handleSortClick} sortOrder={sortOrder} />
-      <section>
-        <H3 center marginBottom={spacing[6]} >Mądrości ze świata polityki</H3>
+      <div>
         <WithLoader isLoading={!quotes || isLoading}>
           <WithEmptyInfo
             isEmpty={!quotes || !quotes.length}
@@ -120,7 +122,7 @@ const quotesApp = ({
             />
           </WithEmptyInfo>
         </WithLoader>
-      </section>
+      </div>
     </>
   );
 };

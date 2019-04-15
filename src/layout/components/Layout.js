@@ -2,7 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { element } from 'prop-types';
 
-import { navigationHeight, bodyMaxWidth, elevation, spacing } from 'utils';
+import {
+  navigationHeight,
+  bodyMaxWidth,
+  elevation,
+  spacing,
+  media
+} from 'utils';
 
 import Toolbar from 'layout/containers/Toolbar';
 
@@ -26,11 +32,15 @@ export default layout;
 const Wrapper = styled.div`
   position: relative;
   ${elevation[5]};
-  padding: ${spacing[4]};
+  padding: ${spacing[4]} ${spacing[1]};
   margin: ${navigationHeight} auto 0;
   background-color: #eee;
   min-height: calc(
     150vh - ${navigationHeight}
   ); // z mniejszą wysokoścją pojawiają się przeskoki przy reload
   max-width: ${bodyMaxWidth};
+
+  ${media.phone`
+    padding: ${spacing[4]};
+  `}
 `;

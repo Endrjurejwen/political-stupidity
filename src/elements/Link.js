@@ -23,7 +23,7 @@ export default styled(NavLink)`
   ${media.tablet`
     ${flexCenter()};
 
-    font-size: .8rem;
+    font-size: .7rem;
     background-color: transparent;
     height: 100%;
     border-bottom: 2px solid transparent;

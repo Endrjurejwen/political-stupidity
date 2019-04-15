@@ -2,11 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { element, bool } from 'prop-types';
 
+import { Button } from 'elements';
 import { color, fixed, elevation, spacing, media } from 'utils';
 
-const sideDrawer = ({ children, isOpen }) => (
+const sideDrawer = ({ children, isOpen, isLogin, logout, closeMenu }) => (
   <Wrapper data-testid="sideDrawer" isOpen={isOpen}>
     {children}
+    <LogOutButton
+      secondary
+      isLogin={isLogin}
+      onClick={() => {
+        logout();
+        closeMenu();
+      }}
+    >
+      Wyloguj się
+    </LogOutButton>
   </Wrapper>
 );
 
@@ -32,6 +43,20 @@ const Wrapper = styled.div`
   visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
   transform: ${({ isOpen }) =>
     isOpen ? 'translateY(0)' : 'translateY(-50vh)'};
+
+  ${media.tablet`
+    display: none;
+  `}
+`;
+
+const LogOutButton = styled(Button)`
+  font-size: 0.7rem;
+  font-weight: normal;
+  font-family: inherit;
+  align-self: center;
+  color: #fff;
+  display: ${({ isLogin }) => (isLogin ? 'block' : 'none')};
+  margin-left: 10px;
 
   ${media.tablet`
     display: none;

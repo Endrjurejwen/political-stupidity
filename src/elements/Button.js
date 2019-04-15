@@ -3,7 +3,7 @@ import { color, elevation, spacing } from 'utils';
 
 export default styled.button`
   ${elevation[1]};
-
+  font-family: inherit;
   font-weight: bold;
 
   padding: ${spacing[1]} ${spacing[4]};

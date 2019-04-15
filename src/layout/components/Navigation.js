@@ -19,7 +19,7 @@ const navigation = ({ desktop, closeMenu, navItems, logout, isLogin }) => (
         />
       ))}
     </NavigationList>
-    <LogOutButton
+    {/* <LogOutButton
       secondary
       isLogin={isLogin}
       onClick={() => {
@@ -28,7 +28,7 @@ const navigation = ({ desktop, closeMenu, navItems, logout, isLogin }) => (
       }}
     >
       Wyloguj się
-    </LogOutButton>
+    </LogOutButton> */}
   </Wrapper>
 );
 
@@ -66,6 +66,7 @@ const Wrapper = styled.nav`
     display: flex;
     width: auto;
     flex-direction: row;
+    margin-left: 5rem;
   `}
 `;
 
@@ -91,6 +92,9 @@ const NavigationList = styled.ul`
 `;
 
 const LogOutButton = styled(Button)`
+  font-size: 0.7rem;
+  font-weight: normal;
+  font-family: inherit;  
   align-self: center;
   color: #fff;
   display: ${({ isLogin }) => (isLogin ? 'block' : 'none')};

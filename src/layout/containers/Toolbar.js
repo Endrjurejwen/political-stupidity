@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import { shape, func, string, bool } from 'prop-types';
 import { history } from 'react-router-prop-types';
 import { connect } from 'react-redux';
@@ -8,14 +9,18 @@ import { getIsMenuOpenState } from 'layout/selectors';
 import { getUserInfoState } from 'auth/selectors';
 import { toggleMenu } from 'layout/actions';
 import { logout } from 'auth/actions';
-import { Button } from 'elements';
+import { Button, Icon } from 'elements';
+import { media, spacing, flexCenter } from 'utils';
 import { Backdrop, Modal, Toggle } from 'common';
 import ToolbarWrapper from 'layout/components/ToolbarWrapper';
 import SideDrawer from 'layout/components/SideDrawer';
 import MenuButton from 'layout/components/MenuButton';
 import Navigation from 'layout/components/Navigation';
-import CreateQuotation from 'quotes/containers/CreateQuotation';
+// import CreateQuotation from 'quotes/containers/CreateQuotation';
+import CreateQuotationButton from 'quotes/components/CreateQuotationButton';
+import LoginButton from 'auth/components/LoginButton';
 import Login from 'auth/containers/Login';
+import UserSummary from 'auth/components/UserSummary';
 
 const SIGN_IN_NAVIGATION_ITEMS = [
   { name: 'Strona Główna', path: '/quotes' },
@@ -65,48 +70,38 @@ class Toolbar extends Component {
   };
 
   render() {
-    const { isMenuOpen, user } = this.props;
+    const { isMenuOpen, user, isLogin } = this.props;
     const links = user.id
       ? SIGN_IN_NAVIGATION_ITEMS
       : SIGN_OUT_NAVIGATION_ITEMS;
     const actionBtnText = user.id ? 'Dodaj cytat' : 'Zaloguj się';
-    const helloText = user.id ? user.firstName : null;
 
     return (
       <ToolbarWrapper>
+        <div style={{ marginRight: 'auto' }}>Klasa Polityczna</div>
         <MenuButton
           isMenuOpen={isMenuOpen}
           toggleMenu={this.handleToggleMenuClick}
         />
-        <p>
-          <strong>{helloText}</strong>
-        </p>
-        {/* <Button onClick={this.handleNavigateClick}>{actionBtnText}</Button> */}
-        <Toggle
-          open={show => <Button onClick={show}>{actionBtnText}</Button>}
-          content={hide => (
-            <Modal close={hide}>
-              {user.id ? (
-                <CreateQuotation closeModal={hide} />
-              ) : (
-                <Login closeModal={hide} />
-              )}
-            </Modal>
-          )}
-        />
-        <Navigation
-          desktop
-          isLogin={user.id ? 1 : 0}
-          navItems={links}
-          logout={this.handleLogoutClick}
-        />
-        <SideDrawer isOpen={isMenuOpen}>
-          <Navigation
+        {user.id ? <CreateQuotationButton desktop /> : <LoginButton desktop />}
+        <Navigation desktop navItems={links} />
+        <FlexContainer isLogin={!!user.id}>
+          {user.id && <UserSummary name={user.firstName} />}
+          <LogOutButton
+            secondary
             isLogin={user.id ? 1 : 0}
-            navItems={links}
-            closeMenu={this.handleToggleMenuClick}
-            logout={this.handleLogoutClick}
-          />
+            onClick={this.handleLogoutClick}
+          >
+            <Icon name="logout" color="#fff" />
+          </LogOutButton>
+        </FlexContainer>
+        <SideDrawer
+          isOpen={isMenuOpen}
+          isLogin={user.id ? 1 : 0}
+          logout={this.handleLogoutClick}
+          closeMenu={this.handleToggleMenuClick}
+        >
+          <Navigation navItems={links} closeMenu={this.handleToggleMenuClick} />
         </SideDrawer>
         {isMenuOpen && <Backdrop close={this.handleToggleMenuClick} />}
       </ToolbarWrapper>
@@ -137,6 +132,41 @@ export default withRouter(
     mapDispatchToProps
   )(Toolbar)
 );
+
+const LogOutButton = styled(Button)`
+  font-size: 0.7rem;
+  font-weight: normal;
+  font-family: inherit;
+  align-self: center;
+  color: #fff;
+  display: none;
+  margin-left: ${spacing[3]};
+  font-size: 0.9rem;
+  padding: ${spacing[1]} ${spacing[2]};
+
+  border: none;
+  line-height: 0;
+  background-color: transparent;
+  cursor: pointer;
+
+  ${media.tablet`
+    display: ${({ isLogin }) => (isLogin ? 'block' : 'none')};
+  `}
+`;
+
+const FlexContainer = styled.div`
+  display: none;
+  height: 100%;
+  padding: 0 1rem;
+  border-right: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-bottom: 2px solid transparent;
+
+  ${media.tablet`
+    display: ${({ isLogin }) => (isLogin ? 'flex' : 'none ')};
+    justify-content: space-between;
+  `}
+`;
 
 // import React, { Component } from 'react';
 // import { shape, func, string, bool } from 'prop-types';
