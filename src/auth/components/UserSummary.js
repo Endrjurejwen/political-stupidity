@@ -14,7 +14,7 @@ export default userSummary;
 
 const Wrapper = styled.div`
   ${flexCenter({ justifyContent: 'space-between' })};
-  font-size: .7rem;
+  font-size: 0.7rem;
   /* border: 2px solid transparent;
   height: 100%; */
 

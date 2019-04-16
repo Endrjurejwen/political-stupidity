@@ -19,7 +19,9 @@ import Navigation from 'layout/components/Navigation';
 // import CreateQuotation from 'quotes/containers/CreateQuotation';
 import CreateQuotationButton from 'quotes/components/CreateQuotationButton';
 import LoginButton from 'auth/components/LoginButton';
+import UserDetails from 'auth/components/UserDetails';
 import Login from 'auth/containers/Login';
+import LogoutButton from 'auth/containers/LogoutButton';
 import UserSummary from 'auth/components/UserSummary';
 
 const SIGN_IN_NAVIGATION_ITEMS = [
@@ -87,19 +89,14 @@ class Toolbar extends Component {
         <Navigation desktop navItems={links} />
         <FlexContainer isLogin={!!user.id}>
           {user.id && <UserSummary name={user.firstName} />}
-          <LogOutButton
-            secondary
-            isLogin={user.id ? 1 : 0}
-            onClick={this.handleLogoutClick}
-          >
-            <Icon name="logout" color="#fff" />
-          </LogOutButton>
+          <LogoutButton />
         </FlexContainer>
         <SideDrawer
+          user={user}
           isOpen={isMenuOpen}
-          isLogin={user.id ? 1 : 0}
-          logout={this.handleLogoutClick}
-          closeMenu={this.handleToggleMenuClick}
+          loginButton={<LoginButton closeMenu={this.handleToggleMenuClick} />}
+          logoutButton={<LogoutButton closeMenu={this.handleToggleMenuClick} />}
+          userInfo={<UserDetails user={user} />}
         >
           <Navigation navItems={links} closeMenu={this.handleToggleMenuClick} />
         </SideDrawer>

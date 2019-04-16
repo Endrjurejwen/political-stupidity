@@ -7,7 +7,11 @@ import CreateQuotation from 'quotes/containers/CreateQuotation';
 
 const createQuotationButton = ({ desktop }) => (
   <Toggle
-    open={show => <ActionButton desktop={desktop} onClick={show}>Dodaj Cytat</ActionButton>}
+    open={show => (
+      <ActionButton desktop={desktop} onClick={show}>
+        Dodaj Cytat
+      </ActionButton>
+    )}
     content={hide => (
       <Modal close={hide}>
         <CreateQuotation closeModal={hide} />

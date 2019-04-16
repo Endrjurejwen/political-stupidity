@@ -19,16 +19,6 @@ const navigation = ({ desktop, closeMenu, navItems, logout, isLogin }) => (
         />
       ))}
     </NavigationList>
-    {/* <LogOutButton
-      secondary
-      isLogin={isLogin}
-      onClick={() => {
-        logout();
-        closeMenu();
-      }}
-    >
-      Wyloguj się
-    </LogOutButton> */}
   </Wrapper>
 );
 
@@ -36,7 +26,7 @@ navigation.propTypes = {
   closeMenu: func,
   desktop: bool,
   isLogin: number,
-  logout: func.isRequired,
+  logout: func,
   navItems: arrayOf(
     shape({
       name: string.isRequired,
@@ -48,7 +38,8 @@ navigation.propTypes = {
 navigation.defaultProps = {
   closeMenu: () => null,
   desktop: false,
-  isLogin: 0
+  isLogin: 0,
+  logout: () => null
 };
 
 export default navigation;
@@ -71,7 +62,7 @@ const Wrapper = styled.nav`
 `;
 
 const NavigationList = styled.ul`
-  ${flexCenter({ justifyContent: 'space-around' })};
+  ${flexCenter({ justifyContent: 'center' })};
   flex-flow: column;
   list-style: none;
   background-color: transparent;

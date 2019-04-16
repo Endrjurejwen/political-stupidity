@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { shape, bool, string, func } from 'prop-types';
 import styled from 'styled-components';
 import { Button, H3, H5 } from 'elements';
 import { flexCenter, absolute, spacing, media, color, elevation } from 'utils';
@@ -50,12 +50,21 @@ const panel = ({ onSortClick, sortOrder }) => (
 );
 
 panel.propTypes = {
-  onSortClick: PropTypes.func,
-  sortOrder: PropTypes.shape({
-    time: PropTypes.string.isRequired,
-    comments: PropTypes.string.isRequired,
-    likes: PropTypes.string.isRequired
-  }).isRequired
+  onSortClick: func,
+  sortOrder: shape({
+    comments: shape({
+      active: bool,
+      oder: string
+    }).isRequired,
+    likes: shape({
+      active: bool,
+      oder: string
+    }).isRequired,
+    time: shape({
+      active: bool,
+      oder: string
+    }).isRequired
+  }).isRequired,
 };
 
 panel.defaultProps = {

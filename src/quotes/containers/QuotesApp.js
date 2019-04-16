@@ -104,7 +104,7 @@ const quotesApp = ({
 
   return (
     <>
-      {user.id ? <CreateQuotationButton /> : <LoginButton />}
+      {user.id ? <CreateQuotationButton /> : <LoginButton fixed />}
       <Panel onSortClick={handleSortClick} sortOrder={sortOrder} />
       <div>
         <WithLoader isLoading={!quotes || isLoading}>
@@ -139,9 +139,18 @@ quotesApp.propTypes = {
   location: location.isRequired,
   quotes: arrayOf(quotationType),
   sortOrder: shape({
-    comments: string.isRequired,
-    likes: string.isRequired,
-    time: string.isRequired
+    comments: shape({
+      active: bool,
+      oder: string
+    }).isRequired,
+    likes: shape({
+      active: bool,
+      oder: string
+    }).isRequired,
+    time: shape({
+      active: bool,
+      oder: string
+    }).isRequired
   }).isRequired,
   user: shape({
     id: string
