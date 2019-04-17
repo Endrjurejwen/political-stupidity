@@ -52,6 +52,11 @@ class CommentsContainer extends Component {
     this.props.dispatch({ type: actionTypes.CLEAR_DATA });
   };
 
+  resetTextareaSize = () => {
+    const element = document.querySelector(".resizeTextArea");
+    element.style.height = "inherit";
+  }
+
   handleChange = event => {
     this.setState({
       content: event.target.value
@@ -59,6 +64,8 @@ class CommentsContainer extends Component {
   };
 
   handleSubmit = event => {
+    this.resetTextareaSize();
+
     const { actions, match } = this.props;
     const quotationID = match.params.id;
     event.preventDefault();
@@ -88,7 +95,12 @@ class CommentsContainer extends Component {
     const { content } = this.state;
     return (
       <section>
-        <Title>Komentarze</Title>
+        <H2 center marginBottom={spacing[5]}>Komentarze</H2>
+        <CreateComment
+          commentValue={content}
+          onCommentChange={this.handleChange}
+          onCommentSubmit={this.handleSubmit}
+        />
         <WithLoader isLoading={!comments}>
           <WithEmptyInfo
             isEmpty={!comments || !comments.length}
@@ -103,11 +115,6 @@ class CommentsContainer extends Component {
             />
           </WithEmptyInfo>
         </WithLoader>
-        <CreateComment
-          commentValue={content}
-          onCommentChange={this.handleChange}
-          onCommentSubmit={this.handleSubmit}
-        />
       </section>
     );
   }
@@ -156,7 +163,3 @@ export default compose(
   )
 )(CommentsContainer);
 
-const Title = styled(H2)`
-  text-align: center;
-  margin-bottom: ${spacing[3]};
-`;

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { logout } from 'auth/actions';
 import { getUserInfoState } from 'auth/selectors';
 import { Button, Icon } from 'elements';
-import { media, spacing } from 'utils';
+import { media, spacing, color } from 'utils';
 
 const logoutButton = ({ isLogin, actions, closeMenu, user }) => (
   <LogOutButton
@@ -16,7 +16,7 @@ const logoutButton = ({ isLogin, actions, closeMenu, user }) => (
       closeMenu();
     }}
   >
-    <Icon name="logout" color="#fff" />
+    <Icon name="logout" color={color.textLight} />
   </LogOutButton>
 );
 
@@ -54,7 +54,7 @@ const LogOutButton = styled(Button)`
   display: block;
   /* margin-left: ${spacing[3]}; */
   font-size: 0.9rem;
-  padding: ${spacing[1]} ${spacing[3]};
+  padding: ${spacing[1]} ${spacing[2]};
 
   border: none;
   line-height: 0;

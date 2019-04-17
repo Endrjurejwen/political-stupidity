@@ -4,7 +4,7 @@ import { color } from 'utils';
 export default styled.input`
   font-family: inherit;
   font-size: 1rem;
-  color: ${color.primary};
+  color: ${color.textDark};
   padding: 0.2rem 0.3rem;
   border: none;
   border-bottom: 2px solid grey;
@@ -22,7 +22,7 @@ export default styled.input`
   }
 
   &::placeholder {
-    color: grey;
+    color: ${color.textSecondary};
   }
 
   &:placeholder-shown + label {

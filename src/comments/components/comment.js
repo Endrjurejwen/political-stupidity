@@ -3,8 +3,8 @@ import { element } from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
 import { commentType } from 'comments/propTypes';
-import { Card } from 'elements';
-import { spacing, flexCenter, absolute } from 'utils';
+import { Card, H6 } from 'elements';
+import { spacing, flexCenter, absolute, color } from 'utils';
 
 const comment = ({
   comment,
@@ -13,16 +13,21 @@ const comment = ({
   isEditButtonsDisplay
 }) => (
   <Card secondary>
+    <Header>
+      <H6>
+        {comment.author.firstName} {comment.author.lastName}
+      </H6>
+    </Header>
     <Text data-testid="comment-content">{comment.content}</Text>
     <FlexContainer>
-      <div>
-        <UserName data-testid="comment-user">
-          {comment.author.firstName} {comment.author.lastName}{' '}
-        </UserName>
+      {/* <div> */}
+        {/* <UserName data-testid="comment-user">
+          {comment.author.firstName} {comment.author.lastName}
+        </UserName> */}
         <Data data-testid="comment-timestamp">
           {moment(comment.createAt.toDate()).calendar()}
         </Data>
-      </div>
+      {/* </div> */}
       {likeButton}
     </FlexContainer>
     <EditButtonsWrapper isDisplay={isEditButtonsDisplay}>
@@ -44,13 +49,18 @@ comment.defaultProps = {
 
 export default comment;
 
+const Header = styled.header`
+  padding: ${spacing[2]} ${spacing[3]} ${spacing[0]};
+  /* border-bottom: 1px solid ${color.layoutBorder}; */
+`;
+
 const FlexContainer = styled.div`
-  ${flexCenter({ justifyContent: 'space-between', alignItems: 'flex-end' })};
-  border-top: 1px solid lightgrey;
+  ${flexCenter({ justifyContent: 'space-between' })};
+  border-top: 1px solid ${color.layoutBorder};
 `;
 
 const Text = styled.p`
-  /* padding: 0 0 ${spacing[2]}; */
+  padding: 0 ${spacing[3]} ${spacing[2]};
 `;
 
 const UserName = styled.div`
@@ -62,7 +72,8 @@ const UserName = styled.div`
 
 const Data = styled.time`
   font-size: 0.85rem;
-  color: grey;
+  color: ${color.textSecondary};
+  padding: ${spacing[3]} 0 ${spacing[4]};
 `;
 
 const EditButtonsWrapper = styled.aside`

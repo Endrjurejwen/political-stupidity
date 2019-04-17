@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import { color } from 'utils';
 
 export default styled.label`
-  color: grey;
+  color: ${color.textSecondary};
   font-size: 0.8rem;
   margin-left: 0.3rem;
   display: block;

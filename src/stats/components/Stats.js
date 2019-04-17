@@ -27,12 +27,15 @@ stats.propTypes = {
 export default stats;
 
 const StatsWrapper = styled.aside`
+  ${elevation[1]};
   display: flex;
+  justify-content: center;
   padding: ${spacing[2]} ${spacing[4]};
   margin-right: -${spacing[1]};
   margin-left: -${spacing[1]};
-  border-bottom: 1px solid lightgrey;
-  border-top: 1px solid lightgrey;
+  background-color: #fff;
+  border-bottom: 2px solid ${color.action};
+  /* border-top: 1px solid ${color.layoutBorder}; */
 
   & > *:not(:last-child) {
     margin-right: ${spacing[5]};
@@ -41,6 +44,8 @@ const StatsWrapper = styled.aside`
   ${media.phone`
     margin-right: -${spacing[4]};
     margin-left: -${spacing[4]};
+    border: 2px solid ${color.action};
+    border-top: none;
   `}
 `;
 

@@ -10,7 +10,7 @@ import { getUserInfoState } from 'auth/selectors';
 import { toggleMenu } from 'layout/actions';
 import { logout } from 'auth/actions';
 import { Button, Icon } from 'elements';
-import { media, spacing, flexCenter } from 'utils';
+import { media, spacing, flexCenter, color } from 'utils';
 import { Backdrop, Modal, Toggle } from 'common';
 import ToolbarWrapper from 'layout/components/ToolbarWrapper';
 import SideDrawer from 'layout/components/SideDrawer';
@@ -96,6 +96,12 @@ class Toolbar extends Component {
           isOpen={isMenuOpen}
           loginButton={<LoginButton closeMenu={this.handleToggleMenuClick} />}
           logoutButton={<LogoutButton closeMenu={this.handleToggleMenuClick} />}
+          createQuotationButton={
+            <CreateQuotationButton
+              extended
+              closeMenu={this.handleToggleMenuClick}
+            />
+          }
           userInfo={<UserDetails user={user} />}
         >
           <Navigation navItems={links} closeMenu={this.handleToggleMenuClick} />
@@ -130,38 +136,18 @@ export default withRouter(
   )(Toolbar)
 );
 
-const LogOutButton = styled(Button)`
-  font-size: 0.7rem;
-  font-weight: normal;
-  font-family: inherit;
-  align-self: center;
-  color: #fff;
-  display: none;
-  margin-left: ${spacing[3]};
-  font-size: 0.9rem;
-  padding: ${spacing[1]} ${spacing[2]};
-
-  border: none;
-  line-height: 0;
-  background-color: transparent;
-  cursor: pointer;
-
-  ${media.tablet`
-    display: ${({ isLogin }) => (isLogin ? 'block' : 'none')};
-  `}
-`;
-
 const FlexContainer = styled.div`
   display: none;
   height: 100%;
   padding: 0 1rem;
-  border-right: 1px solid #fff;
-  border-left: 1px solid #fff;
+  border-right: 1px solid ${color.textLight};
+  border-left: 1px solid ${color.textLight};
   border-bottom: 2px solid transparent;
 
   ${media.tablet`
     display: ${({ isLogin }) => (isLogin ? 'flex' : 'none ')};
     justify-content: space-between;
+    width: 11rem;
   `}
 `;
 

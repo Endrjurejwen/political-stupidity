@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import { color } from 'utils';
 
 export default styled.textarea`
+  /* overflow: hidden; */
   font-family: inherit;
   font-size: 1rem;
-  color: ${color.primary};
+  color: ${color.textDark};
   padding: 0.4rem 0.5rem;
   border: 2px solid grey;
   background-color: transparent;
@@ -22,7 +23,7 @@ export default styled.textarea`
   }
 
   &::placeholder {
-    color: grey;
+    color: ${color.textSecondary};
   }
 
   &:placeholder-shown + label {

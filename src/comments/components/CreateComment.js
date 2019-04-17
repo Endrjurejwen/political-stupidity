@@ -7,7 +7,7 @@ import { spacing, media } from 'utils';
 
 const createComment = ({ commentValue, onCommentSubmit, onCommentChange }) => (
   <Form onSubmit={onCommentSubmit}>
-    <TextareaBox id="comment" value={commentValue} onChange={onCommentChange} />
+    <TextareaBox required id="comment" value={commentValue} onChange={onCommentChange} />
     <SubmitButton>Skomentuj</SubmitButton>
   </Form>
 );
@@ -24,7 +24,7 @@ const Form = styled.form`
   max-width: 30rem;
   display: flex;
   flex-direction: column;
-  margin: ${spacing[2]} auto;
+  margin: ${spacing[2]} auto ${spacing[5]};
 `;
 
 const SubmitButton = styled(Button)`

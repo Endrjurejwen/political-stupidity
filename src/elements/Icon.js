@@ -209,7 +209,7 @@ C283.05,40.8,326.4,20.4,369.75,20.4C448.8,20.4,510,81.6,510,160.65c0,96.9-86.7,1
 };
 
 icon.defaultProps = {
-  color: color.primary,
+  color: color.textDark,
   height: '1.5rem',
   width: '1.5rem'
 };

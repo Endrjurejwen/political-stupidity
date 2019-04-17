@@ -9,7 +9,14 @@ import Login from 'auth/containers/Login';
 const loginButton = ({ desktop, fixed, closeMenu }) => (
   <Toggle
     open={show => (
-      <ActionButton desktop={desktop} fixed={fixed} onClick={() => {show(); closeMenu();}}>
+      <ActionButton
+        desktop={desktop}
+        fixed={fixed}
+        onClick={() => {
+          show();
+          closeMenu();
+        }}
+      >
         Zaloguj się
       </ActionButton>
     )}
@@ -25,20 +32,21 @@ loginButton.propTypes = {
   desktop: bool,
   fixed: bool,
   closeMenu: func
-}
+};
 
 loginButton.defaultProps = {
   desktop: false,
   fixed: false,
   closeMenu: () => null
-}
+};
 
 export default loginButton;
 
 const ActionButton = styled(Button)`
   position: ${props => (props.fixed ? 'fixed' : 'static')};
   bottom: 1rem;
-  right: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: ${({ desktop }) => (desktop ? 'none' : 'block')};
   z-index: 2;
 

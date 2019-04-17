@@ -82,11 +82,11 @@ const NavigationList = styled.ul`
   `}
 `;
 
-const LogOutButton = styled(Button)`
-  font-size: 0.7rem;
-  font-weight: normal;
-  font-family: inherit;  
-  align-self: center;
-  color: #fff;
-  display: ${({ isLogin }) => (isLogin ? 'block' : 'none')};
-`;
+// const LogOutButton = styled(Button)`
+//   font-size: 0.7rem;
+//   font-weight: normal;
+//   font-family: inherit;
+//   align-self: center;
+//   color: #fff;
+//   display: ${({ isLogin }) => (isLogin ? 'block' : 'none')};
+// `;

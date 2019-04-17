@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   ${elevation[3]};
 
   color: ${color.textLight};
-  background-color: ${color.primary};
+  background-color: ${color.navigation};
   width: 100vw;
   height: ${navigationHeight};
   padding: 0 ${spacing[1]};

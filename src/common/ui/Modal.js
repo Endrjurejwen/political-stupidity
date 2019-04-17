@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { func, element } from 'prop-types';
 import { Backdrop, CloseButton, Portal, useBodyScrollLock } from 'common';
-import { media, fixed, elevation, spacing, flexCenter, absolute } from 'utils';
+import { media, fixed, elevation, spacing, flexCenter, absolute, color } from 'utils';
 
 const modal = ({ close, children }) => {
   useBodyScrollLock();
@@ -36,7 +36,7 @@ const ModalCard = styled.div`
   ${elevation[3]};
   z-index: 100;
   margin: 0 auto ${spacing[0]};
-  background-color: #eee;
+  background-color: ${color.backgroundLight};
   width: 80%;
   border-radius: 8px;
   padding: ${spacing[2]} ${spacing[3]};

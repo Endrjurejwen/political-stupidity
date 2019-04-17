@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
-import { fluidTypography, defaultFont } from 'utils';
+import { fluidTypography, defaultFont, color } from 'utils';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-family: ${defaultFont};
     line-height: 1.6;
-    background-color: #FFDB99;
+    background: ${color.body};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

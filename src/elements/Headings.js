@@ -1,11 +1,12 @@
 import styled, { css } from 'styled-components';
 
-import { fluidTypography, textDark, margins } from 'utils';
+import { fluidTypography, textDark, margins, color } from 'utils';
 
 const headings = css`
   ${margins};
   text-transform: uppercase;
-  color: ${textDark};
+  color: ${color.textDark};
+  color: ${props => (props.textLight ? color.textLight : color.textDark)};
   font-family: sans-serif;
   text-align: ${props => (props.center ? 'center' : 'left')};
 `;

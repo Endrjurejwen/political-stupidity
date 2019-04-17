@@ -32,7 +32,7 @@ class CreateQuotation extends Component {
     quotation: null
   };
 
-  hadleChange = event => {
+  handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
@@ -75,16 +75,16 @@ class CreateQuotation extends Component {
             Stwórz cytat
           </H2>
           <TextareaBox
-            onChange={this.hadleChange}
+            onChange={this.handleChange}
             placeholder="Tutaj wpisz cytat"
-            rows="5"
+            // rows="5"
             cols="30"
             id="content"
             value={content}
             required
           />
           <InputBox
-            onChange={this.hadleChange}
+            onChange={this.handleChange}
             placeholder="Autor cytatu"
             id="politician"
             value={politician}
@@ -156,7 +156,7 @@ const Form = styled.form`
 //     history: history.isRequired
 //   };
 
-//   hadleChange = event => {
+//   handleChange = event => {
 //     this.setState({
 //       [event.target.id]: event.target.value
 //     });
@@ -181,7 +181,7 @@ const Form = styled.form`
 //           Stwórz cytat
 //         </H2>
 //         <TextareaBox
-//           onChange={this.hadleChange}
+//           onChange={this.handleChange}
 //           placeholder="Tutaj wpisz cytat"
 //           rows="5"
 //           cols="30"
@@ -190,7 +190,7 @@ const Form = styled.form`
 //           required
 //         />
 //         <InputBox
-//           onChange={this.hadleChange}
+//           onChange={this.handleChange}
 //           placeholder="Autor cytatu"
 //           id="politician"
 //           value={politician}

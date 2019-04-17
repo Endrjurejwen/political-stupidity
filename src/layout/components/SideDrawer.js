@@ -2,19 +2,34 @@ import React from 'react';
 import styled from 'styled-components';
 import { element, bool } from 'prop-types';
 import { Icon, H4 } from 'elements';
+import CreateQuotationButton from 'quotes/components/CreateQuotationButton';
 
 import { Button } from 'elements';
 import { color, fixed, elevation, spacing, media, flexCenter } from 'utils';
 
-const sideDrawer = ({ children, isOpen, logoutButton, loginButton, userInfo, user }) => (
+const sideDrawer = ({
+  children,
+  isOpen,
+  logoutButton,
+  loginButton,
+  createQuotationButton,
+  userInfo,
+  user
+}) => (
   <Wrapper data-testid="sideDrawer" isOpen={isOpen}>
     <Header>
-      {user.id ? userInfo : <H4>Klasa Polityczna</H4>}
+      {user.id ? (
+        userInfo
+      ) : (
+        <H4 center textLight marginBottom={spacing[4]}>
+          Klasa Polityczna
+        </H4>
+      )}
       {user.id && logoutButton}
     </Header>
     <NavContainer>
       {children}
-      {!user.id && loginButton}
+      {!user.id ? loginButton : createQuotationButton}
     </NavContainer>
     <Footer>
       <p>&copy; Andrzej Kruk 2019</p>
@@ -36,7 +51,7 @@ const Wrapper = styled.div`
   height: 100%;
   width: 100vw;
   z-index: 30;
-  background-color: ${color.primary};
+  background-color: ${color.navigation};
   color: ${color.textLight};
   text-align: center;
 
@@ -51,17 +66,17 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.header`
-  ${flexCenter({ alignItems: 'start' })};
+  ${flexCenter()};
   flex-direction: column;
-  padding: ${spacing[3]} ${spacing[0]};
+  padding: ${spacing[3]} 0;
 `;
 
 const NavContainer = styled.div`
   padding: ${spacing[4]} 0 ${spacing[6]};
   display: flex;
   flex-direction: column;
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #fff;
+  border-top: 1px solid ${color.textLight};
+  border-bottom: 1px solid ${color.textLight};
   flex: 2;
 `;
 

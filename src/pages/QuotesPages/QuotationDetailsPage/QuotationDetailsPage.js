@@ -28,6 +28,6 @@ const ReturnButton = styled(Button)`
   ${elevation[4]};
   position: fixed;
   bottom: 5%;
-  background-color: ${color.primary};
-  border-color: ${color.primary};
+  background-color: ${color.textDark};
+  border-color: ${color.textDark};
 `;

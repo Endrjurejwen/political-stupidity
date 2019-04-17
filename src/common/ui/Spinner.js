@@ -32,7 +32,7 @@ const Spinner = styled.div`
     content: '';
     width: 5.2em;
     height: 10.2em;
-    background: #eee;
+    background: #F8F8F8;
     border-radius: 10.2em 0 0 10.2em;
     top: -0.1em;
     left: -0.1em;
@@ -45,11 +45,11 @@ const Spinner = styled.div`
     content: '';
     width: 5.2em;
     height: 10.2em;
-    background: #eee;
+    background: #F8F8F8;
     border-radius: 0 10.2em 10.2em 0;
     top: -0.1em;
     left: 5.1em;
     transform-origin: 0px 5.1em;
-    animation: ${loading} 2s infinite ease;
+    animation: ${loading} 1.5s infinite ease;
   }
 `;

@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Icon } from 'elements';
-import { flexCenter, spacing } from 'utils';
+import { flexCenter, spacing, color } from 'utils';
 
 const userDetails = ({ user }) => (
   <UserContainer>
     <UserAvatar>
-      <Icon name="userMan" color="#fff" width="3rem" height="3rem" />
+      <Icon name="userMan" color={color.textLight} width="3rem" height="3rem" />
     </UserAvatar>
     <UserData>
       <div>{`${user.firstName} ${user.lastName}`}</div>

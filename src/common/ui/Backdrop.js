@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { func } from 'prop-types';
-import { fixed } from 'utils';
+import { fixed, color } from 'utils';
 
 const backdrop = ({ close }) => (
   <Background data-testid="backdrop" onClick={close} />
@@ -16,7 +16,7 @@ const Background = styled.div`
 
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.55);
+  background-color: ${color.backdrop};
   z-index: 20;
 `;
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Icon } from 'elements';
-import { flexCenter, spacing } from 'utils';
+import { flexCenter, spacing, color } from 'utils';
 
 const userSummary = ({ name }) => (
   <Wrapper>
     <p>{name}</p>
-    <Icon name="userMan" color="#fff" />
+    <Icon name="userMan" color={color.textLight} />
   </Wrapper>
 );
 

@@ -4,14 +4,16 @@ import { arrayOf, element, bool } from 'prop-types';
 import moment from 'moment';
 import { quotationType } from 'quotes/propTypes';
 import { Card, H5, Paragraph } from 'elements';
-import { spacing, flexCenter, absolute } from 'utils';
+import { spacing, flexCenter, absolute, color } from 'utils';
 
 const quotation = ({ quotation, children, toolbox, isToolboxDisplay }) => (
   <Card>
     <Header>
       <Title data-testid="quotation-author">{quotation.politician}</Title>
     </Header>
-    <Paragraph marginBottom={spacing[3]} data-testid="quotation-content">{quotation.content}</Paragraph>
+    <Paragraph marginBottom={spacing[3]} data-testid="quotation-content">
+      {quotation.content}
+    </Paragraph>
     <Footer>
       <UserName data-testid="quotation-user">
         Opublikował {quotation.author.firstName} {quotation.author.lastName}
@@ -47,17 +49,18 @@ const Title = styled(H5)`
 
 const Header = styled.header`
   padding: ${spacing[2]} ${spacing[3]};
-  background-color: rgba(255, 199, 137, 0.4);
+  background-color: ${color.secondary};
   /* width: 75%; */
   overflow: hidden;
   border-radius: 8px 8px 0 0;
+  border-bottom: 2px solid ${color.action};
   margin-bottom: ${spacing[3]};
 `;
 
 const ActionButtonsWrapper = styled.aside`
   ${flexCenter({ justifyContent: 'space-between' })};
   padding: ${spacing[3]} ${spacing[2]};
-  border-top: 1px solid lightgrey;
+  border-top: 1px solid ${color.layoutBorder};
 `;
 
 const UserName = styled.address`
@@ -68,7 +71,7 @@ const UserName = styled.address`
 
 const Data = styled.time`
   font-size: 0.85rem;
-  color: grey;
+  color: ${color.textSecondary};
 `;
 
 const ToolboxWrapper = styled.aside`

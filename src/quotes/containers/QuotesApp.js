@@ -97,7 +97,6 @@ const quotesApp = ({
   };
 
   const handleSortClick = event => {
-    // history.push('/quotes');
     const sortBy = event.target.dataset.sortby;
     actions.sortQuotes(sortBy);
   };
