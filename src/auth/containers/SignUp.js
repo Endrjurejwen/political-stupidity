@@ -55,6 +55,7 @@ class SignUp extends Component {
         <Form onSubmit={this.handleSubmit}>
           <Title>Rejestracja</Title>
           <InputBox
+            autoFocus
             change={this.handleChange}
             type="text"
             placeholder="Twoje imię"

@@ -17,22 +17,42 @@ const trapTabKey = (event, close) => {
   const firstTabStop = focusableElements[0];
   const lastTabStop = focusableElements[focusableElements.length - 1];
 
-  if (event.keyCode === 9) {
-    if (event.shiftKey) {
-      if (document.activeElement === firstTabStop) {
+  const isActiveFirstTab = () => document.activeElement === firstTabStop;
+  const isActiveLastTab = () => document.activeElement === lastTabStop;
+
+  switch (event.keyCode) {
+    case 9:
+      if (event.shiftKey && isActiveFirstTab()) {
         event.preventDefault();
         lastTabStop.focus();
+      } else if (isActiveLastTab()) {
+        event.preventDefault();
+        firstTabStop.focus();
       }
-    } else if (document.activeElement === lastTabStop) {
-      event.preventDefault();
-      firstTabStop.focus();
-    }
-  }
-
-  if (event.keyCode === 27) {
-    close();
-    focusedElementBeforeModal.focus();
+      break;
+    case 27:
+      close();
+      focusedElementBeforeModal.focus();
+      break;
+    default:
+      break;
   }
 };
+
+//   if (event.keyCode === 9) {
+//     if (event.shiftKey && isActiveFirst()) {
+//       event.preventDefault();
+//       lastTabStop.focus();
+//     } else if (isActiveLast()) {
+//       event.preventDefault();
+//       firstTabStop.focus();
+//     }
+//   }
+
+//   if (event.keyCode === 27) {
+//     close();
+//     focusedElementBeforeModal.focus();
+//   }
+// };
 
 export default trapTabKey;

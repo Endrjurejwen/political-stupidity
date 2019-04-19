@@ -1,11 +1,11 @@
-import React, { Component, useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { string, bool, shape, func } from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getErrorAuthState, getIsLoadingAuthState } from 'auth/selectors';
 import { login } from 'auth/actions';
-import { InputBox, WithLoader } from 'common';
+import { InputBox, WithLoader, useAutoFocus } from 'common';
 import { Button, H2 } from 'elements';
 import { spacing, flexCenter } from 'utils';
 
@@ -19,82 +19,63 @@ const ErrorMessage = ({ error }) => {
   ) : null;
 };
 
-class Login extends Component {
-  state = {
-    email: '',
-    password: ''
-  };
+const loginForm = ({ actions, error, isLoading, closeModal }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const autoFocusRef = useRef(null);
+  useAutoFocus(autoFocusRef);
 
-  static propTypes = {
-    actions: shape({
-      login: func.isRequired
-    }).isRequired,
-    error: string,
-    isLoading: bool,
-    closeModal: func
-  };
+  const setCredentials = () => ({ email, password });
 
-  static defaultProps = {
-    error: null,
-    isLoading: false,
-    closeModal: () => null
-  };
-
-  handleChange = event => {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
-  };
-
-  handleSubmit = event => {
-    const { actions, closeModal } = this.props;
+  const handleSubmit = event => {
+    const newCredentials = setCredentials();
     event.preventDefault();
-    actions.login(this.state).then(res => res && closeModal());
-    this.setState({
-      email: '',
-      password: '',
-      loading: false
-    });
+    actions.login(newCredentials).then(res => res && closeModal());
   };
 
-  // handleCloseErrorMessage = () => {
-  //   this.setState({
-  //     isErrorInfoShown: false
-  //   });
-  // };
+  return (
+    <WithLoader isLoading={isLoading}>
+      <Form onSubmit={handleSubmit}>
+        <Title>Logowanie</Title>
+        <InputBox
+          ref={autoFocusRef}
+          change={event => setEmail(event.target.value)}
+          type="email"
+          placeholder="Twój email"
+          id="email"
+          value={email}
+          required
+        />
+        <InputBox
+          change={event => setPassword(event.target.value)}
+          type="password"
+          placeholder="Twoje hasło"
+          id="password"
+          value={password}
+          required
+        />
+        <Button type="submit">Zaloguj się</Button>
+        {/* <p>{error || null}</p> */}
+        {error && <ErrorMessage error={error} />}
+      </Form>
+    </WithLoader>
+  );
+};
 
-  render() {
-    const { email, password } = this.state;
-    const { error, isLoading } = this.props;
-    return (
-      <WithLoader isLoading={isLoading}>
-        <Form onSubmit={this.handleSubmit}>
-          <Title>Logowanie</Title>
-          <InputBox
-            autoFocus="true"
-            change={this.handleChange}
-            type="email"
-            placeholder="Twój email"
-            id="email"
-            value={email}
-            required
-          />
-          <InputBox
-            change={this.handleChange}
-            type="password"
-            placeholder="Twoje hasło"
-            id="password"
-            value={password}
-            required
-          />
-          <Button type="submit">Zaloguj się</Button>
-          {/* <p>{error || null}</p> */}
-          {error && <ErrorMessage error={error} />}
-        </Form>
-      </WithLoader>
-    );
-  }
-}
+loginForm.propTypes = {
+  actions: shape({
+    login: func.isRequired
+  }).isRequired,
+  error: string,
+  isLoading: bool,
+  closeModal: func
+};
+
+loginForm.defaultProps = {
+  error: null,
+  isLoading: false,
+  closeModal: () => null
+};
 
 const mapStateToProps = state => ({
   error: getErrorAuthState(state),
@@ -115,7 +96,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(loginForm);
 
 const Title = styled(H2)`
   text-align: center;
@@ -128,3 +109,45 @@ const Form = styled.form`
   max-width: 35rem;
   margin: ${spacing[4]} auto 0;
 `;
+
+  // state = {
+  //   email: '',
+  //   password: ''
+  // };
+
+  // static propTypes = {
+  //   actions: shape({
+  //     login: func.isRequired
+  //   }).isRequired,
+  //   error: string,
+  //   isLoading: bool,
+  //   closeModal: func
+  // };
+
+  // static defaultProps = {
+  //   error: null,
+  //   isLoading: false,
+  //   closeModal: () => null
+  // };
+
+  // const handleChange = event => {
+  //   this.setState({
+  //     [event.target.id]: event.target.value
+  //   });
+  // };
+
+      // this.setState({
+    //   email: '',
+    //   password: ''
+    // });
+  // };
+
+  // handleCloseErrorMessage = () => {
+  //   this.setState({
+  //     isErrorInfoShown: false
+  //   });
+  // };
+
+  // render() {
+    // const { email, password } = this.state;
+    // const { error, isLoading } = this.props;

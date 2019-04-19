@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, forwardRef } from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
 
 import { Textarea, Label } from 'elements';
 import { spacing } from 'utils';
 
-const textareaBox = ({ type, placeholder, id, ...rest }) => {
+const textareaBox = forwardRef(({ type, placeholder, id, ...rest }, ref) => {
   const resize = element => {
     element.style.height = "inherit";
 
     const height = element.scrollHeight;
 
-    element.style.height = height + "px";
+    element.style.height = `${height}px`;
   };
 
   useEffect(() => {
@@ -31,11 +31,11 @@ const textareaBox = ({ type, placeholder, id, ...rest }) => {
 
   return (
     <Wrapper>
-      <Textarea className="resizeTextArea" placeholder={placeholder} id={id} {...rest} />
+      <Textarea ref={ref} className="resizeTextArea" placeholder={placeholder} id={id} {...rest} />
       <Label htmlFor={id}>{placeholder}</Label>
     </Wrapper>
   );
-};
+});
 
 textareaBox.propTypes = {
   id: string.isRequired,

@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 import { func, string } from 'prop-types';
 
 import { Input, Label } from 'elements';
 import { spacing } from 'utils';
 
-const inputBox = ({ type, placeholder, id, change, ...rest }) => (
+const inputBox = forwardRef(({ type, placeholder, id, change, ...rest }, ref) => (
   <Wrapper>
     <Input
+      ref={ref}
       type={type}
       placeholder={placeholder}
       id={id}
@@ -16,7 +17,7 @@ const inputBox = ({ type, placeholder, id, change, ...rest }) => (
     />
     <Label htmlFor={id}>{placeholder}</Label>
   </Wrapper>
-);
+));
 
 inputBox.propTypes = {
   change: func,

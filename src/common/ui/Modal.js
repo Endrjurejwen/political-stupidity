@@ -17,10 +17,10 @@ const modal = ({ close, children }) => {
   useBodyScrollLock();
 
   useEffect(() => {
-    const focusedElementBeforeModal = document.activeElement;
+    // const focusedElementBeforeModal = document.activeElement;
     document.addEventListener('keydown', event => trapTabKey(event, close));
     return () => {
-      focusedElementBeforeModal.focus();
+      // focusedElementBeforeModal.focus();
       document.removeEventListener('keydown', event =>
         trapTabKey(event, close)
       );
