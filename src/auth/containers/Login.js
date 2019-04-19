@@ -71,6 +71,7 @@ class Login extends Component {
         <Form onSubmit={this.handleSubmit}>
           <Title>Logowanie</Title>
           <InputBox
+            autoFocus="true"
             change={this.handleChange}
             type="email"
             placeholder="Twój email"

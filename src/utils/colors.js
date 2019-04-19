@@ -13,8 +13,8 @@ export const color = {
   backgroundLight: '#fdfdfd',
   textLight: '#fff',
   textDark: '#222',
-  textSecondary: '#777',
-  comments: 'rgba(174,213,129, 0.1)',
+  textSecondary: '#666',
+  comments: 'rgba(174,213,129, 0.2)',
   valid: 'green',
   invalid: 'crimson'
 };

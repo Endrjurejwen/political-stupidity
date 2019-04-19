@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { func, element } from 'prop-types';
 import { Backdrop, CloseButton, Portal, useBodyScrollLock } from 'common';
-import { media, fixed, elevation, spacing, flexCenter, absolute, color } from 'utils';
+import {
+  media,
+  fixed,
+  elevation,
+  spacing,
+  flexCenter,
+  absolute,
+  color,
+  trapTabKey
+} from 'utils';
 
 const modal = ({ close, children }) => {
   useBodyScrollLock();
+
+  useEffect(() => {
+    const focusedElementBeforeModal = document.activeElement;
+    document.addEventListener('keydown', event => trapTabKey(event, close));
+    return () => {
+      focusedElementBeforeModal.focus();
+      document.removeEventListener('keydown', event =>
+        trapTabKey(event, close)
+      );
+    };
+  }, []);
+
   return (
     <Portal>
-      <ModalCard>
+      <ModalCard className="modal" aria-modal="true">
         <CloseButtonWrapper>
           <CloseButton click={close} />
         </CloseButtonWrapper>

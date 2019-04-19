@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { H1, H5 } from 'elements';
 import { spacing, color, elevation, media } from 'utils';
-import bg from 'assets/images/sejm2.jpg';
+import bg from 'assets/images/sejm3.jpg';
 
 const header = () => (
   <Header>

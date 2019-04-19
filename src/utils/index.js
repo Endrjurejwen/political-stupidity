@@ -3,6 +3,7 @@ export { default as elevation } from './elevation';
 export { default as fluidTypography } from './fluidTypography';
 export { default as spacing } from './spacing';
 export { default as margins } from './margins';
+export { default as trapTabKey } from './trapTabKey';
 export * from './colors';
 export * from './position';
 export * from './fonts';

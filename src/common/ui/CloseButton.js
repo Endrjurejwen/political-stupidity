@@ -6,7 +6,7 @@ import { spacing, color, flexCenter, absolute } from 'utils';
 
 const CloseButton = ({ click, isDisplay }) => (
   <IconButton data-testid="button-close" onClick={click} isDisplay={isDisplay}>
-    <Icon name="close" width="1rem" />
+    <Icon name="close" width="1.4em" height="1.4em" />
   </IconButton>
 );
 
