@@ -4,7 +4,7 @@ import {
   createCommentFailure
 } from 'comments/actionCreators';
 
-const createComment = (quotationID, comment) => {
+const createComment = (quotationID, content) => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     const { profile } = getState().firebase;
@@ -15,7 +15,8 @@ const createComment = (quotationID, comment) => {
       .doc(quotationID)
       .collection('comments')
       .add({
-        ...comment,
+        // ...comment,
+        content,
         author: {
           firstName: profile.firstName,
           lastName: profile.lastName,

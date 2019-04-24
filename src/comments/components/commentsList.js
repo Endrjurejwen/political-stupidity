@@ -2,7 +2,8 @@ import React from 'react';
 import { arrayOf, shape, string, func } from 'prop-types';
 import Comment from 'comments/components/Comment';
 import { commentType } from 'comments/propTypes';
-import { LikeButton, CloseButton } from 'common';
+import { LikeButton, DeleteButton, EditButton, Toggle, Modal } from 'common';
+import Confirmation from 'quotes/components/Confirmation';
 
 const commentsList = ({
   comments,
@@ -28,7 +29,20 @@ const commentsList = ({
             }
           />
         }
-        closeButton={<CloseButton click={() => deleteClick(comment.id)} />}
+        deleteButton={
+          <Toggle
+            open={show => <DeleteButton click={show} />}
+            content={hide => (
+              <Modal close={hide}>
+                <Confirmation
+                  onCloseClick={hide}
+                  onConfirmClick={() => deleteClick(comment.id)}
+                />
+              </Modal>
+            )}
+          />
+        }
+        editButton={<EditButton />}
       />
     ))}
   </>

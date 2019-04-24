@@ -17,16 +17,16 @@ import { WithLoader, WithEmptyInfo } from 'common';
 import { H2, H5 } from 'elements';
 import { spacing } from 'utils';
 import {
-  createComment,
+  // createComment,
   deleteComment,
   likeComment,
   dislikeComment
 } from 'comments/actions';
 
 class CommentsContainer extends Component {
-  state = {
-    content: ''
-  };
+  // state = {
+  //   content: ''
+  // };
 
   static propTypes = {
     actions: shape({
@@ -52,28 +52,28 @@ class CommentsContainer extends Component {
     this.props.dispatch({ type: actionTypes.CLEAR_DATA });
   };
 
-  resetTextareaSize = () => {
-    const element = document.querySelector(".resizeTextArea");
-    element.style.height = "inherit";
-  }
+  // resetTextareaSize = () => {
+  //   const element = document.querySelector('.resizeTextArea');
+  //   element.style.height = 'inherit';
+  // };
 
-  handleChange = event => {
-    this.setState({
-      content: event.target.value
-    });
-  };
+  // handleChange = event => {
+  //   this.setState({
+  //     content: event.target.value
+  //   });
+  // };
 
-  handleSubmit = event => {
-    this.resetTextareaSize();
+  // handleSubmit = event => {
+  //   this.resetTextareaSize();
 
-    const { actions, match } = this.props;
-    const quotationID = match.params.id;
-    event.preventDefault();
-    actions.createComment(quotationID, this.state);
-    this.setState({
-      content: ''
-    });
-  };
+  //   const { actions, match } = this.props;
+  //   const quotationID = match.params.id;
+  //   event.preventDefault();
+  //   actions.createComment(quotationID, this.state);
+  //   this.setState({
+  //     content: ''
+  //   });
+  // };
 
   handleDeleteClick = commentId => {
     const { match, actions } = this.props;
@@ -92,14 +92,16 @@ class CommentsContainer extends Component {
 
   render() {
     const { comments, user } = this.props;
-    const { content } = this.state;
+    // const { content } = this.state;
     return (
       <section>
-        <H2 center marginBottom={spacing[5]}>Komentarze</H2>
+        <H2 center marginBottom={spacing[5]}>
+          Komentarze
+        </H2>
         <CreateComment
-          commentValue={content}
-          onCommentChange={this.handleChange}
-          onCommentSubmit={this.handleSubmit}
+          // commentValue={content}
+          // onCommentChange={this.handleChange}
+          // onCommentSubmit={this.handleSubmit}
         />
         <WithLoader isLoading={!comments}>
           <WithEmptyInfo
@@ -136,7 +138,7 @@ const mapDispatchToProps = dispatch => {
   return {
     actions: bindActionCreators(
       {
-        createComment,
+        // createComment,
         deleteComment,
         likeComment,
         dislikeComment
@@ -162,4 +164,3 @@ export default compose(
     mapDispatchToProps
   )
 )(CommentsContainer);
-

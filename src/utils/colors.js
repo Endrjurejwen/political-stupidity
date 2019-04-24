@@ -14,7 +14,7 @@ export const color = {
   textLight: '#fff',
   textDark: '#222',
   textSecondary: '#666',
-  comments: 'rgba(174,213,129, 0.2)',
+  comments: 'rgba(174,213,129, 0.1)',
   valid: 'green',
   invalid: 'crimson'
 };

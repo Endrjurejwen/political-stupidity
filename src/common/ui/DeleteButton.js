@@ -4,23 +4,23 @@ import { func, bool } from 'prop-types';
 import { Icon } from 'elements';
 import { spacing, color, flexCenter, absolute } from 'utils';
 
-const EditButton = ({ click, isDisplay }) => (
-  <IconButton className="button-edit" data-testid="button-edit" onClick={click} isDisplay={isDisplay}>
-    <Icon name="edit" />
+const DeleteButton = ({ click, isDisplay }) => (
+  <IconButton data-testid="button-close" onClick={click} isDisplay={isDisplay}>
+    <Icon name="delete" />
   </IconButton>
 );
 
-EditButton.propTypes = {
+DeleteButton.propTypes = {
   click: func,
   isDisplay: bool
 };
 
-EditButton.defaultProps = {
+DeleteButton.defaultProps = {
   click: () => null,
   isDisplay: false
 };
 
-export default EditButton;
+export default DeleteButton;
 
 const IconButton = styled.button`
   ${flexCenter};

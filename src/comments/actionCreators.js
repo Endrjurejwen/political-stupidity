@@ -2,6 +2,9 @@ import {
   CREATE_COMMENT_REQUEST,
   CREATE_COMMENT_SUCCESS,
   CREATE_COMMENT_FAILURE,
+  EDIT_COMMENT_REQUEST,
+  EDIT_COMMENT_SUCCESS,
+  EDIT_COMMENT_FAILURE,
   DELETE_COMMENT_REQUEST,
   DELETE_COMMENT_SUCCESS,
   DELETE_COMMENT_FAILURE,
@@ -24,6 +27,20 @@ export const createCommentSuccess = () => ({
 
 export const createCommentFailure = error => ({
   type: CREATE_COMMENT_FAILURE,
+  error
+});
+
+// EDIT_COMMENT
+export const editCommentRequest = () => ({
+  type: EDIT_COMMENT_REQUEST
+});
+
+export const editCommentSuccess = () => ({
+  type: EDIT_COMMENT_SUCCESS
+});
+
+export const editCommentFailure = error => ({
+  type: EDIT_COMMENT_FAILURE,
   error
 });
 

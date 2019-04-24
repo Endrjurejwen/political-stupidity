@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { color } from 'utils';
+import { color, spacing } from 'utils';
 
 export default styled.textarea`
-  /* overflow: hidden; */
+  overflow: hidden;
   font-family: inherit;
   font-size: 1rem;
   color: ${color.textDark};
-  padding: 0.4rem 0.5rem;
+  padding: ${spacing[1]} ${spacing[1]} ${spacing[2]};
   border: 2px solid grey;
   background-color: transparent;
   display: block;

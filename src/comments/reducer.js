@@ -13,6 +13,10 @@ const createCommentReducer = makeAsyncReducerWithLoading({
   name: 'CREATE_COMMENT',
   initialState
 });
+const editCommentReducer = makeAsyncReducerWithLoading({
+  name: 'EDIT_COMMENT',
+  initialState
+});
 const deleteCommentReducer = makeAsyncReducerWithLoading({
   name: 'DELETE_COMMENT',
   initialState
@@ -28,6 +32,7 @@ const dislikeCommentReducer = makeAsyncReducer({
 
 const reducer = reduceReducers(
   createCommentReducer,
+  editCommentReducer,
   deleteCommentReducer,
   likeCommentReducer,
   dislikeCommentReducer

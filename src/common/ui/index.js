@@ -1,5 +1,6 @@
 export { default as LikeButton } from './LikeButton';
 export { default as CloseButton } from './CloseButton';
+export { default as DeleteButton } from './DeleteButton';
 export { default as EditButton } from './EditButton';
 export { default as Backdrop } from './Backdrop';
 export { default as InputBox } from './InputBox';

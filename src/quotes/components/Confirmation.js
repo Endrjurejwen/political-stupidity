@@ -14,7 +14,11 @@ const confirmation = ({ title, text, onConfirmClick, onCloseClick }) => {
       <H5>{title}</H5>
       <p>{text}</p>
       <Container>
-        <InlineButton ref={autoFocusRef} marginLeft="auto" onClick={onCloseClick}>
+        <InlineButton
+          ref={autoFocusRef}
+          marginLeft="auto"
+          onClick={onCloseClick}
+        >
           Anuluję
         </InlineButton>
         <InlineButton

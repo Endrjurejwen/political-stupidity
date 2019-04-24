@@ -2,7 +2,7 @@ import React from 'react';
 import { func, arrayOf, shape, string } from 'prop-types';
 import Quotation from 'quotes/components/Quotation';
 import { quotationType } from 'quotes/propTypes';
-import { LikeButton, CloseButton, EditButton, Toggle, Modal } from 'common';
+import { LikeButton, DeleteButton, EditButton, Toggle, Modal } from 'common';
 import { Button } from 'elements';
 import Confirmation from 'quotes/components/Confirmation';
 import CreateQuotation from 'quotes/containers/CreateQuotation';
@@ -25,7 +25,7 @@ const quotesList = ({
           toolbox={
             <>
               <Toggle
-                open={show => <CloseButton click={show} />}
+                open={show => <DeleteButton click={show} />}
                 content={hide => (
                   <Modal close={hide}>
                     <Confirmation

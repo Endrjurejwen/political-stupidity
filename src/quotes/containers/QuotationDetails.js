@@ -18,7 +18,7 @@ import Confirmation from 'quotes/components/Confirmation';
 import CreateQuotation from 'quotes/containers/CreateQuotation';
 import {
   LikeButton,
-  CloseButton,
+  DeleteButton,
   EditButton,
   WithLoader,
   Toggle,
@@ -84,7 +84,7 @@ class QuotationDetails extends Component {
           toolbox={
             <>
               <Toggle
-                open={show => <CloseButton click={show} />}
+                open={show => <DeleteButton click={show} />}
                 content={hide => (
                   <Modal close={hide}>
                     <Confirmation
