@@ -16,6 +16,7 @@ import { makeGetQuotationState } from 'quotes/selectors';
 import { quotationType } from 'quotes/propTypes';
 import Confirmation from 'quotes/components/Confirmation';
 import CreateQuotation from 'quotes/containers/CreateQuotation';
+import { spacing } from 'utils';
 import {
   LikeButton,
   DeleteButton,
@@ -24,7 +25,7 @@ import {
   Toggle,
   Modal
 } from 'common';
-import { Button } from 'elements';
+import { Button, H2 } from 'elements';
 import {
   likeQuotation,
   dislikeQuotation,
@@ -80,32 +81,32 @@ class QuotationDetails extends Component {
       <WithLoader isLoading={!quotation}>
         <Quotation
           quotation={quotation}
-          isToolboxDisplay={!quotation || quotation.author.id === user.id}
-          toolbox={
-            <>
-              <Toggle
-                open={show => <DeleteButton click={show} />}
-                content={hide => (
-                  <Modal close={hide}>
-                    <Confirmation
-                      onCloseClick={hide}
-                      onConfirmClick={this.handleDeleteClick}
-                    />
-                  </Modal>
-                )}
-              />
-              <Toggle
-                open={show => <EditButton click={show} />}
-                content={hide => (
-                  <Modal close={hide}>
-                    <CreateQuotation quotation={quotation} closeModal={hide} />
-                  </Modal>
-                )}
-              />
-            </>
-          }
+          // isToolboxDisplay={!quotation || quotation.author.id === user.id}
+          // toolbox={
+          //   <>
+          //     <Toggle
+          //       open={show => <DeleteButton click={show} />}
+          //       content={hide => (
+          //         <Modal close={hide}>
+          //           <Confirmation
+          //             onCloseClick={hide}
+          //             onConfirmClick={this.handleDeleteClick}
+          //           />
+          //         </Modal>
+          //       )}
+          //     />
+          //     <Toggle
+          //       open={show => <EditButton click={show} />}
+          //       content={hide => (
+          //         <Modal close={hide}>
+          //           <CreateQuotation quotation={quotation} closeModal={hide} />
+          //         </Modal>
+          //       )}
+          //     />
+          //   </>
+          // }
         >
-          <Button secondary>Zobacz źródło</Button>
+          {/* <Button secondary>Zobacz źródło</Button>
           <LikeButton
             likes={!quotation ? 0 : quotation.likesCount}
             full={!quotation || user.id in quotation.likes}
@@ -114,9 +115,12 @@ class QuotationDetails extends Component {
                 ? this.handleDislikeClick
                 : this.handleLikeClick
             }
-          />
+          /> */}
         </Quotation>
-        {children}
+        <section>
+          <H2 center marginBottom={spacing[5]}>Komentarze ({!quotation || quotation.commentsCount})</H2>
+          {children}
+        </section>
       </WithLoader>
     );
   }

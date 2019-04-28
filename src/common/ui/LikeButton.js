@@ -4,8 +4,8 @@ import { func, bool, number } from 'prop-types';
 import { Icon } from 'elements';
 import { spacing, color, flexCenter } from 'utils';
 
-const likeButton = ({ likes, click, full }) => (
-  <IconButton data-testid="button-likes" full={full} onClick={click}>
+const likeButton = ({ likes, onClick, full }) => (
+  <IconButton data-testid="button-likes" full={full} onClick={onClick}>
     <Icon name="fullLove" color={color.action} />{' '}
     <span>
       <strong>{likes}</strong>
@@ -14,13 +14,13 @@ const likeButton = ({ likes, click, full }) => (
 );
 
 likeButton.propTypes = {
-  click: func,
+  onClick: func,
   full: bool,
   likes: number
 };
 
 likeButton.defaultProps = {
-  click: () => null,
+  onClick: () => null,
   full: false,
   likes: 0
 };

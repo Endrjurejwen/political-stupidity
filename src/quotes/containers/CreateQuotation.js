@@ -1,42 +1,21 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { shape, func, bool } from 'prop-types';
-import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { createQuotation, editQuotation } from 'quotes/actions';
+import { createQuotation } from 'quotes/actions';
 import { getIsLoadingState } from 'quotes/selectors';
 import { quotationType } from 'quotes/propTypes';
-import { spacing, flexCenter } from 'utils';
-import { InputBox, TextareaBox, WithLoader, useAutoFocus } from 'common';
-import { H2, Button } from 'elements';
+import { spacing } from 'utils';
+import { WithLoader } from 'common';
+import { H3 } from 'elements';
+import QuotationForm from 'quotes/components/QuotationForm';
 
 const createQuotationForm = ({ actions, closeModal, isLoading, quotation }) => {
-  const [content, setContent] = useState(quotation ? quotation.content : '');
-  const [politician, setPolitician] = useState(
-    quotation ? quotation.politician : ''
-  );
-  const autoFocusRef = useRef(null);
-  useAutoFocus(autoFocusRef);
-
-  // useEffect(() => {
-  //   const focusedElementBeforeModal = document.activeElement;
-  //   if (autoFocusRef.current) {
-  //     autoFocusRef.current.focus();
-  //   }
-  //   return () => {
-  //     focusedElementBeforeModal.focus();
-  //   };
-  // }, [autoFocusRef]);
+  const [content, setContent] = useState('');
+  const [politician, setPolitician] = useState('');
 
   const setNewQuotation = () => ({ content, politician });
-
-  const handleEditQuotationSubmit = event => {
-    const newQuotation = setNewQuotation();
-    event.preventDefault();
-    actions.editQuotation(quotation.id, newQuotation);
-    closeModal();
-  };
 
   const handleCreateQuotationSubmit = event => {
     const newQuotation = setNewQuotation();
@@ -46,36 +25,20 @@ const createQuotationForm = ({ actions, closeModal, isLoading, quotation }) => {
 
   return (
     <WithLoader isLoading={isLoading}>
-      <Form
-        onSubmit={
-          quotation ? handleEditQuotationSubmit : handleCreateQuotationSubmit
-        }
-      >
-        <H2 center marginBottom={spacing[4]}>
-          Stwórz cytat
-        </H2>
-        <TextareaBox
-          ref={autoFocusRef}
-          onChange={event => setContent(event.target.value)}
-          placeholder="Tutaj wpisz cytat"
-          // rows="5"
-          cols="30"
-          id="content"
-          value={content}
-          required
-        />
-        <InputBox
-          onChange={event => setPolitician(event.target.value)}
-          placeholder="Autor cytatu"
-          id="politician"
-          value={politician}
-          required
-        />
-        <Button type="submit">Opublikuj</Button>
-      </Form>
+      <H3 center marginBottom={spacing[3]}>
+        Stwórz cytat
+      </H3>
+      <QuotationForm
+        onQuotationSubmit={handleCreateQuotationSubmit}
+        onContentChange={setContent}
+        onPoliticianChange={setPolitician}
+        isLoading={isLoading}
+        content={content}
+        politician={politician}
+        buttonLabel="Opublikuj"
+      />
     </WithLoader>
   );
-  // }
 };
 
 createQuotationForm.propTypes = {
@@ -101,8 +64,7 @@ const mapDispatchToProps = dispatch => {
   return {
     actions: bindActionCreators(
       {
-        createQuotation,
-        editQuotation
+        createQuotation
       },
       dispatch
     )
@@ -116,18 +78,7 @@ export default withRouter(
   )(createQuotationForm)
 );
 
-const Form = styled.form`
-  max-width: 30rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* ${flexCenter}; */
-  /* flex-direction: column; */
-  
-  margin: ${spacing[4]} auto 0;
-`;
-
-// import React, { Component } from 'react';
+// import React, { useState, useRef } from 'react';
 // import { shape, func, bool } from 'prop-types';
 // import styled from 'styled-components';
 // import { bindActionCreators } from 'redux';
@@ -137,94 +88,82 @@ const Form = styled.form`
 // import { getIsLoadingState } from 'quotes/selectors';
 // import { quotationType } from 'quotes/propTypes';
 // import { spacing, flexCenter } from 'utils';
-// import { InputBox, TextareaBox, WithLoader } from 'common';
+// import { InputBox, TextareaBox, WithLoader, useAutoFocus } from 'common';
 // import { H2, Button } from 'elements';
 
-// class CreateQuotation extends Component {
-//   state = {
-//     content: this.props.quotation ? this.props.quotation.content : '',
-//     politician: this.props.quotation ? this.props.quotation.politician : ''
-//   };
+// const createQuotationForm = ({ actions, closeModal, isLoading, quotation }) => {
+//   const [content, setContent] = useState(quotation ? quotation.content : '');
+//   const [politician, setPolitician] = useState(
+//     quotation ? quotation.politician : ''
+//   );
+//   const autoFocusRef = useRef(null);
+//   useAutoFocus(autoFocusRef);
 
-//   static propTypes = {
-//     actions: shape({
-//       createQuotation: func.isRequired
-//     }).isRequired,
-//     closeModal: func,
-//     isLoading: bool,
-//     quotation: quotationType
-//   };
+//   const setNewQuotation = () => ({ content, politician });
 
-//   static defaultProps = {
-//     closeModal: () => null,
-//     isLoading: false,
-//     quotation: null
-//   };
-
-//   handleChange = event => {
-//     this.setState({
-//       [event.target.id]: event.target.value
-//     });
-//   };
-
-//   handleEditQuotationSubmit = event => {
-//     const { actions, quotation, closeModal } = this.props;
+//   const handleEditQuotationSubmit = event => {
+//     const newQuotation = setNewQuotation();
 //     event.preventDefault();
-//     actions.editQuotation(quotation.id, this.state);
-//     this.setState({
-//       content: '',
-//       politician: ''
-//     });
+//     actions.editQuotation(quotation.id, newQuotation);
 //     closeModal();
 //   };
 
-//   handleCreateQuotationSubmit = event => {
-//     const { actions, closeModal } = this.props;
+//   const handleCreateQuotationSubmit = event => {
+//     const newQuotation = setNewQuotation();
 //     event.preventDefault();
-//     actions.createQuotation(this.state).then(res => res && closeModal());
-//     this.setState({
-//       content: '',
-//       politician: ''
-//     });
+//     actions.createQuotation(newQuotation).then(res => res && closeModal());
 //   };
 
-//   render() {
-//     const { content, politician } = this.state;
-//     const { quotation, isLoading } = this.props;
-//     return (
-//       <WithLoader isLoading={isLoading}>
-//         <Form
-//           onSubmit={
-//             quotation
-//               ? this.handleEditQuotationSubmit
-//               : this.handleCreateQuotationSubmit
-//           }
-//         >
-//           <H2 center marginBottom={spacing[4]}>
-//             Stwórz cytat
-//           </H2>
-//           <TextareaBox
-//             onChange={this.handleChange}
-//             placeholder="Tutaj wpisz cytat"
-//             // rows="5"
-//             cols="30"
-//             id="content"
-//             value={content}
-//             required
-//           />
-//           <InputBox
-//             onChange={this.handleChange}
-//             placeholder="Autor cytatu"
-//             id="politician"
-//             value={politician}
-//             required
-//           />
-//           <Button type="submit">Opublikuj</Button>
-//         </Form>
-//       </WithLoader>
-//     );
-//   }
-// }
+//   return (
+//     <WithLoader isLoading={isLoading}>
+//       <Form
+//         onSubmit={
+//           quotation ? handleEditQuotationSubmit : handleCreateQuotationSubmit
+//         }
+//       >
+//         <H2 center marginBottom={spacing[4]}>
+//           {quotation ? 'Edytuj cytat' : 'Stwórz cytat'}
+//         </H2>
+//         <TextareaBox
+//           marginBottom={spacing[3]}
+//           ref={autoFocusRef}
+//           onChange={event => setContent(event.target.value)}
+//           placeholder="Tutaj wpisz cytat"
+//           cols="30"
+//           id="content"
+//           value={content}
+//           required
+//         />
+//         <InputBox
+//           onChange={event => setPolitician(event.target.value)}
+//           placeholder="Autor cytatu"
+//           id="politician"
+//           value={politician}
+//           required
+//         />
+//         <Button type="submit">
+//           {quotation ? 'Zapisz zmiany' : 'Opublikuj'}
+//         </Button>
+//       </Form>
+//     </WithLoader>
+//   );
+//   // }
+// };
+
+// createQuotationForm.propTypes = {
+//   actions: shape({
+//     createQuotation: func.isRequired
+//   }).isRequired,
+//   closeModal: func,
+//   isLoading: bool,
+//   quotation: quotationType
+// };
+
+// createQuotationForm.defaultProps = {
+//   closeModal: () => null,
+//   isLoading: false,
+//   quotation: null
+// };
 
 // const mapStateToProps = state => ({
 //   isLoading: getIsLoadingState(state)
@@ -246,11 +185,11 @@ const Form = styled.form`
 //   connect(
 //     mapStateToProps,
 //     mapDispatchToProps
-//   )(CreateQuotation)
+//   )(createQuotationForm)
 // );
 
 // const Form = styled.form`
-//   max-width: 30rem;
+//   /* max-width: 30rem; */
 //   display: flex;
 //   flex-direction: column;
 //   align-items: center;

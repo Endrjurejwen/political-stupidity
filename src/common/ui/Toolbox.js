@@ -1,39 +1,20 @@
-// import React from 'react';
-// import { CloseButton, EditButton, Toggle, Modal } from 'common';
+import React from 'react';
+import styled from 'styled-components';
+import { withUser } from 'common/hoc';
+import { absolute, flexCenter } from 'utils';
 
-// const toolbox = ({ editInfo, deleteInfo, children }) => (
-//   <Toggle
-//     open={show => <EditButton click={show} />}
-//     content={hide => (
-//       <Modal close={hide}>
-//         {React.cloneElement(children, { onCloseClick: hide })}
-//       </Modal>
-//     )}
-//   />
-// );
+const toolbox = ({ children, user, id }) => (
+  <Wrapper isDisplay={user.id === id}>{children}</Wrapper>
+);
 
-// export default toolbox;
+// const toolboxWithUser = withUser(toolbox);
 
-// import React from 'react';
-// import { CloseButton, EditButton, Toggle, Modal } from 'common';
+export default withUser(toolbox);
 
-// const toolbox = ({ editInfo, deleteInfo }) => (
-//   <>
-//     <Toggle
-//       open={show => <EditButton click={show} />}
-//       content={hide => (
-//         <Modal close={hide}>
-//           {React.cloneElement(editInfo, { onCloseClick: hide })}
-//         </Modal>
-//       )}
-//     />
-//     <Toggle
-//       open={show => <CloseButton click={show} />}
-//       content={hide => (
-//         <Modal close={hide}>{(deleteInfo, { closeModal: hide })}</Modal>
-//       )}
-//     />
-//   </>
-// );
-
-// export default toolbox;
+const Wrapper = styled.aside`
+  ${absolute({ side: 'right' })};
+  ${flexCenter({ justifyContent: 'space-between' })};
+  display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
+  justify-content: space-between;
+  padding: 0;
+`;

@@ -31,17 +31,13 @@ const comment = ({
       ) : (
         <Text data-testid="comment-content">{comment.content}</Text>
       )}
-      <FlexContainer>
-        {/* <div> */}
-        {/* <UserName data-testid="comment-user">
-            {comment.author.firstName} {comment.author.lastName}
-          </UserName> */}
+      <Footer>
         <Data data-testid="comment-timestamp">
           {moment(comment.createAt.toDate()).calendar()}
         </Data>
         {/* </div> */}
         {likeButton}
-      </FlexContainer>
+      </Footer>
       <ToolboxWrapper isDisplay={isEditButtonsDisplay}>
         {deleteButton}
         <EditButton click={() => setIsEditActive(!isEditActive)} />
@@ -68,7 +64,7 @@ const Header = styled.header`
   /* border-bottom: 1px solid ${color.layoutBorder}; */
 `;
 
-const FlexContainer = styled.div`
+const Footer = styled.footer`
   ${flexCenter({ justifyContent: 'space-between' })};
   /* border-top: 1px solid ${color.action}; */
   position: relative;
@@ -83,11 +79,11 @@ const FlexContainer = styled.div`
   &:before {
     left: 0;
     height: 1px;
-    width: 87%;
+    width: 35%;
   }
 
   &:after {
-    left: 87%;
+    left: 35%;
     height: 10px;
     width: 10px;
     border-radius: 100px;
@@ -96,6 +92,8 @@ const FlexContainer = styled.div`
 `;
 
 const Text = styled.p`
+  margin: 0;
+  padding: 0;
   padding: 0 ${spacing[3]} ${spacing[2]};
   margin-bottom: ${spacing[3]};
 `;

@@ -22,7 +22,7 @@ const commentsList = ({
           <LikeButton
             likes={comment.likesCount}
             full={user.id in comment.likes}
-            click={
+            onClick={
               user.id in comment.likes
                 ? () => onDislikeClick(comment.id)
                 : () => onLikeClick(comment.id)

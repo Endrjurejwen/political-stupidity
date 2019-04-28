@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { func, string } from 'prop-types';
 
 import { Input, Label } from 'elements';
-import { spacing } from 'utils';
+import { spacing, media } from 'utils';
 
 const inputBox = forwardRef(({ type, placeholder, id, change, ...rest }, ref) => (
   <Wrapper>
@@ -36,4 +36,9 @@ export default inputBox;
 
 const Wrapper = styled.div`
   margin-bottom: ${spacing[3]};
+  width: 100%;
+
+  ${media.phone`
+    width: 75%;
+  `}
 `;

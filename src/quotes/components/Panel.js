@@ -1,6 +1,7 @@
 import React from 'react';
 import { shape, bool, string, func } from 'prop-types';
 import styled from 'styled-components';
+// import { withUser } from 'common';
 import { Button, H3, H5 } from 'elements';
 import { flexCenter, absolute, spacing, media, color, elevation } from 'utils';
 

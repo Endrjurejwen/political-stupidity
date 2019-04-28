@@ -3,10 +3,25 @@ import styled from 'styled-components';
 import { arrayOf, element, bool } from 'prop-types';
 import moment from 'moment';
 import { quotationType } from 'quotes/propTypes';
+import { Toolbox, withToggle, DeleteButton, EditButton } from 'common';
 import { Card, H5, Paragraph } from 'elements';
 import { spacing, flexCenter, absolute, color } from 'utils';
+import EditQuotation from 'quotes/containers/EditQuotation';
+import DeleteQuotation from 'quotes/containers/DeleteQuotation';
+import LikeQuotation from 'quotes/containers/LikeQuotation';
+import ToCommentsButton from 'quotes/components/ToCommentsButton';
 
-const quotation = ({ quotation, children, toolbox, isToolboxDisplay }) => (
+const DeleteQuotationWithToggle = withToggle({
+  modalComponent: DeleteQuotation,
+  toggleButton: DeleteButton
+});
+
+const EditQuotationWithToggle = withToggle({
+  modalComponent: EditQuotation,
+  toggleButton: EditButton
+});
+
+const quotation = ({ quotation, children, toolbox }) => (
   <Card>
     <Header>
       <Title data-testid="quotation-author">{quotation.politician}</Title>
@@ -22,8 +37,14 @@ const quotation = ({ quotation, children, toolbox, isToolboxDisplay }) => (
         {moment(quotation.createAt.toDate()).calendar()}
       </Data>
     </Footer>
-    <ToolboxWrapper isDisplay={isToolboxDisplay}>{toolbox}</ToolboxWrapper>
-    <ActionButtonsWrapper>{children}</ActionButtonsWrapper>
+    <Toolbox id={quotation.author.id}>
+      <DeleteQuotationWithToggle quotation={quotation} />
+      <EditQuotationWithToggle quotation={quotation} />
+    </Toolbox>
+    <ActionButtonsWrapper>
+      <ToCommentsButton quotation={quotation} />
+      <LikeQuotation quotation={quotation} />
+    </ActionButtonsWrapper>
   </Card>
 );
 

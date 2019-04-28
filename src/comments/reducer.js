@@ -13,7 +13,7 @@ const createCommentReducer = makeAsyncReducerWithLoading({
   name: 'CREATE_COMMENT',
   initialState
 });
-const editCommentReducer = makeAsyncReducerWithLoading({
+const editCommentReducer = makeAsyncReducer({
   name: 'EDIT_COMMENT',
   initialState
 });

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { string } from 'prop-types';
 
 import { Textarea, Label } from 'elements';
-import { spacing } from 'utils';
+import { spacing, margins, media } from 'utils';
 
-const textareaBox = forwardRef(({ type, placeholder, id, ...rest }, ref) => {
+const textareaBox = forwardRef(({ type, placeholder, id, fullWidth, marginBottom, ...rest }, ref) => {
   const resize = element => {
     element.style.height = 'inherit';
 
@@ -49,10 +49,11 @@ const textareaBox = forwardRef(({ type, placeholder, id, ...rest }, ref) => {
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper marginBottom={marginBottom} fullWidth={fullWidth}>
       <Textarea
         ref={ref}
-        className="resizeTextArea resizeTextArea--2 text-area"
+        rows="1"
+        className="resizeTextArea text-area"
         placeholder={placeholder}
         id={id}
         {...rest}
@@ -74,7 +75,12 @@ textareaBox.defaultProps = {
 export default textareaBox;
 
 const Wrapper = styled.div`
-  margin-bottom: ${spacing[3]};
+  ${margins};
+  width: 100%;
+
+  ${media.phone`
+    width: ${props => (props.fullWidth ? '100%' : '75%')};
+  `}
 `;
 
 // useEffect(() => {

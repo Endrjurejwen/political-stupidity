@@ -4,10 +4,11 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { TextareaBox, useAutoFocus, useOnClickOutside, useEscapeKey } from 'common';
+import { TextareaBox, useAutoFocus, useOnClickOutside, useEscapeKey, WithLoader } from 'common';
 import { Button } from 'elements';
-import { spacing, media } from 'utils';
+import { spacing, media, margins } from 'utils';
 import { createComment, editComment } from 'comments/actions';
+import { getIsLoadingState } from 'comments/selectors';
 
 const createCommentForm = ({
   commentValue,
@@ -16,7 +17,8 @@ const createCommentForm = ({
   actions,
   match,
   comment,
-  closeEditForm
+  closeEditForm,
+  isLoading
 }) => {
   const [content, setContent] = useState(comment ? comment.content : '');
   const autoFocusRef = useRef(null);
@@ -37,8 +39,10 @@ const createCommentForm = ({
 
     const quotationID = match.params.id;
     event.preventDefault();
-    actions.createComment(quotationID, content);
-    setContent('');
+    actions.createComment(quotationID, content).then(() => {
+      setContent('');
+      window.scrollTo(0, document.body.scrollHeight);
+    });
   };
 
   const handleEditCommentSubmit = event => {
@@ -56,14 +60,19 @@ const createCommentForm = ({
       ref={submitFormRef}
       onSubmit={comment ? handleEditCommentSubmit : handleCreateCommentSubmit}
     >
-      <TextareaBox
-        ref={autoFocusRef}
-        required
-        id="comment"
-        value={content}
-        onChange={event => setContent(event.target.value)}
-      />
-      <SubmitButton type="submit" className="textarea-button">Skomentuj</SubmitButton>
+      <WithLoader isLoading={isLoading}>
+        <TextareaBox
+          fullWidth
+          ref={autoFocusRef}
+          required
+          id="comment"
+          value={content}
+          onChange={event => setContent(event.target.value)}
+        />
+      </WithLoader>
+      <SubmitButton type="submit" className="textarea-button">
+        {comment ? 'Zapisz zmiany' : 'Skomentuj'}
+      </SubmitButton>
     </Form>
   );
 };
@@ -73,6 +82,10 @@ createCommentForm.propTypes = {
   onCommentChange: func.isRequired,
   onCommentSubmit: func.isRequired
 };
+
+const mapStateToProps = state => ({
+  isLoading: getIsLoadingState(state)
+});
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -89,7 +102,7 @@ const mapDispatchToProps = dispatch => {
 export default compose(
   withRouter,
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )
 )(createCommentForm);
@@ -98,22 +111,32 @@ const Form = styled.form`
   max-width: 30rem;
   display: flex;
   flex-direction: column;
-  margin: ${spacing[2]} auto ${spacing[5]};
 
-  /* &:focus-within .textarea-button {
-    visibility: visible;
-  } */
+  padding: 0 ${spacing[3]} ${spacing[2]};
+  /* margin-bottom: ${spacing[3]}; */
+  /* margin: ${spacing[2]} auto ${spacing[5]}; */
+  margin: 0 auto ${spacing[0]};
 
-  /* textarea {
-    border: none;
-    margin: 0;
+  .text-area {
     padding: 0;
-  } */
+    margin: 0;
+    padding-bottom: ${spacing[0]};
+  }
+
+  &:focus-within .textarea-button {
+    position: relative;
+    visibility: visible;
+    margin-top: ${spacing[3]};
+    transform: translateY(0);
+  }
 `;
 
 const SubmitButton = styled(Button)`
-  margin-top: -1rem;
-  /* visibility: hidden; */
+  position: absolute;
+  margin-top: 0;
+  visibility: hidden;
+  transform: translateY(-45px);
+  transition: transform 0.1s ease-out;
 
   ${media.tablet`
     align-self: flex-end;

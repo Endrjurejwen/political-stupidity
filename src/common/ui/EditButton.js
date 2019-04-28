@@ -5,7 +5,12 @@ import { Icon } from 'elements';
 import { spacing, color, flexCenter, absolute } from 'utils';
 
 const EditButton = ({ click, isDisplay }) => (
-  <IconButton className="button-edit" data-testid="button-edit" onClick={click} isDisplay={isDisplay}>
+  <IconButton
+    className="button-edit"
+    data-testid="button-edit"
+    onClick={click}
+    isDisplay={isDisplay}
+  >
     <Icon name="edit" />
   </IconButton>
 );

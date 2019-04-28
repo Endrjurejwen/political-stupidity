@@ -67,7 +67,7 @@ const ModalCard = styled.div`
   overflow-y: auto;
 
   ${media.tablet`
-    width: auto;
+    /* width: auto; */
     /* max-width: 50%; */
   `}
 

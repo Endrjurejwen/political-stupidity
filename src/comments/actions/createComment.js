@@ -10,7 +10,7 @@ const createComment = (quotationID, content) => {
     const { profile } = getState().firebase;
     const authorId = getState().firebase.auth.uid;
     dispatch(createCommentRequest());
-    firestore
+    return firestore
       .collection('quotes')
       .doc(quotationID)
       .collection('comments')

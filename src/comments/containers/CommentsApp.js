@@ -14,7 +14,7 @@ import { getCommentsState } from 'comments/selectors';
 import { makeGetQuotationState } from 'quotes/selectors';
 import { commentType } from 'comments/propTypes';
 import { WithLoader, WithEmptyInfo } from 'common';
-import { H2, H5 } from 'elements';
+import { H2, H5, Card } from 'elements';
 import { spacing } from 'utils';
 import {
   // createComment,
@@ -94,15 +94,8 @@ class CommentsContainer extends Component {
     const { comments, user } = this.props;
     // const { content } = this.state;
     return (
-      <section>
-        <H2 center marginBottom={spacing[5]}>
-          Komentarze
-        </H2>
-        <CreateComment
-          // commentValue={content}
-          // onCommentChange={this.handleChange}
-          // onCommentSubmit={this.handleSubmit}
-        />
+      <>
+        <CreateComment />
         <WithLoader isLoading={!comments}>
           <WithEmptyInfo
             isEmpty={!comments || !comments.length}
@@ -115,9 +108,10 @@ class CommentsContainer extends Component {
               onLikeClick={this.handleLikeClick}
               onDislikeClick={this.handleDislikeClick}
             />
+            {comments && comments.length > 5 && <CreateComment />}
           </WithEmptyInfo>
         </WithLoader>
-      </section>
+      </>
     );
   }
 }
@@ -156,6 +150,7 @@ export default compose(
       collection: 'quotes',
       doc: props.match.params.id,
       subcollections: [{ collection: 'comments' }],
+      orderBy: ['createAt', 'asc'],
       storeAs: 'comments'
     }
   ]),
