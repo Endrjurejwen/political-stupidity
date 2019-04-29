@@ -3,7 +3,7 @@ import { shape, arrayOf, func, string } from 'prop-types';
 import { match } from 'react-router-prop-types';
 import styled from 'styled-components';
 import CommmentsList from 'comments/components/CommentsList';
-import CreateComment from 'comments/components/CreateComment';
+import CreateComment from 'comments/containers/CreateComment';
 import { withRouter } from 'react-router-dom';
 import { compose, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

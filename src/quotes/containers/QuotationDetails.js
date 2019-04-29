@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
-import { shape, func, element, string } from 'prop-types';
-import { match, history } from 'react-router-prop-types';
+import React, { useEffect } from 'react';
+import { func, element } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Quotation from 'quotes/components/Quotation';
-import { compose, bindActionCreators } from 'redux';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
 import {
@@ -14,117 +13,43 @@ import {
 import { getUserInfoState } from 'auth/selectors';
 import { makeGetQuotationState } from 'quotes/selectors';
 import { quotationType } from 'quotes/propTypes';
-import Confirmation from 'quotes/components/Confirmation';
-import CreateQuotation from 'quotes/containers/CreateQuotation';
 import { spacing } from 'utils';
-import {
-  LikeButton,
-  DeleteButton,
-  EditButton,
-  WithLoader,
-  Toggle,
-  Modal
-} from 'common';
+import { WithLoader } from 'common';
 import { Button, H2 } from 'elements';
-import {
-  likeQuotation,
-  dislikeQuotation,
-  deleteQuotation
-} from 'quotes/actions';
 
-class QuotationDetails extends Component {
-  static propTypes = {
-    actions: shape({
-      deleteQuotation: func.isRequired,
-      dislikeQuotation: func.isRequired,
-      likeQuotation: func.isRequired
-    }).isRequired,
-    children: element,
-    dispatch: func.isRequired,
-    history: history.isRequired,
-    match: match.isRequired,
-    quotation: quotationType,
-    user: shape({
-      id: string
-    })
-  };
+const quotationDetails = ({ quotation, children, dispatch }) => {
+  useEffect(() => {
+    return () => {
+      dispatch({ type: actionTypes.CLEAR_DATA });
+    };
+  }, []);
 
-  static defaultProps = {
-    children: null,
-    quotation: null,
-    user: null
-  };
+  return (
+    <WithLoader isLoading={!quotation}>
+      <Quotation
+        quotation={quotation}
+        navigateButton={<Button secondary>Wróć</Button>}
+      />
+      <section>
+        <H2 center marginBottom={spacing[5]}>
+          Komentarze ({!quotation || quotation.commentsCount})
+        </H2>
+        {children}
+      </section>
+    </WithLoader>
+  );
+};
 
-  componentWillUnmount = () => {
-    this.props.dispatch({ type: actionTypes.CLEAR_DATA });
-  };
+quotationDetails.propTypes = {
+  children: element,
+  dispatch: func.isRequired,
+  quotation: quotationType
+};
 
-  handleLikeClick = () => {
-    const { match, actions } = this.props;
-    actions.likeQuotation(match.params.id);
-  };
-
-  handleDislikeClick = () => {
-    const { match, actions } = this.props;
-    actions.dislikeQuotation(match.params.id);
-  };
-
-  handleDeleteClick = () => {
-    const { match, history, actions } = this.props;
-    actions.deleteQuotation(match.params.id);
-    history.push('/quotes');
-  };
-
-  render() {
-    const { quotation, user, children } = this.props;
-    return (
-      <WithLoader isLoading={!quotation}>
-        <Quotation
-          quotation={quotation}
-          // isToolboxDisplay={!quotation || quotation.author.id === user.id}
-          // toolbox={
-          //   <>
-          //     <Toggle
-          //       open={show => <DeleteButton click={show} />}
-          //       content={hide => (
-          //         <Modal close={hide}>
-          //           <Confirmation
-          //             onCloseClick={hide}
-          //             onConfirmClick={this.handleDeleteClick}
-          //           />
-          //         </Modal>
-          //       )}
-          //     />
-          //     <Toggle
-          //       open={show => <EditButton click={show} />}
-          //       content={hide => (
-          //         <Modal close={hide}>
-          //           <CreateQuotation quotation={quotation} closeModal={hide} />
-          //         </Modal>
-          //       )}
-          //     />
-          //   </>
-          // }
-        >
-          {/* <Button secondary>Zobacz źródło</Button>
-          <LikeButton
-            likes={!quotation ? 0 : quotation.likesCount}
-            full={!quotation || user.id in quotation.likes}
-            click={
-              !quotation || user.id in quotation.likes
-                ? this.handleDislikeClick
-                : this.handleLikeClick
-            }
-          /> */}
-        </Quotation>
-        <section>
-          <H2 center marginBottom={spacing[5]}>Komentarze ({!quotation || quotation.commentsCount})</H2>
-          {children}
-        </section>
-      </WithLoader>
-    );
-  }
-}
+quotationDetails.defaultProps = {
+  children: null,
+  quotation: null
+};
 
 const makeMapStateToProps = () => {
   const getQuotationState = makeGetQuotationState();
@@ -137,27 +62,11 @@ const makeMapStateToProps = () => {
   return mapStateToProps;
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    actions: bindActionCreators(
-      {
-        likeQuotation,
-        dislikeQuotation,
-        deleteQuotation
-      },
-      dispatch
-    )
-  };
-};
-
 export default compose(
   withRouter,
   withFirebase,
   withFirestore,
-  connect(
-    makeMapStateToProps,
-    mapDispatchToProps
-  ),
+  connect(makeMapStateToProps),
   firestoreConnect(props => [
     {
       collection: 'quotes',
@@ -165,4 +74,80 @@ export default compose(
       storeAs: 'quotation'
     }
   ])
-)(QuotationDetails);
+)(quotationDetails);
+
+// import React, { Component } from 'react';
+// import { func, element } from 'prop-types';
+// import { withRouter } from 'react-router-dom';
+// import Quotation from 'quotes/components/Quotation';
+// import { compose } from 'redux';
+// import { connect } from 'react-redux';
+// import { actionTypes } from 'redux-firestore';
+// import {
+//   firestoreConnect,
+//   withFirebase,
+//   withFirestore
+// } from 'react-redux-firebase';
+// import { getUserInfoState } from 'auth/selectors';
+// import { makeGetQuotationState } from 'quotes/selectors';
+// import { quotationType } from 'quotes/propTypes';
+// import { spacing } from 'utils';
+// import { WithLoader } from 'common';
+// import { Button, H2 } from 'elements';
+
+// class QuotationDetails extends Component {
+//   static propTypes = {
+//     children: element,
+//     dispatch: func.isRequired,
+//     quotation: quotationType
+//   };
+
+//   static defaultProps = {
+//     children: null,
+//     quotation: null
+//   };
+
+//   componentWillUnmount = () => {
+//     this.props.dispatch({ type: actionTypes.CLEAR_DATA });
+//   };
+
+//   render() {
+//     const { quotation, children } = this.props;
+//     return (
+//       <WithLoader isLoading={!quotation}>
+//         <Quotation quotation={quotation} />
+//         <section>
+//           <H2 center marginBottom={spacing[5]}>
+//             Komentarze ({!quotation || quotation.commentsCount})
+//           </H2>
+//           {children}
+//         </section>
+//       </WithLoader>
+//     );
+//   }
+// }
+
+// const makeMapStateToProps = () => {
+//   const getQuotationState = makeGetQuotationState();
+//   const mapStateToProps = (state, ownProps) => {
+//     return {
+//       quotation: getQuotationState(state, ownProps),
+//       user: getUserInfoState(state)
+//     };
+//   };
+//   return mapStateToProps;
+// };
+
+// export default compose(
+//   withRouter,
+//   withFirebase,
+//   withFirestore,
+//   connect(makeMapStateToProps),
+//   firestoreConnect(props => [
+//     {
+//       collection: 'quotes',
+//       doc: props.match.params.id,
+//       storeAs: 'quotation'
+//     }
+//   ])
+// )(QuotationDetails);

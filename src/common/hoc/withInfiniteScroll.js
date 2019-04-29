@@ -30,12 +30,12 @@ const withInfiniteScroll = ({
     };
 
     onScroll = () => {
-      const { actions, counters, pagination } = this.props;
+      const { counters, pagination } = this.props;
       const isBottom =
         window.innerHeight + window.scrollY >= document.body.offsetHeight; // "document.body.offsetHeight - 300" if you want load before bottom
       const isMoreContent = pagination.limit < counters[counterName];
       if (isBottom && isMoreContent && !pagination.isLoading) {
-        actions[actionName]();
+        this.props[actionName]();
       }
     };
 
@@ -48,7 +48,8 @@ const withInfiniteScroll = ({
           {pagination.isLoading && <Spinner />}
           {pagination.limit >= counters[counterName] &&
             !pagination.isLoading &&
-            quotes && <H5 center>gratulacje! dotarłeś do końca</H5>}
+            ([counterName].length > 0) && 
+            <H5 center>gratulacje! dotarłeś do końca</H5>}
         </>
       );
     }

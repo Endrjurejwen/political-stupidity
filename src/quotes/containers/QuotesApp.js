@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { shape, arrayOf, func, bool, string } from 'prop-types';
-import { history, location } from 'react-router-prop-types';
+import { location } from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
-import { compose, bindActionCreators } from 'redux';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import {
   firestoreConnect,
@@ -18,92 +18,37 @@ import {
   getCurrentSortState,
   getIsLoadingState
 } from 'quotes/selectors';
-import CreateQuotationButton from 'quotes/components/CreateQuotationButton';
+import CreateQuotationToggle from 'quotes/components/CreateQuotationToggle';
 import LoginButton from 'auth/components/LoginButton';
 import Panel from 'quotes/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
 import { WithLoader, WithEmptyInfo, withInfiniteScroll } from 'common';
 import { quotationType } from 'quotes/propTypes';
-import { H3 } from 'elements';
-import { spacing } from 'utils';
-import {
-  likeQuotation,
-  dislikeQuotation,
-  deleteQuotation,
-  sortQuotes,
-  loadMoreQuotes
-} from 'quotes/actions';
+import { sortQuotes, loadMoreQuotes } from 'quotes/actions';
 
 const quotesApp = ({
-  actions,
-  history,
+  sortQuotes,
   location,
   quotes,
   sortOrder,
   user,
   isLoading
 }) => {
-  // useEffect(() => {
-  //   console.log('useEffect');
-  //   firestore.setListener({
-  //     collection: 'quotes',
-  //     orderBy: [currentSort.type, currentSort.order],
-  //     limit: pagination.limit
-  //   });
-
-  //   return function cleanup() {
-  //     firestore.unsetListener({
-  //       collection: 'quotes',
-  //       orderBy: [currentSort.type, currentSort.order],
-  //       limit: pagination.limit
-  //     });
-  //   };
-  // }, []);
-
-  // zrobić z tego custom hooka
   useEffect(() => {
     const id = location.state ? location.state.id : 0;
-    // window.scrollTo(0, 0);
     if (id) {
       window.scrollTo(0, id);
     }
   }, []);
 
-  const handleNavigateClick = id => {
-    history.push({
-      pathname: `/quotes/${id}`,
-      state: { id: window.scrollY }
-    });
-  };
-
-  const handleLikeClick = id => {
-    if (!user.id) {
-      history.push('/login');
-    } else {
-      actions.likeQuotation(id);
-    }
-  };
-
-  const handleDislikeClick = id => {
-    if (!user.id) {
-      history.push('/login');
-    } else {
-      actions.dislikeQuotation(id);
-    }
-  };
-
-  const handleDeleteClick = id => {
-    actions.deleteQuotation(id);
-  };
-
   const handleSortClick = event => {
     const sortBy = event.target.dataset.sortby;
-    actions.sortQuotes(sortBy);
+    sortQuotes(sortBy);
   };
 
   return (
     <>
-      {user.id ? <CreateQuotationButton /> : <LoginButton fixed />}
+      {user.id ? <CreateQuotationToggle /> : <LoginButton fixed />}
       <Panel onSortClick={handleSortClick} sortOrder={sortOrder} />
       <div>
         <WithLoader isLoading={!quotes || isLoading}>
@@ -111,14 +56,7 @@ const quotesApp = ({
             isEmpty={!quotes || !quotes.length}
             info={<p>Nie ma jeszcze żadnych cytatów</p>}
           >
-            <QuotesList
-              quotes={quotes}
-              user={user}
-              navigationClick={handleNavigateClick}
-              onLikeClick={handleLikeClick}
-              onDislikeClick={handleDislikeClick}
-              deleteClick={handleDeleteClick}
-            />
+            <QuotesList quotes={quotes} />
           </WithEmptyInfo>
         </WithLoader>
       </div>
@@ -127,13 +65,6 @@ const quotesApp = ({
 };
 
 quotesApp.propTypes = {
-  actions: shape({
-    deleteQuotation: func.isRequired,
-    dislikeQuotation: func.isRequired,
-    likeQuotation: func.isRequired,
-    sortQuotes: func.isRequired
-  }).isRequired,
-  history: history.isRequired,
   isLoading: bool,
   location: location.isRequired,
   quotes: arrayOf(quotationType),
@@ -151,6 +82,7 @@ quotesApp.propTypes = {
       oder: string
     }).isRequired
   }).isRequired,
+  sortQuotes: func.isRequired,
   user: shape({
     id: string
   })
@@ -172,28 +104,13 @@ const mapStateToProps = state => ({
   counters: getCountersState(state)
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    actions: bindActionCreators(
-      {
-        likeQuotation,
-        dislikeQuotation,
-        deleteQuotation,
-        sortQuotes,
-        loadMoreQuotes
-      },
-      dispatch
-    )
-  };
-};
-
 export default compose(
   withRouter,
   withFirebase,
   withFirestore,
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    { sortQuotes, loadMoreQuotes }
   ),
   firestoreConnect(props => [
     {
@@ -204,3 +121,59 @@ export default compose(
   ]),
   withInfiniteScroll({ counterName: 'quotes', actionName: 'loadMoreQuotes' })
 )(quotesApp);
+
+// useEffect(() => {
+//   console.log('useEffect');
+//   firestore.setListener({
+//     collection: 'quotes',
+//     orderBy: [currentSort.type, currentSort.order],
+//     limit: pagination.limit
+//   });
+
+//   return function cleanup() {
+//     firestore.unsetListener({
+//       collection: 'quotes',
+//       orderBy: [currentSort.type, currentSort.order],
+//       limit: pagination.limit
+//     });
+//   };
+// }, []);
+
+// const handleNavigateClick = id => {
+//   history.push({
+//     pathname: `/quotes/${id}`,
+//     state: { id: window.scrollY }
+//   });
+// };
+
+// const handleLikeClick = id => {
+//   if (!user.id) {
+//     history.push('/login');
+//   } else {
+//     actions.likeQuotation(id);
+//   }
+// };
+
+// const handleDislikeClick = id => {
+//   if (!user.id) {
+//     history.push('/login');
+//   } else {
+//     actions.dislikeQuotation(id);
+//   }
+// };
+
+// const handleDeleteClick = id => {
+//   actions.deleteQuotation(id);
+// };
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     actions: bindActionCreators(
+//       {
+//         sortQuotes,
+//         loadMoreQuotes
+//       },
+//       dispatch
+//     )
+//   };
+// };

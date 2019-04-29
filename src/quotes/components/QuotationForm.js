@@ -1,21 +1,14 @@
-import React, { useState, useRef } from 'react';
-import { shape, func, bool, string } from 'prop-types';
+import React, { useRef } from 'react';
+import { func, string } from 'prop-types';
 import styled from 'styled-components';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { createQuotation, editQuotation } from 'quotes/actions';
-import { getIsLoadingState } from 'quotes/selectors';
-import { quotationType } from 'quotes/propTypes';
 import { spacing, flexCenter } from 'utils';
-import { InputBox, TextareaBox, WithLoader, useAutoFocus } from 'common';
-import { H2, Button } from 'elements';
+import { InputBox, TextareaBox, useAutoFocus } from 'common';
+import { Button } from 'elements';
 
 const quotationForm = ({
   onQuotationSubmit,
   onContentChange,
   onPoliticianChange,
-  isLoading,
   buttonLabel,
   content,
   politician
@@ -25,9 +18,6 @@ const quotationForm = ({
 
   return (
     <Form onSubmit={onQuotationSubmit}>
-      {/* <H2 center marginBottom={spacing[4]}>
-        {isEditForm ? 'Edytuj cytat' : 'Stwórz cytat'}
-      </H2> */}
       <TextareaBox
         marginBottom={spacing[3]}
         ref={autoFocusRef}
@@ -51,16 +41,17 @@ const quotationForm = ({
 };
 
 quotationForm.propTypes = {
+  buttonLabel: string,
   content: string,
-  isEditForm: bool,
-  isLoading: bool,
+  onQuotationSubmit: func.isRequired,
+  onContentChange: func.isRequired,
+  onPoliticianChange: func.isRequired,
   politician: string
 };
 
 quotationForm.defaultProps = {
+  buttonLabel: 'Opublikuj',
   content: '',
-  isEditForm: false,
-  isLoading: false,
   politician: ''
 };
 

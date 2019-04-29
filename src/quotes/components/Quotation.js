@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { arrayOf, element, bool } from 'prop-types';
+import { element } from 'prop-types';
 import moment from 'moment';
 import { quotationType } from 'quotes/propTypes';
 import { Toolbox, withToggle, DeleteButton, EditButton } from 'common';
 import { Card, H5, Paragraph } from 'elements';
-import { spacing, flexCenter, absolute, color } from 'utils';
+import { spacing, flexCenter, color } from 'utils';
 import EditQuotation from 'quotes/containers/EditQuotation';
 import DeleteQuotation from 'quotes/containers/DeleteQuotation';
 import LikeQuotation from 'quotes/containers/LikeQuotation';
-import ToCommentsButton from 'quotes/components/ToCommentsButton';
 
 const DeleteQuotationWithToggle = withToggle({
   modalComponent: DeleteQuotation,
@@ -21,7 +20,7 @@ const EditQuotationWithToggle = withToggle({
   toggleButton: EditButton
 });
 
-const quotation = ({ quotation, children, toolbox }) => (
+const quotation = ({ quotation, navigateButton }) => (
   <Card>
     <Header>
       <Title data-testid="quotation-author">{quotation.politician}</Title>
@@ -42,24 +41,20 @@ const quotation = ({ quotation, children, toolbox }) => (
       <EditQuotationWithToggle quotation={quotation} />
     </Toolbox>
     <ActionButtonsWrapper>
-      <ToCommentsButton quotation={quotation} />
+      {navigateButton}
       <LikeQuotation quotation={quotation} />
     </ActionButtonsWrapper>
   </Card>
 );
 
 quotation.propTypes = {
-  children: arrayOf(element),
-  isToolboxDisplay: bool,
-  quotation: quotationType,
-  toolbox: element
+  navigateButton: element,
+  quotation: quotationType
 };
 
 quotation.defaultProps = {
-  children: null,
-  isToolboxDisplay: false,
-  quotation: null,
-  toolbox: null
+  navigateButton: null,
+  quotation: null
 };
 
 export default quotation;
@@ -115,14 +110,6 @@ const UserName = styled.address`
 const Data = styled.time`
   font-size: 0.85rem;
   color: ${color.textSecondary};
-`;
-
-const ToolboxWrapper = styled.aside`
-  ${absolute({ side: 'right' })};
-  ${flexCenter({ justifyContent: 'space-between' })};
-  display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
-  justify-content: space-between;
-  padding: 0;
 `;
 
 const Footer = styled.footer`

@@ -17,7 +17,7 @@ import SideDrawer from 'layout/components/SideDrawer';
 import MenuButton from 'layout/components/MenuButton';
 import Navigation from 'layout/components/Navigation';
 // import CreateQuotation from 'quotes/containers/CreateQuotation';
-import CreateQuotationButton from 'quotes/components/CreateQuotationButton';
+import CreateQuotationToggle from 'quotes/components/CreateQuotationToggle';
 import LoginButton from 'auth/components/LoginButton';
 import UserDetails from 'auth/components/UserDetails';
 import Login from 'auth/containers/Login';
@@ -85,7 +85,7 @@ class Toolbar extends Component {
           isMenuOpen={isMenuOpen}
           toggleMenu={this.handleToggleMenuClick}
         />
-        {user.id ? <CreateQuotationButton desktop /> : <LoginButton desktop />}
+        {user.id ? <CreateQuotationToggle desktop /> : <LoginButton desktop />}
         <Navigation desktop navItems={links} />
         <FlexContainer isLogin={!!user.id}>
           {user.id && <UserSummary name={user.firstName} />}
@@ -97,7 +97,7 @@ class Toolbar extends Component {
           loginButton={<LoginButton closeMenu={this.handleToggleMenuClick} />}
           logoutButton={<LogoutButton closeMenu={this.handleToggleMenuClick} />}
           createQuotationButton={
-            <CreateQuotationButton
+            <CreateQuotationToggle
               extended
               closeMenu={this.handleToggleMenuClick}
             />

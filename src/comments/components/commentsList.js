@@ -29,20 +29,20 @@ const commentsList = ({
             }
           />
         }
-        deleteButton={
-          <Toggle
-            open={show => <DeleteButton click={show} />}
-            content={hide => (
-              <Modal close={hide}>
-                <Confirmation
-                  onCloseClick={hide}
-                  onConfirmClick={() => deleteClick(comment.id)}
-                />
-              </Modal>
-            )}
-          />
-        }
-        editButton={<EditButton />}
+        // deleteButton={
+        //   <Toggle
+        //     open={show => <DeleteButton click={show} />}
+        //     content={hide => (
+        //       <Modal close={hide}>
+        //         <Confirmation
+        //           onCloseClick={hide}
+        //           onConfirmClick={() => deleteClick(comment.id)}
+        //         />
+        //       </Modal>
+        //     )}
+        //   />
+        // }
+        // editButton={<EditButton />}
       />
     ))}
   </>

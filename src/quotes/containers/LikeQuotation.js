@@ -1,6 +1,6 @@
 import React from 'react';
-import { shape, func, bool } from 'prop-types';
-import { bindActionCreators, compose } from 'redux';
+import { shape, func, string } from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { quotationType } from 'quotes/propTypes';
@@ -9,21 +9,18 @@ import { likeQuotation, dislikeQuotation } from 'quotes/actions';
 
 const LikeButtonWithPrivacyGuard = withPrivacyGuard(LikeButton);
 
-const likeQuotationButton = ({ quotation, user, history, actions }) => {
+const likeQuotationButton = ({
+  quotation,
+  user,
+  likeQuotation,
+  dislikeQuotation
+}) => {
   const handleLikeClick = () => {
-    if (!user.id) {
-      // history.push('/login');
-    } else {
-      actions.likeQuotation(quotation.id);
-    }
+    likeQuotation(quotation.id);
   };
 
   const handleDislikeClick = () => {
-    if (!user.id) {
-      // history.push('/login');
-    } else {
-      actions.dislikeQuotation(quotation.id);
-    }
+    dislikeQuotation(quotation.id);
   };
 
   const isLiked = user.id in quotation.likes;
@@ -37,27 +34,19 @@ const likeQuotationButton = ({ quotation, user, history, actions }) => {
 };
 
 likeQuotationButton.propTypes = {
-  actions: shape({
-    likeQuotation: func.isRequired,
-    dislikeQuotation: func.isRequired
-  }).isRequired,
-  quotation: quotationType
+  dislikeQuotation: func.isRequired,
+  likeQuotation: func.isRequired,
+  quotation: quotationType,
+  user: shape({
+    id: string,
+    firstName: string,
+    lastName: string
+  })
 };
 
 likeQuotationButton.defaultProps = {
-  quotation: null
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    actions: bindActionCreators(
-      {
-        likeQuotation,
-        dislikeQuotation
-      },
-      dispatch
-    )
-  };
+  quotation: null,
+  user: null
 };
 
 export default compose(
@@ -65,7 +54,7 @@ export default compose(
   withUser,
   connect(
     null,
-    mapDispatchToProps
+    { likeQuotation, dislikeQuotation }
   )
 )(likeQuotationButton);
 
@@ -77,3 +66,15 @@ export default compose(
 //     mapDispatchToProps
 //   )(ComponentWithUser)
 // );
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     actions: bindActionCreators(
+//       {
+//         likeQuotation,
+//         dislikeQuotation
+//       },
+//       dispatch
+//     )
+//   };
+// };

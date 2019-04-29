@@ -1,25 +1,21 @@
-import React, { useState } from 'react';
-import { shape, func, bool } from 'prop-types';
-import { bindActionCreators } from 'redux';
+import React from 'react';
+import { func } from 'prop-types';
+import { history } from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { deleteQuotation } from 'quotes/actions';
-import { getIsLoadingState } from 'quotes/selectors';
 import { quotationType } from 'quotes/propTypes';
-import { spacing } from 'utils';
-import { WithLoader } from 'common';
-import { H3 } from 'elements';
 import Confirmation from 'quotes/components/Confirmation';
 
 const deleteQuotationConfirmation = ({
-  actions,
+  deleteQuotation,
   closeModal,
   quotation,
   history
 }) => {
   const handleDeleteQuotationClick = () => {
     const isQuotesLocation = history.location.pathname === '/quotes';
-    actions.deleteQuotation(quotation.id);
+    deleteQuotation(quotation.id);
     if (!isQuotesLocation) {
       history.push('/quotes');
     }
@@ -34,36 +30,31 @@ const deleteQuotationConfirmation = ({
 };
 
 deleteQuotationConfirmation.propTypes = {
-  actions: shape({
-    deleteQuotation: func.isRequired
-  }).isRequired,
-  onCloseClick: func,
+  closeModal: func,
+  deleteQuotation: func.isRequired,
+  history: history.isRequired,
   quotation: quotationType
 };
 
 deleteQuotationConfirmation.defaultProps = {
-  onCloseClick: () => null,
+  closeModal: () => null,
   quotation: null
-};
-
-// const mapStateToProps = state => ({
-//   isLoading: getIsLoadingState(state)
-// });
-
-const mapDispatchToProps = dispatch => {
-  return {
-    actions: bindActionCreators(
-      {
-        deleteQuotation
-      },
-      dispatch
-    )
-  };
 };
 
 export default withRouter(
   connect(
     null,
-    mapDispatchToProps
+    { deleteQuotation }
   )(deleteQuotationConfirmation)
 );
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     actions: bindActionCreators(
+//       {
+//         deleteQuotation
+//       },
+//       dispatch
+//     )
+//   };
+// };

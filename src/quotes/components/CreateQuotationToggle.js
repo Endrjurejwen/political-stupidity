@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
+import { history } from 'react-router-prop-types';
+import { bool, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Toggle, Modal } from 'common';
 import { Button, Cross } from 'elements';
-import { media, flexCenter, spacing, elevation } from 'utils';
+import { media, spacing, elevation } from 'utils';
 import CreateQuotation from 'quotes/containers/CreateQuotation';
 
-const createQuotationButton = ({ desktop, extended, closeMenu, history }) => (
+const createQuotationToggle = ({ desktop, extended, closeMenu, history }) => (
   <Toggle
     open={show => (
       <ActionButton
@@ -30,11 +32,20 @@ const createQuotationButton = ({ desktop, extended, closeMenu, history }) => (
   />
 );
 
-createQuotationButton.defaultProps = {
-  closeMenu: () => null
+createQuotationToggle.propTypes = {
+  closeMenu: func,
+  desktop: bool,
+  extended: bool,
+  history: history.isRequired
 };
 
-export default withRouter(createQuotationButton);
+createQuotationToggle.defaultProps = {
+  closeMenu: () => null,
+  desktop: false,
+  extended: false
+};
+
+export default withRouter(createQuotationToggle);
 
 const ActionButton = styled(Button)`
   ${props => (props.extended ? elevation[1] : elevation[4])};

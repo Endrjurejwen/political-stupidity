@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { element, bool } from 'prop-types';
 import { Icon, H4 } from 'elements';
-import CreateQuotationButton from 'quotes/components/CreateQuotationButton';
 
 import { Button } from 'elements';
 import { color, fixed, elevation, spacing, media, flexCenter } from 'utils';

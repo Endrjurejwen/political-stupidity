@@ -3,10 +3,17 @@ import { element } from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
 import { commentType } from 'comments/propTypes';
-import CreateComment from 'comments/components/CreateComment';
-import { EditButton } from 'common';
+import EditComment from 'comments/containers/EditComment';
+import DeleteComment from 'comments/containers/DeleteComment';
+import LikeComment from 'comments/containers/LikeComment';
+import { EditButton, DeleteButton, withToggle } from 'common';
 import { Card, H6 } from 'elements';
 import { spacing, flexCenter, absolute, color } from 'utils';
+
+const DeleteCommentWithToggle = withToggle({
+  modalComponent: DeleteComment,
+  toggleButton: DeleteButton
+});
 
 const comment = ({
   comment,
@@ -16,6 +23,16 @@ const comment = ({
   isEditButtonsDisplay
 }) => {
   const [isEditActive, setIsEditActive] = useState(false);
+
+  let textBox = <Text data-testid="comment-content">{comment.content}</Text>;
+  if (isEditActive) {
+    textBox = (
+      <EditComment
+        comment={comment}
+        closeEditForm={() => setIsEditActive(!isEditActive)}
+      />
+    );
+  }
   return (
     <Card secondary>
       <Header>
@@ -23,23 +40,15 @@ const comment = ({
           {comment.author.firstName} {comment.author.lastName}
         </H6>
       </Header>
-      {isEditActive ? (
-        <CreateComment
-          comment={comment}
-          closeEditForm={() => setIsEditActive(!isEditActive)}
-        />
-      ) : (
-        <Text data-testid="comment-content">{comment.content}</Text>
-      )}
+      {textBox}
       <Footer>
         <Data data-testid="comment-timestamp">
           {moment(comment.createAt.toDate()).calendar()}
         </Data>
-        {/* </div> */}
-        {likeButton}
+        <LikeComment comment={comment} />
       </Footer>
       <ToolboxWrapper isDisplay={isEditButtonsDisplay}>
-        {deleteButton}
+        <DeleteCommentWithToggle comment={comment} />
         <EditButton click={() => setIsEditActive(!isEditActive)} />
       </ToolboxWrapper>
     </Card>
@@ -96,13 +105,6 @@ const Text = styled.p`
   padding: 0;
   padding: 0 ${spacing[3]} ${spacing[2]};
   margin-bottom: ${spacing[3]};
-`;
-
-const UserName = styled.div`
-  font-size: 0.85rem;
-  padding-top: ${spacing[1]};
-
-  margin-top: ${spacing[1]};
 `;
 
 const Data = styled.time`

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { shape, func, bool } from 'prop-types';
-import { bindActionCreators } from 'redux';
+import { func, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { editQuotation } from 'quotes/actions';
@@ -11,7 +10,12 @@ import { WithLoader } from 'common';
 import { H3 } from 'elements';
 import QuotationForm from 'quotes/components/QuotationForm';
 
-const editQuotationForm = ({ actions, closeModal, isLoading, quotation }) => {
+const editQuotationForm = ({
+  editQuotation,
+  closeModal,
+  isLoading,
+  quotation
+}) => {
   const [content, setContent] = useState(quotation.content);
   const [politician, setPolitician] = useState(quotation.politician);
 
@@ -20,7 +24,7 @@ const editQuotationForm = ({ actions, closeModal, isLoading, quotation }) => {
   const handleEditQuotationSubmit = event => {
     const newQuotation = setNewQuotation();
     event.preventDefault();
-    actions.editQuotation(quotation.id, newQuotation);
+    editQuotation(quotation.id, newQuotation);
     closeModal();
   };
 
@@ -43,10 +47,8 @@ const editQuotationForm = ({ actions, closeModal, isLoading, quotation }) => {
 };
 
 editQuotationForm.propTypes = {
-  actions: shape({
-    editQuotation: func.isRequired
-  }).isRequired,
   closeModal: func,
+  editQuotation: func.isRequired,
   isLoading: bool,
   quotation: quotationType
 };
@@ -61,20 +63,20 @@ const mapStateToProps = state => ({
   isLoading: getIsLoadingState(state)
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    actions: bindActionCreators(
-      {
-        editQuotation
-      },
-      dispatch
-    )
-  };
-};
-
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    { editQuotation }
   )(editQuotationForm)
 );
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     actions: bindActionCreators(
+//       {
+//         editQuotation
+//       },
+//       dispatch
+//     )
+//   };
+// };

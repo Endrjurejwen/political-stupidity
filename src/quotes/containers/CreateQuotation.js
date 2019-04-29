@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { shape, func, bool } from 'prop-types';
-import { bindActionCreators } from 'redux';
+import { func, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { createQuotation } from 'quotes/actions';
 import { getIsLoadingState } from 'quotes/selectors';
-import { quotationType } from 'quotes/propTypes';
 import { spacing } from 'utils';
 import { WithLoader } from 'common';
 import { H3 } from 'elements';
 import QuotationForm from 'quotes/components/QuotationForm';
 
-const createQuotationForm = ({ actions, closeModal, isLoading, quotation }) => {
+const createQuotationForm = ({ createQuotation, closeModal, isLoading }) => {
   const [content, setContent] = useState('');
   const [politician, setPolitician] = useState('');
 
@@ -20,7 +18,7 @@ const createQuotationForm = ({ actions, closeModal, isLoading, quotation }) => {
   const handleCreateQuotationSubmit = event => {
     const newQuotation = setNewQuotation();
     event.preventDefault();
-    actions.createQuotation(newQuotation).then(res => res && closeModal());
+    createQuotation(newQuotation).then(res => res && closeModal());
   };
 
   return (
@@ -32,49 +30,32 @@ const createQuotationForm = ({ actions, closeModal, isLoading, quotation }) => {
         onQuotationSubmit={handleCreateQuotationSubmit}
         onContentChange={setContent}
         onPoliticianChange={setPolitician}
-        isLoading={isLoading}
         content={content}
         politician={politician}
-        buttonLabel="Opublikuj"
       />
     </WithLoader>
   );
 };
 
 createQuotationForm.propTypes = {
-  actions: shape({
-    createQuotation: func.isRequired
-  }).isRequired,
   closeModal: func,
-  isLoading: bool,
-  quotation: quotationType
+  createQuotation: func.isRequired,
+  isLoading: bool
 };
 
 createQuotationForm.defaultProps = {
   closeModal: () => null,
-  isLoading: false,
-  quotation: null
+  isLoading: false
 };
 
 const mapStateToProps = state => ({
   isLoading: getIsLoadingState(state)
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    actions: bindActionCreators(
-      {
-        createQuotation
-      },
-      dispatch
-    )
-  };
-};
-
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    { createQuotation }
   )(createQuotationForm)
 );
 
@@ -198,3 +179,18 @@ export default withRouter(
 
 //   margin: ${spacing[4]} auto 0;
 // `;
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     actions: bindActionCreators(
+//       {
+//         createQuotation
+//       },
+//       dispatch
+//     )
+//   };
+// };
+
+// const mapDispatchToProps = {
+//   createQuotation
+// };
