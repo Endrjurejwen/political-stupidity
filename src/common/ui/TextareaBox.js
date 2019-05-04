@@ -3,65 +3,67 @@ import styled from 'styled-components';
 import { string } from 'prop-types';
 
 import { Textarea, Label } from 'elements';
-import { spacing, margins, media } from 'utils';
+import { margins, media } from 'utils';
 
-const textareaBox = forwardRef(({ type, placeholder, id, fullWidth, marginBottom, ...rest }, ref) => {
-  const resize = element => {
-    element.style.height = 'inherit';
+const textareaBox = forwardRef(
+  ({ type, placeholder, id, fullWidth, marginBottom, ...rest }, ref) => {
+    const resize = element => {
+      element.style.height = 'inherit';
 
-    const height = element.scrollHeight;
+      const height = element.scrollHeight;
 
-    element.style.height = `${height}px`;
-  };
+      element.style.height = `${height}px`;
+    };
 
-  useEffect(() => {
-    const elements = document.querySelectorAll('.resizeTextArea');
-    elements.forEach(element => {
-      element.addEventListener('input', () => {
-        resize(element);
-      });
-    });
-
-    return () => {
+    useEffect(() => {
+      const elements = document.querySelectorAll('.resizeTextArea');
       elements.forEach(element => {
         element.addEventListener('input', () => {
           resize(element);
         });
       });
-    };
-  }, []);
 
-  useEffect(() => {
-    const elements = document.querySelectorAll('.resizeTextArea');
-    elements.forEach(element => {
-      element.addEventListener('focus', () => {
-        resize(element);
-      });
-    });
+      return () => {
+        elements.forEach(element => {
+          element.addEventListener('input', () => {
+            resize(element);
+          });
+        });
+      };
+    }, []);
 
-    return () => {
+    useEffect(() => {
+      const elements = document.querySelectorAll('.resizeTextArea');
       elements.forEach(element => {
         element.addEventListener('focus', () => {
           resize(element);
         });
       });
-    };
-  }, []);
 
-  return (
-    <Wrapper marginBottom={marginBottom} fullWidth={fullWidth}>
-      <Textarea
-        ref={ref}
-        rows="1"
-        className="resizeTextArea text-area"
-        placeholder={placeholder}
-        id={id}
-        {...rest}
-      />
-      <Label htmlFor={id}>{placeholder}</Label>
-    </Wrapper>
-  );
-});
+      return () => {
+        elements.forEach(element => {
+          element.addEventListener('focus', () => {
+            resize(element);
+          });
+        });
+      };
+    }, []);
+
+    return (
+      <Wrapper marginBottom={marginBottom} fullWidth={fullWidth}>
+        <Textarea
+          ref={ref}
+          rows="1"
+          className="resizeTextArea text-area"
+          placeholder={placeholder}
+          id={id}
+          {...rest}
+        />
+        <Label htmlFor={id}>{placeholder}</Label>
+      </Wrapper>
+    );
+  }
+);
 
 textareaBox.propTypes = {
   id: string.isRequired,

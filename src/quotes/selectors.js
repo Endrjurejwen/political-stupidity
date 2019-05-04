@@ -7,73 +7,6 @@ export const getQuotesState = createSelector(
   quotes => quotes
 );
 
-const getSortType = (state, sortTypeName) => {
-  return state.quotes.sortTypes.find(({ name }) => name === sortTypeName);
-};
-
-// TIME ORDER
-const getTimeSortOrder = state => {
-  const timeSortType = getSortType(state, 'time');
-  const { order } = timeSortType;
-  return order;
-};
-
-const getTimeSortActive = state => {
-  const timeSortType = getSortType(state, 'time');
-  const { active } = timeSortType;
-  return active;
-};
-
-const getTimeSortType = createStructuredSelector({
-  order: getTimeSortOrder,
-  active: getTimeSortActive
-});
-
-// COMMENTS ORDER
-const getCommentsSortOrder = state => {
-  const timeSortType = getSortType(state, 'comments');
-  const { order } = timeSortType;
-  return order;
-};
-
-const getCommentsSortActive = state => {
-  const timeSortType = getSortType(state, 'comments');
-  const { active } = timeSortType;
-  return active;
-};
-
-const getCommentsSortType = createStructuredSelector({
-  order: getCommentsSortOrder,
-  active: getCommentsSortActive
-});
-
-// LIKE ORDER
-const getLikesSortOrder = state => {
-  const timeSortType = getSortType(state, 'likes');
-  const { order } = timeSortType;
-  return order;
-};
-
-const getLikesSortActive = state => {
-  const timeSortType = getSortType(state, 'likes');
-  const { active } = timeSortType;
-  return active;
-};
-
-const getLikesSortType = createStructuredSelector({
-  order: getLikesSortOrder,
-  active: getLikesSortActive
-});
-
-export const getSortOrderState = createStructuredSelector({
-  time: getTimeSortType,
-  comments: getCommentsSortType,
-  likes: getLikesSortType
-});
-
-// const getId = ownProps => ownProps.match.params.id;
-// const getDataQuotes = state => state.firestore.data.quotes;
-
 const getQuotation = (state, ownProps) => {
   // const id = getId(ownProps);
   // const quotes = getDataQuotes(state);
@@ -126,3 +59,74 @@ export const getIsLoadingState = createSelector(
   [getIsLoading],
   isLoading => isLoading
 );
+
+const getSortTypes = state => state.quotes.sortTypes;
+
+export const getSortTypesState = createSelector(
+  [getSortTypes],
+  sortTypes => sortTypes
+);
+
+// const getSortType = (state, sortTypeName) => {
+//   return state.quotes.sortTypes.find(({ name }) => name === sortTypeName);
+// };
+
+// // TIME ORDER
+// const getTimeSortOrder = state => {
+//   const timeSortType = getSortType(state, 'time');
+//   const { order } = timeSortType;
+//   return order;
+// };
+
+// const getTimeSortActive = state => {
+//   const timeSortType = getSortType(state, 'time');
+//   const { active } = timeSortType;
+//   return active;
+// };
+
+// const getTimeSortType = createStructuredSelector({
+//   order: getTimeSortOrder,
+//   active: getTimeSortActive
+// });
+
+// // COMMENTS ORDER
+// const getCommentsSortOrder = state => {
+//   const timeSortType = getSortType(state, 'comments');
+//   const { order } = timeSortType;
+//   return order;
+// };
+
+// const getCommentsSortActive = state => {
+//   const timeSortType = getSortType(state, 'comments');
+//   const { active } = timeSortType;
+//   return active;
+// };
+
+// const getCommentsSortType = createStructuredSelector({
+//   order: getCommentsSortOrder,
+//   active: getCommentsSortActive
+// });
+
+// // LIKE ORDER
+// const getLikesSortOrder = state => {
+//   const timeSortType = getSortType(state, 'likes');
+//   const { order } = timeSortType;
+//   return order;
+// };
+
+// const getLikesSortActive = state => {
+//   const timeSortType = getSortType(state, 'likes');
+//   const { active } = timeSortType;
+//   return active;
+// };
+
+// const getLikesSortType = createStructuredSelector({
+//   order: getLikesSortOrder,
+//   active: getLikesSortActive
+// });
+
+// export const getSortOrderState = createStructuredSelector({
+//   time: getTimeSortType,
+//   comments: getCommentsSortType,
+//   likes: getLikesSortType
+// });

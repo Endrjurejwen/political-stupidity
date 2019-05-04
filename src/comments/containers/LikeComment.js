@@ -1,19 +1,28 @@
 import React from 'react';
-import { shape, func } from 'prop-types';
-import { bindActionCreators, compose } from 'redux';
+import { shape, func, string } from 'prop-types';
+import { match } from 'react-router-prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { commentType } from 'comments/propTypes';
 import { withUser, LikeButton } from 'common';
 import { likeComment, dislikeComment } from 'comments/actions';
 
-const likeCommentButton = ({ comment, user, actions, match }) => {
+const likeCommentButton = ({
+  comment,
+  user,
+  likeComment,
+  dislikeComment,
+  match
+}) => {
   const handleLikeClick = () => {
-    actions.likeComment(match.params.id, comment.id);
+    const quotationID = match.params.id;
+    likeComment(quotationID, comment.id);
   };
 
   const handleDislikeClick = () => {
-    actions.dislikeComment(match.params.id, comment.id);
+    const quotationID = match.params.id;
+    dislikeComment(quotationID, comment.id);
   };
 
   const isLiked = user.id in comment.likes;
@@ -27,27 +36,20 @@ const likeCommentButton = ({ comment, user, actions, match }) => {
 };
 
 likeCommentButton.propTypes = {
-  actions: shape({
-    likeComment: func.isRequired,
-    dislikeComment: func.isRequired
-  }).isRequired,
-  comment: commentType
+  comment: commentType,
+  dislikeComment: func.isRequired,
+  likeComment: func.isRequired,
+  match: match.isRequired,
+  user: shape({
+    id: string,
+    firstName: string,
+    lastName: string
+  })
 };
 
 likeCommentButton.defaultProps = {
-  comment: null
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    actions: bindActionCreators(
-      {
-        likeComment,
-        dislikeComment
-      },
-      dispatch
-    )
-  };
+  comment: null,
+  user: null
 };
 
 export default compose(
@@ -55,7 +57,7 @@ export default compose(
   withUser,
   connect(
     null,
-    mapDispatchToProps
+    { likeComment, dislikeComment }
   )
 )(likeCommentButton);
 
@@ -67,3 +69,15 @@ export default compose(
 //     mapDispatchToProps
 //   )(ComponentWithUser)
 // );
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     actions: bindActionCreators(
+//       {
+//         likeComment,
+//         dislikeComment
+//       },
+//       dispatch
+//     )
+//   };
+// };

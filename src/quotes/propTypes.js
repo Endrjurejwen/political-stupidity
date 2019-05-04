@@ -23,3 +23,11 @@ export const firebaseType = PropTypes.objectOf(
     PropTypes.object
   ])
 );
+
+export const sortPropTypes = PropTypes.shape({
+  active: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  order: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
+});

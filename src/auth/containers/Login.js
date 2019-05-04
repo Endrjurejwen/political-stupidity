@@ -110,44 +110,44 @@ const Form = styled.form`
   margin: ${spacing[4]} auto 0;
 `;
 
-  // state = {
-  //   email: '',
-  //   password: ''
-  // };
+// state = {
+//   email: '',
+//   password: ''
+// };
 
-  // static propTypes = {
-  //   actions: shape({
-  //     login: func.isRequired
-  //   }).isRequired,
-  //   error: string,
-  //   isLoading: bool,
-  //   closeModal: func
-  // };
+// static propTypes = {
+//   actions: shape({
+//     login: func.isRequired
+//   }).isRequired,
+//   error: string,
+//   isLoading: bool,
+//   closeModal: func
+// };
 
-  // static defaultProps = {
-  //   error: null,
-  //   isLoading: false,
-  //   closeModal: () => null
-  // };
+// static defaultProps = {
+//   error: null,
+//   isLoading: false,
+//   closeModal: () => null
+// };
 
-  // const handleChange = event => {
-  //   this.setState({
-  //     [event.target.id]: event.target.value
-  //   });
-  // };
+// const handleChange = event => {
+//   this.setState({
+//     [event.target.id]: event.target.value
+//   });
+// };
 
-      // this.setState({
-    //   email: '',
-    //   password: ''
-    // });
-  // };
+// this.setState({
+//   email: '',
+//   password: ''
+// });
+// };
 
-  // handleCloseErrorMessage = () => {
-  //   this.setState({
-  //     isErrorInfoShown: false
-  //   });
-  // };
+// handleCloseErrorMessage = () => {
+//   this.setState({
+//     isErrorInfoShown: false
+//   });
+// };
 
-  // render() {
-    // const { email, password } = this.state;
-    // const { error, isLoading } = this.props;
+// render() {
+// const { email, password } = this.state;
+// const { error, isLoading } = this.props;

@@ -1,20 +1,22 @@
 import React, { useState, useRef } from 'react';
-import { string, func } from 'prop-types';
-import styled from 'styled-components';
+import { func, bool } from 'prop-types';
+import { commentType } from 'comments/propTypes';
+import { match } from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
-import { compose, bindActionCreators } from 'redux';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { TextareaBox, useAutoFocus, useOnClickOutside, useEscapeKey, WithLoader } from 'common';
-import { Button } from 'elements';
-import { spacing, media, margins } from 'utils';
-import { createComment, editComment } from 'comments/actions';
+import {
+  useAutoFocus,
+  useOnClickOutside,
+  useEscapeKey,
+  WithLoader
+} from 'common';
+import { editComment } from 'comments/actions';
 import { getIsLoadingState } from 'comments/selectors';
 import CommentForm from 'comments/components/CommentForm';
 
 const createCommentForm = ({
-  onCommentSubmit,
-  onCommentChange,
-  actions,
+  editComment,
   match,
   comment,
   closeEditForm,
@@ -37,14 +39,14 @@ const createCommentForm = ({
 
     const quotationID = match.params.id;
     event.preventDefault();
-    actions.editComment(quotationID, comment.id, content);
+    editComment(quotationID, comment.id, content);
     setContent('');
     closeEditForm();
   };
 
   return (
     <WithLoader isLoading={isLoading}>
-      <CommentForm 
+      <CommentForm
         formRef={submitFormRef}
         autoFocusRef={autoFocusRef}
         content={content}
@@ -57,29 +59,38 @@ const createCommentForm = ({
 };
 
 createCommentForm.propTypes = {
-  onCommentChange: func.isRequired,
-  onCommentSubmit: func.isRequired
+  closeEditForm: func,
+  comment: commentType,
+  editComment: func.isRequired,
+  isLoading: bool,
+  match: match.isRequired
+};
+
+createCommentForm.defaultProps = {
+  closeEditForm: () => null,
+  comment: null,
+  isLoading: false
 };
 
 const mapStateToProps = state => ({
   isLoading: getIsLoadingState(state)
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    actions: bindActionCreators(
-      {
-        editComment
-      },
-      dispatch
-    )
-  };
-};
-
 export default compose(
   withRouter,
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    { editComment }
   )
 )(createCommentForm);
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     actions: bindActionCreators(
+//       {
+//         editComment
+//       },
+//       dispatch
+//     )
+//   };
+// };

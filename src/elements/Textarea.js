@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { color, spacing } from 'utils';
+import { color } from 'utils';
 
 export default styled.textarea`
   overflow: hidden;

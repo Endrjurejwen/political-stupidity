@@ -9,9 +9,7 @@ const withInfiniteScroll = ({
 }) => WrappedComponent => {
   return class extends Component {
     static propTypes = {
-      actions: shape({
-        [actionName]: func.isRequired
-      }).isRequired,
+      [actionName]: func.isRequired,
       counters: shape({
         [counterName]: oneOfType([string, number])
       }).isRequired,
@@ -20,6 +18,10 @@ const withInfiniteScroll = ({
         isLoading: bool.isRequired
       }).isRequired
     };
+
+    // static defaultProps = {
+    //   actions: null
+    // };
 
     componentDidMount = () => {
       window.addEventListener('scroll', this.onScroll);
@@ -41,15 +43,16 @@ const withInfiniteScroll = ({
 
     // zamienić quotes na isLoading!!!
     render() {
-      const { pagination, counters, quotes } = this.props;
+      const { pagination, counters } = this.props;
       return (
         <>
           <WrappedComponent {...this.props} />
           {pagination.isLoading && <Spinner />}
           {pagination.limit >= counters[counterName] &&
             !pagination.isLoading &&
-            ([counterName].length > 0) && 
-            <H5 center>gratulacje! dotarłeś do końca</H5>}
+            [counterName].length > 0 && (
+              <H5 center>gratulacje! dotarłeś do końca</H5>
+            )}
         </>
       );
     }

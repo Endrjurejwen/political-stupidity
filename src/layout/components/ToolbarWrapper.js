@@ -25,7 +25,6 @@ export default toolbarWrapper;
 const Wrapper = styled.div`
   ${fixed()};
   ${flexCenter({ justifyContent: 'space-between' })};
-  /* align-itmes: baseline; */
   ${elevation[3]};
 
   color: ${color.textLight};

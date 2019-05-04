@@ -1,36 +1,27 @@
 import React, { useState } from 'react';
-import { element } from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
 import { commentType } from 'comments/propTypes';
 import EditComment from 'comments/containers/EditComment';
 import DeleteComment from 'comments/containers/DeleteComment';
 import LikeComment from 'comments/containers/LikeComment';
-import { EditButton, DeleteButton, withToggle } from 'common';
+import { EditButton, DeleteButton, withToggle, Toolbox } from 'common';
 import { Card, H6 } from 'elements';
-import { spacing, flexCenter, absolute, color } from 'utils';
+import { spacing, flexCenter, color } from 'utils';
 
 const DeleteCommentWithToggle = withToggle({
   modalComponent: DeleteComment,
   toggleButton: DeleteButton
 });
 
-const comment = ({
-  comment,
-  deleteButton,
-  editButton,
-  likeButton,
-  isEditButtonsDisplay
-}) => {
+const comment = ({ comment }) => {
   const [isEditActive, setIsEditActive] = useState(false);
+  const toggleEditComment = () => setIsEditActive(!isEditActive);
 
   let textBox = <Text data-testid="comment-content">{comment.content}</Text>;
   if (isEditActive) {
     textBox = (
-      <EditComment
-        comment={comment}
-        closeEditForm={() => setIsEditActive(!isEditActive)}
-      />
+      <EditComment comment={comment} closeEditForm={toggleEditComment} />
     );
   }
   return (
@@ -47,23 +38,20 @@ const comment = ({
         </Data>
         <LikeComment comment={comment} />
       </Footer>
-      <ToolboxWrapper isDisplay={isEditButtonsDisplay}>
+      <Toolbox id={comment.author.id}>
         <DeleteCommentWithToggle comment={comment} />
-        <EditButton click={() => setIsEditActive(!isEditActive)} />
-      </ToolboxWrapper>
+        <EditButton click={toggleEditComment} />
+      </Toolbox>
     </Card>
   );
 };
 
 comment.propTypes = {
-  deleteButton: element,
-  comment: commentType.isRequired,
-  likeButton: element
+  comment: commentType
 };
 
 comment.defaultProps = {
-  deleteButton: null,
-  likeButton: null
+  comment: null
 };
 
 export default comment;
@@ -111,14 +99,4 @@ const Data = styled.time`
   font-size: 0.85rem;
   color: ${color.textSecondary};
   padding: ${spacing[3]} 0 ${spacing[4]};
-`;
-
-const ToolboxWrapper = styled.aside`
-  /* width: 200px;
-  height: 100px; */
-  ${absolute({ side: 'right' })};
-  ${flexCenter({ justifyContent: 'space-between' })};
-  display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
-  justify-content: space-between;
-  padding: 0;
 `;

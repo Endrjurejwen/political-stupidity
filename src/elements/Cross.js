@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { color, elevation, spacing } from 'utils';
+import { color } from 'utils';
 
 export default styled.div`
   background-color: ${props => props.color || color.textLight};
@@ -9,7 +9,7 @@ export default styled.div`
 
   &:after {
     background-color: ${props => props.color || color.textLight};
-    content: "";
+    content: '';
     height: ${props => props.width || '3px'};
     left: -6px;
     position: absolute;

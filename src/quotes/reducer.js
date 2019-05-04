@@ -28,19 +28,22 @@ const initialState = {
       name: 'time',
       order: 'desc',
       type: 'createAt',
-      active: true
+      active: true,
+      label: 'Najnowsze'
     },
     {
       name: 'comments',
       order: 'asc',
       type: 'commentsCount',
-      active: false
+      active: false,
+      label: 'Komentarze'
     },
     {
       name: 'likes',
       order: 'asc',
       type: 'likesCount',
-      active: false
+      active: false,
+      label: 'Polubienia'
     }
   ]
 };

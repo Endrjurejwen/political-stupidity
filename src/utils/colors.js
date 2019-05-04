@@ -1,6 +1,6 @@
 /* eslint import/prefer-default-export: 0 */
 
-const primary = 'rgb(16, 120, 150)'; // #107896 rgb(54,110,72)
+// const primary = 'rgb(16, 120, 150)'; // #107896 rgb(54,110,72)
 
 export const color = {
   action: '#33691E',

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { shape, arrayOf, func, bool, string } from 'prop-types';
+import { shape, arrayOf, bool, string } from 'prop-types';
 import { location } from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -13,7 +13,6 @@ import { getUserInfoState } from 'auth/selectors';
 import { getCountersState } from 'stats/selectors';
 import {
   getQuotesState,
-  getSortOrderState,
   getPaginationState,
   getCurrentSortState,
   getIsLoadingState
@@ -24,16 +23,9 @@ import Panel from 'quotes/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
 import { WithLoader, WithEmptyInfo, withInfiniteScroll } from 'common';
 import { quotationType } from 'quotes/propTypes';
-import { sortQuotes, loadMoreQuotes } from 'quotes/actions';
+import { loadMoreQuotes } from 'quotes/actions';
 
-const quotesApp = ({
-  sortQuotes,
-  location,
-  quotes,
-  sortOrder,
-  user,
-  isLoading
-}) => {
+const quotesApp = ({ location, quotes, user, isLoading }) => {
   useEffect(() => {
     const id = location.state ? location.state.id : 0;
     if (id) {
@@ -41,15 +33,10 @@ const quotesApp = ({
     }
   }, []);
 
-  const handleSortClick = event => {
-    const sortBy = event.target.dataset.sortby;
-    sortQuotes(sortBy);
-  };
-
   return (
     <>
       {user.id ? <CreateQuotationToggle /> : <LoginButton fixed />}
-      <Panel onSortClick={handleSortClick} sortOrder={sortOrder} />
+      <Panel />
       <div>
         <WithLoader isLoading={!quotes || isLoading}>
           <WithEmptyInfo
@@ -68,21 +55,6 @@ quotesApp.propTypes = {
   isLoading: bool,
   location: location.isRequired,
   quotes: arrayOf(quotationType),
-  sortOrder: shape({
-    comments: shape({
-      active: bool,
-      oder: string
-    }).isRequired,
-    likes: shape({
-      active: bool,
-      oder: string
-    }).isRequired,
-    time: shape({
-      active: bool,
-      oder: string
-    }).isRequired
-  }).isRequired,
-  sortQuotes: func.isRequired,
   user: shape({
     id: string
   })
@@ -99,7 +71,6 @@ const mapStateToProps = state => ({
   isLoading: getIsLoadingState(state),
   user: getUserInfoState(state),
   currentSort: getCurrentSortState(state),
-  sortOrder: getSortOrderState(state),
   pagination: getPaginationState(state),
   counters: getCountersState(state)
 });
@@ -110,7 +81,7 @@ export default compose(
   withFirestore,
   connect(
     mapStateToProps,
-    { sortQuotes, loadMoreQuotes }
+    { loadMoreQuotes }
   ),
   firestoreConnect(props => [
     {

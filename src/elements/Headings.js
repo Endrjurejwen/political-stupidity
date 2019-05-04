@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { fluidTypography, textDark, margins, color } from 'utils';
+import { fluidTypography, margins, color } from 'utils';
 
 const headings = css`
   ${margins};

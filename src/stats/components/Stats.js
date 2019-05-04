@@ -1,7 +1,7 @@
 import React from 'react';
 import { number, string, shape, oneOfType } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { H1, H5 } from 'elements';
+// import { H1, H5 } from 'elements';
 import { spacing, color, elevation, media } from 'utils';
 
 const stats = ({ counters }) => (

@@ -1,44 +1,55 @@
 import React from 'react';
 import styled from 'styled-components';
-import { element, bool } from 'prop-types';
-import { Icon, H4 } from 'elements';
+import { element, bool, func } from 'prop-types';
+import { userType } from 'auth/propTypes';
+import { H4 } from 'elements';
 
-import { Button } from 'elements';
+import { withUser } from 'common';
 import { color, fixed, elevation, spacing, media, flexCenter } from 'utils';
+import UserDetails from 'auth/components/UserDetails';
+import CreateQuotationToggle from 'quotes/components/CreateQuotationToggle';
+import LoginButton from 'auth/components/LoginButton';
+import LogoutToggle from 'auth/components/LogoutToggle';
 
-const sideDrawer = ({
-  children,
-  isOpen,
-  logoutButton,
-  loginButton,
-  createQuotationButton,
-  userInfo,
-  user
-}) => (
-  <Wrapper data-testid="sideDrawer" isOpen={isOpen}>
-    <Header>
-      {user.id ? (
-        userInfo
-      ) : (
-        <H4 center textLight marginBottom={spacing[4]}>
-          Klasa Polityczna
-        </H4>
-      )}
-      {user.id && logoutButton}
-    </Header>
-    <NavContainer>
-      {children}
-      {!user.id ? loginButton : createQuotationButton}
-    </NavContainer>
-    <Footer>
-      <p>&copy; Andrzej Kruk 2019</p>
-    </Footer>
-  </Wrapper>
-);
+const sideDrawer = ({ children, closeMenu, isOpen, user }) => {
+  let actionButton = <LoginButton closeMenu={closeMenu} />;
+  let headerContent = (
+    <H4 center textLight marginBottom={spacing[4]}>
+      Klasa Polityczna
+    </H4>
+  );
+  if (user.id) {
+    headerContent = <UserDetails user={user} />;
+    actionButton = <CreateQuotationToggle extended closeMenu={closeMenu} />;
+  }
+  return (
+    <Wrapper data-testid="sideDrawer" isOpen={isOpen}>
+      <Header>
+        {headerContent}
+        {user.id && <LogoutToggle closeMenu={closeMenu} />}
+      </Header>
+      <NavContainer>
+        {children}
+        {actionButton}
+      </NavContainer>
+      <Footer>
+        <p>&copy; Andrzej Kruk 2019</p>
+      </Footer>
+    </Wrapper>
+  );
+};
 
 sideDrawer.propTypes = {
   children: element.isRequired,
-  isOpen: bool.isRequired
+  closeMenu: func,
+  isOpen: bool,
+  user: userType
+};
+
+sideDrawer.defaultProps = {
+  closeMenu: () => null,
+  isOpen: false,
+  user: null
 };
 
 const Wrapper = styled.div`
@@ -84,7 +95,7 @@ const Footer = styled.footer`
   padding: ${spacing[3]} ${spacing[5]};
 `;
 
-export default sideDrawer;
+export default withUser(sideDrawer);
 
 // const Wrapper = styled.div`
 //   ${fixed()};

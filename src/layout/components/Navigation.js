@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { func, bool, number, arrayOf, shape, string } from 'prop-types';
 
-import { Button } from 'elements';
+// import { Button } from 'elements';
 import { media, flexCenter, spacing, color } from 'utils';
 
 import NavigationItem from 'layout/components/NavigationItem';
 
-const navigation = ({ desktop, closeMenu, navItems, logout, isLogin }) => (
+const navigation = ({ desktop, closeMenu, navItems, isLogin }) => (
   <Wrapper desktop={desktop}>
     <NavigationList isLogin={isLogin}>
       {navItems.map(navItem => (
@@ -26,7 +26,6 @@ navigation.propTypes = {
   closeMenu: func,
   desktop: bool,
   isLogin: number,
-  logout: func,
   navItems: arrayOf(
     shape({
       name: string.isRequired,
@@ -38,8 +37,7 @@ navigation.propTypes = {
 navigation.defaultProps = {
   closeMenu: () => null,
   desktop: false,
-  isLogin: 0,
-  logout: () => null
+  isLogin: 0
 };
 
 export default navigation;
