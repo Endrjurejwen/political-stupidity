@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Icon } from 'elements';
 import { flexCenter, spacing, color } from 'utils';
+import { withErrorHandler } from 'common';
+
+console.log(withErrorHandler);
 
 const userSummary = ({ name }) => (
   <Wrapper>

@@ -14,8 +14,9 @@ import { getUserInfoState } from 'auth/selectors';
 import { makeGetQuotationState } from 'quotes/selectors';
 import { quotationType } from 'quotes/propTypes';
 import { spacing } from 'utils';
-import { WithLoader } from 'common';
+import { WithLoader, withErrorHandler } from 'common';
 import { Button, H2 } from 'elements';
+import { resetQuotesError } from 'quotes/actions';
 
 const quotationDetails = ({ quotation, children, dispatch }) => {
   useEffect(() => {
@@ -56,7 +57,8 @@ const makeMapStateToProps = () => {
   const mapStateToProps = (state, ownProps) => {
     return {
       quotation: getQuotationState(state, ownProps),
-      user: getUserInfoState(state)
+      user: getUserInfoState(state),
+      error: state.quotes.error
     };
   };
   return mapStateToProps;
@@ -66,14 +68,15 @@ export default compose(
   withRouter,
   withFirebase,
   withFirestore,
-  connect(makeMapStateToProps),
+  connect(makeMapStateToProps, { resetQuotesError }),
   firestoreConnect(props => [
     {
       collection: 'quotes',
       doc: props.match.params.id,
       storeAs: 'quotation'
     }
-  ])
+  ]),
+  withErrorHandler({ actionName: 'resetQuotesError' })
 )(quotationDetails);
 
 // import React, { Component } from 'react';

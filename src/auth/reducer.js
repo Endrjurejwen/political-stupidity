@@ -1,5 +1,8 @@
 import reduceReducers from 'reduce-reducers';
-import { makeAsyncReducerWithLoading } from 'store/reducerFactory';
+import {
+  makeAsyncReducerWithLoading,
+  makeResetErrorReducer
+} from 'store/reducerFactory';
 
 const initialState = {
   error: null,
@@ -21,7 +24,17 @@ const signUpReducer = makeAsyncReducerWithLoading({
   initialState
 });
 
-const reducer = reduceReducers(loginReducer, logoutReducer, signUpReducer);
+const resetAuthErrorReducer = makeResetErrorReducer({
+  name: 'AUTH',
+  initialState
+});
+
+const reducer = reduceReducers(
+  loginReducer,
+  logoutReducer,
+  signUpReducer,
+  resetAuthErrorReducer
+);
 
 export default reducer;
 

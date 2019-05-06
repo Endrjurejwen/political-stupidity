@@ -10,8 +10,9 @@ import { firestoreConnect, withFirebase } from 'react-redux-firebase';
 import { getCommentsState } from 'comments/selectors';
 import { makeGetQuotationState } from 'quotes/selectors';
 import { commentType } from 'comments/propTypes';
-import { WithLoader, WithEmptyInfo } from 'common';
+import { WithLoader, WithEmptyInfo, withErrorHandler } from 'common';
 import { H5 } from 'elements';
+import { resetCommentsError } from 'comments/actions';
 
 const commentsApp = ({ comments, dispatch }) => {
   useEffect(() => {
@@ -50,7 +51,8 @@ const makeMapStateToProps = () => {
   const mapStateToProps = (state, ownProps) => {
     return {
       quotation: getQuotationState(state, ownProps),
-      comments: getCommentsState(state)
+      comments: getCommentsState(state),
+      error: state.comments.error
     };
   };
   return mapStateToProps;
@@ -68,7 +70,8 @@ export default compose(
       storeAs: 'comments'
     }
   ]),
-  connect(makeMapStateToProps)
+  connect(makeMapStateToProps, { resetCommentsError }),
+  withErrorHandler({ actionName: 'resetCommentsError' })
 )(commentsApp);
 
 // resetTextareaSize = () => {

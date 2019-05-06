@@ -1,36 +1,25 @@
 import React, { useState, useRef } from 'react';
-import { string, bool, shape, func } from 'prop-types';
+import { string, bool, func } from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { getErrorAuthState, getIsLoadingAuthState } from 'auth/selectors';
-import { login } from 'auth/actions';
-import { InputBox, WithLoader, useAutoFocus } from 'common';
+import { login, resetAuthError } from 'auth/actions';
 import { Button, H2 } from 'elements';
 import { spacing, flexCenter } from 'utils';
+import { InputBox, useAutoFocus, WithLoader } from 'common';
+import AuthErrorHandler from 'auth/components/AuthErrorHandler';
 
-const ErrorMessage = ({ error }) => {
-  const [isOpen, setIsOpen] = useState(true);
-  return isOpen ? (
-    <div>
-      <p>{error}</p>
-      <Button onClick={() => setIsOpen(false)}>close</Button>
-    </div>
-  ) : null;
-};
-
-const loginForm = ({ actions, error, isLoading, closeModal }) => {
+const loginForm = ({ login, resetAuthError, error, isLoading, closeModal }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const autoFocusRef = useRef(null);
   useAutoFocus(autoFocusRef);
 
   const setCredentials = () => ({ email, password });
-
   const handleSubmit = event => {
     const newCredentials = setCredentials();
     event.preventDefault();
-    actions.login(newCredentials).then(res => res && closeModal());
+    login(newCredentials).then(res => res && closeModal());
   };
 
   return (
@@ -55,20 +44,18 @@ const loginForm = ({ actions, error, isLoading, closeModal }) => {
           required
         />
         <Button type="submit">Zaloguj się</Button>
-        {/* <p>{error || null}</p> */}
-        {error && <ErrorMessage error={error} />}
+        <AuthErrorHandler error={error} resetError={resetAuthError} />
       </Form>
     </WithLoader>
   );
 };
 
 loginForm.propTypes = {
-  actions: shape({
-    login: func.isRequired
-  }).isRequired,
+  login: func.isRequired,
   error: string,
   isLoading: bool,
-  closeModal: func
+  closeModal: func,
+  resetAuthError: func.isRequired
 };
 
 loginForm.defaultProps = {
@@ -82,20 +69,21 @@ const mapStateToProps = state => ({
   isLoading: getIsLoadingAuthState(state)
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    actions: bindActionCreators(
-      {
-        login
-      },
-      dispatch
-    )
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     actions: bindActionCreators(
+//       {
+//         login,
+//         resetAuthError
+//       },
+//       dispatch
+//     )
+//   };
+// };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { login, resetAuthError }
 )(loginForm);
 
 const Title = styled(H2)`

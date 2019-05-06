@@ -155,10 +155,12 @@ const deleteQuotationReducer = makeAsyncReducerWithLoading({
   name: 'DELETE_QUOTATION',
   initialState
 });
+
 const likeQuotationReducer = makeAsyncReducer({
   name: 'LIKE_QUOTATION',
   initialState
 });
+
 const dislikeQuotationReducer = makeAsyncReducer({
   name: 'DISLIKE_QUOTATION',
   initialState

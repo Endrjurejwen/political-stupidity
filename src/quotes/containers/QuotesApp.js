@@ -21,9 +21,14 @@ import CreateQuotationToggle from 'quotes/components/CreateQuotationToggle';
 import LoginButton from 'auth/components/LoginButton';
 import Panel from 'quotes/components/Panel';
 import QuotesList from 'quotes/components/QuotesList';
-import { WithLoader, WithEmptyInfo, withInfiniteScroll } from 'common';
+import {
+  WithLoader,
+  WithEmptyInfo,
+  withInfiniteScroll,
+  withErrorHandler
+} from 'common';
 import { quotationType } from 'quotes/propTypes';
-import { loadMoreQuotes } from 'quotes/actions';
+import { loadMoreQuotes, resetQuotesError } from 'quotes/actions';
 
 const quotesApp = ({ location, quotes, user, isLoading }) => {
   useEffect(() => {
@@ -72,7 +77,8 @@ const mapStateToProps = state => ({
   user: getUserInfoState(state),
   currentSort: getCurrentSortState(state),
   pagination: getPaginationState(state),
-  counters: getCountersState(state)
+  counters: getCountersState(state),
+  error: state.quotes.error
 });
 
 export default compose(
@@ -81,7 +87,7 @@ export default compose(
   withFirestore,
   connect(
     mapStateToProps,
-    { loadMoreQuotes }
+    { loadMoreQuotes, resetQuotesError }
   ),
   firestoreConnect(props => [
     {
@@ -90,6 +96,7 @@ export default compose(
       limit: props.pagination.limit
     }
   ]),
+  withErrorHandler({ actionName: 'resetQuotesError' }),
   withInfiniteScroll({ counterName: 'quotes', actionName: 'loadMoreQuotes' })
 )(quotesApp);
 

@@ -1,122 +1,96 @@
-import React, { Component } from 'react';
-import { string, bool, shape, func } from 'prop-types';
+import React, { useState } from 'react';
+import { string, bool, func } from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { getErrorAuthState, getIsLoadingAuthState } from 'auth/selectors';
 import { InputBox, Spinner, WithLoader } from 'common';
 import { Button, H2 } from 'elements';
 import { spacing, flexCenter } from 'utils';
-import { signUp } from 'auth/actions';
+import { signUp, resetAuthError } from 'auth/actions';
+import AuthErrorHandler from 'auth/components/AuthErrorHandler';
 
-class SignUp extends Component {
-  state = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
-  };
+const signUpForm = ({ signUp, resetAuthError, error, isLoading }) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  static propTypes = {
-    actions: shape({
-      signUp: func.isRequired
-    }).isRequired,
-    error: string,
-    isLoading: bool
-  };
-
-  static defaultProps = {
-    error: null,
-    isLoading: false
-  };
-
-  handleChange = event => {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
-  };
-
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    this.props.actions.signUp(this.state);
-    this.setState({
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: ''
-    });
+    signUp({ firstName, lastName, email, password });
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPassword('');
   };
 
-  render() {
-    const { firstName, lastName, email, password } = this.state;
-    const { error, isLoading } = this.props;
-    return (
-      <WithLoader isLoading={isLoading}>
-        <Form onSubmit={this.handleSubmit}>
-          <Title>Rejestracja</Title>
-          <InputBox
-            autoFocus
-            change={this.handleChange}
-            type="text"
-            placeholder="Twoje imię"
-            id="firstName"
-            value={firstName}
-            required
-          />
-          <InputBox
-            change={this.handleChange}
-            type="text"
-            placeholder="Twoje Nazwisko"
-            id="lastName"
-            value={lastName}
-            required
-          />
-          <InputBox
-            change={this.handleChange}
-            type="email"
-            placeholder="Twój email"
-            id="email"
-            value={email}
-            required
-          />
-          <InputBox
-            change={this.handleChange}
-            type="password"
-            placeholder="Twoje hasło"
-            id="password"
-            value={password}
-            minlength="6"
-            required
-          />
-          <Button type="submit">Załóż konto</Button>
-          {isLoading && <Spinner />}
-          <p>{error || null}</p>
-        </Form>
-      </WithLoader>
-    );
-  }
-}
+  return (
+    <WithLoader isLoading={isLoading}>
+      <Form onSubmit={handleSubmit}>
+        <Title>Rejestracja</Title>
+        <InputBox
+          autoFocus
+          change={event => setFirstName(event.target.value)}
+          type="text"
+          placeholder="Twoje imię"
+          id="firstName"
+          value={firstName}
+          required
+        />
+        <InputBox
+          change={event => setLastName(event.target.value)}
+          type="text"
+          placeholder="Twoje Nazwisko"
+          id="lastName"
+          value={lastName}
+          required
+        />
+        <InputBox
+          change={event => setEmail(event.target.value)}
+          type="email"
+          placeholder="Twój email"
+          id="email"
+          value={email}
+          required
+        />
+        <InputBox
+          change={event => setPassword(event.target.value)}
+          type="password"
+          placeholder="Twoje hasło"
+          id="password"
+          value={password}
+          minlength="6"
+          required
+        />
+        <Button type="submit">Załóż konto</Button>
+        {isLoading && <Spinner />}
+        <AuthErrorHandler error={error} resetError={resetAuthError} />
+      </Form>
+    </WithLoader>
+  );
+};
+
+signUpForm.propTypes = {
+  error: string,
+  isLoading: bool,
+  resetAuthError: func.isRequired,
+  signUp: func.isRequired
+};
+
+signUpForm.defaultProps = {
+  error: null,
+  isLoading: false
+};
 
 const mapStateToProps = state => ({
   error: getErrorAuthState(state),
   isLoading: getIsLoadingAuthState(state)
 });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    actions: bindActionCreators(
-      {
-        signUp
-      },
-      dispatch
-    )
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
-)(SignUp);
+  { signUp, resetAuthError }
+)(signUpForm);
 
 const Title = styled(H2)`
   text-align: center;

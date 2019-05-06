@@ -1,7 +1,8 @@
 import reduceReducers from 'reduce-reducers';
 import {
   makeAsyncReducer,
-  makeAsyncReducerWithLoading
+  makeAsyncReducerWithLoading,
+  makeResetErrorReducer
 } from 'store/reducerFactory';
 
 const initialState = {
@@ -29,13 +30,18 @@ const dislikeCommentReducer = makeAsyncReducer({
   name: 'DISLIKE_COMMENT',
   initialState
 });
+const resetCommentsErrorReducer = makeResetErrorReducer({
+  name: 'COMMENTS',
+  initialState
+});
 
 const reducer = reduceReducers(
   createCommentReducer,
   editCommentReducer,
   deleteCommentReducer,
   likeCommentReducer,
-  dislikeCommentReducer
+  dislikeCommentReducer,
+  resetCommentsErrorReducer
 );
 
 export default reducer;

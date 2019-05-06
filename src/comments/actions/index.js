@@ -3,5 +3,13 @@ import editComment from './editComment';
 import deleteComment from './deleteComment';
 import likeComment from './likeComment';
 import dislikeComment from './dislikeComment';
+import resetCommentsError from './resetCommentsError';
 
-export { createComment, editComment, deleteComment, likeComment, dislikeComment };
+export {
+  createComment,
+  editComment,
+  deleteComment,
+  likeComment,
+  dislikeComment,
+  resetCommentsError
+};

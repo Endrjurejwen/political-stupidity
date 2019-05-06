@@ -50,3 +50,16 @@ export const makeAsyncReducerWithLoading = ({ name, initialState }) => {
     }
   };
 };
+
+const resetError = state => ({ ...state, error: null });
+
+export const makeResetErrorReducer = ({ name, initialState }) => {
+  return (state = initialState, action) => {
+    switch (action.type) {
+      case `RESET_${name}_ERROR`:
+        return resetError(state);
+      default:
+        return state;
+    }
+  };
+};
