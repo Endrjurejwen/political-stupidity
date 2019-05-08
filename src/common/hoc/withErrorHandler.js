@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'common';
-import { ConfirmationError } from 'common/confirmation';
+import { ConfirmationError } from 'common/info';
 
 const withErrorHandler = ({ actionName }) => WrappedComponent => {
   return props => {

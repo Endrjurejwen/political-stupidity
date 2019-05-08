@@ -1,16 +1,25 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { func, string } from 'prop-types';
+import { string } from 'prop-types';
 import { spacing, color, hidden } from 'utils';
 
 const checkButtonBox = ({ id, label, ...props }) => (
-  <InputBox key={id}>
+  <InputBox>
     <Input id={id} {...props} />
     <label htmlFor={id}>
       <RadioButton>{label}</RadioButton>
     </label>
   </InputBox>
 );
+
+checkButtonBox.propTypes = {
+  id: string.isRequired,
+  label: string
+};
+
+checkButtonBox.defaultProps = {
+  label: ''
+};
 
 export default checkButtonBox;
 

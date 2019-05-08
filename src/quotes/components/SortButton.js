@@ -51,8 +51,7 @@ const SortButton = styled.button`
   &::after {
     content: '';
     position: absolute;
-    /* bottom: ${props => (props.asc ? '-0.35rem' : '0.20rem')}; */
-    bottom: 0.20rem;
+    bottom: 0.2rem;
     right: 0.6rem;
     width: 0px;
     height: 0px;

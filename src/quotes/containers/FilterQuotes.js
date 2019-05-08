@@ -40,6 +40,7 @@ const filterQuotesContainer = ({
         <InputsWrapper>
           {RADIO_BUTTONS_CONFIG.map(({ value, id, label }) => (
             <CheckButtonBox
+              key={id}
               id={id}
               label={label}
               onChange={handleChange}
@@ -87,48 +88,3 @@ const Form = styled.form`
   align-items: center;
   flex-direction: column;
 `;
-
-/* <Form onSubmit={handleSubmit}>
-<InputsWrapper>
-  <InputBox>
-    <Input
-      onChange={handleChange}
-      checked={filter === 'all'}
-      type="radio"
-      id="all"
-      name="filters"
-      value="all"
-    />
-    <label htmlFor="all">
-      <RadioButton>Wszystkie</RadioButton>
-    </label>
-  </InputBox>
-  <InputBox>
-    <Input
-      onChange={handleChange}
-      checked={filter === 'historia'}
-      type="radio"
-      id="history"
-      name="filters"
-      value="historia"
-    />
-    <label htmlFor="history">
-      <RadioButton>Historia</RadioButton>
-    </label>
-  </InputBox>
-  <InputBox>
-    <Input
-      onChange={handleChange}
-      checked={filter === 'przyroda'}
-      type="radio"
-      id="biology"
-      name="filters"
-      value="przyroda"
-    />
-    <label htmlFor="biology">
-      <RadioButton>Przyroda</RadioButton>
-    </label>
-  </InputBox>
-</InputsWrapper>
-<Button type="submit">Filtruj</Button>
-</Form> */

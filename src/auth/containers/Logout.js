@@ -7,7 +7,7 @@ import { logout } from 'auth/actions';
 // import { getUserInfoState } from 'auth/selectors';
 // import { Button } from 'elements';
 // import { spacing } from 'utils';
-import Confirmation from 'quotes/components/Confirmation';
+import { Confirmation } from 'common';
 
 const logoutButton = ({ logout, closeMenu, closeModal }) => {
   const handleLogoutClick = () => {

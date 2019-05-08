@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { deleteQuotation } from 'quotes/actions';
 import { quotationType } from 'quotes/propTypes';
-import Confirmation from 'quotes/components/Confirmation';
+import { Confirmation } from 'common';
 
 const deleteQuotationConfirmation = ({
   deleteQuotation,

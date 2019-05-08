@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ConfirmationError } from 'common/confirmation';
+import { ConfirmationError } from 'common';
 import { spacing, elevation, color } from 'utils';
 
 const authErrorHandler = ({ error, resetError }) => {

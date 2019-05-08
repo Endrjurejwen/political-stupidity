@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { userType } from 'auth/propTypes';
 import { Backdrop, withUser } from 'common';
 import ToolbarWrapper from 'layout/components/ToolbarWrapper';
@@ -53,7 +54,7 @@ toolbar.defaultProps = {
   user: null
 };
 
-export default withUser(toolbar);
+export default withRouter(withUser(toolbar));
 
 // import React, { Component } from 'react';
 // // import styled from 'styled-components';

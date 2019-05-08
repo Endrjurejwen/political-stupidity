@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { element } from 'prop-types';
-import moment from 'moment';
 import { quotationType } from 'quotes/propTypes';
-import { Toolbox, withToggle, DeleteButton, EditButton } from 'common';
+import { Toolbox, withToggle, DeleteButton, EditButton, Data } from 'common';
 import { Card, H5, Paragraph } from 'elements';
 import { spacing, flexCenter, color } from 'utils';
 import EditQuotation from 'quotes/containers/EditQuotation';
@@ -24,7 +23,7 @@ const EditQuotationWithToggle = withToggle({
 const quotation = ({ quotation, navigateButton }) => (
   <Card>
     <Header>
-      <Title data-testid="quotation-author">{quotation.politician}</Title>
+      <Title>{quotation.politician}</Title>
     </Header>
     <TopicsList topics={quotation.topics} />
     <Paragraph marginBottom={spacing[3]} data-testid="quotation-content">
@@ -34,9 +33,7 @@ const quotation = ({ quotation, navigateButton }) => (
       <UserName data-testid="quotation-user">
         Opublikował {quotation.author.firstName} {quotation.author.lastName}
       </UserName>
-      <Data data-testid="quotation-timestamp">
-        {moment(quotation.createAt.toDate()).calendar()}
-      </Data>
+      <Data dataNumber={quotation.createAt} />
     </Footer>
     <Toolbox id={quotation.author.id}>
       <DeleteQuotationWithToggle quotation={quotation} />
@@ -109,10 +106,10 @@ const UserName = styled.address`
   color: inherit;
 `;
 
-const Data = styled.time`
-  font-size: 0.85rem;
-  color: ${color.textSecondary};
-`;
+// const Data = styled.time`
+//   font-size: 0.85rem;
+//   color: ${color.textSecondary};
+// `;
 
 const Footer = styled.footer`
   margin-bottom: ${spacing[3]};

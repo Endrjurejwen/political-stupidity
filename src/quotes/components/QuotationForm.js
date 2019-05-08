@@ -42,6 +42,7 @@ const quotationForm = ({
       <InputsList>
         {RADIO_BUTTONS_CONFIG.map(({ name, id, label }) => (
           <CheckButtonBox
+            key={id}
             id={id}
             label={label}
             onChange={event => onInputChange(event)}

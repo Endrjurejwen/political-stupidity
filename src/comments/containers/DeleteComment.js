@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { deleteComment } from 'comments/actions';
 import { commentType } from 'comments/propTypes';
-import Confirmation from 'quotes/components/Confirmation';
+import { Confirmation } from 'common';
 
 const deleteCommentConfirmation = ({
   deleteComment,
