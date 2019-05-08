@@ -12,6 +12,7 @@ const inputBox = forwardRef(({ type, placeholder, id, change, ...rest }, ref) =>
       type={type}
       placeholder={placeholder}
       id={id}
+      name={id}
       onChange={change}
       {...rest}
     />

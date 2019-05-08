@@ -8,6 +8,7 @@ const loadMoreQuotes = () => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     dispatch(loadMoreQuotesRequest());
+    const { filter } = getState().quotes;
     const { limit } = getState().quotes.pagination;
     const sortInfo = getState().quotes.sortTypes.find(
       ({ active }) => active === true
@@ -18,7 +19,8 @@ const loadMoreQuotes = () => {
       .get({
         collection: 'quotes',
         orderBy: [type, order],
-        limit
+        limit,
+        where: filter.instruction
       })
       .then(() => {
         dispatch(loadMoreQuotesSuccess());

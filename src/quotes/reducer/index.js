@@ -6,6 +6,7 @@ import deleteQuotationReducer from './deleteQuotationReducer';
 import likeQuotationReducer from './likeQuotationReducer';
 import dislikeQuotationReducer from './dislikeQuotationReducer';
 import sortQuotesReducer from './sortQuotesReducer';
+import filterQuotesReducer from './filterQuotesReducer';
 import loadMoreQuotesReducer from './loadMoreQuotesReducer';
 import resetQuotesReducer from './resetQuotesReducer';
 
@@ -16,6 +17,7 @@ const reducer = reduceReducers(
   likeQuotationReducer,
   dislikeQuotationReducer,
   sortQuotesReducer,
+  filterQuotesReducer,
   loadMoreQuotesReducer,
   resetQuotesReducer
 );

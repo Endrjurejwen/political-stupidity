@@ -4,6 +4,7 @@ import editQuotation from './editQuotation';
 import likeQuotation from './likeQuotation';
 import dislikeQuotation from './dislikeQuotation';
 import sortQuotes from './sortQuotes';
+import filterQuotes from './filterQuotes';
 import loadMoreQuotes from './loadMoreQuotes';
 import resetQuotesError from './resetQuotesError';
 
@@ -14,6 +15,7 @@ export {
   likeQuotation,
   dislikeQuotation,
   sortQuotes,
+  filterQuotes,
   loadMoreQuotes,
   resetQuotesError
 };

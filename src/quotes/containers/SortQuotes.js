@@ -4,7 +4,7 @@ import { sortPropTypes } from 'quotes/propTypes';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import SortButton from 'quotes/components/SortButton';
-import { flexCenter, spacing, media } from 'utils';
+import { flexCenter, spacing, media, color, elevation } from 'utils';
 import { sortQuotes } from 'quotes/actions';
 import { getSortTypesState } from 'quotes/selectors';
 
@@ -14,13 +14,15 @@ const sortQuotesContainer = ({ sortQuotes, sortTypes }) => {
     sortQuotes(sortBy);
   };
   return (
-    <SortButtonsList>
-      {sortTypes.map(sortType => (
-        <SortButtonListItem key={sortType.label}>
-          <SortButton sortType={sortType} onSortClick={handleSortClick} />
-        </SortButtonListItem>
-      ))}
-    </SortButtonsList>
+    <Wrapper>
+      <SortButtonsList>
+        {sortTypes.map(sortType => (
+          <SortButtonListItem key={sortType.label}>
+            <SortButton sortType={sortType} onSortClick={handleSortClick} />
+          </SortButtonListItem>
+        ))}
+      </SortButtonsList>
+    </Wrapper>
   );
 };
 
@@ -42,10 +44,23 @@ export default connect(
   { sortQuotes }
 )(sortQuotesContainer);
 
+const Wrapper = styled.div`
+  ${flexCenter()};
+  margin-bottom: ${spacing[3]};
+`;
+
 const SortButtonsList = styled.ul`
   list-style: none;
   ${flexCenter({ justifyContent: 'center', alignItems: 'start' })};
   flex-wrap: wrap;
+
+  ${media.phone`
+    background-color: ${color.backgroundLight};
+    ${elevation[1]};
+    border: 2px solid ${color.action};
+    border-radius: 100px;
+    padding: ${spacing[1]} ${spacing[4]};
+  `}
 `;
 
 const SortButtonListItem = styled.li`

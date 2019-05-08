@@ -57,6 +57,7 @@ const textareaBox = forwardRef(
           className="resizeTextArea text-area"
           placeholder={placeholder}
           id={id}
+          name={id}
           {...rest}
         />
         <Label htmlFor={id}>{placeholder}</Label>

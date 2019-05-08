@@ -1,8 +1,13 @@
 export default {
   error: null,
   isLoading: false,
+  filter: {
+    name: 'all',
+    instruction: null
+  },
   pagination: {
     limit: 2,
+    initialLimit: 2,
     added: 2,
     isLoading: false
   },

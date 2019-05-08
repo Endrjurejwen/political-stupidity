@@ -10,21 +10,79 @@ import { WithLoader } from 'common';
 import { H3 } from 'elements';
 import QuotationForm from 'quotes/components/QuotationForm';
 
+const CHECKBOXES_VALUES = {
+  historia: false,
+  przyroda: false
+};
+
 const editQuotationForm = ({
   editQuotation,
   closeModal,
   isLoading,
   quotation
 }) => {
-  const [content, setContent] = useState(quotation.content);
-  const [politician, setPolitician] = useState(quotation.politician);
+  // const [content, setContent] = useState(quotation.content);
+  // const [politician, setPolitician] = useState(quotation.politician);
 
-  const setNewQuotation = () => ({ content, politician });
+  // const setNewQuotation = () => ({ content, politician });
+
+  // const handleEditQuotationSubmit = event => {
+  //   const newQuotation = setNewQuotation();
+  //   event.preventDefault();
+  //   editQuotation(quotation.id, newQuotation);
+  //   closeModal();
+  // };
+
+  const newCheckboxesValues = quotation.topics.reduce((acc, current) => {
+    if (current in acc) {
+      acc = {
+        ...acc,
+        [current]: true
+      }
+    };
+    return acc;
+  }, CHECKBOXES_VALUES);
+  console.log(newCheckboxesValues);
+
+  const [newQuotation, setNewQuotation] = useState({
+    content: quotation.content,
+    politician: quotation.politician,
+    ...newCheckboxesValues
+  });
+
+  const handleInputChange = ({ target }) => {
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    setNewQuotation({
+      ...newQuotation,
+      [target.name]: value
+    });
+  };
+
+  const setTopicsArray = () => {
+    const arr = [];
+    Object.keys(newQuotation).forEach(key => {
+      if (newQuotation[key] === true) {
+        arr.push(key);
+      }
+    });
+    return arr;
+  };
+
+  const setNewQuotationWithTopics = () => {
+    const topicsArray = setTopicsArray();
+    const newQuotationWithTopics = {
+      content: newQuotation.content,
+      politician: newQuotation.politician,
+      topics: topicsArray
+    };
+    return newQuotationWithTopics;
+  };
 
   const handleEditQuotationSubmit = event => {
-    const newQuotation = setNewQuotation();
     event.preventDefault();
-    editQuotation(quotation.id, newQuotation);
+    const newQuotationWithTopics = setNewQuotationWithTopics();
+    console.log(newQuotationWithTopics);
+    editQuotation(quotation.id, newQuotationWithTopics);
     closeModal();
   };
 
@@ -35,12 +93,13 @@ const editQuotationForm = ({
       </H3>
       <QuotationForm
         onQuotationSubmit={handleEditQuotationSubmit}
-        onContentChange={setContent}
-        onPoliticianChange={setPolitician}
+        onInputChange={handleInputChange}
+        // onPoliticianChange={setPolitician}
         isLoading={isLoading}
         buttonLabel="Zapisz zmiany"
-        content={content}
-        politician={politician}
+        // historia={newQuotation.historia}
+        // przyroda={newQuotation.przyroda}
+        newQuotation={newQuotation}
       />
     </WithLoader>
   );

@@ -9,6 +9,7 @@ import { spacing, flexCenter, color } from 'utils';
 import EditQuotation from 'quotes/containers/EditQuotation';
 import DeleteQuotation from 'quotes/containers/DeleteQuotation';
 import LikeQuotation from 'quotes/containers/LikeQuotation';
+import TopicsList from 'quotes/components/TopicsList';
 
 const DeleteQuotationWithToggle = withToggle({
   modalComponent: DeleteQuotation,
@@ -25,6 +26,7 @@ const quotation = ({ quotation, navigateButton }) => (
     <Header>
       <Title data-testid="quotation-author">{quotation.politician}</Title>
     </Header>
+    <TopicsList topics={quotation.topics} />
     <Paragraph marginBottom={spacing[3]} data-testid="quotation-content">
       {quotation.content}
     </Paragraph>

@@ -15,7 +15,8 @@ import {
   getQuotesState,
   getPaginationState,
   getCurrentSortState,
-  getIsLoadingState
+  getIsLoadingState,
+  getFilterInstructionState
 } from 'quotes/selectors';
 import CreateQuotationToggle from 'quotes/components/CreateQuotationToggle';
 import LoginButton from 'auth/components/LoginButton';
@@ -29,6 +30,7 @@ import {
 } from 'common';
 import { quotationType } from 'quotes/propTypes';
 import { loadMoreQuotes, resetQuotesError } from 'quotes/actions';
+import { H6 } from 'elements';
 
 const quotesApp = ({ location, quotes, user, isLoading }) => {
   useEffect(() => {
@@ -46,7 +48,7 @@ const quotesApp = ({ location, quotes, user, isLoading }) => {
         <WithLoader isLoading={!quotes || isLoading}>
           <WithEmptyInfo
             isEmpty={!quotes || !quotes.length}
-            info={<p>Nie ma jeszcze żadnych cytatów</p>}
+            info={<H6 center>Nie ma jeszcze żadnych cytatów</H6>}
           >
             <QuotesList quotes={quotes} />
           </WithEmptyInfo>
@@ -74,6 +76,7 @@ quotesApp.defaultProps = {
 const mapStateToProps = state => ({
   quotes: getQuotesState(state),
   isLoading: getIsLoadingState(state),
+  currentFilterInstruction: getFilterInstructionState(state),
   user: getUserInfoState(state),
   currentSort: getCurrentSortState(state),
   pagination: getPaginationState(state),
@@ -93,7 +96,8 @@ export default compose(
     {
       collection: 'quotes',
       orderBy: [props.currentSort.type, props.currentSort.order],
-      limit: props.pagination.limit
+      limit: props.pagination.limit,
+      where: props.currentFilterInstruction
     }
   ]),
   withErrorHandler({ actionName: 'resetQuotesError' }),

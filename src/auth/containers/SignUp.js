@@ -100,6 +100,6 @@ const Title = styled(H2)`
 const Form = styled.form`
   ${flexCenter};
   flex-direction: column;
-  max-width: 35rem;
+  /* max-width: 35rem; */
   margin: ${spacing[4]} auto 0;
 `;

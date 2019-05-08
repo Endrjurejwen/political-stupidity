@@ -1,25 +1,35 @@
 import { actionTypes } from 'redux-firestore';
 
 import {
-  sortQuotesRequest,
-  sortQuotesSuccess,
-  sortQuotesFailure,
+  filterQuotesRequest,
+  filterQuotesSuccess,
+  filterQuotesFailure,
   resetPagination
 } from 'quotes/actionCreators';
 
-const sortQuotes = sortBy => {
+const setFilterInstruction = filterName => {
+  if (filterName === 'all') {
+    return null;
+  }
+  return [['topics', 'array-contains', filterName]];
+};
+
+const filterQuotes = name => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
+    const instruction = setFilterInstruction(name);
+    const filter = {
+      name,
+      instruction
+    };
     dispatch(resetPagination());
     dispatch({
       type: actionTypes.CLEAR_DATA,
       preserve: { data: true, ordered: false }
     });
-    dispatch(sortQuotesRequest(sortBy));
-    const { filter } = getState().quotes;
-    // console.log(filter);
+    dispatch(filterQuotesRequest(filter));
     const sortInfo = getState().quotes.sortTypes.find(
-      ({ name }) => name === sortBy
+      ({ active }) => active === true
     );
     const { initialLimit } = getState().quotes.pagination;
     const { order } = sortInfo;
@@ -32,12 +42,12 @@ const sortQuotes = sortBy => {
         where: filter.instruction
       })
       .then(() => {
-        dispatch(sortQuotesSuccess());
+        dispatch(filterQuotesSuccess());
       })
       .catch(error => {
-        dispatch(sortQuotesFailure(error));
+        dispatch(filterQuotesFailure(error));
       });
   };
 };
 
-export default sortQuotes;
+export default filterQuotes;

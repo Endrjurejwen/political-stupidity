@@ -1,17 +1,20 @@
 import React, { useRef } from 'react';
 import { func, string } from 'prop-types';
 import styled from 'styled-components';
-import { spacing, flexCenter } from 'utils';
-import { InputBox, TextareaBox, useAutoFocus } from 'common';
-import { Button } from 'elements';
+import { spacing } from 'utils';
+import { InputBox, TextareaBox, useAutoFocus, CheckButtonBox } from 'common';
+import { Button, H6 } from 'elements';
+
+const RADIO_BUTTONS_CONFIG = [
+  { name: 'historia', id: 'history', label: 'Historia' },
+  { name: 'przyroda', id: 'biology', label: 'Przyroda' }
+];
 
 const quotationForm = ({
   onQuotationSubmit,
-  onContentChange,
-  onPoliticianChange,
+  onInputChange,
   buttonLabel,
-  content,
-  politician
+  newQuotation
 }) => {
   const autoFocusRef = useRef(null);
   useAutoFocus(autoFocusRef);
@@ -21,20 +24,34 @@ const quotationForm = ({
       <TextareaBox
         marginBottom={spacing[3]}
         ref={autoFocusRef}
-        onChange={event => onContentChange(event.target.value)}
+        onChange={event => onInputChange(event)}
         placeholder="Tutaj wpisz cytat"
         cols="30"
         id="content"
-        value={content}
+        value={newQuotation.content}
         required
       />
       <InputBox
-        onChange={event => onPoliticianChange(event.target.value)}
+        onChange={event => onInputChange(event)}
         placeholder="Autor cytatu"
         id="politician"
-        value={politician}
+        value={newQuotation.politician}
         required
       />
+      <H6 marginBottom={spacing[3]}>Zaznacz temat (opcjonalnie)</H6>
+      <InputsList>
+        {RADIO_BUTTONS_CONFIG.map(({ name, id, label }) => (
+          <CheckButtonBox
+            id={id}
+            label={label}
+            onChange={event => onInputChange(event)}
+            type="checkbox"
+            name={name}
+            value={newQuotation}
+            checked={newQuotation[name]}
+          />
+        ))}
+      </InputsList>
       <Button type="submit">{buttonLabel}</Button>
     </Form>
   );
@@ -42,28 +59,65 @@ const quotationForm = ({
 
 quotationForm.propTypes = {
   buttonLabel: string,
-  content: string,
-  onQuotationSubmit: func.isRequired,
-  onContentChange: func.isRequired,
-  onPoliticianChange: func.isRequired,
-  politician: string
+  onInputChange: func.isRequired,
+  onQuotationSubmit: func.isRequired
 };
 
 quotationForm.defaultProps = {
-  buttonLabel: 'Opublikuj',
-  content: '',
-  politician: ''
+  buttonLabel: 'Opublikuj'
 };
 
 export default quotationForm;
 
 const Form = styled.form`
-  /* max-width: 30rem; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* ${flexCenter}; */
-  /* flex-direction: column; */
-  
   margin: ${spacing[4]} auto 0;
 `;
+
+const InputsList = styled.ul`
+  margin-bottom: ${spacing[3]};
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+// return (
+//   <Form onSubmit={onQuotationSubmit}>
+//     <TextareaBox
+//       marginBottom={spacing[3]}
+//       ref={autoFocusRef}
+//       onChange={event => onInputChange(event)}
+//       placeholder="Tutaj wpisz cytat"
+//       cols="30"
+//       id="content"
+//       value={newQuotation.content}
+//       required
+//     />
+//     <InputBox
+//       onChange={event => onInputChange(event)}
+//       placeholder="Autor cytatu"
+//       id="politician"
+//       value={newQuotation.politician}
+//       required
+//     />
+//     <input
+//       onChange={event => onInputChange(event)}
+//       type="checkbox"
+//       id="history"
+//       name="historia"
+//       // value={newQuotation.historia}
+//       checked={newQuotation.historia} />
+//     <label htmlFor="history">Historia</label>
+//     <input
+//       onChange={event => onInputChange(event)}
+//       type="checkbox"
+//       id="biology"
+//       name="przyroda"
+//       // value={newQuotation.przyroda}
+//       checked={newQuotation.przyroda} />
+//     <label htmlFor="biology">Przyroda</label>
+//     <Button type="submit">{buttonLabel}</Button>
+//   </Form>
+// );
+// };

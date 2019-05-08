@@ -8,3 +8,4 @@ export { default as TextareaBox } from './TextareaBox';
 export { default as Spinner } from './Spinner';
 export { default as Modal } from './Modal';
 export { default as Toolbox } from './Toolbox';
+export { default as CheckButtonBox } from './CheckButtonBox';

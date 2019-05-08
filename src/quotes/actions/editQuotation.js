@@ -4,7 +4,7 @@ import {
   editQuotationFailure
 } from 'quotes/actionCreators';
 
-const editQuotation = (id, { politician, content }) => {
+const editQuotation = (id, { politician, content, topics }) => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     dispatch(editQuotationRequest());
@@ -13,7 +13,8 @@ const editQuotation = (id, { politician, content }) => {
       .doc(id)
       .update({
         politician,
-        content
+        content,
+        topics
       })
       .then(() => {
         dispatch(editQuotationSuccess());

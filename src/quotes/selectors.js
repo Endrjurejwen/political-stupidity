@@ -25,9 +25,11 @@ export const makeGetQuotationState = () =>
 
 const getPaginationLimit = state => state.quotes.pagination.limit;
 const getPaginationIsLoading = state => state.quotes.pagination.isLoading;
+const getPaginationInitialLimit = state => state.quotes.pagination.initialLimit;
 
 export const getPaginationState = createStructuredSelector({
   limit: getPaginationLimit,
+  initialLimit: getPaginationInitialLimit,
   isLoading: getPaginationIsLoading
 });
 
@@ -65,6 +67,20 @@ const getSortTypes = state => state.quotes.sortTypes;
 export const getSortTypesState = createSelector(
   [getSortTypes],
   sortTypes => sortTypes
+);
+
+const getFilterName = state => state.quotes.filter.name;
+
+export const getFilterNameState = createSelector(
+  [getFilterName],
+  name => name
+);
+
+const getFilterInstruction = state => state.quotes.filter.instruction;
+
+export const getFilterInstructionState = createSelector(
+  [getFilterInstruction],
+  instruction => instruction
 );
 
 // const getSortType = (state, sortTypeName) => {

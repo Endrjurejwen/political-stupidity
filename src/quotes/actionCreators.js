@@ -17,6 +17,9 @@ import {
   SORT_QUOTES_REQUEST,
   SORT_QUOTES_SUCCESS,
   SORT_QUOTES_FAILURE,
+  FILTER_QUOTES_REQUEST,
+  FILTER_QUOTES_SUCCESS,
+  FILTER_QUOTES_FAILURE,
   LOAD_MORE_QUOTES_REQUEST,
   LOAD_MORE_QUOTES_SUCCESS,
   LOAD_MORE_QUOTES_FAILURE,
@@ -100,6 +103,20 @@ export const sortQuotesSuccess = () => ({
 
 export const sortQuotesFailure = error => ({
   type: SORT_QUOTES_FAILURE,
+  error
+});
+
+export const filterQuotesRequest = filter => ({
+  type: FILTER_QUOTES_REQUEST,
+  filter
+});
+
+export const filterQuotesSuccess = () => ({
+  type: FILTER_QUOTES_SUCCESS
+});
+
+export const filterQuotesFailure = error => ({
+  type: FILTER_QUOTES_FAILURE,
   error
 });
 
