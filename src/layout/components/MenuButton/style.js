@@ -1,27 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
-import { bool, func } from 'prop-types';
-
 import { media, color, spacing } from 'utils';
 
-const menuButton = ({ toggleMenu, isMenuOpen }) => (
-  <MenuBtn
-    aria-label="Menu Button"
-    data-testid="menu-button"
-    onClick={toggleMenu}
-  >
-    <MenuIcon isMenuOpen={isMenuOpen} />
-  </MenuBtn>
-);
-
-menuButton.propTypes = {
-  isMenuOpen: bool.isRequired,
-  toggleMenu: func.isRequired
-};
-
-export default menuButton;
-
-const MenuBtn = styled.button`
+const MenuButton = styled.button`
   display: block;
   z-index: 40;
   cursor: pointer;
@@ -65,3 +45,5 @@ const MenuIcon = styled.div`
       isMenuOpen ? 'rotate(-135deg)' : 'rotate(0deg)'};
   }
 `;
+
+export { MenuButton, MenuIcon };

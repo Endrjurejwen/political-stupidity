@@ -1,17 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 import { H1 } from 'elements';
 import { spacing, color, elevation, media } from 'utils';
 import bg from 'assets/images/sejm3.jpg';
-
-const header = () => (
-  <Header>
-    <Title>Klasa Polityczna</Title>
-    <Claim>Szkolny humor z ławek poselskich</Claim>
-  </Header>
-);
-
-export default header;
 
 const Title = styled(H1)`
   transform: rotate(-2.5deg);
@@ -27,7 +17,6 @@ const Title = styled(H1)`
 
 const Header = styled.header`
   overflow: hidden;
-  /* height: 300px; */
   ${elevation[1]};
   margin: -${spacing[4]} -${spacing[1]} 0;
   display: flex;
@@ -55,15 +44,16 @@ const Header = styled.header`
 `;
 
 const Claim = styled.p`
-  transform: rotate(2.0deg);
+  transform: rotate(2deg);
   margin-left: -5px;
   margin-top: -10px;
   z-index: 2;
   ${elevation[2]};
   padding: 0 ${spacing[4]};
-  /* margin-bottom: ${spacing[6]}; */
   background-color: ${color.secondary};
   border-bottom: 2px solid ${color.action};
   color: ${color.textDark};
   display: inline-block;
 `;
+
+export { Title, Header, Claim };

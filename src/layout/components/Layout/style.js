@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import { element } from 'prop-types';
 import {
   navigationHeight,
   bodyMaxWidth,
@@ -9,25 +7,6 @@ import {
   media,
   color
 } from 'utils';
-
-import Toolbar from 'layout/containers/Toolbar';
-
-const layout = ({ children }) => (
-  <>
-    <Toolbar />
-    <Wrapper data-testid="layout-wrapper">{children}</Wrapper>
-  </>
-);
-
-layout.propTypes = {
-  children: element
-};
-
-layout.defaultProps = {
-  children: null
-};
-
-export default layout;
 
 const Wrapper = styled.div`
   position: relative;
@@ -44,3 +23,5 @@ const Wrapper = styled.div`
     padding: ${spacing[4]};
   `}
 `;
+
+export { Wrapper };

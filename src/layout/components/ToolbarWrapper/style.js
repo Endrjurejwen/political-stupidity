@@ -1,7 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import { arrayOf, oneOfType, element, bool } from 'prop-types';
-
 import {
   color,
   fixed,
@@ -11,16 +8,6 @@ import {
   navigationHeight,
   media
 } from 'utils';
-
-const toolbarWrapper = ({ children }) => (
-  <Wrapper data-testid="toolbar-wrapper">{children}</Wrapper>
-);
-
-toolbarWrapper.propTypes = {
-  children: arrayOf(oneOfType([element, bool])).isRequired
-};
-
-export default toolbarWrapper;
 
 const Wrapper = styled.div`
   ${fixed()};
@@ -37,3 +24,5 @@ const Wrapper = styled.div`
   padding: 0 ${spacing[5]};
   `}
 `;
+
+export { Wrapper };

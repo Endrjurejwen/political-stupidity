@@ -7,20 +7,7 @@ import { connect } from 'react-redux';
 import { firestoreConnect, withFirestore } from 'react-redux-firebase';
 import { getCountersState } from 'stats/selectors';
 
-const statsContainer = ({ counters, firestore, location }) => {
-  // useEffect(() => {
-  //   console.log('useEffect from header');
-  //   firestore.setListener({
-  //     collection: 'counters'
-  //   });
-
-  //   return function cleanup() {
-  //     firestore.unsetListener('quotes');
-  //   };
-  // }, [location.pathname]);
-
-  return <Stats counters={counters} />;
-};
+const statsContainer = ({ counters }) => <Stats counters={counters} />;
 
 statsContainer.propTypes = {
   counters: shape({
