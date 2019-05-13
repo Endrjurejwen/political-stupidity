@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { string, func } from 'prop-types';
-import styled from 'styled-components';
-import { InlineButton, H5 } from 'elements';
-import { flexCenter, spacing } from 'utils';
+import { spacing } from 'utils';
 import { useAutoFocus } from 'common';
+
+import * as S from './style';
 
 const confirmation = ({ title, text, onConfirmClick, onCloseClick }) => {
   const autoFocusRef = useRef(null);
@@ -11,17 +11,17 @@ const confirmation = ({ title, text, onConfirmClick, onCloseClick }) => {
 
   return (
     <>
-      <H5>{title}</H5>
+      <S.H5>{title}</S.H5>
       <p>{text}</p>
-      <Container>
-        <InlineButton
+      <S.ButtonsContainer>
+        <S.InlineButton
           ref={autoFocusRef}
           marginLeft="auto"
           onClick={onCloseClick}
         >
           Anuluję
-        </InlineButton>
-        <InlineButton
+        </S.InlineButton>
+        <S.InlineButton
           marginLeft={spacing[6]}
           onClick={() => {
             onConfirmClick();
@@ -29,8 +29,8 @@ const confirmation = ({ title, text, onConfirmClick, onCloseClick }) => {
           }}
         >
           Potwierdzam
-        </InlineButton>
-      </Container>
+        </S.InlineButton>
+      </S.ButtonsContainer>
     </>
   );
 };
@@ -51,8 +51,3 @@ confirmation.defaultProps = {
 };
 
 export default confirmation;
-
-const Container = styled.div`
-  ${flexCenter({ justifyContent: 'space-between' })};
-  margin-top: ${spacing[3]};
-`;

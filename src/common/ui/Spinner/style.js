@@ -1,15 +1,5 @@
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { color } from 'utils';
-
-const spinner = () => (
-  <Wrapper>
-    <Spinner data-testid="spinner">Loading...</Spinner>
-    <Label>Wczytuję...</Label>
-  </Wrapper>
-);
-
-export default spinner;
 
 const loading = keyframes`
   0% {
@@ -20,7 +10,7 @@ const loading = keyframes`
   }
 `;
 
-const Wrapper = styled.div`
+const Spinner = styled.div`
   /* margin: 0 auto; */
   /* transform: translateX(50%); */
   display: flex;
@@ -35,7 +25,7 @@ const Label = styled.span`
   color: ${color.action};
 `;
 
-const Spinner = styled.div`
+const Symbol = styled.div`
   color: ${color.action};
   font-size: 11px;
   text-indent: -99999em;
@@ -53,7 +43,7 @@ const Spinner = styled.div`
     content: '';
     width: 5.2em;
     height: 10.2em;
-    background: #F8F8F8;
+    background: #f8f8f8;
     border-radius: 10.2em 0 0 10.2em;
     top: -0.1em;
     left: -0.1em;
@@ -66,7 +56,7 @@ const Spinner = styled.div`
     content: '';
     width: 5.2em;
     height: 10.2em;
-    background: #F8F8F8;
+    background: #f8f8f8;
     border-radius: 0 10.2em 10.2em 0;
     top: -0.1em;
     left: 5.1em;
@@ -74,3 +64,5 @@ const Spinner = styled.div`
     animation: ${loading} 1s infinite ease;
   }
 `;
+
+export { Spinner, Label, Symbol };

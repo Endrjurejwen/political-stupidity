@@ -1,27 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
-import { string } from 'prop-types';
 import { spacing, color, hidden } from 'utils';
-
-const checkButtonBox = ({ id, label, ...props }) => (
-  <InputBox>
-    <Input id={id} {...props} />
-    <label htmlFor={id}>
-      <RadioButton>{label}</RadioButton>
-    </label>
-  </InputBox>
-);
-
-checkButtonBox.propTypes = {
-  id: string.isRequired,
-  label: string
-};
-
-checkButtonBox.defaultProps = {
-  label: ''
-};
-
-export default checkButtonBox;
 
 const Input = styled.input`
   ${hidden()};
@@ -44,3 +22,5 @@ const InputBox = styled.li`
     color: ${color.textLight};
   }
 `;
+
+export { Input, RadioButton, InputBox };

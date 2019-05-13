@@ -1,13 +1,13 @@
 import React from 'react';
 import { shape } from 'prop-types';
-import styled from 'styled-components';
 import moment from 'moment';
-import { color } from 'utils';
+
+import * as S from './style';
 
 const data = ({ dataNumber }) => (
-  <DataContainer data-testid="quotation-timestamp">
+  <S.Data data-testid="quotation-timestamp">
     {moment(dataNumber.toDate()).calendar()}
-  </DataContainer>
+  </S.Data>
 );
 
 data.propTypes = {
@@ -15,8 +15,3 @@ data.propTypes = {
 };
 
 export default data;
-
-const DataContainer = styled.time`
-  font-size: 0.85rem;
-  color: ${color.textSecondary};
-`;

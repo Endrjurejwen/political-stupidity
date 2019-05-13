@@ -1,9 +1,7 @@
 import React, { useEffect, forwardRef } from 'react';
-import styled from 'styled-components';
 import { string } from 'prop-types';
 
-import { Textarea, Label } from 'elements';
-import { margins, media } from 'utils';
+import * as S from './style';
 
 const textareaBox = forwardRef(
   ({ type, placeholder, id, fullWidth, marginBottom, ...rest }, ref) => {
@@ -50,8 +48,8 @@ const textareaBox = forwardRef(
     }, []);
 
     return (
-      <Wrapper marginBottom={marginBottom} fullWidth={fullWidth}>
-        <Textarea
+      <S.TextareaBox marginBottom={marginBottom} fullWidth={fullWidth}>
+        <S.Textarea
           ref={ref}
           rows="1"
           className="resizeTextArea text-area"
@@ -60,8 +58,8 @@ const textareaBox = forwardRef(
           name={id}
           {...rest}
         />
-        <Label htmlFor={id}>{placeholder}</Label>
-      </Wrapper>
+        <S.Label htmlFor={id}>{placeholder}</S.Label>
+      </S.TextareaBox>
     );
   }
 );
@@ -76,39 +74,3 @@ textareaBox.defaultProps = {
 };
 
 export default textareaBox;
-
-const Wrapper = styled.div`
-  ${margins};
-  width: 100%;
-
-  ${media.phone`
-    width: ${props => (props.fullWidth ? '100%' : '75%')};
-  `}
-`;
-
-// useEffect(() => {
-//   const element = document.querySelector('.resizeTextArea');
-//   element.addEventListener('input', () => {
-//     resize(element);
-//   });
-
-//   return () => {
-//     element.removeEventListener('input', () => {
-//       resize(element);
-//     });
-//   };
-// }, []);
-
-// useEffect(() => {
-//   const element = document.querySelector('.resizeTextArea');
-
-//   element.addEventListener('focus', () => {
-//     resize(element);
-//   });
-
-//   return () => {
-//     element.removeEventListener('focus', () => {
-//       resize(element);
-//     });
-//   };
-// }, []);
