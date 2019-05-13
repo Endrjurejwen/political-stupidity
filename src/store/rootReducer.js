@@ -2,9 +2,9 @@ import { combineReducers } from 'redux';
 import { firestoreReducer } from 'redux-firestore';
 import { firebaseReducer } from 'react-redux-firebase';
 
-import quotes from 'quotes/reducer';
-import auth from 'auth/reducer';
-import comments from 'comments/reducer';
+import quotes from 'app/quotes/reducer';
+import auth from 'app/auth/reducer';
+import comments from 'app/comments/reducer';
 
 const rootReducer = combineReducers({
   auth,
