@@ -4,6 +4,7 @@ import * as S from 'elements';
 
 const CloseButton = ({ click }) => (
   <S.IconButton data-testid="button-close" onClick={click}>
+    Zamknij
     <S.Icon name="close" width="1.4em" height="1.4em" />
   </S.IconButton>
 );

@@ -1,14 +1,13 @@
 import React from 'react';
 import { func } from 'prop-types';
-import { Icon } from 'elements';
 import { color } from 'utils';
 
-import * as S from './style';
+import * as S from 'elements';
 
 const logoutButton = ({ onClick }) => (
-  <S.LogOutButton onClick={onClick}>
-    <Icon name="logout" color={color.textLight} />
-  </S.LogOutButton>
+  <S.IconButton onClick={onClick}>
+    <S.Icon name="logout" color={color.textLight} />
+  </S.IconButton>
 );
 
 logoutButton.propTypes = {

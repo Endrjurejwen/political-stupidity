@@ -5,8 +5,9 @@ import { getErrorAuthState, getIsLoadingAuthState } from 'app/auth/selectors';
 import { login, resetAuthError } from 'app/auth/actions';
 import { InputBox, useAutoFocus, WithLoader } from 'app/common';
 import AuthErrorHandler from 'app/auth/components/AuthErrorHandler';
+import { spacing } from 'utils';
 
-import * as S from './style';
+import * as S from 'elements';
 
 const loginForm = ({ login, resetAuthError, error, isLoading, closeModal }) => {
   const [email, setEmail] = useState('');
@@ -23,8 +24,8 @@ const loginForm = ({ login, resetAuthError, error, isLoading, closeModal }) => {
 
   return (
     <WithLoader isLoading={isLoading}>
+      <S.H2 center marginBottom={spacing[4]}>Logowanie</S.H2>
       <S.Form onSubmit={handleSubmit}>
-        <S.Title>Logowanie</S.Title>
         <InputBox
           ref={autoFocusRef}
           change={event => setEmail(event.target.value)}

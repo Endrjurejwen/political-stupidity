@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Button } from 'elements';
 import { spacing, media } from 'utils';
 
-const Form = styled.form`
+const CommentForm = styled.form`
   max-width: 30rem;
   display: flex;
   flex-direction: column;
@@ -38,4 +38,4 @@ const SubmitButton = styled(Button)`
   `}
 `;
 
-export { Form, SubmitButton };
+export { CommentForm, SubmitButton };

@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { flexCenter, spacing, color } from 'utils';
 
 export default styled.button`
+  text-indent: -2000px;
+  overflow: hidden;
   ${flexCenter};
   color: ${color.action};
   font-size: 0.9rem;

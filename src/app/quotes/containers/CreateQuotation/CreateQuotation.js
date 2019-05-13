@@ -45,7 +45,7 @@ const createQuotationForm = ({ createQuotation, closeModal, isLoading }) => {
     const newQuotationWithTopics = {
       content: newQuotation.content,
       politician: newQuotation.politician,
-      topics: topicsArray
+      topics: topicsArray.length ? topicsArray : ['Wiedza ogólna']
     };
     return newQuotationWithTopics;
   };

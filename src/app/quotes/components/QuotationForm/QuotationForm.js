@@ -1,7 +1,12 @@
 import React, { useRef } from 'react';
 import { func, string } from 'prop-types';
 import { spacing } from 'utils';
-import { InputBox, TextareaBox, useAutoFocus, CheckButtonBox } from 'app/common';
+import {
+  InputBox,
+  TextareaBox,
+  useAutoFocus,
+  CheckButtonBox
+} from 'app/common';
 
 import * as S from './style';
 

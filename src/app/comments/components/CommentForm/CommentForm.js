@@ -13,7 +13,7 @@ const commentForm = ({
   content
 }) => {
   return (
-    <S.Form ref={formRef} onSubmit={onCommentSubmit}>
+    <S.CommentForm ref={formRef} onSubmit={onCommentSubmit}>
       <TextareaBox
         fullWidth
         ref={autoFocusRef}
@@ -25,7 +25,7 @@ const commentForm = ({
       <S.SubmitButton type="submit" className="textarea-button">
         {SubmitButtonLabel}
       </S.SubmitButton>
-    </S.Form>
+    </S.CommentForm>
   );
 };
 

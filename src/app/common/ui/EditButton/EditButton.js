@@ -8,6 +8,7 @@ const EditButton = ({ click }) => (
     data-testid="button-edit"
     onClick={click}
   >
+    Edytuj
     <S.Icon name="edit" />
   </S.IconButton>
 );

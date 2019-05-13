@@ -5,8 +5,9 @@ import { getErrorAuthState, getIsLoadingAuthState } from 'app/auth/selectors';
 import { InputBox, Spinner, WithLoader } from 'app/common';
 import { signUp, resetAuthError } from 'app/auth/actions';
 import AuthErrorHandler from 'app/auth/components/AuthErrorHandler';
+import { spacing } from 'utils';
 
-import * as S from './style';
+import * as S from 'elements';
 
 const signUpForm = ({ signUp, resetAuthError, error, isLoading }) => {
   const [firstName, setFirstName] = useState('');
@@ -25,8 +26,8 @@ const signUpForm = ({ signUp, resetAuthError, error, isLoading }) => {
 
   return (
     <WithLoader isLoading={isLoading}>
+      <S.H2 center marginBottom={spacing[4]}>Rejestracja</S.H2>
       <S.Form onSubmit={handleSubmit}>
-        <S.Title>Rejestracja</S.Title>
         <InputBox
           autoFocus
           change={event => setFirstName(event.target.value)}

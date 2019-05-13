@@ -1,6 +1,21 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { Icon } from 'elements';
 import { spacing, color, flexCenter } from 'utils';
+
+const like = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
 
 const LikeButton = styled.button`
   color: ${color.action};
@@ -13,12 +28,22 @@ const LikeButton = styled.button`
   background-color: transparent;
   cursor: pointer;
 
+  .like-icon--animation:hover svg {
+      animation: ${like} 0.8s ease;
+    }
+
   svg {
     margin: 0 ${spacing[0]} 0 0;
+    transition: transform 0.1s;
 
     g path {
       fill: ${({ full }) => (full ? color.action : 'transparent')};
     }
+  }
+
+  & svg {
+    /* animation: ${like} 0.8s ease; */
+    animation: ${({ full }) => (full ? css`${like} 0.5s ease` : null)};
   }
 
   &:hover svg g path {

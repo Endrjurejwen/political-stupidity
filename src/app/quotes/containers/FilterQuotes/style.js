@@ -11,6 +11,7 @@ const InputsWrapper = styled.div`
 const Form = styled.form`
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
 `;
 

@@ -11,3 +11,4 @@ export { default as Textarea } from './textarea';
 export { default as Label } from './label';
 export { default as Cross } from './cross';
 export { default as IconButton } from './iconButton';
+export { default as Form } from './form';

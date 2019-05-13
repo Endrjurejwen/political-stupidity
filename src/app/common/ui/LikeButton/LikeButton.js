@@ -6,7 +6,7 @@ import * as S from './style';
 
 const likeButton = ({ likes, onClick, full }) => (
   <S.LikeButton data-testid="button-likes" full={full} onClick={onClick}>
-    <S.Icon name="fullLove" color={color.action} />{' '}
+    <S.Icon name="fullLove" color={color.action} />
     <span>
       <strong>{likes}</strong>
     </span>
