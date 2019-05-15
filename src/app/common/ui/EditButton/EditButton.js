@@ -2,11 +2,11 @@ import React from 'react';
 import { func } from 'prop-types';
 import * as S from 'elements';
 
-const EditButton = ({ click }) => (
+const EditButton = ({ onClick }) => (
   <S.IconButton
     className="button-edit"
     data-testid="button-edit"
-    onClick={click}
+    onClick={onClick}
   >
     Edytuj
     <S.Icon name="edit" />
@@ -14,11 +14,11 @@ const EditButton = ({ click }) => (
 );
 
 EditButton.propTypes = {
-  click: func
+  onClick: func
 };
 
 EditButton.defaultProps = {
-  click: () => null
+  onClick: () => null
 };
 
 export default EditButton;

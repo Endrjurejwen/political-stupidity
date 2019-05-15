@@ -1,18 +1,24 @@
 import React from 'react';
 import { Toggle, Modal } from 'app/common';
-import { withUser } from 'app/common/hoc';
+import { withUser, withDelayUnmounting } from 'app/common/hoc';
 import Login from 'app/auth/containers/Login';
 
 const withPrivacyGuard = WrappedButton => {
   const withPrivacyGuardComponent = ({ user, ...props }) => {
+    const ModalWithDelay = withDelayUnmounting(Modal);
     if (!user.id) {
       return (
         <Toggle
           open={show => <WrappedButton {...props} onClick={show} />}
-          content={hide => (
-            <Modal close={hide}>
+          content={({ hide, isShown }) => (
+            <ModalWithDelay
+              close={hide}
+              isMounted={isShown}
+              isShown={isShown}
+              delayTime={150}
+            >
               <Login closeModal={hide} />
-            </Modal>
+            </ModalWithDelay>
           )}
         />
       );
@@ -25,18 +31,19 @@ const withPrivacyGuard = WrappedButton => {
 
 export default withPrivacyGuard;
 
+
 // import React from 'react';
-// import { Toggle, Modal } from 'common';
-// import { withUser } from 'common/hoc';
-// import Login from 'auth/containers/Login';
+// import { Toggle, Modal } from 'app/common';
+// import { withUser } from 'app/common/hoc';
+// import Login from 'app/auth/containers/Login';
 
 // const withPrivacyGuard = WrappedButton => {
-//   const withPrivacyGuardComponent = props => {
-//     if (!props.user.id) {
+//   const withPrivacyGuardComponent = ({ user, ...props }) => {
+//     if (!user.id) {
 //       return (
 //         <Toggle
-//           open={show => <WrappedButton {...props} click={show} />}
-//           content={hide => (
+//           open={show => <WrappedButton {...props} onClick={show} />}
+//           content={({ hide, isShown }) => isShown && (
 //             <Modal close={hide}>
 //               <Login closeModal={hide} />
 //             </Modal>

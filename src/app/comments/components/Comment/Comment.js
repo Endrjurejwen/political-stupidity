@@ -3,7 +3,13 @@ import { commentType } from 'app/comments/propTypes';
 import EditComment from 'app/comments/containers/EditComment';
 import DeleteComment from 'app/comments/containers/DeleteComment';
 import LikeComment from 'app/comments/containers/LikeComment';
-import { EditButton, DeleteButton, withToggle, Toolbox, Data } from 'app/common';
+import {
+  EditButton,
+  DeleteButton,
+  withToggle,
+  Toolbox,
+  Data
+} from 'app/common';
 
 import * as S from './style';
 
@@ -38,7 +44,7 @@ const comment = ({ comment }) => {
       </S.Footer>
       <Toolbox id={comment.author.id}>
         <DeleteCommentWithToggle comment={comment} />
-        <EditButton click={toggleEditComment} />
+        <EditButton onClick={toggleEditComment} />
       </Toolbox>
     </S.Card>
   );

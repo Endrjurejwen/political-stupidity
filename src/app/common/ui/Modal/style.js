@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import {
   media,
   fixed,
@@ -8,6 +8,29 @@ import {
   absolute,
   color
 } from 'utils';
+
+const fadeIn = keyframes`
+  0% { 
+    transform: translate(-50%, -150%) scale(0.8, 1); 
+    opacity: 0; 
+  }
+  }
+  100% { 
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1; 
+  }
+`;
+
+const fadeOut = keyframes`
+  0% { 
+    transform: translate(-50%, -50%);
+    opacity: 1; 
+  }
+  100% { 
+    transform: translate(-50%, -150%) scale(0.8, 1); 
+    opacity: 0; 
+  }
+`;
 
 const Modal = styled.div`
   ${fixed({ x: '50%', y: '45%' })};
@@ -23,6 +46,15 @@ const Modal = styled.div`
   min-height: 12rem;
   min-width: 20rem;
   overflow-y: auto;
+
+  animation: ${({ isMounted }) =>
+    isMounted
+      ? css`
+          ${fadeIn} 0.20s ease-in-out
+        `
+      : css`
+          ${fadeOut} 0.20s ease-in-out
+        `};
 
   ${media.tablet`
     /* width: auto; */

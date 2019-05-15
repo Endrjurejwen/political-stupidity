@@ -1,17 +1,35 @@
 import React from 'react';
 import { element, bool, func } from 'prop-types';
 import { userType } from 'app/auth/propTypes';
-import { withUser } from 'app/common';
+import { withUser, withToggle } from 'app/common';
 import { spacing } from 'utils';
 import UserDetails from 'app/auth/components/UserDetails';
-import CreateQuotationToggle from 'app/quotes/components/CreateQuotationToggle';
 import LoginButton from 'app/auth/components/LoginButton';
-import LogoutToggle from 'app/auth/components/LogoutToggle';
+import LogoutButton from 'app/auth/components/LogoutButton';
+import Login from 'app/auth/containers/Login';
+import Logout from 'app/auth/containers/Logout';
+import CreateQuotation from 'app/quotes/containers/CreateQuotation';
+import CreateQuotationButton from 'app/quotes/components/CreateQuotationButton';
 
 import * as S from './style';
 
+const LoginWithToggle = withToggle({
+  modalComponent: Login,
+  toggleButton: LoginButton
+});
+
+const LogoutWithToggle = withToggle({
+  modalComponent: Logout,
+  toggleButton: LogoutButton
+});
+
+const CreateQuotationWithToggle = withToggle({
+  modalComponent: CreateQuotation,
+  toggleButton: CreateQuotationButton
+});
+
 const sideDrawer = ({ children, closeMenu, isOpen, user }) => {
-  let actionButton = <LoginButton closeMenu={closeMenu} />;
+  let actionButton = <LoginWithToggle closeMenu={closeMenu} />;
   let headerContent = (
     <S.H4 center textLight marginBottom={spacing[4]}>
       Klasa Polityczna
@@ -19,13 +37,13 @@ const sideDrawer = ({ children, closeMenu, isOpen, user }) => {
   );
   if (user.id) {
     headerContent = <UserDetails user={user} />;
-    actionButton = <CreateQuotationToggle extended closeMenu={closeMenu} />;
+    actionButton = <CreateQuotationWithToggle extended closeMenu={closeMenu} />;
   }
   return (
     <S.Wrapper data-testid="sideDrawer" isOpen={isOpen}>
       <S.Header>
         {headerContent}
-        {user.id && <LogoutToggle closeMenu={closeMenu} />}
+        {user.id && <LogoutWithToggle closeMenu={closeMenu} />}
       </S.Header>
       <S.NavContainer>
         {children}

@@ -24,7 +24,9 @@ const loginForm = ({ login, resetAuthError, error, isLoading, closeModal }) => {
 
   return (
     <WithLoader isLoading={isLoading}>
-      <S.H2 center marginBottom={spacing[4]}>Logowanie</S.H2>
+      <S.H2 center marginBottom={spacing[4]}>
+        Logowanie
+      </S.H2>
       <S.Form onSubmit={handleSubmit}>
         <InputBox
           ref={autoFocusRef}

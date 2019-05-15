@@ -18,7 +18,6 @@ import {
   getIsLoadingState,
   getFilterInstructionState
 } from 'app/quotes/selectors';
-import CreateQuotationToggle from 'app/quotes/components/CreateQuotationToggle';
 import LoginButton from 'app/auth/components/LoginButton';
 import Controls from 'app/quotes/components/Controls';
 import QuotesList from 'app/quotes/components/QuotesList';
@@ -26,12 +25,26 @@ import {
   WithLoader,
   WithEmptyInfo,
   withInfiniteScroll,
-  withErrorHandler
+  withErrorHandler,
+  withToggle
 } from 'app/common';
 import { quotationType } from 'app/quotes/propTypes';
 import { loadMoreQuotes, resetQuotesError } from 'app/quotes/actions';
+import Login from 'app/auth/containers/Login';
+import CreateQuotation from 'app/quotes/containers/CreateQuotation';
+import CreateQuotationButton from 'app/quotes/components/CreateQuotationButton';
 
 import * as S from 'elements';
+
+const LoginWithToggle = withToggle({
+  modalComponent: Login,
+  toggleButton: LoginButton
+});
+
+const CreateQuotationWithToggle = withToggle({
+  modalComponent: CreateQuotation,
+  toggleButton: CreateQuotationButton
+});
 
 const quotesApp = ({ location, quotes, user, isLoading }) => {
   useEffect(() => {
@@ -43,7 +56,7 @@ const quotesApp = ({ location, quotes, user, isLoading }) => {
 
   return (
     <>
-      {user.id ? <CreateQuotationToggle /> : <LoginButton fixed />}
+      {user.id ? <CreateQuotationWithToggle /> : <LoginWithToggle fixed />}
       <Controls />
       <div>
         <WithLoader isLoading={!quotes || isLoading}>

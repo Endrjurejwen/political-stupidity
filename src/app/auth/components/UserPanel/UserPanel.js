@@ -1,15 +1,22 @@
 import React from 'react';
 import { userType } from 'app/auth/propTypes';
-import { withUser } from 'app/common';
-import LogoutToggle from 'app/auth/components/LogoutToggle';
+import { withUser, withToggle } from 'app/common';
+// import LogoutToggle from 'app/auth/components/LogoutToggle';
+import LogoutButton from 'app/auth/components/LogoutButton';
 import UserSummary from 'app/auth/components/UserSummary';
+import Logout from 'app/auth/containers/Logout'
 
 import * as S from './style';
+
+const LogoutWithToggle = withToggle({
+  modalComponent: Logout,
+  toggleButton: LogoutButton
+});
 
 const userPanel = ({ user }) => (
   <S.Wrapper isLogin={!!user.id}>
     <UserSummary name={user.firstName} />
-    <LogoutToggle />
+    <LogoutWithToggle />
   </S.Wrapper>
 );
 

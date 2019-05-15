@@ -28,10 +28,6 @@ const LikeButton = styled.button`
   background-color: transparent;
   cursor: pointer;
 
-  .like-icon--animation:hover svg {
-      animation: ${like} 0.8s ease;
-    }
-
   svg {
     margin: 0 ${spacing[0]} 0 0;
     transition: transform 0.1s;
@@ -43,7 +39,12 @@ const LikeButton = styled.button`
 
   & svg {
     /* animation: ${like} 0.8s ease; */
-    animation: ${({ full }) => (full ? css`${like} 0.5s ease` : null)};
+    animation: ${({ full }) =>
+      full
+        ? css`
+            ${like} 0.5s ease
+          `
+        : null};
   }
 
   &:hover svg g path {

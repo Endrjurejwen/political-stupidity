@@ -5,14 +5,12 @@ import { trapTabKey } from 'utils';
 
 import * as S from './style';
 
-const modal = ({ close, children }) => {
+const modal = ({ close, children, isShown, isMounted }) => {
   useBodyScrollLock();
 
   useEffect(() => {
-    // const focusedElementBeforeModal = document.activeElement;
     document.addEventListener('keydown', event => trapTabKey(event, close));
     return () => {
-      // focusedElementBeforeModal.focus();
       document.removeEventListener('keydown', event =>
         trapTabKey(event, close)
       );
@@ -21,13 +19,13 @@ const modal = ({ close, children }) => {
 
   return (
     <Portal>
-      <S.Modal className="modal" aria-modal="true">
+      <S.Modal isMounted={isMounted} className="modal" aria-modal="true">
         <S.CloseButtonWrapper>
           <CloseButton click={close} />
         </S.CloseButtonWrapper>
         <S.ModalContent>{children}</S.ModalContent>
       </S.Modal>
-      <Backdrop close={close} />
+      <Backdrop isMounted={isMounted} close={close} />
     </Portal>
   );
 };

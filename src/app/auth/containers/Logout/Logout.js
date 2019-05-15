@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import { logout } from 'app/auth/actions';
 import { Confirmation } from 'app/common';
 
-const logoutButton = ({ logout, closeMenu, closeModal }) => {
+const logoutButton = ({ logout, closeModal }) => {
   const handleLogoutClick = () => {
     logout();
-    closeMenu();
   };
   return (
     <Confirmation
@@ -20,13 +19,11 @@ const logoutButton = ({ logout, closeMenu, closeModal }) => {
 };
 
 logoutButton.propTypes = {
-  closeMenu: func,
   closeModal: func,
   logout: func.isRequired
 };
 
 logoutButton.defaultProps = {
-  closeMenu: () => null,
   closeModal: () => null
 };
 

@@ -9,7 +9,6 @@ const Title = styled(H5)`
 const Header = styled.header`
   padding: ${spacing[2]} ${spacing[3]};
   background-color: ${color.secondary};
-  /* width: 75%; */
   overflow: hidden;
   border-radius: 8px 8px 0 0;
   border-bottom: 2px solid ${color.action};
