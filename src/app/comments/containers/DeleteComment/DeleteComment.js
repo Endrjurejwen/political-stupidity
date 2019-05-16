@@ -9,7 +9,7 @@ import { Confirmation } from 'app/common';
 
 const deleteCommentConfirmation = ({
   deleteComment,
-  closeModal,
+  onCloseModal,
   comment,
   match
 }) => {
@@ -20,7 +20,7 @@ const deleteCommentConfirmation = ({
 
   return (
     <Confirmation
-      onCloseClick={closeModal}
+      onCloseClick={onCloseModal}
       onConfirmClick={handleDeleteClick}
       text="Czy na pewno chcesz usunąć ten komentarz?"
       title="Usunięcie komentarza"
@@ -30,14 +30,14 @@ const deleteCommentConfirmation = ({
 
 deleteCommentConfirmation.propTypes = {
   deleteComment: func.isRequired,
-  closeModal: func,
   comment: commentType,
-  match: match.isRequired
+  match: match.isRequired,
+  onCloseModal: func
 };
 
 deleteCommentConfirmation.defaultProps = {
-  closeModal: () => null,
-  comment: null
+  comment: null,
+  onCloseModal: () => null
 };
 
 export default withRouter(

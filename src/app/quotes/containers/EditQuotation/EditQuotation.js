@@ -18,7 +18,7 @@ const CHECKBOXES_VALUES = {
 
 const editQuotationForm = ({
   editQuotation,
-  closeModal,
+  onCloseModal,
   isLoading,
   quotation
 }) => {
@@ -28,7 +28,7 @@ const editQuotationForm = ({
         ...acc,
         [current]: true
       };
-    }
+    };
     return acc;
   }, CHECKBOXES_VALUES);
 
@@ -70,7 +70,7 @@ const editQuotationForm = ({
     event.preventDefault();
     const newQuotationWithTopics = setNewQuotationWithTopics();
     editQuotation(quotation.id, newQuotationWithTopics);
-    closeModal();
+    onCloseModal();
   };
 
   return (
@@ -90,15 +90,15 @@ const editQuotationForm = ({
 };
 
 editQuotationForm.propTypes = {
-  closeModal: func,
   editQuotation: func.isRequired,
   isLoading: bool,
+  onCloseModal: func,
   quotation: quotationType
 };
 
 editQuotationForm.defaultProps = {
-  closeModal: () => null,
   isLoading: false,
+  onCloseModal: () => null,
   quotation: null
 };
 

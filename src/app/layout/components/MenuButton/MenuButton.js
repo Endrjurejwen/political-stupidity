@@ -3,11 +3,11 @@ import { bool, func } from 'prop-types';
 
 import * as S from './style';
 
-const menuButton = ({ toggleMenu, isMenuOpen }) => (
+const menuButton = ({ onToggleMenu, isMenuOpen }) => (
   <S.MenuButton
     aria-label="Menu Button"
     data-testid="menu-button"
-    onClick={toggleMenu}
+    onClick={onToggleMenu}
   >
     <S.MenuIcon isMenuOpen={isMenuOpen} />
   </S.MenuButton>
@@ -15,7 +15,7 @@ const menuButton = ({ toggleMenu, isMenuOpen }) => (
 
 menuButton.propTypes = {
   isMenuOpen: bool.isRequired,
-  toggleMenu: func.isRequired
+  onToggleMenu: func.isRequired
 };
 
 export default menuButton;

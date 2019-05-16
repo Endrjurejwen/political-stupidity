@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { func, string } from 'prop-types';
+import { func, string, objectOf, oneOfType, bool } from 'prop-types';
 import { spacing } from 'utils';
 import {
   InputBox,
@@ -65,12 +65,14 @@ const quotationForm = ({
 
 quotationForm.propTypes = {
   buttonLabel: string,
+  newQuotation: objectOf(oneOfType([string, bool])),
   onInputChange: func.isRequired,
   onQuotationSubmit: func.isRequired
 };
 
 quotationForm.defaultProps = {
-  buttonLabel: 'Opublikuj'
+  buttonLabel: 'Opublikuj',
+  newQuotation: null
 };
 
 export default quotationForm;

@@ -9,7 +9,13 @@ import { spacing } from 'utils';
 
 import * as S from 'elements';
 
-const loginForm = ({ login, resetAuthError, error, isLoading, closeModal }) => {
+const loginForm = ({
+  login,
+  resetAuthError,
+  error,
+  isLoading,
+  onCloseModal
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const autoFocusRef = useRef(null);
@@ -19,7 +25,7 @@ const loginForm = ({ login, resetAuthError, error, isLoading, closeModal }) => {
   const handleSubmit = event => {
     const newCredentials = setCredentials();
     event.preventDefault();
-    login(newCredentials).then(res => res && closeModal());
+    login(newCredentials).then(res => res && onCloseModal());
   };
 
   return (
@@ -56,14 +62,14 @@ loginForm.propTypes = {
   login: func.isRequired,
   error: string,
   isLoading: bool,
-  closeModal: func,
+  onCloseModal: func,
   resetAuthError: func.isRequired
 };
 
 loginForm.defaultProps = {
   error: null,
   isLoading: false,
-  closeModal: () => null
+  onCloseModal: () => null
 };
 
 const mapStateToProps = state => ({

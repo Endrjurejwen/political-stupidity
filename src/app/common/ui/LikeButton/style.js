@@ -33,14 +33,14 @@ const LikeButton = styled.button`
     transition: transform 0.1s;
 
     g path {
-      fill: ${({ full }) => (full ? color.action : 'transparent')};
+      fill: ${({ isLiked }) => (isLiked ? color.action : 'transparent')};
     }
   }
 
   & svg {
     /* animation: ${like} 0.8s ease; */
-    animation: ${({ full }) =>
-      full
+    animation: ${({ isAnimated }) =>
+      isAnimated
         ? css`
             ${like} 0.5s ease
           `

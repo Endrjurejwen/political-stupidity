@@ -1,10 +1,10 @@
 import React, { useEffect, forwardRef } from 'react';
-import { string } from 'prop-types';
+import { string, bool } from 'prop-types';
 
 import * as S from './style';
 
 const textareaBox = forwardRef(
-  ({ type, placeholder, id, fullWidth, marginBottom, ...rest }, ref) => {
+  ({ placeholder, id, isFullWidth, marginBottom, ...rest }, ref) => {
     const resize = element => {
       element.style.height = 'inherit';
 
@@ -48,7 +48,7 @@ const textareaBox = forwardRef(
     }, []);
 
     return (
-      <S.TextareaBox marginBottom={marginBottom} fullWidth={fullWidth}>
+      <S.TextareaBox marginBottom={marginBottom} isFullWidth={isFullWidth}>
         <S.Textarea
           ref={ref}
           rows="1"
@@ -66,10 +66,14 @@ const textareaBox = forwardRef(
 
 textareaBox.propTypes = {
   id: string.isRequired,
+  isFullWidth: bool,
+  marginBottom: string,
   placeholder: string
 };
 
 textareaBox.defaultProps = {
+  isFullWidth: false,
+  marginBottom: '',
   placeholder: 'Tutaj wpisz swój komentarz'
 };
 

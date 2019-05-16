@@ -1,28 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { func, bool, number } from 'prop-types';
 import { color } from 'utils';
 
 import * as S from './style';
 
-const likeButton = ({ likes, onClick, full }) => (
-  <S.LikeButton data-testid="button-likes" full={full} onClick={onClick}>
-    <S.Icon name="fullLove" color={color.action} />
-    <span>
-      <strong>{likes}</strong>
-    </span>
-  </S.LikeButton>
-);
+const likeButton = ({ likes, onClick, isLiked }) => {
+  const [isAnimated, setIsAnimated] = useState(false);
+  const handleClick = () => {
+    onClick();
+    setIsAnimated(true);
+  };
+
+  useEffect(() => {
+    setTimeout(() => setIsAnimated(false), 500);
+  }, [isAnimated]);
+
+  return (
+    <S.LikeButton
+      data-testid="button-likes"
+      isLiked={isLiked}
+      isAnimated={isAnimated}
+      onClick={handleClick}
+    >
+      <S.Icon name="fullLove" color={color.action} />
+      <span>
+        <strong>{likes}</strong>
+      </span>
+    </S.LikeButton>
+  );
+};
 
 likeButton.propTypes = {
-  onClick: func,
-  full: bool,
-  likes: number
+  isLiked: bool,
+  likes: number,
+  onClick: func
 };
 
 likeButton.defaultProps = {
-  onClick: () => null,
-  full: false,
-  likes: 0
+  isLiked: false,
+  likes: 0,
+  onClick: () => null
 };
 
 export default likeButton;

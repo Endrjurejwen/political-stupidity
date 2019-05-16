@@ -9,7 +9,7 @@ import { Confirmation } from 'app/common';
 
 const deleteQuotationConfirmation = ({
   deleteQuotation,
-  closeModal,
+  onCloseModal,
   quotation,
   history
 }) => {
@@ -23,21 +23,21 @@ const deleteQuotationConfirmation = ({
 
   return (
     <Confirmation
-      onCloseClick={closeModal}
+      onCloseClick={onCloseModal}
       onConfirmClick={handleDeleteQuotationClick}
     />
   );
 };
 
 deleteQuotationConfirmation.propTypes = {
-  closeModal: func,
   deleteQuotation: func.isRequired,
   history: history.isRequired,
+  onCloseModal: func,
   quotation: quotationType
 };
 
 deleteQuotationConfirmation.defaultProps = {
-  closeModal: () => null,
+  onCloseModal: () => null,
   quotation: null
 };
 

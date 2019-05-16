@@ -6,36 +6,42 @@ import { withRouter } from 'react-router-dom';
 import * as S from './style';
 
 const createQuotationButton = ({
-  desktop,
-  extended,
-  closeMenu,
+  isDesktop,
+  isExtended,
+  onCloseMenu,
   history,
   onClick
 }) => {
   const handleClick = () => {
     history.push('/quotes');
     onClick();
-    closeMenu();
+    onCloseMenu();
   };
   return (
-    <S.ActionButton desktop={desktop} extended={extended} onClick={handleClick}>
+    <S.ActionButton
+      isDesktop={isDesktop}
+      isExtended={isExtended}
+      onClick={handleClick}
+    >
       <S.Cross />
-      {(desktop || extended) && <S.Label>Dodaj Cytat</S.Label>}
+      {(isDesktop || isExtended) && <S.Label>Dodaj Cytat</S.Label>}
     </S.ActionButton>
   );
 };
 
 createQuotationButton.propTypes = {
-  closeMenu: func,
-  desktop: bool,
-  extended: bool,
-  history: history.isRequired
+  history: history.isRequired,
+  isDesktop: bool,
+  isExtended: bool,
+  onClick: func,
+  onCloseMenu: func
 };
 
 createQuotationButton.defaultProps = {
-  closeMenu: () => null,
-  desktop: false,
-  extended: false
+  isDesktop: false,
+  isExtended: false,
+  onClick: () => null,
+  onCloseMenu: () => null
 };
 
 export default withRouter(createQuotationButton);

@@ -1,6 +1,25 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { Card, H5, Paragraph } from 'elements';
 import { spacing, flexCenter, color } from 'utils';
+
+const fadeIn = keyframes`
+  0% { 
+    opacity: 0; 
+  }
+  }
+  100% { 
+    opacity: 1; 
+  }
+`;
+
+const AnimatedCard = styled(Card)`
+  animation: ${({ isAnimated }) =>
+  isAnimated
+    ? css`
+        ${fadeIn} 0.2s ease-in-out
+      `
+    : null};
+`;
 
 const Title = styled(H5)`
   width: 75%;
@@ -47,4 +66,4 @@ const Footer = styled.footer`
   margin-bottom: ${spacing[3]};
 `;
 
-export { Card, Paragraph, Title, Header, ActionButtonsWrapper, Footer };
+export { AnimatedCard, Paragraph, Title, Header, ActionButtonsWrapper, Footer };

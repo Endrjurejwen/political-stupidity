@@ -1,26 +1,25 @@
 import React from 'react';
 import { Toggle, Modal } from 'app/common';
-import withDelayUnmounting from './withDelayUnmounting';
-
-// console.log(Modal);
+import { CSSTransition } from 'react-transition-group';
 
 const withToggle = ({
   modalComponent: ModalComponent,
   toggleButton: ToggleButton
 }) => {
-  const DelayedModal = withDelayUnmounting(Modal);
   return props => (
     <Toggle
       open={show => <ToggleButton {...props} onClick={show} />}
       content={({ hide, isShown }) => (
-        <DelayedModal
-          close={hide}
-          isMounted={isShown}
-          isShown={isShown}
-          delayTime={180}
+        <CSSTransition
+          in={isShown}
+          timeout={300}
+          classNames="fade"
+          unmountOnExit
         >
-          <ModalComponent {...props} closeModal={hide} />
-        </DelayedModal>
+          <Modal onCloseModal={hide} isShown={isShown}>
+            <ModalComponent {...props} onCloseModal={hide} />
+          </Modal>
+        </CSSTransition>
       )}
     />
   );
@@ -29,12 +28,28 @@ const withToggle = ({
 export default withToggle;
 
 // import React from 'react';
+// import { Toggle, Modal } from 'app/common';
+// import withDelayUnmounting from './withDelayUnmounting';
 
-// const withToggle = WrappedComponent => {
+// const withToggle = ({
+//   modalComponent: ModalComponent,
+//   toggleButton: ToggleButton
+// }) => {
+//   const DelayedModal = withDelayUnmounting(Modal);
 //   return props => (
-//     <div style={{ border: `1px solid red` }}>
-//       <WrappedComponent {...props} />
-//     </div>
+//     <Toggle
+//       open={show => <ToggleButton {...props} onClick={show} />}
+//       content={({ hide, isShown }) => (
+//         <DelayedModal
+//           close={hide}
+//           isMounted={isShown}
+//           isShown={isShown}
+//           delayTime={250}
+//         >
+//           <ModalComponent {...props} closeModal={hide} />
+//         </DelayedModal>
+//       )}
+//     />
 //   );
 // };
 

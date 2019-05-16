@@ -27,7 +27,7 @@ const comment = ({ comment }) => {
   );
   if (isEditActive) {
     textBox = (
-      <EditComment comment={comment} closeEditForm={toggleEditComment} />
+      <EditComment comment={comment} onCloseEditForm={toggleEditComment} />
     );
   }
   return (

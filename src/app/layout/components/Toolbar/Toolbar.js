@@ -46,14 +46,14 @@ const toolbar = ({ user }) => {
   return (
     <ToolbarWrapper>
       <div style={{ marginRight: 'auto' }}>Klasa Polityczna</div>
-      <MenuButton isMenuOpen={isMenuOpen} toggleMenu={handleToggleMenu} />
-      {user.id ? <CreateQuotationWithToggle desktop /> : <LoginWithToggle desktop />}
-      <Navigation desktop navItems={links} />
+      <MenuButton isMenuOpen={isMenuOpen} onToggleMenu={handleToggleMenu} />
+      {user.id ? <CreateQuotationWithToggle isDesktop /> : <LoginWithToggle isDesktop />}
+      <Navigation isDesktop navItems={links} />
       <UserPanel />
-      <SideDrawer isOpen={isMenuOpen} closeMenu={handleToggleMenu}>
-        <Navigation navItems={links} closeMenu={handleToggleMenu} />
+      <SideDrawer isOpen={isMenuOpen} onCloseMenu={handleToggleMenu}>
+        <Navigation navItems={links} onCloseMenu={handleToggleMenu} />
       </SideDrawer>
-      {isMenuOpen && <Backdrop close={handleToggleMenu} />}
+      {isMenuOpen && <Backdrop onClose={handleToggleMenu} />}
     </ToolbarWrapper>
   );
 };

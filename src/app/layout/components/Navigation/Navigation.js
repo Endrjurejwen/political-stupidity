@@ -4,15 +4,15 @@ import NavigationItem from 'app/layout/components/NavigationItem';
 
 import * as S from './style';
 
-const navigation = ({ desktop, closeMenu, navItems, isLogin }) => (
-  <S.Wrapper desktop={desktop}>
+const navigation = ({ isDesktop, onCloseMenu, navItems, isLogin }) => (
+  <S.Wrapper isDesktop={isDesktop}>
     <S.NavigationList isLogin={isLogin}>
       {navItems.map(navItem => (
         <NavigationItem
           key={navItem.name}
           path={navItem.path}
           name={navItem.name}
-          closeMenu={closeMenu}
+          onCloseMenu={onCloseMenu}
         />
       ))}
     </S.NavigationList>
@@ -20,21 +20,21 @@ const navigation = ({ desktop, closeMenu, navItems, isLogin }) => (
 );
 
 navigation.propTypes = {
-  closeMenu: func,
-  desktop: bool,
+  isDesktop: bool,
   isLogin: number,
   navItems: arrayOf(
     shape({
       name: string.isRequired,
       path: string.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  onCloseMenu: func
 };
 
 navigation.defaultProps = {
-  closeMenu: () => null,
-  desktop: false,
-  isLogin: 0
+  isDesktop: false,
+  isLogin: 0,
+  onCloseMenu: () => null
 };
 
 export default navigation;

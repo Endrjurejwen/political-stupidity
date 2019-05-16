@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { logout } from 'app/auth/actions';
 import { Confirmation } from 'app/common';
 
-const logoutButton = ({ logout, closeModal }) => {
+const logoutButton = ({ logout, onCloseModal }) => {
   const handleLogoutClick = () => {
     logout();
   };
   return (
     <Confirmation
-      onCloseClick={closeModal}
+      onCloseClick={onCloseModal}
       onConfirmClick={handleLogoutClick}
       text="Czy na pewno chcesz się wylogować?"
       title="Wyloguj się"
@@ -19,12 +19,12 @@ const logoutButton = ({ logout, closeModal }) => {
 };
 
 logoutButton.propTypes = {
-  closeModal: func,
-  logout: func.isRequired
+  logout: func.isRequired,
+  onCloseModal: func
 };
 
 logoutButton.defaultProps = {
-  closeModal: () => null
+  onCloseModal: () => null
 };
 
 export default connect(

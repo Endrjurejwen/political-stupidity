@@ -1,4 +1,4 @@
-import { actionTypes } from 'redux-firestore';
+// import { actionTypes } from 'redux-firestore';
 
 import {
   sortQuotesRequest,
@@ -11,13 +11,12 @@ const sortQuotes = sortBy => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     dispatch(resetPagination());
-    dispatch({
-      type: actionTypes.CLEAR_DATA,
-      preserve: { data: true, ordered: false }
-    });
+    // dispatch({
+    //   type: actionTypes.CLEAR_DATA,
+    //   preserve: { data: true, ordered: false }
+    // });
     dispatch(sortQuotesRequest(sortBy));
     const { filter } = getState().quotes;
-    // console.log(filter);
     const sortInfo = getState().quotes.sortTypes.find(
       ({ name }) => name === sortBy
     );

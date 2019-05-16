@@ -15,7 +15,7 @@ const commentForm = ({
   return (
     <S.CommentForm ref={formRef} onSubmit={onCommentSubmit}>
       <TextareaBox
-        fullWidth
+        isFullWidth
         ref={autoFocusRef}
         required
         id="comment"

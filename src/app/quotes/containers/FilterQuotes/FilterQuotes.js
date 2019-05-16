@@ -15,7 +15,7 @@ const RADIO_BUTTONS_CONFIG = [
 ];
 
 const filterQuotesContainer = ({
-  closeModal,
+  onCloseModal,
   filterQuotes,
   currentFilterName
 }) => {
@@ -24,7 +24,7 @@ const filterQuotesContainer = ({
   const handleSubmit = event => {
     event.preventDefault();
     filterQuotes(filter);
-    closeModal();
+    onCloseModal();
   };
 
   const handleChange = ({ target }) => {
@@ -58,14 +58,14 @@ const filterQuotesContainer = ({
 };
 
 filterQuotesContainer.propTypes = {
-  closeModal: func,
   currentFilterName: string,
-  filterQuotes: func.isRequired
+  filterQuotes: func.isRequired,
+  onCloseModal: func
 };
 
 filterQuotesContainer.defaultProps = {
-  closeModal: () => null,
-  currentFilterName: 'all'
+  currentFilterName: 'all',
+  onCloseModal: () => null
 };
 
 const mapStateToProps = state => ({

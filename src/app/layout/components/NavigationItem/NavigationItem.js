@@ -3,24 +3,24 @@ import { func, string } from 'prop-types';
 
 import * as S from './style';
 
-const navigationItem = ({ name, path, closeMenu }) => (
+const navigationItem = ({ name, path, onCloseMenu }) => (
   <S.NavigationItem>
-    <S.Link data-testid="link" onClick={closeMenu} to={path}>
+    <S.Link data-testid="link" onClick={onCloseMenu} to={path}>
       {name}
     </S.Link>
   </S.NavigationItem>
 );
 
 navigationItem.propTypes = {
-  closeMenu: func,
   name: string,
-  path: string
+  path: string,
+  onCloseMenu: func
 };
 
 navigationItem.defaultProps = {
-  closeMenu: () => {},
   name: 'Link',
-  path: '/'
+  path: '/',
+  onCloseMenu: () => {}
 };
 
 export default navigationItem;

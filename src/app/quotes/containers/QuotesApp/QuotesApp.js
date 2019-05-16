@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { shape, arrayOf, bool, string } from 'prop-types';
+import { arrayOf, bool } from 'prop-types';
+import { userType } from 'app/auth/propTypes';
 import { location } from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
@@ -9,7 +10,6 @@ import {
   withFirebase,
   withFirestore
 } from 'react-redux-firebase';
-import { getUserInfoState } from 'app/auth/selectors';
 import { getCountersState } from 'app/stats/selectors';
 import {
   getQuotesState,
@@ -26,7 +26,8 @@ import {
   WithEmptyInfo,
   withInfiniteScroll,
   withErrorHandler,
-  withToggle
+  withToggle,
+  withUser
 } from 'app/common';
 import { quotationType } from 'app/quotes/propTypes';
 import { loadMoreQuotes, resetQuotesError } from 'app/quotes/actions';
@@ -56,7 +57,7 @@ const quotesApp = ({ location, quotes, user, isLoading }) => {
 
   return (
     <>
-      {user.id ? <CreateQuotationWithToggle /> : <LoginWithToggle fixed />}
+      {user.id ? <CreateQuotationWithToggle /> : <LoginWithToggle isFixed />}
       <Controls />
       <div>
         <WithLoader isLoading={!quotes || isLoading}>
@@ -76,9 +77,7 @@ quotesApp.propTypes = {
   isLoading: bool,
   location: location.isRequired,
   quotes: arrayOf(quotationType),
-  user: shape({
-    id: string
-  })
+  user: userType
 };
 
 quotesApp.defaultProps = {
@@ -91,7 +90,6 @@ const mapStateToProps = state => ({
   quotes: getQuotesState(state),
   isLoading: getIsLoadingState(state),
   currentFilterInstruction: getFilterInstructionState(state),
-  user: getUserInfoState(state),
   currentSort: getCurrentSortState(state),
   pagination: getPaginationState(state),
   counters: getCountersState(state),
@@ -99,6 +97,7 @@ const mapStateToProps = state => ({
 });
 
 export default compose(
+  withUser,
   withRouter,
   withFirebase,
   withFirestore,

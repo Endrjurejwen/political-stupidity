@@ -5,7 +5,7 @@ const Wrapper = styled.nav`
   background-color: transparent;
   width: 100%;
   height: 100%;
-  display: ${({ desktop }) => (desktop ? 'none' : 'flex')};
+  display: ${({ isDesktop }) => (isDesktop ? 'none' : 'flex')};
   align-items: center;
   justify-content: center;
   flex-direction: column;

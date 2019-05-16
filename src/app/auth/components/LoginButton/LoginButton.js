@@ -5,28 +5,34 @@ import { func, bool } from 'prop-types';
 
 import * as S from './style';
 
-const loginButton = ({ desktop, fixed, closeMenu, onClick }) => {
+const loginButton = ({ isDesktop, isFixed, onCloseMenu, onClick }) => {
   const handleClick = () => {
     onClick();
-    closeMenu();
+    onCloseMenu();
   };
   return (
-    <S.ActionButton desktop={desktop} fixed={fixed} onClick={handleClick}>
+    <S.ActionButton
+      isDesktop={isDesktop}
+      isFixed={isFixed}
+      onClick={handleClick}
+    >
       Zaloguj się
     </S.ActionButton>
   );
 };
 
 loginButton.propTypes = {
-  desktop: bool,
-  fixed: bool,
-  closeMenu: func
+  isDesktop: bool,
+  isFixed: bool,
+  onClick: func,
+  onCloseMenu: func
 };
 
 loginButton.defaultProps = {
-  desktop: false,
-  fixed: false,
-  closeMenu: () => null
+  isDesktop: false,
+  isFixed: false,
+  onClick: () => null,
+  onCloseMenu: () => null
 };
 
 export default loginButton;

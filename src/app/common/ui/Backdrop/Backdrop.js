@@ -1,14 +1,19 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, bool } from 'prop-types';
 
 import * as S from './style';
 
-const backdrop = ({ close, isMounted }) => (
-  <S.Backdrop isAnimated={isMounted} data-testid="backdrop" onClick={close} />
+const backdrop = ({ onClose, isShown }) => (
+  <S.Backdrop isAnimated={isShown} data-testid="backdrop" onClick={onClose} />
 );
 
 backdrop.propTypes = {
-  close: func.isRequired
+  isShown: bool,
+  onClose: func.isRequired
+};
+
+backdrop.defaultProps = {
+  isShown: () => null
 };
 
 export default backdrop;

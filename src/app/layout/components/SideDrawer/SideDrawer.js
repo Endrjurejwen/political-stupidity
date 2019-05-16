@@ -28,8 +28,8 @@ const CreateQuotationWithToggle = withToggle({
   toggleButton: CreateQuotationButton
 });
 
-const sideDrawer = ({ children, closeMenu, isOpen, user }) => {
-  let actionButton = <LoginWithToggle closeMenu={closeMenu} />;
+const sideDrawer = ({ children, onCloseMenu, isOpen, user }) => {
+  let actionButton = <LoginWithToggle onCloseMenu={onCloseMenu} />;
   let headerContent = (
     <S.H4 center textLight marginBottom={spacing[4]}>
       Klasa Polityczna
@@ -37,13 +37,15 @@ const sideDrawer = ({ children, closeMenu, isOpen, user }) => {
   );
   if (user.id) {
     headerContent = <UserDetails user={user} />;
-    actionButton = <CreateQuotationWithToggle extended closeMenu={closeMenu} />;
+    actionButton = (
+      <CreateQuotationWithToggle isExtended onCloseMenu={onCloseMenu} />
+    );
   }
   return (
     <S.Wrapper data-testid="sideDrawer" isOpen={isOpen}>
       <S.Header>
         {headerContent}
-        {user.id && <LogoutWithToggle closeMenu={closeMenu} />}
+        {user.id && <LogoutWithToggle onCloseMenu={onCloseMenu} />}
       </S.Header>
       <S.NavContainer>
         {children}
@@ -58,14 +60,14 @@ const sideDrawer = ({ children, closeMenu, isOpen, user }) => {
 
 sideDrawer.propTypes = {
   children: element.isRequired,
-  closeMenu: func,
   isOpen: bool,
+  onCloseMenu: func,
   user: userType
 };
 
 sideDrawer.defaultProps = {
-  closeMenu: () => null,
   isOpen: false,
+  onCloseMenu: () => null,
   user: null
 };
 

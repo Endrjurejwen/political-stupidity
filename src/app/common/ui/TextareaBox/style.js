@@ -8,7 +8,7 @@ const TextareaBox = styled.div`
   width: 100%;
 
   ${media.phone`
-    width: ${props => (props.fullWidth ? '100%' : '75%')};
+    width: ${props => (props.isFullWidth ? '100%' : '75%')};
   `}
 `;
 

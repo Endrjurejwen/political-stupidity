@@ -1,10 +1,11 @@
 import React from 'react';
-import { shape, func, string } from 'prop-types';
+import { func } from 'prop-types';
+import { commentType } from 'app/comments/propTypes';
+import { userType } from 'app/auth/propTypes';
 import { match } from 'react-router-prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { commentType } from 'app/comments/propTypes';
 import { withUser, LikeButton } from 'app/common';
 import { likeComment, dislikeComment } from 'app/comments/actions';
 
@@ -29,7 +30,7 @@ const likeCommentButton = ({
   return (
     <LikeButton
       likes={comment.likesCount}
-      full={isLiked}
+      isLiked={isLiked}
       onClick={isLiked ? handleDislikeClick : handleLikeClick}
     />
   );
@@ -40,11 +41,7 @@ likeCommentButton.propTypes = {
   dislikeComment: func.isRequired,
   likeComment: func.isRequired,
   match: match.isRequired,
-  user: shape({
-    id: string,
-    firstName: string,
-    lastName: string
-  })
+  user: userType
 };
 
 likeCommentButton.defaultProps = {

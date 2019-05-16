@@ -1,9 +1,10 @@
 import React from 'react';
-import { shape, func, string } from 'prop-types';
+import { func } from 'prop-types';
+import { userType } from 'app/auth/propTypes';
+import { quotationType } from 'app/quotes/propTypes';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { quotationType } from 'app/quotes/propTypes';
 import { withUser, withPrivacyGuard, LikeButton } from 'app/common';
 import { likeQuotation, dislikeQuotation } from 'app/quotes/actions';
 
@@ -27,7 +28,7 @@ const likeQuotationButton = ({
   return (
     <LikeButtonWithPrivacyGuard
       likes={quotation.likesCount}
-      full={isLiked}
+      isLiked={isLiked}
       onClick={isLiked ? handleDislikeClick : handleLikeClick}
     />
   );
@@ -37,11 +38,7 @@ likeQuotationButton.propTypes = {
   dislikeQuotation: func.isRequired,
   likeQuotation: func.isRequired,
   quotation: quotationType,
-  user: shape({
-    id: string,
-    firstName: string,
-    lastName: string
-  })
+  user: userType
 };
 
 likeQuotationButton.defaultProps = {

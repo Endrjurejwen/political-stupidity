@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled from 'styled-components';
 import {
   media,
   fixed,
@@ -9,28 +9,28 @@ import {
   color
 } from 'utils';
 
-const fadeIn = keyframes`
-  0% { 
-    transform: translate(-50%, -150%) scale(0.8, 1); 
-    opacity: 0; 
-  }
-  }
-  100% { 
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1; 
-  }
-`;
+// const fadeIn = keyframes`
+//   0% {
+//     transform: translate(-50%, -150%) scale(0.8, 1);
+//     opacity: 0;
+//   }
+//   }
+//   100% {
+//     transform: translate(-50%, -50%) scale(1);
+//     opacity: 1;
+//   }
+// `;
 
-const fadeOut = keyframes`
-  0% { 
-    transform: translate(-50%, -50%);
-    opacity: 1; 
-  }
-  100% { 
-    transform: translate(-50%, -150%) scale(0.8, 1); 
-    opacity: 0; 
-  }
-`;
+// const fadeOut = keyframes`
+//   0% {
+//     transform: translate(-50%, -50%);
+//     opacity: 1;
+//   }
+//   100% {
+//     transform: translate(-50%, -150%) scale(0.8, 1);
+//     opacity: 0;
+//   }
+// `;
 
 const Modal = styled.div`
   ${fixed({ x: '50%', y: '45%' })};
@@ -47,14 +47,26 @@ const Modal = styled.div`
   min-width: 20rem;
   overflow-y: auto;
 
-  animation: ${({ isMounted }) =>
-    isMounted
-      ? css`
-          ${fadeIn} 0.20s ease-in-out
-        `
-      : css`
-          ${fadeOut} 0.20s ease-in-out
-        `};
+  &.fade-enter {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+
+  &.fade-enter-active {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateX(0);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  &.fade-exit {
+    opacity: 1;
+  }
+
+  &.fade-exit-active {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+    transition: opacity 0.3s, transform 0.3s;
+  }
 
   ${media.tablet`
     /* width: auto; */

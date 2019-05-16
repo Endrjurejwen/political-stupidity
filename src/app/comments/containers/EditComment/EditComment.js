@@ -19,15 +19,15 @@ const createCommentForm = ({
   editComment,
   match,
   comment,
-  closeEditForm,
+  onCloseEditForm,
   isLoading
 }) => {
   const [content, setContent] = useState(comment.content);
   const submitFormRef = useRef(null);
   const autoFocusRef = useRef(null);
   useAutoFocus(autoFocusRef);
-  useOnClickOutside(submitFormRef, closeEditForm);
-  useEscapeKey(closeEditForm);
+  useOnClickOutside(submitFormRef, onCloseEditForm);
+  useEscapeKey(onCloseEditForm);
 
   const resetTextareaSize = () => {
     const element = document.querySelector('.resizeTextArea');
@@ -41,7 +41,7 @@ const createCommentForm = ({
     event.preventDefault();
     editComment(quotationID, comment.id, content);
     setContent('');
-    closeEditForm();
+    onCloseEditForm();
   };
 
   return (
@@ -59,17 +59,17 @@ const createCommentForm = ({
 };
 
 createCommentForm.propTypes = {
-  closeEditForm: func,
   comment: commentType,
   editComment: func.isRequired,
   isLoading: bool,
-  match: match.isRequired
+  match: match.isRequired,
+  onCloseEditForm: func
 };
 
 createCommentForm.defaultProps = {
-  closeEditForm: () => null,
   comment: null,
-  isLoading: false
+  isLoading: false,
+  onCloseEditForm: () => null
 };
 
 const mapStateToProps = state => ({

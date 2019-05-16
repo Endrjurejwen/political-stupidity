@@ -4,10 +4,10 @@ import { color } from 'utils';
 
 import * as S from 'elements';
 
-const logoutButton = ({ onClick, closeMenu }) => {
+const logoutButton = ({ onClick, onCloseMenu }) => {
   const handleClick = () => {
     onClick();
-    closeMenu();
+    onCloseMenu();
   };
   return (
     <S.IconButton onClick={handleClick}>
@@ -17,13 +17,13 @@ const logoutButton = ({ onClick, closeMenu }) => {
 };
 
 logoutButton.propTypes = {
-  closeMenu: func,
-  onClick: func
+  onClick: func,
+  onCloseMenu: func
 };
 
 logoutButton.defaultProps = {
-  closeMenu: () => null,
-  onClick: () => null
+  onClick: () => null,
+  onCloseMenu: () => null
 };
 
 export default logoutButton;

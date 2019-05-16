@@ -1,7 +1,13 @@
 import React from 'react';
 import { element } from 'prop-types';
 import { quotationType } from 'app/quotes/propTypes';
-import { Toolbox, withToggle, DeleteButton, EditButton, Data } from 'app/common';
+import {
+  Toolbox,
+  withToggle,
+  DeleteButton,
+  EditButton,
+  Data
+} from 'app/common';
 import { spacing } from 'utils';
 import EditQuotation from 'app/quotes/containers/EditQuotation';
 import DeleteQuotation from 'app/quotes/containers/DeleteQuotation';
@@ -22,7 +28,7 @@ const EditQuotationWithToggle = withToggle({
 });
 
 const quotation = ({ quotation, navigateButton }) => (
-  <S.Card>
+  <S.AnimatedCard isAnimated={!!quotation}>
     <S.Header>
       <S.Title>{quotation.politician}</S.Title>
     </S.Header>
@@ -42,7 +48,7 @@ const quotation = ({ quotation, navigateButton }) => (
       {navigateButton}
       <LikeQuotation quotation={quotation} />
     </S.ActionButtonsWrapper>
-  </S.Card>
+  </S.AnimatedCard>
 );
 
 quotation.propTypes = {

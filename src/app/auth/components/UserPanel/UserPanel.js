@@ -1,7 +1,6 @@
 import React from 'react';
 import { userType } from 'app/auth/propTypes';
 import { withUser, withToggle } from 'app/common';
-// import LogoutToggle from 'app/auth/components/LogoutToggle';
 import LogoutButton from 'app/auth/components/LogoutButton';
 import UserSummary from 'app/auth/components/UserSummary';
 import Logout from 'app/auth/containers/Logout'

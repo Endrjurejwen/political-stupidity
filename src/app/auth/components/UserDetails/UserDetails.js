@@ -1,5 +1,5 @@
 import React from 'react';
-import { shape, string } from 'prop-types';
+import { userType } from 'app/auth/propTypes';
 import { Icon } from 'elements';
 import { color } from 'utils';
 
@@ -18,11 +18,7 @@ const userDetails = ({ user }) => (
 );
 
 userDetails.propTypes = {
-  user: shape({
-    firstName: string,
-    lastName: string,
-    id: string
-  })
+  user: userType
 };
 
 userDetails.defaultProps = {

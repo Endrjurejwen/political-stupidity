@@ -15,7 +15,7 @@ const withPrivacyGuard = WrappedButton => {
               close={hide}
               isMounted={isShown}
               isShown={isShown}
-              delayTime={150}
+              delayTime={250}
             >
               <Login closeModal={hide} />
             </ModalWithDelay>
