@@ -16,8 +16,26 @@ export default styled(NavLink)`
   height: 100%;
   transition: color 0.2s;
 
+  position: relative;
+
+  &::after {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background-color: ${color.textLight};
+    transition: width 0.15s ease-in-out;
+  }
+
   &:hover {
-    color: ${color.action};
+    color: ${color.secondary};
+  }
+
+  &:hover::after {
+    width: 100%;
   }
 
   ${media.tablet`
@@ -33,7 +51,7 @@ export default styled(NavLink)`
     }
 
     &:hover {
-      color: ${color.action};
+      color: ${color.secondary};
     }
   `}
 `;

@@ -13,4 +13,16 @@ export default styled.button`
   line-height: 0;
   background-color: transparent;
   cursor: pointer;
+
+  svg path, svg g path {
+    transition: fill 0.15s ease-in-out;
+  }
+
+  &:hover svg path, &:hover svg g path {
+    fill: ${color.textDark};
+  }
+
+  /* &:hover svg g path {
+    fill: ${color.secondary};
+  } */
 `;

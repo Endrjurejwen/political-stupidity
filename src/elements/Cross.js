@@ -8,7 +8,7 @@ export default styled.div`
   width: ${props => props.width || '3px'};
 
   &:after {
-    background-color: ${props => props.color || color.textLight};
+    background-color: inherit;
     content: '';
     height: ${props => props.width || '3px'};
     left: -6px;

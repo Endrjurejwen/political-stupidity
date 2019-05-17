@@ -15,6 +15,27 @@ const FilterButton = styled.button`
   display: flex;
   align-items: center;
 
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1.5px;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background-color: ${color.action};
+    transition: width 0.15s ease-in-out, background-color 0.15s ease-in-out;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+
+  &:hover div {
+    background-color: ${color.action};
+  }
+
   span {
     margin-right: ${spacing[1]};
   }
@@ -29,7 +50,7 @@ const FilterSymbol = styled.div`
 
   &:after {
     content: '';
-    background-color: ${color.textDark};
+    background-color: inherit;
     position: absolute;
     top: -4px;
     left: 0;
@@ -39,7 +60,7 @@ const FilterSymbol = styled.div`
 
   &:before {
     content: '';
-    background-color: ${color.textDark};
+    background-color: inherit;
     position: absolute;
     top: 4px;
     left: 0;

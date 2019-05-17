@@ -2,7 +2,7 @@ import React from 'react';
 import { func } from 'prop-types';
 import { color } from 'utils';
 
-import * as S from 'elements';
+import * as S from './style';
 
 const logoutButton = ({ onClick, onCloseMenu }) => {
   const handleClick = () => {
@@ -10,9 +10,10 @@ const logoutButton = ({ onClick, onCloseMenu }) => {
     onCloseMenu();
   };
   return (
-    <S.IconButton onClick={handleClick}>
+    <S.LogoutButton onClick={handleClick}>
       <S.Icon name="logout" color={color.textLight} />
-    </S.IconButton>
+      <span>Wyloguj się</span>
+    </S.LogoutButton>
   );
 };
 

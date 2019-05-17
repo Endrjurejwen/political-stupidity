@@ -1,6 +1,6 @@
 import styled, { keyframes, css } from 'styled-components';
 import { Icon } from 'elements';
-import { spacing, color, flexCenter } from 'utils';
+import { spacing, color, flexCenter, hidden } from 'utils';
 
 const like = keyframes`
   0% {
@@ -53,4 +53,8 @@ const LikeButton = styled.button`
   }
 `;
 
-export { LikeButton, Icon };
+const HiddenLabel = styled.span`
+  ${hidden};
+`;
+
+export { LikeButton, Icon, HiddenLabel };

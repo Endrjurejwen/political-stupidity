@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    font-family: ${defaultFont};
+    font-family: 'EB Garamond', serif;
     line-height: 1.6;
     background: ${color.body};
     -webkit-font-smoothing: antialiased;

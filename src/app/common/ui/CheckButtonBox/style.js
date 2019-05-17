@@ -10,6 +10,7 @@ const RadioButton = styled.span`
   border: 2px solid ${color.action};
   border-radius: 100px;
   padding: ${spacing[0]} ${spacing[2]};
+  cursor: pointer;
 `;
 
 const InputBox = styled.li`

@@ -13,7 +13,7 @@ backdrop.propTypes = {
 };
 
 backdrop.defaultProps = {
-  isShown: () => null
+  isShown: false
 };
 
 export default backdrop;

@@ -16,10 +16,14 @@ const SortButton = styled.button`
   color: ${color.textDark};
   cursor: pointer;
   text-transform: uppercase;
-  transition: 0.1s background-color ease-in;
-  transition: 0.1s color ease-in;
+  transition: 0.15s background-color ease-in-out;
+  /* transition: 0.15s color ease-in; */
 
-  &::after {
+  &:hover::before {
+    border-top-color: ${color.action};
+  }
+
+  &::before {
     content: '';
     position: absolute;
     bottom: 0.2rem;
@@ -33,7 +37,22 @@ const SortButton = styled.button`
         : `${color.textDark} transparent transparent`};
     transform: ${props => (props.asc ? 'rotate(180deg)' : 'rotate(0deg)')};
     transform-origin: center 25%;
-    transition: 0.1s transform ease-in;
+    transition: 0.15s transform ease-in-out, border-top-color 0.15s ease-in-out;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1.5px;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background-color: ${color.action};
+    transition: width 0.15s ease-in-out;
+  }
+
+  &:hover::after {
+    width: 100%;
   }
 `;
 

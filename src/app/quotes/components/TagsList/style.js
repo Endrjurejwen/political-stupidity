@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { H6 } from 'elements';
 import { spacing, color } from 'utils';
 
-const TagsWrapper = styled.div`
+const TagsWrapper = styled.aside`
   margin-bottom: ${spacing[3]};
   text-transform: capitalize;
 `;

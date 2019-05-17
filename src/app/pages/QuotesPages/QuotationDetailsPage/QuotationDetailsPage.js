@@ -1,4 +1,5 @@
 import React from 'react';
+import { history, location } from 'react-router-prop-types';
 import QuotationDetails from 'app/quotes/containers/QuotationDetails';
 import CommentsApp from 'app/comments/containers/CommentsApp';
 import styled from 'styled-components';
@@ -20,6 +21,11 @@ const quotationDetailsPage = ({ history, location }) => {
       <ReturnButton onClick={handleNavigateReturn}>Powrót</ReturnButton>
     </>
   );
+};
+
+quotationDetailsPage.propTypes = {
+  history: history.isRequired,
+  location: location.isRequired
 };
 
 export default quotationDetailsPage;

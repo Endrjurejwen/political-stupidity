@@ -26,6 +26,7 @@ const likeButton = ({ likes, onClick, isLiked }) => {
       <span>
         <strong>{likes}</strong>
       </span>
+      <S.HiddenLabel>Polub lub przestań lubić</S.HiddenLabel>
     </S.LikeButton>
   );
 };

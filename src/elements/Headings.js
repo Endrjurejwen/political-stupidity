@@ -7,7 +7,7 @@ const headings = css`
   text-transform: uppercase;
   color: ${color.textDark};
   color: ${props => (props.textLight ? color.textLight : color.textDark)};
-  font-family: sans-serif;
+  font-family: 'Oswald', sans-serif;
   text-align: ${props => (props.center ? 'center' : 'left')};
 `;
 

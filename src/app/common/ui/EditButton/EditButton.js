@@ -1,6 +1,7 @@
 import React from 'react';
 import { func } from 'prop-types';
 import * as S from 'elements';
+import { color } from 'utils';
 
 const EditButton = ({ onClick }) => (
   <S.IconButton
@@ -9,7 +10,7 @@ const EditButton = ({ onClick }) => (
     onClick={onClick}
   >
     Edytuj
-    <S.Icon name="edit" />
+    <S.Icon name="edit" color={color.textSecondary} />
   </S.IconButton>
 );
 

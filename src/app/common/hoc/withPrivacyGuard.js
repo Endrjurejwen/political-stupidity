@@ -1,24 +1,26 @@
 import React from 'react';
 import { Toggle, Modal } from 'app/common';
-import { withUser, withDelayUnmounting } from 'app/common/hoc';
+import { withUser } from 'app/common/hoc';
 import Login from 'app/auth/containers/Login';
+import { CSSTransition } from 'react-transition-group';
 
 const withPrivacyGuard = WrappedButton => {
   const withPrivacyGuardComponent = ({ user, ...props }) => {
-    const ModalWithDelay = withDelayUnmounting(Modal);
     if (!user.id) {
       return (
         <Toggle
           open={show => <WrappedButton {...props} onClick={show} />}
           content={({ hide, isShown }) => (
-            <ModalWithDelay
-              close={hide}
-              isMounted={isShown}
-              isShown={isShown}
-              delayTime={250}
+            <CSSTransition
+              in={isShown}
+              timeout={300}
+              classNames="fade"
+              unmountOnExit
             >
-              <Login closeModal={hide} />
-            </ModalWithDelay>
+              <Modal onCloseModal={hide} isShown={isShown}>
+                <Login onCloseModal={hide} />
+              </Modal>
+            </CSSTransition>
           )}
         />
       );

@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
-import { func, element } from 'prop-types';
+import React from 'react';
+import { element } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import Quotation from 'app/quotes/components/Quotation';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { actionTypes } from 'redux-firestore';
 import {
   firestoreConnect,
   withFirebase,
@@ -19,32 +18,23 @@ import { resetQuotesError } from 'app/quotes/actions';
 
 import * as S from 'elements';
 
-const quotationDetails = ({ quotation, children, dispatch }) => {
-  useEffect(() => {
-    return () => {
-      dispatch({ type: actionTypes.CLEAR_DATA });
-    };
-  }, []);
-
-  return (
-    <WithLoader isLoading={!quotation}>
-      <Quotation
-        quotation={quotation}
-        navigateButton={<S.Button secondary>Wróć</S.Button>}
-      />
-      <section>
-        <S.H2 center marginBottom={spacing[5]}>
-          Komentarze ({!quotation || quotation.commentsCount})
-        </S.H2>
-        {children}
-      </section>
-    </WithLoader>
-  );
-};
+const quotationDetails = ({ quotation, children }) => (
+  <WithLoader isLoading={!quotation}>
+    <Quotation
+      quotation={quotation}
+      navigateButton={<S.Button secondary>Wróć</S.Button>}
+    />
+    <section>
+      <S.H2 center marginBottom={spacing[5]}>
+        Komentarze ({!quotation || quotation.commentsCount})
+      </S.H2>
+      {children}
+    </section>
+  </WithLoader>
+);
 
 quotationDetails.propTypes = {
   children: element,
-  dispatch: func.isRequired,
   quotation: quotationType
 };
 

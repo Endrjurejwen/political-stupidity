@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Button, Cross } from 'elements';
-import { media, spacing, elevation } from 'utils';
+import { media, spacing, elevation, color } from 'utils';
 
 const ActionButton = styled(Button)`
   ${props => (props.isExtended ? elevation[1] : elevation[4])};
@@ -12,17 +12,34 @@ const ActionButton = styled(Button)`
   justify-content: center;
   z-index: 2;
   border-radius: 100px;
-  padding: ${props => (props.isExtended ? spacing[2] : spacing[3])} ${spacing[4]};
+  padding: ${props => (props.isExtended ? spacing[2] : spacing[3])}
+    ${spacing[4]};
+  /* transition: border 0.15s ease-in-out; */
+
+  &:hover {
+    border: ${props =>
+      props.isDesktop || props.isExtended
+        ? `2px solid ${color.textLight}`
+        : null};
+  }
+
+  div {
+    transition: background-color 0.25s ease-in-out;
+  }
+
+  &:hover div {
+    background-color: ${color.action};
+  }
 
   ${media.tablet`
-  ${elevation[1]};
-  position: static;
-  display: ${({ isDesktop }) => (isDesktop ? 'flex' : 'none')};
-  padding: ${spacing[1]} ${spacing[4]};
-`}
+    /* ${elevation[1]}; */
+    position: static;
+    display: ${({ isDesktop }) => (isDesktop ? 'flex' : 'none')};
+    padding: ${spacing[1]} ${spacing[4]};
+  `}
 `;
 
-const Label = styled.div`
+const Label = styled.span`
   margin-left: ${spacing[3]};
   margin-top: ${props => (props.isExtended ? -spacing[1] : '0')};
 `;
