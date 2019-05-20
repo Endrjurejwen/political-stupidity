@@ -16,12 +16,19 @@ const ActionButton = styled(Button)`
     ${spacing[4]};
   /* transition: border 0.15s ease-in-out; */
 
-  &:hover {
+  border: 2px solid ${color.textLight};
+
+  /* border: ${props =>
+    props.isDesktop || props.isExtended
+      ? `2px solid ${color.textLight}`
+      : null}; */
+
+  /* &:hover {
     border: ${props =>
       props.isDesktop || props.isExtended
         ? `2px solid ${color.textLight}`
         : null};
-  }
+  } */
 
   div {
     transition: background-color 0.25s ease-in-out;

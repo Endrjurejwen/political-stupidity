@@ -15,7 +15,7 @@ const Footer = styled.footer`
 
   &:before, &:after {
     content: '';
-    background: ${color.secondary};
+    background: ${color.action};
     position: absolute;
     top: 0;
   }

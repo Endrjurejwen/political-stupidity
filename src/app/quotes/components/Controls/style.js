@@ -10,7 +10,7 @@ const PanelContainer = styled.aside`
     flex-flow: row wrap;
     background-color: ${color.backgroundLight};
     ${elevation[1]};
-    border: 2px solid ${color.action};
+    border: 2px solid ${color.navigation};
     border-radius: 100px;
     padding: ${spacing[1]} ${spacing[4]};
   `}

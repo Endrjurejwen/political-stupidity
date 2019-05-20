@@ -33,16 +33,16 @@ const quotation = ({ quotation, navigateButton }) => (
       <S.Title>{quotation.politician}</S.Title>
     </S.Header>
     <TagsList topics={quotation.topics} />
-    <S.Paragraph marginBottom={spacing[3]} data-testid="quotation-content">
+    <S.TextContent marginBottom={spacing[3]} data-testid="quotation-content">
       {quotation.content}
-    </S.Paragraph>
+    </S.TextContent>
     <S.Footer>
       <Author credentials={quotation.author} />
       <Data dataNumber={quotation.createAt} />
     </S.Footer>
     <Toolbox id={quotation.author.id}>
-      <DeleteQuotationWithToggle quotation={quotation} />
       <EditQuotationWithToggle quotation={quotation} />
+      <DeleteQuotationWithToggle quotation={quotation} />
     </Toolbox>
     <S.ActionButtonsWrapper>
       {navigateButton}

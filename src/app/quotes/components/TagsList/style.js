@@ -5,6 +5,7 @@ import { spacing, color } from 'utils';
 const TagsWrapper = styled.aside`
   margin-bottom: ${spacing[3]};
   text-transform: capitalize;
+  padding: 0 ${spacing[3]};
 `;
 
 const Tag = styled.span`
