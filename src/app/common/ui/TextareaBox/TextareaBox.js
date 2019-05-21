@@ -56,6 +56,7 @@ const textareaBox = forwardRef(
           placeholder={placeholder}
           id={id}
           name={id}
+          // data-testid={`textarea-${id}`}
           {...rest}
         />
         <S.Label htmlFor={id}>{placeholder}</S.Label>

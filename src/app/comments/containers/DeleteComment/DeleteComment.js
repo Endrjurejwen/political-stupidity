@@ -1,21 +1,20 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 import { match } from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { deleteComment } from 'app/comments/actions';
-import { commentType } from 'app/comments/propTypes';
 import { Confirmation } from 'app/common';
 
-const deleteCommentConfirmation = ({
+export const deleteCommentConfirmation = ({
   deleteComment,
   onCloseModal,
-  comment,
+  commentID,
   match
 }) => {
   const handleDeleteClick = () => {
     const quotationID = match.params.id;
-    deleteComment(quotationID, comment.id);
+    deleteComment(quotationID, commentID);
   };
 
   return (
@@ -30,13 +29,13 @@ const deleteCommentConfirmation = ({
 
 deleteCommentConfirmation.propTypes = {
   deleteComment: func.isRequired,
-  comment: commentType,
+  commentID: string,
   match: match.isRequired,
   onCloseModal: func
 };
 
 deleteCommentConfirmation.defaultProps = {
-  comment: null,
+  commentID: null,
   onCloseModal: () => null
 };
 

@@ -33,7 +33,7 @@ const comment = ({ comment }) => {
   return (
     <S.Card secondary>
       <S.Header>
-        <S.H6>
+        <S.H6 data-testid="comment-author">
           {comment.author.firstName} {comment.author.lastName}
         </S.H6>
       </S.Header>
@@ -43,7 +43,7 @@ const comment = ({ comment }) => {
         <LikeComment comment={comment} />
       </S.Footer>
       <Toolbox id={comment.author.id}>
-        <DeleteCommentWithToggle comment={comment} />
+        <DeleteCommentWithToggle commentID={comment.id} />
         <EditButton onClick={toggleEditComment} />
       </Toolbox>
     </S.Card>

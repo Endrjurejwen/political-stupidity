@@ -21,7 +21,7 @@ export default styled.button`
   background-size: 250%;
   transition: background-position 0.15s ease-in-out,
     background-color 0.25s ease-in-out, color 0.15s ease-in-out,
-    border 0.15s ease-in-out;
+    border 0.15s ease-in-out, transform 0.15s ease-in-out;
 
   ${props =>
     props.secondary &&

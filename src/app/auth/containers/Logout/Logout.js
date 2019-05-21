@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { logout } from 'app/auth/actions';
 import { Confirmation } from 'app/common';
 
-const logoutButton = ({ logout, onCloseModal }) => {
+export const logoutButton = ({ logout, onCloseModal }) => {
   const handleLogoutClick = () => {
     logout();
   };

@@ -9,3 +9,4 @@ export * from './position';
 export * from './fonts';
 export * from './params';
 export * from './testHelpers';
+export * from './fakeData';

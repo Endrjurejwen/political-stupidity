@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { withUser, LikeButton } from 'app/common';
 import { likeComment, dislikeComment } from 'app/comments/actions';
 
-const likeCommentButton = ({
+export const likeCommentButton = ({
   comment,
   user,
   likeComment,

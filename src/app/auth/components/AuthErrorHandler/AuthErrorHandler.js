@@ -11,7 +11,7 @@ const authErrorHandler = ({ error, resetError }) => {
   let errorMessage = null;
   if (error) {
     errorMessage = (
-      <S.Wrapper>
+      <S.Wrapper data-testid="auth-error-handler">
         <ConfirmationError onConfirmClick={handleClick} text={error} />
       </S.Wrapper>
     );

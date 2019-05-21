@@ -7,7 +7,7 @@ import * as S from './style';
 
 const userSummary = ({ name }) => (
   <S.Wrapper>
-    <p>{name}</p>
+    <p data-testid="user-name">{name}</p>
     <Icon name="userMan" color={color.textLight} />
   </S.Wrapper>
 );

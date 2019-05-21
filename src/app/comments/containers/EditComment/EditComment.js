@@ -15,7 +15,7 @@ import { editComment } from 'app/comments/actions';
 import { getIsLoadingState } from 'app/comments/selectors';
 import CommentForm from 'app/comments/components/CommentForm';
 
-const createCommentForm = ({
+export const editCommentForm = ({
   editComment,
   match,
   comment,
@@ -58,7 +58,7 @@ const createCommentForm = ({
   );
 };
 
-createCommentForm.propTypes = {
+editCommentForm.propTypes = {
   comment: commentType,
   editComment: func.isRequired,
   isLoading: bool,
@@ -66,7 +66,7 @@ createCommentForm.propTypes = {
   onCloseEditForm: func
 };
 
-createCommentForm.defaultProps = {
+editCommentForm.defaultProps = {
   comment: null,
   isLoading: false,
   onCloseEditForm: () => null
@@ -82,4 +82,4 @@ export default compose(
     mapStateToProps,
     { editComment }
   )
-)(createCommentForm);
+)(editCommentForm);

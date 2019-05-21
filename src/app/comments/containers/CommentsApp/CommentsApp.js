@@ -14,7 +14,7 @@ import { WithLoader, WithEmptyInfo, withErrorHandler } from 'app/common';
 import { H5 } from 'elements';
 import { resetCommentsError } from 'app/comments/actions';
 
-const commentsApp = ({ comments, dispatch }) => {
+export const commentsApp = ({ comments, dispatch }) => {
   useEffect(() => {
     return () => {
       dispatch({ type: actionTypes.CLEAR_DATA });

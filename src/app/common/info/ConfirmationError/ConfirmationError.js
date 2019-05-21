@@ -11,7 +11,7 @@ const confirmation = ({ title, text, onConfirmClick }) => {
   return (
     <>
       <S.H5>{title}</S.H5>
-      <p>{text}</p>
+      <p data-testid="error-text">{text}</p>
       <S.ButtonsContainer>
         <S.InlineButton marginLeft="auto" onClick={onConfirmClick}>
           Rozumiem

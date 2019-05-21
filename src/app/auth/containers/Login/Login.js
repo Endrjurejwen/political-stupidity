@@ -9,25 +9,33 @@ import { spacing } from 'utils';
 
 import * as S from 'elements';
 
-const loginForm = ({
+export const loginForm = ({
   login,
   resetAuthError,
   error,
   isLoading,
   onCloseModal
 }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [newCredentials, setNewCredentials] = useState({
+    email: '',
+    password: ''
+  });
   const autoFocusRef = useRef(null);
   useAutoFocus(autoFocusRef);
 
-  const setCredentials = () => ({ email, password });
+  const handleChange = ({ target: { name, value } }) => {
+    setNewCredentials({
+      ...newCredentials,
+      [name]: value
+    });
+  };
+
   const handleSubmit = event => {
-    const newCredentials = setCredentials();
     event.preventDefault();
     login(newCredentials).then(res => res && onCloseModal());
   };
 
+  const { email, password } = newCredentials;
   return (
     <WithLoader isLoading={isLoading}>
       <S.H2 center marginBottom={spacing[4]}>
@@ -36,7 +44,7 @@ const loginForm = ({
       <S.Form onSubmit={handleSubmit}>
         <InputBox
           ref={autoFocusRef}
-          change={event => setEmail(event.target.value)}
+          change={handleChange}
           type="email"
           placeholder="Twój email"
           id="email"
@@ -44,7 +52,7 @@ const loginForm = ({
           required
         />
         <InputBox
-          change={event => setPassword(event.target.value)}
+          change={handleChange}
           type="password"
           placeholder="Twoje hasło"
           id="password"

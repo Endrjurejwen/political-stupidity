@@ -31,7 +31,7 @@ const SubmitButton = styled(Button)`
   margin-top: 0;
   visibility: hidden;
   transform: translateY(-45px);
-  transition: transform 0.1s ease-out;
+  /* transition: transform 0.1s ease-out; */
 
   ${media.tablet`
     align-self: flex-end;

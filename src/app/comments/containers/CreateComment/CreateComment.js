@@ -9,7 +9,7 @@ import { createComment } from 'app/comments/actions';
 import { getIsLoadingState } from 'app/comments/selectors';
 import CommentForm from 'app/comments/components/CommentForm';
 
-const createCommentForm = ({ createComment, isLoading, match }) => {
+export const createCommentForm = ({ createComment, isLoading, match }) => {
   const [content, setContent] = useState('');
   const resetTextareaSize = () => {
     const element = document.querySelector('.resizeTextArea');

@@ -3,7 +3,7 @@ import { userType } from 'app/auth/propTypes';
 import { withUser, withToggle } from 'app/common';
 import LogoutButton from 'app/auth/components/LogoutButton';
 import UserSummary from 'app/auth/components/UserSummary';
-import Logout from 'app/auth/containers/Logout'
+import Logout from 'app/auth/containers/Logout';
 
 import * as S from './style';
 
