@@ -16,7 +16,8 @@ import {
   getPaginationState,
   getCurrentSortState,
   getIsLoadingState,
-  getFilterInstructionState
+  getFilterInstructionState,
+  getErrorState
 } from 'app/quotes/selectors';
 import LoginButton from 'app/auth/components/LoginButton';
 import Controls from 'app/quotes/components/Controls';
@@ -93,7 +94,7 @@ const mapStateToProps = state => ({
   currentSort: getCurrentSortState(state),
   pagination: getPaginationState(state),
   counters: getCountersState(state),
-  error: state.quotes.error
+  error: getErrorState(state)
 });
 
 export default compose(

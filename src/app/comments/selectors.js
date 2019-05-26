@@ -15,3 +15,10 @@ export const getIsLoadingState = createSelector(
   [getIsLoading],
   isLoading => isLoading
 );
+
+const getError = state => state.comments.error;
+
+export const getErrorState = createSelector(
+  [getError],
+  error => error
+);

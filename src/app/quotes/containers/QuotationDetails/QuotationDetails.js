@@ -9,8 +9,7 @@ import {
   withFirebase,
   withFirestore
 } from 'react-redux-firebase';
-import { getUserInfoState } from 'app/auth/selectors';
-import { makeGetQuotationState } from 'app/quotes/selectors';
+import { getQuotationState, getErrorState } from 'app/quotes/selectors';
 import { quotationType } from 'app/quotes/propTypes';
 import { spacing } from 'utils';
 import { WithLoader, withErrorHandler } from 'app/common';
@@ -43,24 +42,17 @@ quotationDetails.defaultProps = {
   quotation: null
 };
 
-const makeMapStateToProps = () => {
-  const getQuotationState = makeGetQuotationState();
-  const mapStateToProps = (state, ownProps) => {
-    return {
-      quotation: getQuotationState(state, ownProps),
-      user: getUserInfoState(state),
-      error: state.quotes.error
-    };
-  };
-  return mapStateToProps;
-};
+const mapStateToProps = state => ({
+  quotation: getQuotationState(state),
+  error: getErrorState(state)
+});
 
 export default compose(
   withRouter,
   withFirebase,
   withFirestore,
   connect(
-    makeMapStateToProps,
+    mapStateToProps,
     { resetQuotesError }
   ),
   firestoreConnect(props => [

@@ -7,8 +7,8 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { actionTypes } from 'redux-firestore';
 import { firestoreConnect, withFirebase } from 'react-redux-firebase';
-import { getCommentsState } from 'app/comments/selectors';
-import { makeGetQuotationState } from 'app/quotes/selectors';
+import { getCommentsState, getErrorState } from 'app/comments/selectors';
+import { getQuotationState } from 'app/quotes/selectors';
 import { commentType } from 'app/comments/propTypes';
 import { WithLoader, WithEmptyInfo, withErrorHandler } from 'app/common';
 import { H5 } from 'elements';
@@ -46,17 +46,11 @@ commentsApp.defaultProps = {
   comments: null
 };
 
-const makeMapStateToProps = () => {
-  const getQuotationState = makeGetQuotationState();
-  const mapStateToProps = (state, ownProps) => {
-    return {
-      quotation: getQuotationState(state, ownProps),
-      comments: getCommentsState(state),
-      error: state.comments.error
-    };
-  };
-  return mapStateToProps;
-};
+const mapStateToProps = state => ({
+  quotation: getQuotationState(state),
+  comments: getCommentsState(state),
+  error: getErrorState(state)
+});
 
 export default compose(
   withRouter,
@@ -71,7 +65,7 @@ export default compose(
     }
   ]),
   connect(
-    makeMapStateToProps,
+    mapStateToProps,
     { resetCommentsError }
   ),
   withErrorHandler({ actionName: 'resetCommentsError' })
