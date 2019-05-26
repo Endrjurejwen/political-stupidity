@@ -2,7 +2,7 @@ import {
   deleteCommentRequest,
   deleteCommentSuccess,
   deleteCommentFailure
-} from 'app/comments/actionCreators';
+} from 'app/comments/actions';
 
 const deleteComment = (quotationID, commentID) => {
   return (dispatch, getState, { getFirestore }) => {

@@ -1,11 +1,20 @@
 import React from 'react';
-import { fakeQuotation, renderWithReduxAndRouter } from 'utils';
+import {
+  fakeQuotation,
+  renderWithReduxAndRouter,
+  fakeLocation,
+  fakeHistory
+} from 'utils';
 import { quotationDetails as QuotationDetails } from './QuotationDetails';
 
-describe('<QuotationDetails with quotation', () => {
+describe('<QuotationDetails with quotation, history and location', () => {
   test('should render corectly', () => {
     const { getByText } = renderWithReduxAndRouter(
-      <QuotationDetails quotation={fakeQuotation} />
+      <QuotationDetails
+        quotation={fakeQuotation}
+        location={fakeLocation}
+        history={fakeHistory}
+      />
     );
 
     expect(

@@ -11,7 +11,7 @@ import {
   useEscapeKey,
   WithLoader
 } from 'app/common';
-import { editComment } from 'app/comments/actions';
+import { editComment } from 'app/comments/operations';
 import { getIsLoadingState } from 'app/comments/selectors';
 import CommentForm from 'app/comments/components/CommentForm';
 

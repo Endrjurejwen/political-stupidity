@@ -1,8 +1,4 @@
-import {
-  logoutRequest,
-  logoutSuccess,
-  logoutFailure
-} from 'app/auth/actionCreators';
+import { logoutRequest, logoutSuccess, logoutFailure } from 'app/auth/actions';
 
 const logout = () => {
   return (dispatch, getState, { getFirebase }) => {

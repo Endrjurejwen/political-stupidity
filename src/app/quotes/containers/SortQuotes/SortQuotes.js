@@ -3,7 +3,7 @@ import { func, arrayOf } from 'prop-types';
 import { sortPropTypes } from 'app/quotes/propTypes';
 import { connect } from 'react-redux';
 import SortButton from 'app/quotes/components/SortButton';
-import { sortQuotes } from 'app/quotes/actions';
+import { sortQuotes } from 'app/quotes/operations';
 import { getSortTypesState } from 'app/quotes/selectors';
 
 import * as S from './style';

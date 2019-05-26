@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
-import { filterQuotes } from 'app/quotes/actions';
+import { filterQuotes } from 'app/quotes/operations';
 import { getFilterNameState } from 'app/quotes/selectors';
 import { CheckButtonBox } from 'app/common';
 import { spacing } from 'utils';

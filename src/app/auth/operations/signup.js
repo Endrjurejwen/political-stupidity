@@ -1,8 +1,4 @@
-import {
-  signupRequest,
-  signupSuccess,
-  signupFailure
-} from 'app/auth/actionCreators';
+import { signupRequest, signupSuccess, signupFailure } from 'app/auth/actions';
 
 const signUp = newUser => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {

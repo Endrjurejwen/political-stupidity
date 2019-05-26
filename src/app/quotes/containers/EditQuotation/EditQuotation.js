@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { func, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { editQuotation } from 'app/quotes/actions';
+import { editQuotation } from 'app/quotes/operations';
 import { getIsLoadingState } from 'app/quotes/selectors';
 import { quotationType } from 'app/quotes/propTypes';
 import { spacing } from 'utils';

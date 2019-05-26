@@ -1,4 +1,4 @@
-import { loginRequest, loginSuccess, loginFailure } from 'app/auth/actionCreators';
+import { loginRequest, loginSuccess, loginFailure } from 'app/auth/actions';
 
 const login = credentails => {
   return (dispatch, getState, { getFirebase }) => {

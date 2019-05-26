@@ -3,7 +3,7 @@ import { func, string } from 'prop-types';
 import { history } from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { deleteQuotation } from 'app/quotes/actions';
+import { deleteQuotation } from 'app/quotes/operations';
 import { Confirmation } from 'app/common';
 
 export const deleteQuotationConfirmation = ({

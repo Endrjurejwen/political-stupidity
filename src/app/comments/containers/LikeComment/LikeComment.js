@@ -7,7 +7,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withUser, LikeButton } from 'app/common';
-import { likeComment, dislikeComment } from 'app/comments/actions';
+import { likeComment, dislikeComment } from 'app/comments/operations';
 
 export const likeCommentButton = ({
   comment: { id, likes, likesCount },

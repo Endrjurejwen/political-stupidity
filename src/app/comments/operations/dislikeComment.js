@@ -2,7 +2,7 @@ import {
   dislikeCommentRequest,
   dislikeCommentSuccess,
   dislikeCommentFailure
-} from 'app/comments/actionCreators';
+} from 'app/comments/actions';
 
 const dislikeComment = (quotationID, commentID) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {

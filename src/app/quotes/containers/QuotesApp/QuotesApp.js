@@ -31,7 +31,8 @@ import {
   withUser
 } from 'app/common';
 import { quotationType } from 'app/quotes/propTypes';
-import { loadMoreQuotes, resetQuotesError } from 'app/quotes/actions';
+import { loadMoreQuotes } from 'app/quotes/operations';
+import { resetQuotesError } from 'app/quotes/actions';
 import Login from 'app/auth/containers/Login';
 import CreateQuotation from 'app/quotes/containers/CreateQuotation';
 import CreateQuotationButton from 'app/quotes/components/CreateQuotationButton';

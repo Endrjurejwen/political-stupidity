@@ -24,9 +24,11 @@ import {
   LOAD_MORE_QUOTES_SUCCESS,
   LOAD_MORE_QUOTES_FAILURE,
   RESET_PAGINATION,
-  RESET_QUOTES_STATE
+  RESET_QUOTES_STATE,
+  RESET_QUOTES_ERROR
 } from 'app/quotes/actionTypes';
 
+// CREATE_QUOTATION
 export const createQuotationRequest = () => ({
   type: CREATE_QUOTATION_REQUEST
 });
@@ -40,6 +42,7 @@ export const createQuotationFailure = error => ({
   error
 });
 
+// EDIT_QUOTATION
 export const editQuotationRequest = () => ({
   type: EDIT_QUOTATION_REQUEST
 });
@@ -53,6 +56,7 @@ export const editQuotationFailure = error => ({
   error
 });
 
+// DELETE_QUOTATION
 export const deleteQuotationRequest = () => ({
   type: DELETE_QUOTATION_REQUEST
 });
@@ -66,6 +70,7 @@ export const deleteQuotationFailure = error => ({
   error
 });
 
+// LIKE_QUOTATION
 export const likeQuotationRequest = () => ({
   type: LIKE_QUOTATION_REQUEST
 });
@@ -79,6 +84,7 @@ export const likeQuotationFailure = error => ({
   error
 });
 
+// DISLIKE_QUOTATION
 export const dislikeQuotationRequest = () => ({
   type: DISLIKE_QUOTATION_REQUEST
 });
@@ -92,6 +98,7 @@ export const dislikeQuotationFailure = error => ({
   error
 });
 
+// SORT_QUOTES
 export const sortQuotesRequest = sortBy => ({
   type: SORT_QUOTES_REQUEST,
   sortBy
@@ -106,6 +113,7 @@ export const sortQuotesFailure = error => ({
   error
 });
 
+// FILTER_QUOTES
 export const filterQuotesRequest = filter => ({
   type: FILTER_QUOTES_REQUEST,
   filter
@@ -120,6 +128,7 @@ export const filterQuotesFailure = error => ({
   error
 });
 
+// LOAD_MORE_QUOTES
 export const loadMoreQuotesRequest = () => ({
   type: LOAD_MORE_QUOTES_REQUEST
 });
@@ -133,10 +142,15 @@ export const loadMoreQuotesFailure = error => ({
   error
 });
 
+// RESET
 export const resetPagination = () => ({
   type: RESET_PAGINATION
 });
 
 export const resetQotesState = () => ({
   type: RESET_QUOTES_STATE
+});
+
+export const resetQuotesError = () => ({
+  type: RESET_QUOTES_ERROR
 });

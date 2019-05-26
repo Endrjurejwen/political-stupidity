@@ -2,7 +2,7 @@ import {
   editQuotationRequest,
   editQuotationSuccess,
   editQuotationFailure
-} from 'app/quotes/actionCreators';
+} from 'app/quotes/actions';
 
 const editQuotation = (id, { politician, content, topics }) => {
   return (dispatch, getState, { getFirestore }) => {

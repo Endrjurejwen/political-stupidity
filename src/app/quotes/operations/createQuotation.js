@@ -5,7 +5,7 @@ import {
   createQuotationSuccess,
   createQuotationFailure,
   resetQotesState
-} from 'app/quotes/actionCreators';
+} from 'app/quotes/actions';
 
 const createQuotation = quotation => {
   return (dispatch, getState, { getFirestore }) => {

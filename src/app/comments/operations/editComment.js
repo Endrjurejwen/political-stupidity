@@ -2,7 +2,7 @@ import {
   editCommentRequest,
   editCommentSuccess,
   editCommentFailure
-} from 'app/comments/actionCreators';
+} from 'app/comments/actions';
 
 const editComment = (quotationID, commentID, content) => {
   return (dispatch, getState, { getFirestore }) => {

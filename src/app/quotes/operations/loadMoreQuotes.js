@@ -2,7 +2,7 @@ import {
   loadMoreQuotesRequest,
   loadMoreQuotesSuccess,
   loadMoreQuotesFailure
-} from 'app/quotes/actionCreators';
+} from 'app/quotes/actions';
 
 const loadMoreQuotes = () => {
   return (dispatch, getState, { getFirestore }) => {

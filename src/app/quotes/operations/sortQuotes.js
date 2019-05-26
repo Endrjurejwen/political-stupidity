@@ -5,7 +5,7 @@ import {
   sortQuotesSuccess,
   sortQuotesFailure,
   resetPagination
-} from 'app/quotes/actionCreators';
+} from 'app/quotes/actions';
 
 const sortQuotes = sortBy => {
   return (dispatch, getState, { getFirestore }) => {

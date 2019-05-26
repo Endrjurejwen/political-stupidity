@@ -6,6 +6,7 @@ import ToolbarWrapper from 'app/layout/components/ToolbarWrapper';
 import SideDrawer from 'app/layout/components/SideDrawer';
 import MenuButton from 'app/layout/components/MenuButton';
 import Navigation from 'app/layout/components/Navigation';
+import ReturnButton from 'app/layout/components/ReturnButton';
 import LoginButton from 'app/auth/components/LoginButton';
 import UserPanel from 'app/auth/components/UserPanel';
 import Login from 'app/auth/containers/Login';
@@ -35,7 +36,7 @@ const CreateQuotationWithToggle = withToggle({
   toggleButton: CreateQuotationButton
 });
 
-const toolbar = ({ user }) => {
+const toolbar = ({ user, location }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -43,11 +44,21 @@ const toolbar = ({ user }) => {
 
   const links = user.id ? SIGN_IN_NAVIGATION_ITEMS : SIGN_OUT_NAVIGATION_ITEMS;
 
+  let actionButton = <LoginWithToggle isDesktop />;
+  if (user.id) {
+    actionButton = <CreateQuotationWithToggle isDesktop />;
+  }
+
+  let contextInfo = <div style={{ marginRight: 'auto' }}>Klasa Polityczna</div>;
+  if (location.pathname.includes('/quotes/')) {
+    contextInfo = <ReturnButton />;
+  }
+
   return (
     <ToolbarWrapper>
-      <div style={{ marginRight: 'auto' }}>Klasa Polityczna</div>
+      {contextInfo}
       <MenuButton isMenuOpen={isMenuOpen} onToggleMenu={handleToggleMenu} />
-      {user.id ? <CreateQuotationWithToggle isDesktop /> : <LoginWithToggle isDesktop />}
+      {actionButton}
       <Navigation isDesktop navItems={links} />
       <UserPanel />
       <SideDrawer isOpen={isMenuOpen} onCloseMenu={handleToggleMenu}>

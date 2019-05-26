@@ -2,7 +2,7 @@ import {
   createCommentRequest,
   createCommentSuccess,
   createCommentFailure
-} from 'app/comments/actionCreators';
+} from 'app/comments/actions';
 
 const createComment = (quotationID, content) => {
   return (dispatch, getState, { getFirestore }) => {

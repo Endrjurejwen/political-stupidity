@@ -5,7 +5,7 @@ import {
   filterQuotesSuccess,
   filterQuotesFailure,
   resetPagination
-} from 'app/quotes/actionCreators';
+} from 'app/quotes/actions';
 
 const setFilterInstruction = filterName => {
   if (filterName === 'all') {

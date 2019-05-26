@@ -1,7 +1,7 @@
 import React from 'react';
 import { func } from 'prop-types';
 import { connect } from 'react-redux';
-import { logout } from 'app/auth/actions';
+import { logout } from 'app/auth/operations';
 import { Confirmation } from 'app/common';
 
 export const logoutButton = ({ logout, onCloseModal }) => {

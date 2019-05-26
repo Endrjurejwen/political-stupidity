@@ -1,8 +1,8 @@
 import {
-  dislikeQuotationRequest,
-  dislikeQuotationSuccess,
-  dislikeQuotationFailure
-} from 'app/quotes/actionCreators';
+  likeQuotationRequest,
+  likeQuotationSuccess,
+  likeQuotationFailure
+} from 'app/quotes/actions';
 
 const getQuotation = (state, id) => {
   const quotation = state.firestore.data.quotation
@@ -11,30 +11,30 @@ const getQuotation = (state, id) => {
   return quotation;
 };
 
-const dislikeQuotation = id => {
-  return (dispatch, getState, { getFirebase, getFirestore }) => {
-    const firebase = getFirebase();
+const likeQuotation = id => {
+  return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
     // const oldLikesCount = getState().firestore.data.quotes[id].likesCount;
+
     const state = getState();
     const quotation = getQuotation(state, id);
     const oldLikesCount = quotation.likesCount;
-    dispatch(dislikeQuotationRequest());
+    dispatch(likeQuotationRequest());
     firestore
       .collection('quotes')
       .doc(id)
       .update({
-        [`likes.${authorId}`]: firebase.firestore.FieldValue.delete(),
-        likesCount: oldLikesCount - 1
+        [`likes.${authorId}`]: true,
+        likesCount: oldLikesCount + 1
       })
       .then(() => {
-        dispatch(dislikeQuotationSuccess());
+        dispatch(likeQuotationSuccess());
       })
       .catch(error => {
-        dispatch(dislikeQuotationFailure(error));
+        dispatch(likeQuotationFailure(error));
       });
   };
 };
 
-export default dislikeQuotation;
+export default likeQuotation;

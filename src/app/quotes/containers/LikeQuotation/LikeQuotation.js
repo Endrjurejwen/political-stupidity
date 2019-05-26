@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withUser, withPrivacyGuard, LikeButton } from 'app/common';
-import { likeQuotation, dislikeQuotation } from 'app/quotes/actions';
+import { likeQuotation, dislikeQuotation } from 'app/quotes/operations';
 
 const LikeButtonWithPrivacyGuard = withPrivacyGuard(LikeButton);
 

@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { WithLoader } from 'app/common';
-import { createComment } from 'app/comments/actions';
+import { createComment } from 'app/comments/operations';
 import { getIsLoadingState } from 'app/comments/selectors';
 import CommentForm from 'app/comments/components/CommentForm';
 

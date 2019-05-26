@@ -3,7 +3,7 @@ import { func, string } from 'prop-types';
 import { match } from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { deleteComment } from 'app/comments/actions';
+import { deleteComment } from 'app/comments/operations';
 import { Confirmation } from 'app/common';
 
 export const deleteCommentConfirmation = ({

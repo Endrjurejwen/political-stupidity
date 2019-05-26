@@ -13,7 +13,8 @@ import {
   LIKE_COMMENT_FAILURE,
   DISLIKE_COMMENT_REQUEST,
   DISLIKE_COMMENT_SUCCESS,
-  DISLIKE_COMMENT_FAILURE
+  DISLIKE_COMMENT_FAILURE,
+  RESET_COMMENTS_ERROR
 } from 'app/comments/actionTypes';
 
 // CREATE_COMMENT
@@ -84,4 +85,9 @@ export const dislikeCommentSuccess = () => ({
 export const dislikeCommentFailure = error => ({
   type: DISLIKE_COMMENT_FAILURE,
   error
+});
+
+// RESET ERROR
+export const resetCommentsError = () => ({
+  type: RESET_COMMENTS_ERROR
 });

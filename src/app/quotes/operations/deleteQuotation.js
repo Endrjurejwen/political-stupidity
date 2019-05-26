@@ -6,7 +6,7 @@ import {
   deleteQuotationSuccess,
   deleteQuotationFailure,
   resetQotesState
-} from 'app/quotes/actionCreators';
+} from 'app/quotes/actions';
 
 const deleteAtPath = path => {
   const deleteFn = firebase.functions().httpsCallable('recursiveDelete');

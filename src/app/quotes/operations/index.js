@@ -6,7 +6,6 @@ import dislikeQuotation from './dislikeQuotation';
 import sortQuotes from './sortQuotes';
 import filterQuotes from './filterQuotes';
 import loadMoreQuotes from './loadMoreQuotes';
-import resetQuotesError from './resetQuotesError';
 
 export {
   createQuotation,
@@ -16,6 +15,5 @@ export {
   dislikeQuotation,
   sortQuotes,
   filterQuotes,
-  loadMoreQuotes,
-  resetQuotesError
+  loadMoreQuotes
 };

@@ -2,7 +2,7 @@ import {
   likeCommentRequest,
   likeCommentSuccess,
   likeCommentFailure
-} from 'app/comments/actionCreators';
+} from 'app/comments/actions';
 
 const likeComment = (quotationID, commentID) => {
   return (dispatch, getState, { getFirestore }) => {
