@@ -4,16 +4,15 @@ import { spacing, color, elevation, media } from 'utils';
 import bg from 'assets/images/sejm3.jpg';
 
 const Title = styled(H1)`
+  transform: rotate(-2.5deg);
+  ${elevation[2]};
   padding: 0 ${spacing[4]};
   margin-bottom: ${spacing[3]};
-  /* border-bottom: 4px solid ${color.textLight}; */
+  margin-left: -5px;
+  background-color: ${color.action};
+  /* border-bottom: 2px solid ${color.action}; */
   display: inline-block;
   color: ${color.textLight};
-
-  ${media.phone`
-    color: ${color.textDark};
-    border-bottom: 4px solid ${color.action};
-  `}
 `;
 
 const Header = styled.header`
@@ -36,13 +35,15 @@ const Header = styled.header`
     ),
     url(${bg});
 
+  /* position: relative; */
+
   ${media.phone`
     margin: -${spacing[4]} -${spacing[4]} 0;
     border: 2px solid ${color.action};
     border-top: none;
     border-bottom: 1px solid ${color.layoutBorder};
-
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: flex-start;
 
     background-repeat: no-repeat;
@@ -59,21 +60,46 @@ const Header = styled.header`
 `;
 
 const Claim = styled.p`
+  transform: rotate(2deg);
   margin-left: -5px;
   margin-top: -10px;
   z-index: 2;
+  ${elevation[2]};
   padding: 0 ${spacing[4]};
-  /* border-bottom: 2px solid ${color.textLight}; */
+  background-color: ${color.action};
+  /* border-bottom: 2px solid ${color.action}; */
   color: ${color.textLight};
   display: inline-block;
+`;
+
+const Logo = styled.div`
+  margin-top: ${spacing[3]};
+  color: ${color.textLight};
+  font-size: 2rem;
 
   ${media.phone`
-    color: ${color.textDark};
-    border-bottom: 2px solid ${color.action};
+    margin-right: 16%;
+    font-size: 2.5rem;
+  `}
+
+  /* position: absolute; */
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  ${media.phone`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
   `}
 `;
 
-export { Title, Header, Claim };
+export { Title, Header, Claim, Logo, Wrapper };
 
 // import styled from 'styled-components';
 // import { H1 } from 'elements';

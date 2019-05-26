@@ -49,7 +49,7 @@ const toolbar = ({ user, location }) => {
     actionButton = <CreateQuotationWithToggle isDesktop />;
   }
 
-  let contextInfo = <div style={{ marginRight: 'auto' }}>Klasa Polityczna</div>;
+  let contextInfo = <div style={{ marginRight: 'auto' }}>¯\_(ツ)_/¯</div>;
   if (location.pathname.includes('/quotes/')) {
     contextInfo = <ReturnButton />;
   }
@@ -57,13 +57,13 @@ const toolbar = ({ user, location }) => {
   return (
     <ToolbarWrapper>
       {contextInfo}
-      <MenuButton isMenuOpen={isMenuOpen} onToggleMenu={handleToggleMenu} />
       {actionButton}
       <Navigation isDesktop navItems={links} />
       <UserPanel />
       <SideDrawer isOpen={isMenuOpen} onCloseMenu={handleToggleMenu}>
         <Navigation navItems={links} onCloseMenu={handleToggleMenu} />
       </SideDrawer>
+      <MenuButton isMenuOpen={isMenuOpen} onToggleMenu={handleToggleMenu} />
       {isMenuOpen && <Backdrop onClose={handleToggleMenu} />}
     </ToolbarWrapper>
   );

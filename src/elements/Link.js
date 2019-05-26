@@ -38,7 +38,7 @@ export default styled(NavLink)`
     width: 100%;
   }
 
-  ${media.tablet`
+  ${media.desktop`
     ${flexCenter()};
 
     font-size: .7rem;

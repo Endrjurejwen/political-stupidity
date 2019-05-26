@@ -38,7 +38,7 @@ const ActionButton = styled(Button)`
     background-color: ${color.action};
   }
 
-  ${media.tablet`
+  ${media.desktop`
     /* ${elevation[1]}; */
     position: static;
     display: ${({ isDesktop }) => (isDesktop ? 'flex' : 'none')};

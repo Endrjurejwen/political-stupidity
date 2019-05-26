@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   border-left: 1px solid ${color.textLight};
   border-bottom: 2px solid transparent;
 
-  ${media.tablet`
+  ${media.desktop`
     display: ${({ isLogin }) => (isLogin ? 'flex' : 'none ')};
     justify-content: space-between;
     width: 11rem;

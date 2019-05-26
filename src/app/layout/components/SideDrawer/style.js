@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   transform: ${({ isOpen }) =>
     isOpen ? 'translateX(0)' : 'translateX(100vw)'};
 
-  ${media.tablet`
+  ${media.desktop`
     display: none;
   `}
 `;

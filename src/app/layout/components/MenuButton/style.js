@@ -10,7 +10,7 @@ const MenuButton = styled.button`
   background-color: transparent;
   padding: 0 ${spacing[3]};
 
-  ${media.tablet`
+  ${media.desktop`
     display: none;
   `}
 `;

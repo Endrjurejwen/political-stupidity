@@ -10,7 +10,7 @@ const Wrapper = styled.nav`
   justify-content: center;
   flex-direction: column;
 
-  ${media.tablet`
+  ${media.desktop`
     display: flex;
     width: auto;
     flex-direction: row;
@@ -29,7 +29,7 @@ const NavigationList = styled.ul`
   border-bottom: ${({ isLogin }) =>
     isLogin ? `1px solid ${color.action}` : 'none'};
 
-  ${media.tablet`
+  ${media.desktop`
     width: auto;
     flex-flow: row;
     justify-content: space-between;
