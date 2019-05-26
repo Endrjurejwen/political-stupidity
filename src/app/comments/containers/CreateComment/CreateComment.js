@@ -16,11 +16,11 @@ export const createCommentForm = ({ createComment, isLoading, match }) => {
     element.style.height = 'inherit';
   };
 
-  const handleCreateCommentSubmit = event => {
+  const handleCreateCommentSubmit = () => {
     resetTextareaSize();
 
     const quotationID = match.params.id;
-    event.preventDefault();
+    // event.preventDefault();
     createComment(quotationID, content).then(() => {
       setContent('');
       window.scrollTo(0, document.body.scrollHeight);

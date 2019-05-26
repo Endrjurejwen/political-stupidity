@@ -16,25 +16,25 @@ const CHECKBOXES_VALUES = {
   przyroda: false
 };
 
-const editQuotationForm = ({
+export const editQuotationForm = ({
   editQuotation,
   onCloseModal,
   isLoading,
-  quotation
+  quotation: { topics, content, politician, id }
 }) => {
-  const newCheckboxesValues = quotation.topics.reduce((acc, current) => {
+  const newCheckboxesValues = topics.reduce((acc, current) => {
     if (current in acc) {
       acc = {
         ...acc,
         [current]: true
       };
-    };
+    }
     return acc;
   }, CHECKBOXES_VALUES);
 
   const [newQuotation, setNewQuotation] = useState({
-    content: quotation.content,
-    politician: quotation.politician,
+    content,
+    politician,
     ...newCheckboxesValues
   });
 
@@ -66,10 +66,10 @@ const editQuotationForm = ({
     return newQuotationWithTopics;
   };
 
-  const handleEditQuotationSubmit = event => {
-    event.preventDefault();
+  const handleEditQuotationSubmit = () => {
+    // event.preventDefault();
     const newQuotationWithTopics = setNewQuotationWithTopics();
-    editQuotation(quotation.id, newQuotationWithTopics);
+    editQuotation(id, newQuotationWithTopics);
     onCloseModal();
   };
 

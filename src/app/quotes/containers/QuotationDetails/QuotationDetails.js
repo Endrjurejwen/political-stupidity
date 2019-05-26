@@ -18,11 +18,11 @@ import { resetQuotesError } from 'app/quotes/actions';
 
 import * as S from 'elements';
 
-const quotationDetails = ({ quotation, children }) => (
+export const quotationDetails = ({ quotation, children }) => (
   <WithLoader isLoading={!quotation}>
     <Quotation
       quotation={quotation}
-      navigateButton={<S.Button secondary>Wróć</S.Button>}
+      navigateButton={<S.Button secondary>Powrót</S.Button>}
     />
     <section>
       <S.H2 center marginBottom={spacing[5]}>

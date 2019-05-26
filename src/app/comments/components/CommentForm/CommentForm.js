@@ -12,8 +12,12 @@ const commentForm = ({
   formRef,
   content
 }) => {
+  const handleSubmit = event => {
+    event.preventDefault();
+    onCommentSubmit();
+  };
   return (
-    <S.CommentForm ref={formRef} onSubmit={onCommentSubmit}>
+    <S.CommentForm ref={formRef} onSubmit={handleSubmit}>
       <TextareaBox
         isFullWidth
         ref={autoFocusRef}

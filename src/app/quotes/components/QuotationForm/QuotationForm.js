@@ -24,8 +24,13 @@ const quotationForm = ({
   const autoFocusRef = useRef(null);
   useAutoFocus(autoFocusRef);
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    onQuotationSubmit();
+  };
+
   return (
-    <S.Form onSubmit={onQuotationSubmit}>
+    <S.Form onSubmit={handleSubmit}>
       <TextareaBox
         marginBottom={spacing[3]}
         ref={autoFocusRef}
@@ -38,7 +43,7 @@ const quotationForm = ({
       />
       <InputBox
         onChange={event => onInputChange(event)}
-        placeholder="Autor cytatu"
+        placeholder="Kto to powiedział?"
         id="politician"
         value={newQuotation.politician}
         required
@@ -53,7 +58,7 @@ const quotationForm = ({
             onChange={event => onInputChange(event)}
             type="checkbox"
             name={name}
-            value={newQuotation}
+            value={name}
             checked={newQuotation[name]}
           />
         ))}

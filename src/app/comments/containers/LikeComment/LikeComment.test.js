@@ -8,9 +8,11 @@ const dislikeCommentMock = jest.fn();
 
 afterEach(cleanup);
 
-describe('<LikeComment with deleteComment, onCloseModal, match, user and commentID', () => {
-  test('should fire likeComment function when button was clicked', () => {
-    const { getByText } = render(
+const fakeCommentLiked = { ...fakeComment, likes: { 123: true } };
+
+describe('<LikeComment with likeComment, dislikeComment, match, user and comment', () => {
+  test('should fire like or dislike function when button was clicked', () => {
+    const { getByText, rerender } = render(
       <LikeComment
         likeComment={likeCommentMock}
         dislikeComment={dislikeCommentMock}
@@ -27,5 +29,23 @@ describe('<LikeComment with deleteComment, onCloseModal, match, user and comment
       fakeComment.id
     );
     expect(dislikeCommentMock).toHaveBeenCalledTimes(0);
+
+    rerender(
+      <LikeComment
+        likeComment={likeCommentMock}
+        dislikeComment={dislikeCommentMock}
+        match={fakeMatch}
+        comment={fakeCommentLiked}
+        user={fakeUser}
+      />
+    );
+
+    fireEvent.click(getByText(/polub lub przestań lubić/i));
+    expect(dislikeCommentMock).toHaveBeenCalledTimes(1);
+    expect(dislikeCommentMock).toHaveBeenCalledWith(
+      fakeMatch.params.id,
+      fakeComment.id
+    );
+    expect(likeCommentMock).toHaveBeenCalledTimes(1);
   });
 });

@@ -10,7 +10,7 @@ import { withUser, LikeButton } from 'app/common';
 import { likeComment, dislikeComment } from 'app/comments/actions';
 
 export const likeCommentButton = ({
-  comment,
+  comment: { id, likes, likesCount },
   user,
   likeComment,
   dislikeComment,
@@ -18,18 +18,18 @@ export const likeCommentButton = ({
 }) => {
   const handleLikeClick = () => {
     const quotationID = match.params.id;
-    likeComment(quotationID, comment.id);
+    likeComment(quotationID, id);
   };
 
   const handleDislikeClick = () => {
     const quotationID = match.params.id;
-    dislikeComment(quotationID, comment.id);
+    dislikeComment(quotationID, id);
   };
 
-  const isLiked = user.id in comment.likes;
+  const isLiked = user.id in likes;
   return (
     <LikeButton
-      likes={comment.likesCount}
+      likes={likesCount}
       isLiked={isLiked}
       onClick={isLiked ? handleDislikeClick : handleLikeClick}
     />

@@ -14,7 +14,7 @@ const RADIO_BUTTONS_CONFIG = [
   { value: 'przyroda', id: 'biology', label: 'Przyroda' }
 ];
 
-const filterQuotesContainer = ({
+export const filterQuotesContainer = ({
   onCloseModal,
   filterQuotes,
   currentFilterName
@@ -27,8 +27,8 @@ const filterQuotesContainer = ({
     onCloseModal();
   };
 
-  const handleChange = ({ target }) => {
-    setFilter(target.value);
+  const handleChange = ({ target: { value } }) => {
+    setFilter(value);
   };
 
   return (

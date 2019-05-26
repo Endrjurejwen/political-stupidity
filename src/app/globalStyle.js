@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-import { fluidTypography, defaultFont, color } from 'utils';
+// import { fluidTypography, defaultFont, color } from 'utils';
+import { fluidTypography, color } from 'utils';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {

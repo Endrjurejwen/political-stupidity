@@ -1,21 +1,20 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 import { history } from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { deleteQuotation } from 'app/quotes/actions';
-import { quotationType } from 'app/quotes/propTypes';
 import { Confirmation } from 'app/common';
 
-const deleteQuotationConfirmation = ({
+export const deleteQuotationConfirmation = ({
   deleteQuotation,
   onCloseModal,
-  quotation,
+  quotationID,
   history
 }) => {
   const handleDeleteQuotationClick = () => {
     const isQuotesLocation = history.location.pathname === '/quotes';
-    deleteQuotation(quotation.id);
+    deleteQuotation(quotationID);
     if (!isQuotesLocation) {
       history.push('/quotes');
     }
@@ -31,14 +30,15 @@ const deleteQuotationConfirmation = ({
 
 deleteQuotationConfirmation.propTypes = {
   deleteQuotation: func.isRequired,
-  history: history.isRequired,
+  history,
   onCloseModal: func,
-  quotation: quotationType
+  quotationID: string
 };
 
 deleteQuotationConfirmation.defaultProps = {
+  history: null,
   onCloseModal: () => null,
-  quotation: null
+  quotationID: null
 };
 
 export default withRouter(
@@ -47,14 +47,3 @@ export default withRouter(
     { deleteQuotation }
   )(deleteQuotationConfirmation)
 );
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     actions: bindActionCreators(
-//       {
-//         deleteQuotation
-//       },
-//       dispatch
-//     )
-//   };
-// };

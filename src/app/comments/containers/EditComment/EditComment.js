@@ -34,11 +34,11 @@ export const editCommentForm = ({
     element.style.height = 'inherit';
   };
 
-  const handleEditCommentSubmit = event => {
+  const handleEditCommentSubmit = () => {
     resetTextareaSize();
 
     const quotationID = match.params.id;
-    event.preventDefault();
+    // event.preventDefault();
     editComment(quotationID, comment.id, content);
     setContent('');
     onCloseEditForm();

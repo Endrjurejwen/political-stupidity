@@ -8,7 +8,7 @@ import { getSortTypesState } from 'app/quotes/selectors';
 
 import * as S from './style';
 
-const sortQuotesContainer = ({ sortQuotes, sortTypes }) => {
+export const sortQuotesContainer = ({ sortQuotes, sortTypes }) => {
   const handleSortClick = event => {
     const sortBy = event.target.dataset.sortby;
     sortQuotes(sortBy);

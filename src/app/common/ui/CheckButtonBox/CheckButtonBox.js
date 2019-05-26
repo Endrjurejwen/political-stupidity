@@ -5,7 +5,7 @@ import * as S from './style';
 
 const checkButtonBox = ({ id, label, ...props }) => (
   <S.InputBox>
-    <S.Input id={id} {...props} />
+    <S.Input id={id} {...props} data-testid={`filter-${id}`} />
     <label htmlFor={id}>
       <S.RadioButton>{label}</S.RadioButton>
     </label>

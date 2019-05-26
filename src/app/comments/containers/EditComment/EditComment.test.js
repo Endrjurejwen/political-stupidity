@@ -10,7 +10,7 @@ const onCloseEditFormMock = jest.fn();
 console.error = jest.fn();
 
 describe('<EditComment /> with comment, editComment, match and onCloseEditForm', () => {
-  test('should edit with content and proper ids', () => {
+  test('should edit comment with content and proper ids', () => {
     const { getByPlaceholderText, getByText } = render(
       <EditComment
         comment={fakeComment}

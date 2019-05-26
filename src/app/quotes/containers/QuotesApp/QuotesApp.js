@@ -47,7 +47,7 @@ const CreateQuotationWithToggle = withToggle({
   toggleButton: CreateQuotationButton
 });
 
-const quotesApp = ({ location, quotes, user, isLoading }) => {
+export const quotesApp = ({ location, quotes, user, isLoading }) => {
   useEffect(() => {
     const id = location.state ? location.state.id : 0;
     if (id) {

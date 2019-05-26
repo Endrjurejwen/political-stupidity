@@ -15,7 +15,11 @@ const CHECKBOXES_VALUES = {
   przyroda: false
 };
 
-const createQuotationForm = ({ createQuotation, onCloseModal, isLoading }) => {
+export const createQuotationForm = ({
+  createQuotation,
+  onCloseModal,
+  isLoading
+}) => {
   const [newQuotation, setNewQuotation] = useState({
     content: '',
     politician: '',
@@ -50,8 +54,8 @@ const createQuotationForm = ({ createQuotation, onCloseModal, isLoading }) => {
     return newQuotationWithTopics;
   };
 
-  const handleCreateQuotationSubmit = event => {
-    event.preventDefault();
+  const handleCreateQuotationSubmit = () => {
+    // event.preventDefault();
     const newQuotationWithTopics = setNewQuotationWithTopics();
     createQuotation(newQuotationWithTopics).then(res => res && onCloseModal());
   };

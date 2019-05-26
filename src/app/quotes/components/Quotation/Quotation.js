@@ -30,7 +30,7 @@ const EditQuotationWithToggle = withToggle({
 const quotation = ({ quotation, navigateButton }) => (
   <S.AnimatedCard isAnimated={!!quotation}>
     <S.Header>
-      <S.Title>{quotation.politician}</S.Title>
+      <S.Title data-testid="quotation-title">{quotation.politician}</S.Title>
     </S.Header>
     <TagsList topics={quotation.topics} />
     <S.TextContent marginBottom={spacing[3]} data-testid="quotation-content">
@@ -42,7 +42,7 @@ const quotation = ({ quotation, navigateButton }) => (
     </S.Footer>
     <Toolbox id={quotation.author.id}>
       <EditQuotationWithToggle quotation={quotation} />
-      <DeleteQuotationWithToggle quotation={quotation} />
+      <DeleteQuotationWithToggle quotationID={quotation.id} />
     </Toolbox>
     <S.ActionButtonsWrapper>
       {navigateButton}

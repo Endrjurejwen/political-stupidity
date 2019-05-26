@@ -10,24 +10,24 @@ import { likeQuotation, dislikeQuotation } from 'app/quotes/actions';
 
 const LikeButtonWithPrivacyGuard = withPrivacyGuard(LikeButton);
 
-const likeQuotationButton = ({
-  quotation,
+export const likeQuotationButton = ({
+  quotation: { id, likes, likesCount },
   user,
   likeQuotation,
   dislikeQuotation
 }) => {
   const handleLikeClick = () => {
-    likeQuotation(quotation.id);
+    likeQuotation(id);
   };
 
   const handleDislikeClick = () => {
-    dislikeQuotation(quotation.id);
+    dislikeQuotation(id);
   };
 
-  const isLiked = user.id in quotation.likes;
+  const isLiked = user.id in likes;
   return (
     <LikeButtonWithPrivacyGuard
-      likes={quotation.likesCount}
+      likes={likesCount}
       isLiked={isLiked}
       onClick={isLiked ? handleDislikeClick : handleLikeClick}
     />

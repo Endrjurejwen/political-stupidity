@@ -9,7 +9,7 @@ const createCommentMock = jest.fn(() => Promise.resolve(''));
 console.error = jest.fn();
 
 describe('<CreateComment /> with createComment and match', () => {
-  test('should create with content and proper id', () => {
+  test('should create comment with content and proper id', () => {
     const { getByPlaceholderText, getByText } = render(
       <CreateComment createComment={createCommentMock} match={fakeMatch} />
     );

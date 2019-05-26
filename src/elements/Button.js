@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { color, elevation, spacing } from 'utils';
+import { color, spacing } from 'utils';
 
 export default styled.button`
   font-family: inherit;
