@@ -5,19 +5,19 @@ import { color } from 'utils';
 
 import * as S from './style';
 
-const userSummary = ({ name }) => (
+const userSummary = ({ nick }) => (
   <S.Wrapper>
-    <p data-testid="user-name">{name}</p>
+    <p data-testid="user-nick">{nick}</p>
     <Icon name="userMan" color={color.textLight} />
   </S.Wrapper>
 );
 
 userSummary.propTypes = {
-  name: string
+  nick: string
 };
 
 userSummary.defaultProps = {
-  name: ''
+  nick: ''
 };
 
 export default userSummary;

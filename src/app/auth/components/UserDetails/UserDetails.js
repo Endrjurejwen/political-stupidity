@@ -12,9 +12,10 @@ const userDetails = ({ user }) => (
     </S.UserAvatar>
     <S.UserData>
       <div data-testid="user-credentials">
-        {`${user.firstName} ${user.lastName}`}
+        {`${user.firstName} ${user.lastName} (${user.nick})`}
       </div>
-      <div>endrjurejwen@gmail.com</div>
+      {/* <div>{user.nick}</div> */}
+      <div>{user.email}</div>
     </S.UserData>
   </S.UserContainer>
 );

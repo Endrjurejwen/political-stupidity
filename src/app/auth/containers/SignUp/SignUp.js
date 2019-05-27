@@ -18,6 +18,7 @@ const INPUTS_CONFIG = [
     id: 'lastName',
     autoFocus: false
   },
+  { type: 'text', placeholder: 'Twój Nick', id: 'nick', autoFocus: false },
   { type: 'email', placeholder: 'Twój email', id: 'email', autoFocus: false },
   {
     type: 'password',
@@ -31,6 +32,7 @@ export const signUpForm = ({ signUp, resetAuthError, error, isLoading }) => {
   const [newCredentials, setNewCredentials] = useState({
     firstName: '',
     lastName: '',
+    nick: '',
     email: '',
     password: ''
   });
@@ -41,6 +43,7 @@ export const signUpForm = ({ signUp, resetAuthError, error, isLoading }) => {
     setNewCredentials({
       firstName: '',
       lastName: '',
+      nick: '',
       email: '',
       password: ''
     });

@@ -9,6 +9,6 @@ describe('<UserPanel /> with user', () => {
     );
 
     expect(getByText(/wyloguj się/i)).toBeInTheDocument();
-    expect(getByTestId('user-name')).toBeInTheDocument();
+    expect(getByTestId('user-nick')).toBeInTheDocument();
   });
 });

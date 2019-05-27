@@ -25,6 +25,7 @@ const createQuotation = quotation => {
         author: {
           firstName: profile.firstName,
           lastName: profile.lastName,
+          nick: profile.nick,
           id: authorId
         },
         createAt: new Date(),
@@ -45,24 +46,24 @@ const createQuotation = quotation => {
 
 export default createQuotation;
 
-// // import { actionTypes } from 'redux-firestore';
+// import { actionTypes } from 'redux-firestore';
 
 // import {
 //   createQuotationRequest,
 //   createQuotationSuccess,
 //   createQuotationFailure,
 //   resetQotesState
-// } from 'quotes/actionCreators';
+// } from 'app/quotes/actions';
 
 // const createQuotation = quotation => {
 //   return (dispatch, getState, { getFirestore }) => {
 //     const firestore = getFirestore();
 //     const { profile } = getState().firebase;
 //     const authorId = getState().firebase.auth.uid;
-//     // dispatch({
-//     //   type: actionTypes.CLEAR_DATA,
-//     //   preserve: { data: true, ordered: false }
-//     // });
+//     dispatch({
+//       type: actionTypes.CLEAR_DATA,
+//       preserve: { data: true, ordered: true }
+//     });
 //     dispatch(resetQotesState());
 //     dispatch(createQuotationRequest());
 //     return firestore
@@ -78,6 +79,7 @@ export default createQuotation;
 //         likes: {},
 //         likesCount: 0,
 //         commentsCount: 0
+//         // topics: ['historia']
 //       })
 //       .then(res => {
 //         dispatch(createQuotationSuccess());

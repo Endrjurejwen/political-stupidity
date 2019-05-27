@@ -34,7 +34,7 @@ const comment = ({ comment }) => {
     <S.Card secondary>
       <S.Header>
         <S.H6 data-testid="comment-author">
-          {comment.author.firstName} {comment.author.lastName}
+          {comment.author.nick}
         </S.H6>
       </S.Header>
       {textBox}

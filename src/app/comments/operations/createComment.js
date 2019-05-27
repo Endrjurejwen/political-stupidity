@@ -20,6 +20,7 @@ const createComment = (quotationID, content) => {
         author: {
           firstName: profile.firstName,
           lastName: profile.lastName,
+          nick: profile.nick,
           id: authorId
         },
         createAt: new Date(),

@@ -14,7 +14,7 @@ const LogoutWithToggle = withToggle({
 
 const userPanel = ({ user }) => (
   <S.Wrapper isLogin={!!user.id}>
-    <UserSummary name={user.firstName} />
+    <UserSummary nick={user.nick} />
     <LogoutWithToggle />
   </S.Wrapper>
 );

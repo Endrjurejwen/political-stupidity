@@ -2,10 +2,9 @@ import styled from 'styled-components';
 import { absolute, flexCenter } from 'utils';
 
 const Toolbox = styled.aside`
-  ${absolute({ side: 'right' })};
+  ${absolute({ side: 'right', y: '4px' })};
   ${flexCenter({ justifyContent: 'space-between' })};
   display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
-  justify-content: space-between;
   padding: 0;
 `;
 

@@ -3,7 +3,7 @@ import { fireEvent, render } from 'react-testing-library';
 import { signUpForm as SignUp } from './SignUp';
 
 const signUpMock = jest.fn(() =>
-  Promise.resolve({ firstName: '', lastName: '', email: '', password: '' })
+  Promise.resolve({ firstName: '', lastName: '', nick: '', email: '', password: '' })
 );
 const resetAuthErrorMock = jest.fn();
 
@@ -15,6 +15,7 @@ describe('<SignUp /> with signUp', () => {
 
     const firstNameInput = getByPlaceholderText(/twoje imię/i);
     const lastNameInput = getByPlaceholderText(/twoje nazwisko/i);
+    const nickInput = getByPlaceholderText(/twój nick/i);
     const emailInput = getByPlaceholderText(/twój email/i);
     const passwordInput = getByPlaceholderText(/twoje hasło/i);
 
@@ -44,11 +45,18 @@ describe('<SignUp /> with signUp', () => {
       }
     });
 
+    fireEvent.change(nickInput, {
+      target: {
+        value: 'nick'
+      }
+    });
+
     fireEvent.submit(getByText(/załóż konto/i));
     expect(signUpMock).toHaveBeenCalledTimes(1);
     expect(signUpMock).toHaveBeenCalledWith({
       firstName: 'Gal',
       lastName: 'Anonim',
+      nick: 'nick',
       email: 'test@test.pl',
       password: 'test'
     });

@@ -3,16 +3,15 @@ import { shape, string } from 'prop-types';
 
 import * as S from './style';
 
-const author = ({ credentials: { firstName, lastName } }) => (
+const author = ({ credentials: { nick } }) => (
   <S.AuthorContainer data-testid="quotation-user">
-    Opublikował {firstName} {lastName}
+    Opublikował {nick}
   </S.AuthorContainer>
 );
 
 author.propTypes = {
   credentials: shape({
-    firstName: string,
-    lastName: string
+    nick: string
   }).isRequired
 };
 

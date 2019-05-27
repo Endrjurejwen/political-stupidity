@@ -1,7 +1,9 @@
 export const fakeUser = {
   id: '123',
   firstName: 'Gal',
-  lastName: 'Anonim'
+  lastName: 'Anonim',
+  nick: 'Anonim@123',
+  email: 'test@test.pl'
 };
 
 export const fakeComments = [
@@ -9,6 +11,7 @@ export const fakeComments = [
     author: {
       firstName: 'Gal',
       lastName: 'Anonim',
+      nick: 'Anonim@123',
       id: '12340'
     },
     content: 'Lorem ipsum',
@@ -25,7 +28,8 @@ export const fakeComments = [
     author: {
       firstName: 'Jan',
       lastName: 'Kowalski',
-      id: '87654'
+      id: '87654',
+      nick: 'Janeczek23'
     },
     content: 'Lorem ipsum',
     createAt: {
@@ -85,6 +89,7 @@ export const fakeQuotes = [
     author: {
       firstName: 'Gal',
       lastName: 'Anonim',
+      nick: 'Anonim@456',
       id: '12340'
     },
     content: 'Lorem ipsum',
@@ -104,6 +109,7 @@ export const fakeQuotes = [
     author: {
       firstName: 'Jan',
       lastName: 'Nowak',
+      nick: 'Janeczek@21',
       id: '3456'
     },
     content: 'Dolsda sads',

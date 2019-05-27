@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { userType } from 'app/auth/propTypes';
-import { Backdrop, withUser, withToggle } from 'app/common';
+import { location } from 'react-router-prop-types';
+import { withUser, withToggle } from 'app/common';
 import ToolbarWrapper from 'app/layout/components/ToolbarWrapper';
 import SideDrawer from 'app/layout/components/SideDrawer';
 import MenuButton from 'app/layout/components/MenuButton';
 import Navigation from 'app/layout/components/Navigation';
+import Logo from 'app/layout/components/Logo';
 import ReturnButton from 'app/layout/components/ReturnButton';
 import LoginButton from 'app/auth/components/LoginButton';
 import UserPanel from 'app/auth/components/UserPanel';
@@ -49,7 +51,7 @@ const toolbar = ({ user, location }) => {
     actionButton = <CreateQuotationWithToggle isDesktop />;
   }
 
-  let contextInfo = <div style={{ marginRight: 'auto' }}>¯\_(ツ)_/¯</div>;
+  let contextInfo = <Logo />;
   if (location.pathname.includes('/quotes/')) {
     contextInfo = <ReturnButton />;
   }
@@ -64,13 +66,13 @@ const toolbar = ({ user, location }) => {
         <Navigation navItems={links} onCloseMenu={handleToggleMenu} />
       </SideDrawer>
       <MenuButton isMenuOpen={isMenuOpen} onToggleMenu={handleToggleMenu} />
-      {isMenuOpen && <Backdrop onClose={handleToggleMenu} />}
     </ToolbarWrapper>
   );
 };
 
 toolbar.propTypes = {
-  user: userType
+  user: userType,
+  location: location.isRequired
 };
 
 toolbar.defaultProps = {

@@ -8,6 +8,7 @@ const Wrapper = styled.nav`
   display: ${({ isDesktop }) => (isDesktop ? 'none' : 'flex')};
   align-items: center;
   justify-content: center;
+  align-content: center;
   flex-direction: column;
 
   ${media.desktop`
@@ -19,7 +20,7 @@ const Wrapper = styled.nav`
 `;
 
 const NavigationList = styled.ul`
-  ${flexCenter({ justifyContent: 'center' })};
+  ${flexCenter()};
   flex-flow: column;
   list-style: none;
   background-color: transparent;
