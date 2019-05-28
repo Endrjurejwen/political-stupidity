@@ -5,7 +5,6 @@ const FilterButton = styled.button`
   font-family: inherit;
   font-weight: bold;
   font-size: 0.6rem;
-  /* position: relative; */
   padding: ${spacing[1]} ${spacing[2]};
   border: none;
   background-color: transparent;

@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { string, bool, func } from 'prop-types';
+import { history } from 'react-router-prop-types';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getErrorAuthState, getIsLoadingAuthState } from 'app/auth/selectors';
 import { resetAuthError } from 'app/auth/actions';
@@ -15,7 +17,8 @@ export const loginForm = ({
   resetAuthError,
   error,
   isLoading,
-  onCloseModal
+  onCloseModal,
+  history
 }) => {
   const [newCredentials, setNewCredentials] = useState({
     email: '',
@@ -34,6 +37,11 @@ export const loginForm = ({
   const handleSubmit = event => {
     event.preventDefault();
     login(newCredentials).then(res => res && onCloseModal());
+  };
+
+  const handleToSingUp = () => {
+    history.push('/signup');
+    onCloseModal();
   };
 
   const { email, password } = newCredentials;
@@ -63,6 +71,10 @@ export const loginForm = ({
         <S.Button type="submit">Zaloguj się</S.Button>
         <AuthErrorHandler error={error} resetError={resetAuthError} />
       </S.Form>
+      <S.BreakLine>Lub</S.BreakLine>
+      <S.Button margin="0 auto" secondary onClick={handleToSingUp}>
+        Załóż konto
+      </S.Button>
     </WithLoader>
   );
 };
@@ -70,6 +82,7 @@ export const loginForm = ({
 loginForm.propTypes = {
   login: func.isRequired,
   error: string,
+  history: history.isRequired,
   isLoading: bool,
   onCloseModal: func,
   resetAuthError: func.isRequired
@@ -89,4 +102,34 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { login, resetAuthError }
-)(loginForm);
+)(withRouter(loginForm));
+
+// const BreakLine = styled.div`
+//   color: ${color.textSecondary};
+//   font-size: 0.85rem;
+//   text-align: center;
+//   width: 60%;
+//   margin: ${spacing[3]} auto;
+
+//   position: relative;
+
+//   &::before {
+//     content: '';
+//     position: absolute;
+//     bottom: 50%;
+//     left: 0;
+//     height: 1px;
+//     width: 45%;
+//     background-color: ${color.textSecondary};
+//   }
+
+//   &::after {
+//     content: '';
+//     position: absolute;
+//     bottom: 50%;
+//     right: 0;
+//     height: 1px;
+//     width: 45%;
+//     background-color: ${color.textSecondary};
+//   }
+// `;

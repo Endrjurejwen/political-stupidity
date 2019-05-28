@@ -1,4 +1,5 @@
 import React from 'react';
+import { fakeHistory } from 'utils';
 import { fireEvent, render } from 'react-testing-library';
 import { loginForm as Login } from './Login';
 
@@ -13,6 +14,7 @@ describe('<Login /> with login and onCloseModal', () => {
         login={loginMock}
         resetAuthError={resetAuthErrorMock}
         onCloseModal={onCloseModalMock}
+        history={fakeHistory}
       />
     );
 

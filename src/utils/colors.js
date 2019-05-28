@@ -5,7 +5,7 @@
 export const color = {
   action: '#4353FF',
   secondary: '#A1A9FF',
-  body: 'F4F4F4',
+  body: '#F4F4F4',
   backdrop: 'rgba(0, 0, 0, 0.55)',
   layout: 'transparent',
   layoutBorder: 'lightgrey',

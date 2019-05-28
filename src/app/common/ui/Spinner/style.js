@@ -43,7 +43,7 @@ const Symbol = styled.div`
     content: '';
     width: 5.2em;
     height: 10.2em;
-    background: #f8f8f8;
+    background-color: ${props => props.bgColor || '#F4F4F4'};
     border-radius: 10.2em 0 0 10.2em;
     top: -0.1em;
     left: -0.1em;
@@ -56,7 +56,7 @@ const Symbol = styled.div`
     content: '';
     width: 5.2em;
     height: 10.2em;
-    background: #f8f8f8;
+    background-color: ${props => props.bgColor || '#F4F4F4'};
     border-radius: 0 10.2em 10.2em 0;
     top: -0.1em;
     left: 5.1em;

@@ -1,10 +1,11 @@
 import styled, { css } from 'styled-components';
-import { color, spacing } from 'utils';
+import { color, spacing, margins } from 'utils';
 
 export default styled.button`
+  ${margins};
   font-family: inherit;
   font-weight: bold;
-
+  display: block;
   padding: ${spacing[1]} ${spacing[4]};
   border-radius: 20px;
   border: 2px solid ${color.action};
@@ -18,7 +19,7 @@ export default styled.button`
     transparent 50%,
     ${color.textLight} 50%
   );
-  background-size: 250%;
+  background-size: 260%;
   transition: background-position 0.15s ease-in-out,
     background-color 0.25s ease-in-out, color 0.15s ease-in-out,
     border 0.15s ease-in-out, transform 0.15s ease-in-out;
