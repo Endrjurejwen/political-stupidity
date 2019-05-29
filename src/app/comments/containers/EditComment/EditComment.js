@@ -29,6 +29,10 @@ export const editCommentForm = ({
   useOnClickOutside(submitFormRef, onCloseEditForm);
   useEscapeKey(onCloseEditForm);
 
+  const handleCommentChange = ({ target }) => {
+    setContent(target.value);
+  };
+
   const resetTextareaSize = () => {
     const element = document.querySelector('.resizeTextArea');
     element.style.height = 'inherit';
@@ -51,7 +55,7 @@ export const editCommentForm = ({
         autoFocusRef={autoFocusRef}
         content={content}
         onCommentSubmit={handleEditCommentSubmit}
-        onCommentChange={setContent}
+        onCommentChange={handleCommentChange}
         SubmitButtonLabel="Zapisz zmiany"
       />
     </WithLoader>

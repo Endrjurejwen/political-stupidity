@@ -19,7 +19,11 @@ const RADIO_BUTTONS_CONFIG = [
   { name: 'chemia', id: 'chemistry', label: 'Chemia' },
   { name: 'język polski', id: 'polish', label: 'Język polski' },
   { name: 'języki obce', id: 'foreign', label: 'Języki obce' },
-  { name: 'wiedza o społeczeństwie', id: 'wos', label: 'Wiedza o społeczneństwie' },
+  {
+    name: 'wiedza o społeczeństwie',
+    id: 'wos',
+    label: 'Wiedza o społeczneństwie'
+  }
 ];
 
 const quotationForm = ({
@@ -55,7 +59,9 @@ const quotationForm = ({
         value={newQuotation.politician}
         required
       />
-      <S.H6 marginBottom={spacing[3]}>Wybierz temat - możesz zaznaczyć kilka</S.H6>
+      <S.H6 marginBottom={spacing[3]}>
+        Wybierz temat - możesz zaznaczyć kilka
+      </S.H6>
       <S.InputsList>
         {RADIO_BUTTONS_CONFIG.map(({ name, id, label }) => (
           <CheckButtonBox

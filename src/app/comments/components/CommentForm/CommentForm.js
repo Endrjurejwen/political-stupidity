@@ -17,14 +17,14 @@ const commentForm = ({
     onCommentSubmit();
   };
   return (
-    <S.CommentForm ref={formRef} onSubmit={handleSubmit}>
+    <S.CommentForm onSubmit={handleSubmit} ref={formRef}>
       <TextareaBox
         isFullWidth
         ref={autoFocusRef}
         required
         id="comment"
         value={content}
-        onChange={event => onCommentChange(event.target.value)}
+        onChange={event => onCommentChange(event)}
       />
       <S.SubmitButton type="submit" className="textarea-button">
         {SubmitButtonLabel}

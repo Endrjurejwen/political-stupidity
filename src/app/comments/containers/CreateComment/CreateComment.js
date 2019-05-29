@@ -16,6 +16,10 @@ export const createCommentForm = ({ createComment, isLoading, match }) => {
     element.style.height = 'inherit';
   };
 
+  const handleCommentChange = ({ target }) => {
+    setContent(target.value);
+  };
+
   const handleCreateCommentSubmit = () => {
     resetTextareaSize();
 
@@ -28,11 +32,11 @@ export const createCommentForm = ({ createComment, isLoading, match }) => {
   };
 
   return (
-    <WithLoader isLoading={isLoading}>
+    <WithLoader isLoading={isLoading} bgColor="#F4F4F4">
       <CommentForm
         content={content}
         onCommentSubmit={handleCreateCommentSubmit}
-        onCommentChange={setContent}
+        onCommentChange={handleCommentChange}
         SubmitButtonLabel="Skomentuj"
       />
     </WithLoader>

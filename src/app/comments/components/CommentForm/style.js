@@ -18,6 +18,17 @@ const CommentForm = styled.form`
     padding-bottom: ${spacing[0]};
   }
 
+  @media not all and (min-resolution:.001dpcm) { 
+    @media {
+      .textarea-button {
+        position: relative;
+        visibility: visible;
+        margin-top: ${spacing[3]};
+        transform: translateY(0);
+      }
+    }
+}
+
   &:focus-within .textarea-button {
     position: relative;
     visibility: visible;
