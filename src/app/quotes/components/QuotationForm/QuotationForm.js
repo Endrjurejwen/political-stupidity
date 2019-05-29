@@ -12,7 +12,14 @@ import * as S from './style';
 
 const RADIO_BUTTONS_CONFIG = [
   { name: 'historia', id: 'history', label: 'Historia' },
-  { name: 'przyroda', id: 'biology', label: 'Przyroda' }
+  { name: 'przyroda', id: 'biology', label: 'Przyroda' },
+  { name: 'geografia', id: 'geography', label: 'Geografia' },
+  { name: 'matematyka', id: 'mathematics', label: 'Matematyka' },
+  { name: 'fizyka', id: 'physics', label: 'Fizyka' },
+  { name: 'chemia', id: 'chemistry', label: 'Chemia' },
+  { name: 'język polski', id: 'polish', label: 'Język polski' },
+  { name: 'języki obce', id: 'foreign', label: 'Języki obce' },
+  { name: 'wiedza o społeczeństwie', id: 'wos', label: 'Wiedza o społeczneństwie' },
 ];
 
 const quotationForm = ({
@@ -48,7 +55,7 @@ const quotationForm = ({
         value={newQuotation.politician}
         required
       />
-      <S.H6 marginBottom={spacing[3]}>Zaznacz temat (opcjonalnie)</S.H6>
+      <S.H6 marginBottom={spacing[3]}>Wybierz temat - możesz zaznaczyć kilka</S.H6>
       <S.InputsList>
         {RADIO_BUTTONS_CONFIG.map(({ name, id, label }) => (
           <CheckButtonBox

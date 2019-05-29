@@ -3,7 +3,7 @@ import { fireEvent, render } from 'react-testing-library';
 import { fakeHistory } from 'utils';
 import { deleteQuotationConfirmation as DeleteQuotation } from './DeleteQuotation';
 
-const deleteQuotationMock = jest.fn();
+const deleteQuotationMock = jest.fn(() => Promise.resolve(''));
 const onCloseModalMock = jest.fn();
 
 const fakeQuotationID = '1234';

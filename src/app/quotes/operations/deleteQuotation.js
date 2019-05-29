@@ -5,7 +5,7 @@ import {
   deleteQuotationRequest,
   deleteQuotationSuccess,
   deleteQuotationFailure,
-  resetQotesState
+  // resetQotesState
 } from 'app/quotes/actions';
 
 const deleteAtPath = path => {
@@ -23,18 +23,19 @@ const deleteQuotation = id => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     deleteAtPath(`quotes/${id}/comments`);
-    dispatch(resetQotesState());
+    // dispatch(resetQotesState());
     // dispatch({
     //   type: actionTypes.CLEAR_DATA,
     //   preserve: { data: true, ordered: false }
     // });
     dispatch(deleteQuotationRequest());
-    firestore
+    return firestore
       .collection('quotes')
       .doc(id)
       .delete()
-      .then(() => {
+      .then(res => {
         dispatch(deleteQuotationSuccess());
+        return res;
       })
       .catch(error => {
         dispatch(deleteQuotationFailure(error));

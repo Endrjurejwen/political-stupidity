@@ -6,9 +6,9 @@ export default {
     instruction: null
   },
   pagination: {
-    limit: 2,
-    initialLimit: 2,
-    added: 2,
+    limit: 5,
+    initialLimit: 5,
+    added: 5,
     isLoading: false
   },
   sortTypes: [

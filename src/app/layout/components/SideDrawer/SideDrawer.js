@@ -31,9 +31,12 @@ const CreateQuotationWithToggle = withToggle({
 const sideDrawer = ({ children, onCloseMenu, isOpen, user }) => {
   let actionButton = <LoginWithToggle onCloseMenu={onCloseMenu} />;
   let headerContent = (
-    <S.H4 center textLight marginBottom={spacing[4]}>
-      Klasa Polityczna
-    </S.H4>
+    <>
+      <S.Title center textLight marginBottom={spacing[4]}>
+        Klasa Polityczna
+      </S.Title>
+      <div>¯\_(ツ)_/¯</div>
+    </>
   );
   if (user.id) {
     headerContent = <UserDetails user={user} />;

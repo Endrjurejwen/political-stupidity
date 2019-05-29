@@ -11,7 +11,7 @@ const ActionButton = styled(Button)`
   z-index: 2;
   border: 2px solid ${color.textLight};
 
-  ${media.tablet`
+  ${media.desktop`
     display: ${({ isDesktop }) => (isDesktop ? 'block' : 'none')};
   `}
 `;

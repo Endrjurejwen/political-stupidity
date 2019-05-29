@@ -17,7 +17,7 @@ spinner.propTypes = {
 };
 
 spinner.defaultProps = {
-  bgColor: '#F4F4F4'
+  bgColor: '#FFF'
 };
 
 export default spinner;

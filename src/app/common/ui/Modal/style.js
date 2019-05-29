@@ -9,29 +9,6 @@ import {
   color
 } from 'utils';
 
-// const fadeIn = keyframes`
-//   0% {
-//     transform: translate(-50%, -150%) scale(0.8, 1);
-//     opacity: 0;
-//   }
-//   }
-//   100% {
-//     transform: translate(-50%, -50%) scale(1);
-//     opacity: 1;
-//   }
-// `;
-
-// const fadeOut = keyframes`
-//   0% {
-//     transform: translate(-50%, -50%);
-//     opacity: 1;
-//   }
-//   100% {
-//     transform: translate(-50%, -150%) scale(0.8, 1);
-//     opacity: 0;
-//   }
-// `;
-
 const Modal = styled.div`
   ${fixed({ x: '50%', y: '45%' })};
   transform: translate(-50%, -50%);
@@ -68,13 +45,7 @@ const Modal = styled.div`
     transition: opacity 0.3s, transform 0.3s;
   }
 
-  ${media.tablet`
-    /* width: auto; */
-    /* max-width: 50%; */
-  `}
-
   ${media.desktop`
-    /* width: auto; */
     max-width: 40%;
   `}
 `;
@@ -91,3 +62,26 @@ const CloseButtonWrapper = styled.aside`
 `;
 
 export { Modal, ModalContent, CloseButtonWrapper };
+
+// const fadeIn = keyframes`
+//   0% {
+//     transform: translate(-50%, -150%) scale(0.8, 1);
+//     opacity: 0;
+//   }
+//   }
+//   100% {
+//     transform: translate(-50%, -50%) scale(1);
+//     opacity: 1;
+//   }
+// `;
+
+// const fadeOut = keyframes`
+//   0% {
+//     transform: translate(-50%, -50%);
+//     opacity: 1;
+//   }
+//   100% {
+//     transform: translate(-50%, -150%) scale(0.8, 1);
+//     opacity: 0;
+//   }
+// `;

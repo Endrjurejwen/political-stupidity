@@ -11,8 +11,19 @@ import * as S from './style';
 const RADIO_BUTTONS_CONFIG = [
   { value: 'all', id: 'all', label: 'Wszystkie' },
   { value: 'historia', id: 'history', label: 'Historia' },
-  { value: 'przyroda', id: 'biology', label: 'Przyroda' }
+  { value: 'przyroda', id: 'biology', label: 'Przyroda' },
+  { value: 'geografia', id: 'geography', label: 'Geografia' },
+  { value: 'matematyka', id: 'matemathics', label: 'Matematyka' },
+  { value: 'fizyka', id: 'physics', label: 'Fizyka' },
+  { value: 'chemia', id: 'chemistry', label: 'Chemia' },
+  { value: 'język polski', id: 'polish', label: 'Język polski' },
+  { value: 'języki obce', id: 'foreign', label: 'Języki obce' },
+  { value: 'wiedza o społeczeństwie', id: 'wos', label: 'Wiedza o społeczeństwie' }
 ];
+
+// { name: 'geografia', id: 'geography', label: 'Geografia' },
+// { name: 'wiedza o społeczeństwie', id: 'wos', label: 'Wiedza o społeczneństwie' },
+// { name: 'język polski', id: 'polish', label: 'Język Polski' },
 
 export const filterQuotesContainer = ({
   onCloseModal,

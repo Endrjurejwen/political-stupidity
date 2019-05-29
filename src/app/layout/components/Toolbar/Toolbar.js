@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { userType } from 'app/auth/propTypes';
 import { location } from 'react-router-prop-types';
-import { withUser, withToggle } from 'app/common';
+import { withUser, withToggle, Backdrop } from 'app/common';
 import ToolbarWrapper from 'app/layout/components/ToolbarWrapper';
 import SideDrawer from 'app/layout/components/SideDrawer';
 import MenuButton from 'app/layout/components/MenuButton';
@@ -66,6 +66,7 @@ const toolbar = ({ user, location }) => {
         <Navigation navItems={links} onCloseMenu={handleToggleMenu} />
       </SideDrawer>
       <MenuButton isMenuOpen={isMenuOpen} onToggleMenu={handleToggleMenu} />
+      {isMenuOpen && <Backdrop isShown={isMenuOpen} onClose={handleToggleMenu} />}
     </ToolbarWrapper>
   );
 };

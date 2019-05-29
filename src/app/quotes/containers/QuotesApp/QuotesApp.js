@@ -62,7 +62,7 @@ export const quotesApp = ({ location, quotes, user, isLoading }) => {
       {user.id ? <CreateQuotationWithToggle /> : <LoginWithToggle isFixed />}
       <Controls />
       <div>
-        <WithLoader isLoading={!quotes || isLoading}>
+        <WithLoader isLoading={!quotes || isLoading} bgColor="#F4F4F4">
           <WithEmptyInfo
             isEmpty={!quotes || !quotes.length}
             info={<S.H6 center>Nie ma jeszcze żadnych cytatów</S.H6>}

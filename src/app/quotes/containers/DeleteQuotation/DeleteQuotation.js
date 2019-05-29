@@ -14,7 +14,7 @@ export const deleteQuotationConfirmation = ({
 }) => {
   const handleDeleteQuotationClick = () => {
     const isQuotesLocation = history.location.pathname === '/quotes';
-    deleteQuotation(quotationID);
+    deleteQuotation(quotationID).then(res => res && onCloseModal());
     if (!isQuotesLocation) {
       history.push('/quotes');
     }

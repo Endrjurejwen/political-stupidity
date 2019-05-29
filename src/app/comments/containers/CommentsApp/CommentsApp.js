@@ -24,7 +24,7 @@ export const commentsApp = ({ comments, dispatch }) => {
   return (
     <>
       <CreateComment />
-      <WithLoader isLoading={!comments}>
+      <WithLoader isLoading={!comments} bgColor="#F4F4F4">
         <WithEmptyInfo
           isEmpty={!comments || !comments.length}
           info={<H5 center>Jeszcze nikt nie dodał komentarza</H5>}

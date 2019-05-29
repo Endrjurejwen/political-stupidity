@@ -12,7 +12,14 @@ import * as S from 'elements';
 
 const CHECKBOXES_VALUES = {
   historia: false,
-  przyroda: false
+  przyroda: false,
+  geografia: false,
+  matematyka: false,
+  fizyka: false,
+  chemia: false,
+  'Język polski': false,
+  'Języki obce': false,
+  'wiedza o społeczneństwie': false
 };
 
 export const createQuotationForm = ({
@@ -55,7 +62,6 @@ export const createQuotationForm = ({
   };
 
   const handleCreateQuotationSubmit = () => {
-    // event.preventDefault();
     const newQuotationWithTopics = setNewQuotationWithTopics();
     createQuotation(newQuotationWithTopics).then(res => res && onCloseModal());
   };

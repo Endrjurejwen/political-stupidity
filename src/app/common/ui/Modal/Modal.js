@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import { func, element, bool } from 'prop-types';
-import { Backdrop, CloseButton, Portal, useBodyScrollLock } from 'app/common';
+import { Backdrop, CloseButton, Portal } from 'app/common';
 import { trapTabKey } from 'utils';
 
 import * as S from './style';
 
 const modal = ({ onCloseModal, children, isShown }) => {
-  useBodyScrollLock();
-
   useEffect(() => {
     document.addEventListener('keydown', event =>
       trapTabKey(event, onCloseModal)
