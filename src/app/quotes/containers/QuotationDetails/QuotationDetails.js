@@ -31,7 +31,7 @@ export const quotationDetails = ({
     });
   };
   return (
-    <WithLoader isLoading={!quotation}>
+    <WithLoader isLoading={!quotation} bgColor="#F4F4F4">
       <Quotation
         quotation={quotation}
         navigateButton={
