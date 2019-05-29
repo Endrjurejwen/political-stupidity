@@ -10,7 +10,4 @@ export default styled.article`
     props.secondary ? color.comments : color.backgroundLight};
   max-width: 30rem;
   border-radius: 8px;
-  /* & > * {
-    padding: 0 ${spacing[3]};
-  } */
 `;

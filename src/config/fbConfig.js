@@ -6,7 +6,7 @@ import 'firebase/functions';
 
 // Initialize Firebase
 const config = {
-  apiKey: 'AIzaSyCuYdIyqrcEKD7RNOoyM9JRf1AoZOv6LOQ',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: 'political-stupidity.firebaseapp.com',
   databaseURL: 'https://political-stupidity.firebaseio.com',
   projectId: 'political-stupidity',

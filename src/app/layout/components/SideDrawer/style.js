@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   ${fixed()};
   ${elevation[3]};
   /* display: flex; */
-  flex-direction: column;
+  /* flex-direction: column; */
   padding: ${spacing[2]} ${spacing[4]};
   height: 100vh;
   width: 100vw;
