@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { H1 } from 'elements';
 import { spacing, color, elevation, media } from 'utils';
-import bg from 'assets/images/sejm3.jpg';
+// import bg from 'assets/images/sejm3.jpg';
 
 const Title = styled(H1)`
   transform: rotate(-2.5deg);
@@ -32,8 +32,7 @@ const Header = styled.header`
       ${color.backgroundLight} 0%,
       ${color.action} 0%,
       #3542CC 100%
-    ),
-    url(${bg});
+    );
 
   /* position: relative; */
 
@@ -54,8 +53,7 @@ const Header = styled.header`
         ${color.backgroundLight} 45%,
         ${color.action} 45%,
         #3542CC 100%
-      ),
-      url(${bg});
+      );
   `}
 `;
 
