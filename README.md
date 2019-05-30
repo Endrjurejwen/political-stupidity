@@ -5,6 +5,7 @@ Full stack, Twitter-like app made with React, Redux and Firebase.
 [Demo](https://political-stupidity.web.app)
 
 ## Includes
+
 - Create-react-app - for project bootstrapping
 - React v. 16.8 (with hooks)
 - React-router v. 4 - for routing
@@ -25,6 +26,7 @@ Full stack, Twitter-like app made with React, Redux and Firebase.
 - Prettier - for code style checking
 
 ## Features
+
 - Registration
 - Login with email adress and password
 - User can create new posts with tags
@@ -38,6 +40,7 @@ Full stack, Twitter-like app made with React, Redux and Firebase.
 - Responsive design with mobile-first approach
 
 ## Run on your Machine
+
 1. Clone repositiory
 2. npm install
 3. npm start
@@ -45,9 +48,10 @@ Full stack, Twitter-like app made with React, Redux and Firebase.
 5. npm test (for testing app)
 
 ## Improve
-- [] Add react-helmet for SEO optimization
-- [] Add terms and about content
-- [] Add user page
-- [] Allow user to edit and delete his account
-- [] Add infinite scroll to Comments
-= [] Add filter by favorite 
+
+- [ ] Add react-helmet for SEO optimization
+- [ ] Add terms and about content
+- [ ] Add user page
+- [ ] Allow user to edit and delete his account
+- [ ] Add infinite scroll to Comments
+- [ ] Add filter by favorite
