@@ -1,68 +1,53 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Klasa Polityczna
 
-## Available Scripts
+Full stack, Twitter-like app made with React, Redux and Firebase.
 
-In the project directory, you can run:
+[Demo](https://political-stupidity.web.app)
 
-### `npm start`
+## Includes
+- Create-react-app - for project bootstrapping
+- React v. 16.8 (with hooks)
+- React-router v. 4 - for routing
+- Redux v. 4 - for state management
+- React-redux
+- Redux-thunk - for async operations in redux
+- Reselect - for selectors
+- Firestore - for real-time database
+- Firebase authentication
+- Firebase cloud functions - for counting and deleting documents in database
+- Styled-components - for style and animation
+- React-transition-group - for animating mount and unmount
+- Prop-types - for react props checking
+- Jest - for testing
+- Jest - for react components testing
+- React-testing-library - for testing
+- Airbnb-extended eslint - for linting
+- Prettier - for code style checking
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features
+- Registration
+- Login with email adress and password
+- User can create new posts with tags
+- User can create and read comments
+- User can edit and delete his posts and comments
+- User can like posts and comments
+- Visitor can read, filter and sort posts without login
+- Sort posts by data, likes and comments
+- Filter posts by tags
+- Infinite scroll (fetch new post as user scroll down)
+- Responsive design with mobile-first approach
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Run on your Machine
+1. Clone repositiory
+2. npm install
+3. npm start
+4. visit http://localhost:3000/
+5. npm test (for testing app)
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Improve
+- [] Add react-helmet for SEO optimization
+- [] Add terms and about content
+- [] Add user page
+- [] Allow user to edit and delete his account
+- [] Add infinite scroll to Comments
+= [] Add filter by favorite 
