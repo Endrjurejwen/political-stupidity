@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { filterQuotes } from 'app/quotes/operations';
 import { getFilterNameState } from 'app/quotes/selectors';
-import { CheckButtonBox } from 'app/common';
+import { CheckButtonBox, useAutoFocus } from 'app/common';
 import { spacing } from 'utils';
 
 import * as S from './style';
@@ -18,7 +18,11 @@ const RADIO_BUTTONS_CONFIG = [
   { value: 'chemia', id: 'chemistry', label: 'Chemia' },
   { value: 'język polski', id: 'polish', label: 'Język polski' },
   { value: 'języki obce', id: 'foreign', label: 'Języki obce' },
-  { value: 'wiedza o społeczeństwie', id: 'wos', label: 'Wiedza o społeczeństwie' }
+  {
+    value: 'wiedza o społeczeństwie',
+    id: 'wos',
+    label: 'Wiedza o społeczeństwie'
+  }
 ];
 
 // { name: 'geografia', id: 'geography', label: 'Geografia' },
@@ -31,6 +35,8 @@ export const filterQuotesContainer = ({
   currentFilterName
 }) => {
   const [filter, setFilter] = useState(currentFilterName);
+  const autoFocusRef = useRef(null);
+  useAutoFocus(autoFocusRef);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -57,12 +63,14 @@ export const filterQuotesContainer = ({
               onChange={handleChange}
               checked={filter === value}
               type="radio"
-              name="filters"
+              name={value}
               value={value}
             />
           ))}
         </S.InputsWrapper>
-        <S.Button type="submit">Filtruj</S.Button>
+        <S.Button ref={autoFocusRef} type="submit">
+          Filtruj
+        </S.Button>
       </S.Form>
     </div>
   );

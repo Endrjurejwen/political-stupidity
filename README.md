@@ -20,8 +20,7 @@ Full stack, Twitter-like app made with React, Redux and Firebase.
 - React-transition-group - for animating mount and unmount
 - Prop-types - for react props checking
 - Jest - for testing
-- Jest - for react components testing
-- React-testing-library - for testing
+- React-testing-library - for react components testing
 - Airbnb-extended eslint - for linting
 - Prettier - for code style checking
 
@@ -36,7 +35,7 @@ Full stack, Twitter-like app made with React, Redux and Firebase.
 - Visitor can read, filter and sort posts without login
 - Sort posts by data, likes and comments
 - Filter posts by tags
-- Infinite scroll (fetch new post as user scroll down)
+- Infinite scroll (fetch new posts as user scroll down)
 - Responsive design with mobile-first approach
 
 ## Run on your Machine

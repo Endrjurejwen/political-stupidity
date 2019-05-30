@@ -3,6 +3,10 @@ import { spacing, color, hidden } from 'utils';
 
 const Input = styled.input`
   ${hidden()};
+
+  &:focus + label span {
+    outline: ${color.secondary} solid 2px;
+  }
 `;
 
 const RadioButton = styled.span`
@@ -11,6 +15,10 @@ const RadioButton = styled.span`
   border-radius: 100px;
   padding: ${spacing[0]} ${spacing[2]};
   cursor: pointer;
+
+  &:focus {
+    outline: ${color.secondary} solid 2px;
+  }
 `;
 
 const InputBox = styled.li`
