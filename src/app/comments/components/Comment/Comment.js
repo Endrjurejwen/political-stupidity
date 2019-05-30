@@ -33,9 +33,7 @@ const comment = ({ comment }) => {
   return (
     <S.Card secondary>
       <S.Header>
-        <S.H6 data-testid="comment-author">
-          {comment.author.nick}
-        </S.H6>
+        <S.H6 data-testid="comment-author">{comment.author.nick}</S.H6>
       </S.Header>
       {textBox}
       <S.Footer>

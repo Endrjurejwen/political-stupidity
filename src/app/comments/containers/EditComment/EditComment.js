@@ -42,7 +42,6 @@ export const editCommentForm = ({
     resetTextareaSize();
 
     const quotationID = match.params.id;
-    // event.preventDefault();
     editComment(quotationID, comment.id, content);
     setContent('');
     onCloseEditForm();

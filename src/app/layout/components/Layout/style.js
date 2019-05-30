@@ -1,11 +1,5 @@
 import styled from 'styled-components';
-import {
-  navigationHeight,
-  bodyMaxWidth,
-  spacing,
-  media,
-  color
-} from 'utils';
+import { navigationHeight, bodyMaxWidth, spacing, media, color } from 'utils';
 
 const Wrapper = styled.div`
   position: relative;

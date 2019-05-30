@@ -6,21 +6,10 @@ import { createQuotation } from 'app/quotes/operations';
 import { getIsLoadingState } from 'app/quotes/selectors';
 import { spacing } from 'utils';
 import { WithLoader } from 'app/common';
+import { CHECKBOXES_VALUES } from 'app/quotes/containers/CreateQuotation';
 import QuotationForm from 'app/quotes/components/QuotationForm';
 
 import * as S from 'elements';
-
-const CHECKBOXES_VALUES = {
-  historia: false,
-  przyroda: false,
-  geografia: false,
-  matematyka: false,
-  fizyka: false,
-  chemia: false,
-  'Język polski': false,
-  'Języki obce': false,
-  'wiedza o społeczneństwie': false
-};
 
 export const createQuotationForm = ({
   createQuotation,
@@ -101,64 +90,3 @@ export default withRouter(
     { createQuotation }
   )(createQuotationForm)
 );
-
-// import React, { useState } from 'react';
-// import { func, bool } from 'prop-types';
-// import { connect } from 'react-redux';
-// import { withRouter } from 'react-router-dom';
-// import { createQuotation } from 'quotes/actions';
-// import { getIsLoadingState } from 'quotes/selectors';
-// import { spacing } from 'utils';
-// import { WithLoader } from 'common';
-// import { H3 } from 'elements';
-// import QuotationForm from 'quotes/components/QuotationForm';
-
-// const createQuotationForm = ({ createQuotation, closeModal, isLoading }) => {
-//   const [content, setContent] = useState('');
-//   const [politician, setPolitician] = useState('');
-
-//   const setNewQuotation = () => ({ content, politician });
-
-//   const handleCreateQuotationSubmit = event => {
-//     const newQuotation = setNewQuotation();
-//     event.preventDefault();
-//     createQuotation(newQuotation).then(res => res && closeModal());
-//   };
-
-//   return (
-//     <WithLoader isLoading={isLoading}>
-//       <H3 center marginBottom={spacing[3]}>
-//         Stwórz cytat
-//       </H3>
-//       <QuotationForm
-//         onQuotationSubmit={handleCreateQuotationSubmit}
-//         onContentChange={setContent}
-//         onPoliticianChange={setPolitician}
-//         content={content}
-//         politician={politician}
-//       />
-//     </WithLoader>
-//   );
-// };
-
-// createQuotationForm.propTypes = {
-//   closeModal: func,
-//   createQuotation: func.isRequired,
-//   isLoading: bool
-// };
-
-// createQuotationForm.defaultProps = {
-//   closeModal: () => null,
-//   isLoading: false
-// };
-
-// const mapStateToProps = state => ({
-//   isLoading: getIsLoadingState(state)
-// });
-
-// export default withRouter(
-//   connect(
-//     mapStateToProps,
-//     { createQuotation }
-//   )(createQuotationForm)
-// );

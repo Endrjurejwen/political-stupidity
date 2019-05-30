@@ -10,6 +10,8 @@ describe('<UserDetails /> with user', () => {
     expect(getByTestId('user-details-container')).toBeInTheDocument();
 
     const { firstName, lastName, nick } = fakeUser;
-    expect(getByTestId('user-credentials')).toHaveTextContent(`${firstName} ${lastName} (${nick})`);
+    expect(getByTestId('user-credentials')).toHaveTextContent(
+      `${firstName} ${lastName} (${nick})`
+    );
   });
 });

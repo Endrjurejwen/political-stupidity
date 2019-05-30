@@ -31,6 +31,7 @@ module.exports = {
       'import/no-unresolved': "off",
       "prettier/prettier": "error",
       "import/no-extraneous-dependencies": ["error", {"devDependencies": true,}],
+      "import/prefer-default-export": 0
     },
     "globals": {
       "test": true,

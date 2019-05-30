@@ -25,10 +25,6 @@ const RADIO_BUTTONS_CONFIG = [
   }
 ];
 
-// { name: 'geografia', id: 'geography', label: 'Geografia' },
-// { name: 'wiedza o społeczeństwie', id: 'wos', label: 'Wiedza o społeczneństwie' },
-// { name: 'język polski', id: 'polish', label: 'Język Polski' },
-
 export const filterQuotesContainer = ({
   onCloseModal,
   filterQuotes,

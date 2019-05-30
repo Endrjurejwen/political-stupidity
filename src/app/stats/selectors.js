@@ -1,5 +1,3 @@
-/* eslint import/prefer-default-export: 0 */
-
 import { createStructuredSelector } from 'reselect';
 
 const getCounters = state => state.firestore.data.counters;

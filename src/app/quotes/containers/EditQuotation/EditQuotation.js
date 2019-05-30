@@ -1,3 +1,5 @@
+/* eslint no-param-reassign: 0 */
+
 import React, { useState } from 'react';
 import { func, bool } from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,21 +9,10 @@ import { getIsLoadingState } from 'app/quotes/selectors';
 import { quotationType } from 'app/quotes/propTypes';
 import { spacing } from 'utils';
 import { WithLoader } from 'app/common';
+import { CHECKBOXES_VALUES } from 'app/quotes/containers/CreateQuotation';
 import QuotationForm from 'app/quotes/components/QuotationForm';
 
 import * as S from 'elements';
-
-const CHECKBOXES_VALUES = {
-  historia: false,
-  przyroda: false,
-  geografia: false,
-  matematyka: false,
-  fizyka: false,
-  chemia: false,
-  'Język polski': false,
-  'Języki obce': false,
-  'wiedza o społeczneństwie': false
-};
 
 export const editQuotationForm = ({
   editQuotation,
@@ -74,7 +65,6 @@ export const editQuotationForm = ({
   };
 
   const handleEditQuotationSubmit = () => {
-    // event.preventDefault();
     const newQuotationWithTopics = setNewQuotationWithTopics();
     editQuotation(id, newQuotationWithTopics);
     onCloseModal();

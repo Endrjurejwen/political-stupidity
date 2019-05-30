@@ -15,8 +15,6 @@ const likeQuotation = id => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     const authorId = getState().firebase.auth.uid;
-    // const oldLikesCount = getState().firestore.data.quotes[id].likesCount;
-
     const state = getState();
     const quotation = getQuotation(state, id);
     const oldLikesCount = quotation.likesCount;

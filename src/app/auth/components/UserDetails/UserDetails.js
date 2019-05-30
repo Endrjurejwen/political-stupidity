@@ -14,7 +14,6 @@ const userDetails = ({ user }) => (
       <div data-testid="user-credentials">
         {`${user.firstName} ${user.lastName} (${user.nick})`}
       </div>
-      {/* <div>{user.nick}</div> */}
       <div>{user.email}</div>
     </S.UserData>
   </S.UserContainer>

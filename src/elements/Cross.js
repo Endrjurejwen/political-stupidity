@@ -17,20 +17,3 @@ export default styled.div`
     width: ${props => props.height || '15px'};
   }
 `;
-
-// export default styled.div`
-//   background-color: red;
-//   height: 100px;
-//   position: relative;
-//   width: 20px;
-
-//   &:after {
-//     background-color: red;
-//     content: "";
-//     height: 20px;
-//     left: -40px;
-//     position: absolute;
-//     top: 40px;
-//     width: 100px;
-//   }
-// `;

@@ -1,5 +1,3 @@
-// import { actionTypes } from 'redux-firestore';
-
 import {
   sortQuotesRequest,
   sortQuotesSuccess,
@@ -11,10 +9,6 @@ const sortQuotes = sortBy => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     dispatch(resetPagination());
-    // dispatch({
-    //   type: actionTypes.CLEAR_DATA,
-    //   preserve: { data: true, ordered: false }
-    // });
     dispatch(sortQuotesRequest(sortBy));
     const { filter } = getState().quotes;
     const sortInfo = getState().quotes.sortTypes.find(

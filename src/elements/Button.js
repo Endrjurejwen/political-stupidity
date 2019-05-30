@@ -42,34 +42,3 @@ export default styled.button`
     color: ${props => (props.secondary ? color.textLight : color.action)};
   }
 `;
-
-// export default styled.button`
-//   /* ${elevation[1]}; */
-//   font-family: inherit;
-//   font-weight: bold;
-
-//   padding: ${spacing[1]} ${spacing[4]};
-//   border-radius: 20px;
-//   border: 2px solid ${color.action};
-//   background-color: ${props =>
-//     props.secondary ? 'transparent' : color.action};
-//   color: ${props => (props.secondary ? color.action : color.textLight)};
-//   cursor: pointer;
-//   text-transform: uppercase;
-//   background-image: linear-gradient(90deg, transparent 0%, transparent 50%, ${
-//     color.action
-//   } 50%);
-//   background-size: 250%;
-// 	transition: background-position .2s ease-in-out;
-
-//   ${props =>
-//     props.secondary &&
-//     css`
-//       border-color: red;
-//     `}
-
-//   &:hover {
-//     /* ${elevation[2]}; */
-//     background-position: -80%;
-//   }
-// `;

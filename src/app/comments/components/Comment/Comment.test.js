@@ -12,9 +12,7 @@ describe('<Comment /> with comment', () => {
     );
     const { author, content, likesCount } = fakeComment;
 
-    expect(getByTestId('comment-author')).toHaveTextContent(
-      `${author.nick}`
-    );
+    expect(getByTestId('comment-author')).toHaveTextContent(`${author.nick}`);
     expect(getByTestId('comment-content')).toHaveTextContent(content);
     expect(getByTestId('button-likes')).toHaveTextContent(likesCount);
   });

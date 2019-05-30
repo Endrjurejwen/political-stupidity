@@ -10,12 +10,10 @@ const useOnClickOutside = (ref, handler) => {
     };
 
     document.addEventListener('click', listener);
-    // document.addEventListener('touchstart', listener);
 
     return () => {
       document.removeEventListener('click', listener);
-      // document.removeEventListener('touchstart', listener);
-    }
+    };
   }, []);
 };
 

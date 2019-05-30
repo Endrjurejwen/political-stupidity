@@ -11,12 +11,9 @@ const loading = keyframes`
 `;
 
 const Spinner = styled.div`
-  /* margin: 0 auto; */
-  /* transform: translateX(50%); */
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* width: 100%; */
 `;
 
 const Label = styled.span`
@@ -29,7 +26,6 @@ const Symbol = styled.div`
   color: ${color.action};
   font-size: 11px;
   text-indent: -99999em;
-  /* margin: 0 auto; */
   position: relative;
   width: 10em;
   height: 10em;

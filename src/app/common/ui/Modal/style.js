@@ -62,26 +62,3 @@ const CloseButtonWrapper = styled.aside`
 `;
 
 export { Modal, ModalContent, CloseButtonWrapper };
-
-// const fadeIn = keyframes`
-//   0% {
-//     transform: translate(-50%, -150%) scale(0.8, 1);
-//     opacity: 0;
-//   }
-//   }
-//   100% {
-//     transform: translate(-50%, -50%) scale(1);
-//     opacity: 1;
-//   }
-// `;
-
-// const fadeOut = keyframes`
-//   0% {
-//     transform: translate(-50%, -50%);
-//     opacity: 1;
-//   }
-//   100% {
-//     transform: translate(-50%, -150%) scale(0.8, 1);
-//     opacity: 0;
-//   }
-// `;

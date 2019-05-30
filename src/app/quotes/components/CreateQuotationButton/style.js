@@ -14,21 +14,7 @@ const ActionButton = styled(Button)`
   border-radius: 100px;
   padding: ${props => (props.isExtended ? spacing[2] : spacing[3])}
     ${spacing[4]};
-  /* transition: border 0.15s ease-in-out; */
-
   border: 2px solid ${color.textLight};
-
-  /* border: ${props =>
-    props.isDesktop || props.isExtended
-      ? `2px solid ${color.textLight}`
-      : null}; */
-
-  /* &:hover {
-    border: ${props =>
-      props.isDesktop || props.isExtended
-        ? `2px solid ${color.textLight}`
-        : null};
-  } */
 
   div {
     transition: background-color 0.25s ease-in-out;
@@ -39,7 +25,6 @@ const ActionButton = styled(Button)`
   }
 
   ${media.desktop`
-    /* ${elevation[1]}; */
     position: static;
     display: ${({ isDesktop }) => (isDesktop ? 'flex' : 'none')};
     padding: ${spacing[1]} ${spacing[4]};

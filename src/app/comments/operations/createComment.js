@@ -15,7 +15,6 @@ const createComment = (quotationID, content) => {
       .doc(quotationID)
       .collection('comments')
       .add({
-        // ...comment,
         content,
         author: {
           firstName: profile.firstName,

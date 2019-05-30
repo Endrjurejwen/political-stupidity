@@ -28,13 +28,12 @@ const Title = styled(H5)`
 
 const Header = styled.header`
   padding: ${spacing[2]} ${spacing[3]};
-  /* background-color: ${color.action}; */
   background-image: linear-gradient(
-      70deg,
-      #3542CC 0%,
-      ${color.action} 65%,
-      ${color.textLight} 65%
-    );
+    70deg,
+    #3542cc 0%,
+    ${color.action} 65%,
+    ${color.textLight} 65%
+  );
   overflow: hidden;
   border-radius: 8px 8px 0 0;
   border: 2px solid ${color.action};
@@ -46,27 +45,6 @@ const ActionButtonsWrapper = styled.aside`
   padding: ${spacing[3]} ${spacing[2]};
   position: relative;
   border-top: 1px solid ${color.layoutBorder};
-
-  /* &:before, &:after {
-    content: '';
-    background: ${color.secondary};
-    position: absolute;
-    top: 0;
-  }
-
-  &:before {
-    right: 0;
-    height: 1px;
-    width: 82%;
-  }
-
-  &:after {
-    right: 82%;
-    height: 10px;
-    width: 10px;
-    border-radius: 100px;
-    transform: translateY(-5px);
-  } */
 `;
 
 const Footer = styled.footer`

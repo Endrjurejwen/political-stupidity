@@ -103,33 +103,3 @@ export default connect(
   mapStateToProps,
   { login, resetAuthError }
 )(withRouter(loginForm));
-
-// const BreakLine = styled.div`
-//   color: ${color.textSecondary};
-//   font-size: 0.85rem;
-//   text-align: center;
-//   width: 60%;
-//   margin: ${spacing[3]} auto;
-
-//   position: relative;
-
-//   &::before {
-//     content: '';
-//     position: absolute;
-//     bottom: 50%;
-//     left: 0;
-//     height: 1px;
-//     width: 45%;
-//     background-color: ${color.textSecondary};
-//   }
-
-//   &::after {
-//     content: '';
-//     position: absolute;
-//     bottom: 50%;
-//     right: 0;
-//     height: 1px;
-//     width: 45%;
-//     background-color: ${color.textSecondary};
-//   }
-// `;

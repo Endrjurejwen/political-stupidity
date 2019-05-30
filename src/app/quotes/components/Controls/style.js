@@ -3,7 +3,6 @@ import { spacing, media, flexCenter, color, elevation } from 'utils';
 
 const PanelContainer = styled.aside`
   ${flexCenter({ justifyContent: 'center', alignItems: 'center' })};
-  /* flex-wrap: wrap; */
   flex-flow: column wrap;
 
   ${media.phone`
@@ -25,7 +24,6 @@ const FilterButton = styled.button`
   font-family: inherit;
   font-weight: bold;
   font-size: 0.6rem;
-  /* position: relative; */
   padding: ${spacing[1]} ${spacing[2]};
   border: none;
   background-color: transparent;

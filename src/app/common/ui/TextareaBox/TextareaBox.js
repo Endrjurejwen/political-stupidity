@@ -1,3 +1,5 @@
+/* eslint no-param-reassign: 0 */
+
 import React, { useEffect, forwardRef } from 'react';
 import { string, bool } from 'prop-types';
 
@@ -56,7 +58,6 @@ const textareaBox = forwardRef(
           placeholder={placeholder}
           id={id}
           name={id}
-          // data-testid={`textarea-${id}`}
           {...rest}
         />
         <S.Label htmlFor={id}>{placeholder}</S.Label>

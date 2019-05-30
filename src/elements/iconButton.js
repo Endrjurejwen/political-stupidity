@@ -14,15 +14,13 @@ export default styled.button`
   background-color: transparent;
   cursor: pointer;
 
-  svg path, svg g path {
+  svg path,
+  svg g path {
     transition: fill 0.15s ease-in-out;
   }
 
-  &:hover svg path, &:hover svg g path {
+  &:hover svg path,
+  &:hover svg g path {
     fill: ${color.textDark};
   }
-
-  /* &:hover svg g path {
-    fill: ${color.secondary};
-  } */
 `;

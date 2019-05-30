@@ -66,7 +66,9 @@ const toolbar = ({ user, location }) => {
         <Navigation navItems={links} onCloseMenu={handleToggleMenu} />
       </SideDrawer>
       <MenuButton isMenuOpen={isMenuOpen} onToggleMenu={handleToggleMenu} />
-      {isMenuOpen && <Backdrop isShown={isMenuOpen} onClose={handleToggleMenu} />}
+      {isMenuOpen && (
+        <Backdrop isShown={isMenuOpen} onClose={handleToggleMenu} />
+      )}
     </ToolbarWrapper>
   );
 };

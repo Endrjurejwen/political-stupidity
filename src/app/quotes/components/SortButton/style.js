@@ -17,7 +17,6 @@ const SortButton = styled.button`
   cursor: pointer;
   text-transform: uppercase;
   transition: 0.15s background-color ease-in-out;
-  /* transition: 0.15s color ease-in; */
 
   &:hover::before {
     border-top-color: ${color.action};

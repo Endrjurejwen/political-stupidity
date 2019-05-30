@@ -27,31 +27,3 @@ export const getUserInfoState = createStructuredSelector({
   email: getEmail,
   id: getId
 });
-
-// const getAuthError = state => state.auth.authError;
-
-// export const makeGetAuthErrorState = () =>
-//   createSelector(
-//     [getAuthError],
-//     authError => authError
-//   );
-
-// const getIsLoading = state => state.auth.isLoading;
-
-// export const makeGetIsLoadingState = () =>
-//   createSelector(
-//     [getIsLoading],
-//     isLoading => isLoading
-//   );
-
-// const makeMapStateToProps = () => {
-//   const getAuthErrorState = makeGetAuthErrorState();
-//   const getIsLoadingState = makeGetIsLoadingState();
-//   const mapStateToProps = state => {
-//     return {
-//       authError: getAuthErrorState(state),
-//       isLoading: getIsLoadingState(state)
-//     };
-//   };
-//   return mapStateToProps;
-// };

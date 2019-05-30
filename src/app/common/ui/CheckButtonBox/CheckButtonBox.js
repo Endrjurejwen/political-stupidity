@@ -1,3 +1,5 @@
+/* eslint jsx-a11y/label-has-for: 0 */
+
 import React from 'react';
 import { string } from 'prop-types';
 

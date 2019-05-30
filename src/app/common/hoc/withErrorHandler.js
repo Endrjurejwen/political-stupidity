@@ -1,3 +1,6 @@
+/* eslint react/destructuring-assignment: 0 */
+/* eslint react/prop-types: 0 */
+
 import React from 'react';
 import { Modal } from 'app/common';
 import { ConfirmationError } from 'app/common/info';

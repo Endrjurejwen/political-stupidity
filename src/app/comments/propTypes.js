@@ -1,4 +1,3 @@
-/* eslint import/prefer-default-export: 0 */
 import PropTypes from 'prop-types';
 
 export const commentType = PropTypes.shape({

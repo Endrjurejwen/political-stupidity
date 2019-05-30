@@ -39,20 +39,4 @@ const trapTabKey = (event, close) => {
   }
 };
 
-//   if (event.keyCode === 9) {
-//     if (event.shiftKey && isActiveFirst()) {
-//       event.preventDefault();
-//       lastTabStop.focus();
-//     } else if (isActiveLast()) {
-//       event.preventDefault();
-//       firstTabStop.focus();
-//     }
-//   }
-
-//   if (event.keyCode === 27) {
-//     close();
-//     focusedElementBeforeModal.focus();
-//   }
-// };
-
 export default trapTabKey;

@@ -3,7 +3,13 @@ import { fireEvent, render } from 'react-testing-library';
 import { signUpForm as SignUp } from './SignUp';
 
 const signUpMock = jest.fn(() =>
-  Promise.resolve({ firstName: '', lastName: '', nick: '', email: '', password: '' })
+  Promise.resolve({
+    firstName: '',
+    lastName: '',
+    nick: '',
+    email: '',
+    password: ''
+  })
 );
 const resetAuthErrorMock = jest.fn();
 

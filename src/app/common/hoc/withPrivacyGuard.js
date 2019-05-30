@@ -1,3 +1,5 @@
+/* eslint react/prop-types: 0 */
+
 import React from 'react';
 import { Toggle, Modal } from 'app/common';
 import { withUser } from 'app/common/hoc';
@@ -32,31 +34,3 @@ const withPrivacyGuard = WrappedButton => {
 };
 
 export default withPrivacyGuard;
-
-
-// import React from 'react';
-// import { Toggle, Modal } from 'app/common';
-// import { withUser } from 'app/common/hoc';
-// import Login from 'app/auth/containers/Login';
-
-// const withPrivacyGuard = WrappedButton => {
-//   const withPrivacyGuardComponent = ({ user, ...props }) => {
-//     if (!user.id) {
-//       return (
-//         <Toggle
-//           open={show => <WrappedButton {...props} onClick={show} />}
-//           content={({ hide, isShown }) => isShown && (
-//             <Modal close={hide}>
-//               <Login closeModal={hide} />
-//             </Modal>
-//           )}
-//         />
-//       );
-//     }
-//     return <WrappedButton {...props} />;
-//   };
-
-//   return withUser(withPrivacyGuardComponent);
-// };
-
-// export default withPrivacyGuard;

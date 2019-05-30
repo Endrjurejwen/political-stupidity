@@ -12,7 +12,6 @@ const Form = styled.form`
 const InputsList = styled.ul`
   margin-bottom: ${spacing[3]};
   display: flex;
-  /* justify-content: center; */
   flex-wrap: wrap;
 `;
 

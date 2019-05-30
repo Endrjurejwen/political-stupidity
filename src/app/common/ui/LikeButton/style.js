@@ -38,7 +38,6 @@ const LikeButton = styled.button`
   }
 
   & svg {
-    /* animation: ${like} 0.8s ease; */
     animation: ${({ isAnimated }) =>
       isAnimated
         ? css`

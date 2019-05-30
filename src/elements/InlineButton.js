@@ -10,6 +10,5 @@ export default styled.button`
   color: ${props => (props.secondary ? color.textLight : color.action)};
   cursor: pointer;
   text-transform: uppercase;
-  /* margin-left: ${props => props.marginLeft || '0'}; */
   ${margins}
 `;

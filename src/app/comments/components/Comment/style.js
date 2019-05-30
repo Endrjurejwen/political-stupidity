@@ -4,16 +4,15 @@ import { spacing, flexCenter, color } from 'utils';
 
 const Header = styled.header`
   padding: ${spacing[2]} ${spacing[3]} ${spacing[2]};
-  /* border-bottom: 1px solid ${color.layoutBorder}; */
 `;
 
 const Footer = styled.footer`
   ${flexCenter({ justifyContent: 'space-between' })};
   padding: ${spacing[2]} ${spacing[1]} ${spacing[2]} ${spacing[3]};
-  /* border-top: 1px solid ${color.action}; */
   position: relative;
 
-  &:before, &:after {
+  &:before,
+  &:after {
     content: '';
     background: ${color.action};
     position: absolute;

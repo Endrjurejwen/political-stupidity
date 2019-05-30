@@ -24,7 +24,6 @@ export const createCommentForm = ({ createComment, isLoading, match }) => {
     resetTextareaSize();
 
     const quotationID = match.params.id;
-    // event.preventDefault();
     createComment(quotationID, content).then(() => {
       setContent('');
       window.scrollTo(0, document.body.scrollHeight);

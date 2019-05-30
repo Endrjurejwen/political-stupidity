@@ -54,24 +54,3 @@ export default compose(
     { likeQuotation, dislikeQuotation }
   )
 )(likeQuotationButton);
-
-// const ComponentWithUser = withUser(likeQuotationButton);
-
-// export default withRouter(
-//   connect(
-//     null,
-//     mapDispatchToProps
-//   )(ComponentWithUser)
-// );
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     actions: bindActionCreators(
-//       {
-//         likeQuotation,
-//         dislikeQuotation
-//       },
-//       dispatch
-//     )
-//   };
-// };

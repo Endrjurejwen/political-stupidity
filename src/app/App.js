@@ -1,6 +1,4 @@
-/* eslint react/prefer-stateless-function: 0 */
-
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Global from 'app/globalStyle';
@@ -17,21 +15,17 @@ if (history.location && history.location.state && history.location.state.id) {
   history.replace({ ...history.location, state });
 }
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Router>
-          <>
-            <Layout>
-              <Routes />
-            </Layout>
-            <Global />
-          </>
-        </Router>
-      </Provider>
-    );
-  }
-}
+const app = () => (
+  <Provider store={store}>
+    <Router>
+      <>
+        <Layout>
+          <Routes />
+        </Layout>
+        <Global />
+      </>
+    </Router>
+  </Provider>
+);
 
-export default App;
+export default app;
