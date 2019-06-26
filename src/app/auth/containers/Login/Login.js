@@ -11,6 +11,7 @@ import AuthErrorHandler from 'app/auth/components/AuthErrorHandler';
 import { spacing } from 'utils';
 
 import * as S from 'elements';
+import ROUTES_NAMES from 'app/pages/Routes/routesNames';
 
 export const loginForm = ({
   login,
@@ -40,7 +41,7 @@ export const loginForm = ({
   };
 
   const handleToSingUp = () => {
-    history.push('/signup');
+    history.push(ROUTES_NAMES.signup);
     onCloseModal();
   };
 

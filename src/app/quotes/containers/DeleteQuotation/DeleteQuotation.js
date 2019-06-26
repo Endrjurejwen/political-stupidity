@@ -6,6 +6,8 @@ import { withRouter } from 'react-router-dom';
 import { deleteQuotation } from 'app/quotes/operations';
 import { Confirmation } from 'app/common';
 
+import ROUTES_NAMES from 'app/pages/Routes/routesNames';
+
 export const deleteQuotationConfirmation = ({
   deleteQuotation,
   onCloseModal,
@@ -13,10 +15,10 @@ export const deleteQuotationConfirmation = ({
   history
 }) => {
   const handleDeleteQuotationClick = () => {
-    const isQuotesLocation = history.location.pathname === '/quotes';
+    const isQuotesLocation = history.location.pathname === ROUTES_NAMES.quotes;
     deleteQuotation(quotationID).then(res => res && onCloseModal());
     if (!isQuotesLocation) {
-      history.push('/quotes');
+      history.push(ROUTES_NAMES.quotes);
     }
   };
 

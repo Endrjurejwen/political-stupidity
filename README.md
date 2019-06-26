@@ -4,6 +4,10 @@ Full stack, Twitter-like app made with React, Redux and Firebase.
 
 [Demo](https://political-stupidity.web.app)
 
+**Dummy account:**
+login (mail): test@test.pl
+password: test123
+
 ## Includes
 
 - Create-react-app - for project bootstrapping

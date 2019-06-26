@@ -10,6 +10,7 @@ import Login from 'app/auth/containers/Login';
 import Logout from 'app/auth/containers/Logout';
 import CreateQuotation from 'app/quotes/containers/CreateQuotation';
 import CreateQuotationButton from 'app/quotes/components/CreateQuotationButton';
+import Logo from 'app/layout/components/Logo';
 
 import * as S from './style';
 
@@ -35,7 +36,7 @@ const sideDrawer = ({ children, onCloseMenu, isOpen, user }) => {
       <S.Title center textLight marginBottom={spacing[4]}>
         Klasa Polityczna
       </S.Title>
-      <div>¯\_(ツ)_/¯</div>
+      <Logo />
     </>
   );
   if (user.id) {

@@ -15,17 +15,21 @@ import Login from 'app/auth/containers/Login';
 import CreateQuotation from 'app/quotes/containers/CreateQuotation';
 import CreateQuotationButton from 'app/quotes/components/CreateQuotationButton';
 
+import ROUTES_NAMES from 'app/pages/Routes/routesNames';
+
+const { about, terms, signup, quotes } = ROUTES_NAMES;
+
 const SIGN_IN_NAVIGATION_ITEMS = [
-  { name: 'Strona Główna', path: '/quotes' },
-  { name: 'Idea', path: '/about' },
-  { name: 'Regulamin', path: '/terms' }
+  { name: 'Strona Główna', path: quotes },
+  { name: 'Idea', path: about },
+  { name: 'Regulamin', path: terms }
 ];
 
 const SIGN_OUT_NAVIGATION_ITEMS = [
-  { name: 'Strona Główna', path: '/quotes' },
-  { name: 'Idea', path: '/about' },
-  { name: 'Regulamin', path: '/terms' },
-  { name: 'Załóż konto', path: '/signup' }
+  { name: 'Strona Główna', path: quotes },
+  { name: 'Idea', path: about },
+  { name: 'Regulamin', path: terms },
+  { name: 'Załóż konto', path: signup }
 ];
 
 const LoginWithToggle = withToggle({
@@ -51,8 +55,8 @@ const toolbar = ({ user, location }) => {
     actionButton = <CreateQuotationWithToggle isDesktop />;
   }
 
-  let contextInfo = <Logo />;
-  if (location.pathname.includes('/quotes/')) {
+  let contextInfo = <Logo marginAuto />;
+  if (location.pathname.includes(`${quotes}/`)) {
     contextInfo = <ReturnButton />;
   }
 

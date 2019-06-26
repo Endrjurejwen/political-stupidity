@@ -16,6 +16,7 @@ import { spacing } from 'utils';
 import { WithLoader, withErrorHandler } from 'app/common';
 import { resetQuotesError } from 'app/quotes/actions';
 
+import ROUTES_NAMES from 'app/pages/Routes/routesNames';
 import * as S from 'elements';
 
 export const quotationDetails = ({
@@ -26,7 +27,7 @@ export const quotationDetails = ({
 }) => {
   const handleNavigateReturn = () => {
     history.push({
-      pathname: '/quotes',
+      pathname: ROUTES_NAMES.quotes,
       state: { id: location.state.id }
     });
   };

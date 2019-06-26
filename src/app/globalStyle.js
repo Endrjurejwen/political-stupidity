@@ -22,11 +22,6 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
-  button:focus, input:focus, a:focus {
-    outline: ${color.secondary} solid 2px;
-  }
-  
 `;
 
 export default GlobalStyle;

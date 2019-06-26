@@ -1,8 +1,9 @@
 import React from 'react';
 
+import ROUTES_NAMES from 'app/pages/Routes/routesNames';
 import * as S from './style';
 
-const logo = () => {
+const logo = ({ marginAuto }) => {
   const handleClick = () => {
     window.scroll({
       top: 0,
@@ -11,9 +12,11 @@ const logo = () => {
     });
   };
   return (
-    <S.Link to="/quotes" onClick={handleClick}>
-      ¯\_(ツ)_/¯
-    </S.Link>
+    <S.Logo marginAuto={marginAuto}>
+      <S.Link to={ROUTES_NAMES.quotes} onClick={handleClick}>
+        ¯\_(ツ)_/¯
+      </S.Link>
+    </S.Logo>
   );
 };
 
