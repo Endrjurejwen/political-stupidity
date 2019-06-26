@@ -57,7 +57,7 @@ export const signUpForm = ({ signUp, resetAuthError, error, isLoading }) => {
   };
 
   return (
-    <WithLoader isLoading={isLoading}>
+    <WithLoader isLoading={isLoading} bgColor="#F4F4F4">
       <S.H2 center marginBottom={spacing[4]}>
         Rejestracja
       </S.H2>

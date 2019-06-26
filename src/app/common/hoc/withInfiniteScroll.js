@@ -52,7 +52,7 @@ const withInfiniteScroll = ({
       return (
         <>
           <WrappedComponent {...this.props} />
-          {isLoading && <Spinner bgColor="F4F4F4" />}
+          {isLoading && <Spinner bgColor="#F4F4F4" />}
           {!isLoading && isReachEnd && (
             <H5 center>gratulacje! dotarłeś do końca</H5>
           )}
